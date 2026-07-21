@@ -11,11 +11,11 @@
   ];
   const grid = document.querySelector('#memory-grid'), complete = document.querySelector('#game-complete'), shell = document.querySelector('.memory-shell'), note = document.querySelector('#game-note'), livingDots = document.querySelector('#living-dots');
   const movesEl = document.querySelector('#moves'), pairsEl = document.querySelector('#pairs'), timerEl = document.querySelector('#timer'), status = document.querySelector('#game-status');
-  let deck, first, second, locked, moves, pairs, seconds, timer, transitionTimer;
+  let deck, first, second, locked, moves, pairs, seconds, timer, transitionTimer, revealTimer;
   const shuffle = a => { for (let i = a.length - 1; i; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const time = n => `${String(Math.floor(n / 60)).padStart(2,'0')}:${String(n % 60).padStart(2,'0')}`;
   function startTimer(){ if (!timer) timer = setInterval(() => { seconds++; timerEl.textContent = time(seconds); }, 1000); }
-  function reset(){ clearInterval(timer); clearTimeout(transitionTimer); timer = transitionTimer = null; first = second = null; locked = false; moves = pairs = seconds = 0; movesEl.textContent='0'; pairsEl.textContent='0 / 8'; timerEl.textContent='00:00'; shell.classList.remove('is-resolving','is-complete'); shell.removeAttribute('aria-busy'); grid.classList.remove('grid-resolving'); livingDots.classList.remove('visible'); livingDots.replaceChildren(); livingDots.removeAttribute('style'); complete.hidden=true; grid.hidden=false; note.hidden=false; deck=shuffle([...concepts,...concepts].map((item,i)=>({...item,id:i}))); render(); }
+  function reset(){ clearInterval(timer); clearTimeout(transitionTimer); clearTimeout(revealTimer); timer = transitionTimer = revealTimer = null; first = second = null; locked = false; moves = pairs = seconds = 0; movesEl.textContent='0'; pairsEl.textContent='0 / 8'; timerEl.textContent='00:00'; shell.classList.remove('is-resolving','is-complete'); shell.removeAttribute('aria-busy'); grid.classList.remove('grid-resolving'); livingDots.classList.remove('visible'); livingDots.replaceChildren(); livingDots.removeAttribute('style'); complete.hidden=true; grid.hidden=false; note.hidden=false; deck=shuffle([...concepts,...concepts].map((item,i)=>({...item,id:i}))); render(); }
   function render(){ grid.innerHTML=''; deck.forEach((item,index)=>{ const card=document.createElement('button'); const column=index%4, row=Math.floor(index/4); const dotX=((index*47)%121)-60, dotY=((index*71)%91)-45; card.className='memory-card'; card.type='button'; card.dataset.index=index; card.style.setProperty('--exit-x',`${(1.5-column)*34}px`);card.style.setProperty('--exit-y',`${(1.5-row)*22}px`);card.style.setProperty('--exit-delay',`${index*22}ms`);card.style.setProperty('--dot-x',`${dotX}px`);card.style.setProperty('--dot-y',`${dotY}px`);card.style.setProperty('--dot-delay',`${(row*4+column)*14}ms`);card.style.setProperty('--dot-color',index%3===0?'#c05be8':index%3===1?'#765cff':'#4f8cff'); card.setAttribute('aria-label',`Hidden card ${index+1}`); card.innerHTML=`<span class="card-inner"><span class="card-back"><span class="logo-icon" aria-hidden="true"></span></span><span class="card-front"><svg class="game-type-icon" viewBox="0 0 24 24" aria-hidden="true">${item.icon}</svg><span>${item.label}</span></span></span>`; card.addEventListener('click',()=>flip(card,item)); grid.append(card); }); }
   function flip(card,item){ if(locked || card===first || card.classList.contains('matched')) return; startTimer(); card.classList.add('flipped'); card.setAttribute('aria-label',item.label); if(!first){first=card;return;} second=card; moves++;movesEl.textContent=moves; const match=deck[+first.dataset.index].key===item.key; if(match){ first.classList.add('matched');second.classList.add('matched'); pairs++;pairsEl.textContent=`${pairs} / 8`;status.textContent=`Pair found: ${item.label}. ${pairs} of 8 pairs.`;first=second=null;if(pairs===8)setTimeout(finish,650); } else { locked=true;status.textContent='Not a match.';setTimeout(()=>{first.classList.remove('flipped');second.classList.remove('flipped');first.setAttribute('aria-label',`Hidden card ${+first.dataset.index+1}`);second.setAttribute('aria-label',`Hidden card ${+second.dataset.index+1}`);first=second=null;locked=false;},760); } }
   function buildLivingField(){
@@ -48,8 +48,19 @@
     }
     livingDots.classList.add('visible');
     requestAnimationFrame(()=>requestAnimationFrame(()=>livingDots.querySelectorAll('i').forEach(dot=>dot.classList.add('flying'))));
-    setTimeout(()=>livingDots.querySelectorAll('i').forEach(dot=>dot.classList.add('settled')),2700);
+    setTimeout(()=>livingDots.querySelectorAll('i').forEach(dot=>dot.classList.add('settled')),3900);
   }
-  function finish(){if(shell.classList.contains('is-resolving')||!complete.hidden)return;clearInterval(timer);timer=null;locked=true;shell.classList.add('is-resolving');shell.setAttribute('aria-busy','true');buildLivingField();grid.classList.add('grid-resolving');note.hidden=true;const delay=matchMedia('(prefers-reduced-motion: reduce)').matches?20:2150;transitionTimer=setTimeout(()=>{grid.hidden=true;complete.hidden=false;complete.style.minHeight=`${livingDots.offsetHeight}px`;shell.classList.remove('is-resolving');shell.classList.add('is-complete');shell.removeAttribute('aria-busy');status.textContent=`Complete in ${moves} moves and ${time(seconds)}. ResearchGames makes research playable.`;complete.querySelector('button').focus();},delay);}
-  document.querySelector('#restart-game').addEventListener('click',reset);document.querySelector('#skip-game').addEventListener('click',finish);reset();
+  function finish(skipped=false){
+    if(shell.classList.contains('is-resolving')||!complete.hidden)return;
+    clearInterval(timer);timer=null;locked=true;shell.classList.add('is-resolving');shell.setAttribute('aria-busy','true');note.hidden=true;
+    if(skipped){grid.querySelectorAll('.memory-card').forEach((card,index)=>{card.classList.add('flipped');card.setAttribute('aria-label',deck[index].label);});}
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const readingPause=reduced?20:(skipped?2600:850);
+    revealTimer=setTimeout(()=>{
+      buildLivingField();grid.classList.add('grid-resolving');
+      const transitionDelay=reduced?20:3450;
+      transitionTimer=setTimeout(()=>{grid.hidden=true;complete.hidden=false;complete.style.minHeight=`${livingDots.offsetHeight}px`;shell.classList.remove('is-resolving');shell.classList.add('is-complete');shell.removeAttribute('aria-busy');status.textContent=`Complete in ${moves} moves and ${time(seconds)}. ResearchGames.eu makes research playable.`;complete.querySelector('button').focus();},transitionDelay);
+    },readingPause);
+  }
+  document.querySelector('#restart-game').addEventListener('click',reset);document.querySelector('#skip-game').addEventListener('click',()=>finish(true));reset();
 })();
