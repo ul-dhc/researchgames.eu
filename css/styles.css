@@ -25,12 +25,12 @@ main{max-width:var(--max-placeholder);min-height:calc(100svh - 78px);margin:auto
 .memory-grid{position:relative;z-index:2}
 .memory-grid.grid-resolving{overflow:visible;perspective:1100px;pointer-events:none}
 .memory-grid.grid-resolving:before,.memory-grid.grid-resolving:after{display:none}
-.memory-grid.grid-resolving .memory-card{animation:placeholder-card-dissolve 1.42s cubic-bezier(.4,0,.2,1) var(--exit-delay) both}
-.memory-grid.grid-resolving .memory-card .card-inner{animation:placeholder-card-fold 1.08s cubic-bezier(.42,0,.2,1) var(--exit-delay) both}
+.memory-grid.grid-resolving .memory-card{animation:placeholder-card-dissolve 2.42s cubic-bezier(.4,0,.2,1) var(--exit-delay) both}
+.memory-grid.grid-resolving .memory-card .card-inner{animation:placeholder-card-fold 1.92s cubic-bezier(.42,0,.2,1) var(--exit-delay) both}
 .living-dots{position:absolute;z-index:1;overflow:hidden;border-radius:8px;pointer-events:none;opacity:0}
 .living-dots.visible{opacity:1}
 .living-dots i{position:absolute;left:var(--sx);top:var(--sy);width:var(--size);height:var(--size);border-radius:50%;background:var(--color);box-shadow:0 0 7px color-mix(in srgb,var(--color) 58%,transparent);opacity:0;filter:blur(var(--blur));transform:translate(-50%,-50%) scale(.2);will-change:transform,opacity,filter}
-.living-dots i.flying{animation:placeholder-dot-travel 1.68s cubic-bezier(.18,.68,.2,1) var(--delay) forwards}
+.living-dots i.flying{animation:placeholder-dot-travel 2.72s cubic-bezier(.18,.68,.2,1) var(--delay) forwards}
 .living-dots i.settled{left:var(--tx);top:var(--ty);opacity:var(--alpha);transform:translate(-50%,-50%);animation:placeholder-dot-dance var(--drift-time) ease-in-out var(--phase) infinite,placeholder-dot-focus var(--focus-time) ease-in-out var(--phase) infinite}
 .game-complete{z-index:2;background:transparent!important;animation:placeholder-field-arrive .75s ease-out both}
 .game-complete:not([hidden]){display:flex;flex-direction:column;align-items:center;justify-content:center}
