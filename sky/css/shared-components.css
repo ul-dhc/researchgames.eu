@@ -1,0 +1,128 @@
+/* Shared ResearchGames.eu identity and game controls.
+   Kept separate so the English and Latvian page layouts remain independent. */
+.logo-icon,
+.logo-icon-brand {
+  display: block;
+  background: url('../assets/brand/researchgames-icon-color.svg') center / contain no-repeat;
+}
+
+.logo-icon-brand {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+}
+
+.logo-icon-large {
+  width: 72px;
+  height: 72px;
+  margin-inline: auto;
+}
+
+.brand .logo-icon-brand,
+.brand .logo-type,
+.brand .logo-type strong {
+  transition: transform .35s cubic-bezier(.22, 1.25, .36, 1), filter .35s, color .35s, text-shadow .35s;
+}
+
+.brand:hover .logo-icon-brand,
+.brand:focus-visible .logo-icon-brand {
+  transform: translateY(-1px) rotate(-3deg) scale(1.07);
+  filter: drop-shadow(0 0 9px #6756ff73);
+}
+
+.brand:hover .logo-type,
+.brand:focus-visible .logo-type { transform: translateX(2px); }
+.brand:hover .logo-type strong,
+.brand:focus-visible .logo-type strong { color: #a85cff; text-shadow: 0 0 15px #764cff55; }
+
+.theme-toggle .theme-sun,
+.theme-toggle .theme-moon {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+}
+
+.theme-toggle svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .3s cubic-bezier(.22, 1.3, .36, 1);
+}
+
+.theme-toggle:hover svg { transform: scale(1.08); }
+
+.memory-card.matched .card-front {
+  color: var(--pair-color);
+  border-color: color-mix(in srgb, var(--pair-color) 76%, #596175);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--pair-color) 13%, #111625), #090e1a 78%);
+  box-shadow: inset 0 0 28px color-mix(in srgb, var(--pair-color) 14%, transparent), 0 0 16px color-mix(in srgb, var(--pair-color) 25%, transparent);
+}
+
+.memory-card.matched .game-type-icon {
+  color: var(--pair-color);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--pair-color) 55%, transparent));
+}
+
+[data-theme="light"] .memory-card.matched .card-front {
+  color: color-mix(in srgb, var(--pair-color) 76%, #20202a);
+  border-color: color-mix(in srgb, var(--pair-color) 64%, #a7a4b2);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--pair-color) 12%, #fff), #f6f4f8 82%);
+}
+
+.memory-shell.is-skip-reveal .memory-card .card-inner {
+  transition-duration: .65s;
+  transition-delay: var(--skip-delay);
+}
+
+.memory-grid.grid-resolving .memory-card {
+  animation: shared-card-dissolve 3.15s cubic-bezier(.22,.61,.36,1) var(--exit-delay) both;
+}
+
+.memory-grid.grid-resolving .memory-card .card-inner {
+  animation: none;
+  transform: rotateY(180deg);
+}
+
+.memory-grid.grid-resolving .card-front,
+.memory-grid.grid-resolving .card-back {
+  animation: shared-card-surface 3.05s cubic-bezier(.22,.61,.36,1) var(--exit-delay) both;
+}
+
+.living-dots i.flying {
+  animation: shared-dot-travel 3.2s cubic-bezier(.22,.61,.36,1) var(--delay) forwards;
+}
+
+@keyframes shared-card-dissolve {
+  0%, 28% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1); }
+  66% { opacity:.9; filter:blur(0); transform:translate3d(0,-3px,0) scale(.98); }
+  88% { opacity:.32; filter:blur(1px); transform:translate3d(var(--exit-x),var(--exit-y),0) scale(.58); }
+  100% { opacity:0; filter:blur(2.4px); transform:translate3d(var(--exit-x),var(--exit-y),0) scale(.2); }
+}
+
+@keyframes shared-card-surface {
+  0%, 34% { border-color: color-mix(in srgb, var(--pair-color) 72%, #41485a); box-shadow: inset 0 0 22px color-mix(in srgb, var(--pair-color) 12%, transparent); }
+  70% { border-color: color-mix(in srgb, var(--pair-color) 32%, transparent); background-color: color-mix(in srgb, var(--pair-color) 7%, transparent); box-shadow: inset 0 0 12px transparent; }
+  100% { border-color: transparent; background: transparent; color: transparent; box-shadow: none; }
+}
+
+@keyframes shared-dot-travel {
+  0%, 12% { opacity:0; transform:translate(-50%,-50%) scale(.42); }
+  42% { opacity:.72; transform:translate(-50%,-50%) scale(.82); }
+  100% { opacity:.7; transform:translate(calc(-50% + var(--mx)),calc(-50% + var(--my))) scale(1); }
+}
+
+@media (max-width: 760px) {
+  .site-header .logo-icon-brand { flex-basis: 36px; width: 36px; height: 36px; }
+  .card-front { font-size: clamp(10px, 2.8vw, 13px); }
+  .game-type-icon { width: clamp(24px, 7vw, 29px); height: clamp(24px, 7vw, 29px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .memory-shell.is-skip-reveal .memory-card .card-inner { transition-delay: 0ms; }
+}
