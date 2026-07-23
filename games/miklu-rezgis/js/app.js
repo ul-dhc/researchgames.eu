@@ -1,8 +1,4 @@
 'use strict';
-// Bundled from ES modules into a single classic script so the game
-// works when opened directly (file://) as well as when served over http(s).
-
-// ==== constants.js ====
 const RIDDLES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrAe1vIq__WSCT4FUOA2gHDlkL4g7RCm43CJEDAdvKRzbRulSpqHjGwtXBGot0mgWO4yLYUuc7RMJ-/pub?output=csv';
 const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZte1RBtUIa6zVdDqGPtBd6y9BOMnG2QOFrv3CAFB1SEOd6_PNx8SNTHv-Yi/exec';
 
@@ -69,6 +65,34 @@ function dailyIndex(key, length) {
     hash = Math.imul(hash, 16777619);
   }
   return Math.abs(hash >>> 0) % length;
+}
+
+function dailyDifficultyLabel(level) {
+  if (level <= 2) return 'diezgan viegla';
+  if (level <= 4) return 'samērā viegla';
+  if (level <= 6) return 'ne visai grūta';
+  if (level <= 8) return 'diezgan grūta';
+  return 'ļoti izaicinoša';
+}
+
+function getDailySelection() {
+  const pool = [];
+  for (let level = 1; level <= 10; level += 1) {
+    (state.levels[level] || []).forEach(riddle => {
+      if (riddle && riddle.q && riddle.a) pool.push({ riddle, level });
+    });
+  }
+  if (!pool.length) return null;
+  return pool[dailyIndex(dailyDateKey(), pool.length)];
+}
+
+function updateDailyModeSummary() {
+  const summary = document.getElementById('daily-mode-sub');
+  if (!summary) return;
+  const selection = getDailySelection();
+  summary.textContent = selection
+    ? `1 mīkla · katru dienu cita · šodien tā varētu būt ${dailyDifficultyLabel(selection.level)}`
+    : '1 mīkla · katru dienu cita';
 }
 
 function hasPlayedDaily() {
@@ -1623,12 +1647,12 @@ function renderPartyPassHandoff(previousPlayer, nextPlayer) {
 }
 
 function startDailyGame() {
-  const pool = Object.values(state.levels).flat().filter(riddle => riddle && riddle.q && riddle.a);
-  if (!pool.length) return;
+  const selection = getDailySelection();
+  if (!selection) return;
   state.currentLevel = 1;
   state.riddlesPerLevel = 1;
   state.maxScore = 115;
-  state.shuffledLevel = [pool[dailyIndex(dailyDateKey(), pool.length)]];
+  state.shuffledLevel = [selection.riddle];
   state.riddleIdx = 0;
   state.levelScore = 0;
   loadRiddle();
@@ -1934,6 +1958,7 @@ function init() {
   renderLockedGrid();
   lockGame();
   wireEvents();
+  loadRiddlesFromSheets(() => updateDailyModeSummary());
   checkAboutDeepLink();
   checkContinuePrompt();
   flushAnalyticsQueue();
