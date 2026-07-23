@@ -84,8 +84,21 @@
   <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M7.5 3v5M16.5 3v5M3.5 10h17"/><path d="m9 15 2 2 4-4"/>
   </symbol>
-  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3.5 19c.4-3.5 2.1-5.3 5-5.3s4.6 1.8 5 5.3M14 14.4c.7-.4 1.5-.7 2.5-.7 2.5 0 3.8 1.6 4 4.5"/>
+  <symbol id="i-party-popper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5.8 11.3 2 22l10.7-3.79"/>
+    <path d="M4 3h.01M22 8h.01M15 2h.01M22 20h.01"/>
+    <path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/>
+    <path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11-.11.7-.72 1.22-1.43 1.22H17"/>
+    <path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/>
+    <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>
+  </symbol>
+  <symbol id="i-bird" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 7h.01"/>
+    <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/>
+    <path d="m20 7 2 .5-2 .5"/>
+    <path d="M10 18v3"/>
+    <path d="M14 17.75V21"/>
+    <path d="M7 18a6 6 0 0 0 3.84-10.61"/>
   </symbol>
 </defs>
 </svg>
@@ -144,8 +157,13 @@
           <span class="landing-mode-copy"><span class="mode-title">Dienas mīkla</span><span id="daily-mode-sub" class="mode-sub">1 mīkla · katru dienu cita</span></span>
           <span class="mode-radio"></span>
         </button>
+        <a class="mode-card landing-mode-card child-mode-card" href="berniem/">
+          <span class="landing-mode-icon"><svg width="24" height="24"><use href="#i-bird"/></svg></span>
+          <span class="landing-mode-copy"><span class="mode-title">Bērnu spēle</span><span class="mode-sub">5 vieglas mīklas · liels 6 × 6 režģis</span></span>
+          <span class="child-mode-arrow"><svg width="18" height="18"><use href="#i-arrow-right"/></svg></span>
+        </a>
         <button class="mode-card landing-mode-card" data-mode="party">
-          <span class="landing-mode-icon"><svg width="22" height="22"><use href="#i-users"/></svg></span>
+          <span class="landing-mode-icon"><svg width="24" height="24"><use href="#i-party-popper"/></svg></span>
           <span class="landing-mode-copy"><span class="mode-title">Ballītes versija</span><span class="mode-sub">2 spēlētāji · sacensība vienā ierīcē</span></span>
           <span class="mode-radio"></span>
         </button>
