@@ -1,2 +1,0 @@
-# Lībiešu vietvārdu spēle
-
