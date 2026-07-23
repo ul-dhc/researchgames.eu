@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="lv" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071326">
+  <title>Mazais mīklu minētājs</title>
+  <meta name="description" content="Atmini piecas latviešu tautas mīklas un atrodi atbildes burtu režģī.">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true">
+    <defs>
+      <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/>
+      </symbol>
+      <symbol id="i-bird" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 7h.01"/>
+        <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/>
+        <path d="m20 7 2 .5-2 .5"/>
+        <path d="M10 18v3M14 17.75V21"/>
+        <path d="M7 18a6 6 0 0 0 3.84-10.61"/>
+      </symbol>
+    </defs>
+  </svg>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Mazais mīklu minētājs">
+      <img src="assets/mark.svg" alt="">
+      <span>Mazais mīklu minētājs</span>
+    </a>
+    <div class="header-actions">
+      <button class="icon-button" id="text-size-button" type="button" aria-label="Palielināt burtus">A+</button>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Mainīt krāsu režīmu">
+        <span aria-hidden="true">☀</span>
+        <span class="toggle-track"><span class="toggle-dot"></span></span>
+        <span aria-hidden="true">☾</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="start-screen" id="start-screen">
+      <div class="hero">
+        <div class="hero-mark"><img src="assets/mark.svg" alt=""></div>
+        <p class="eyebrow">Latviešu tautas mīklas bērniem</p>
+        <h1>Mazais<br>mīklu minētājs</h1>
+        <p class="hero-text">Atmini mīklu un atrodi atbildi burtu režģī.</p>
+        <button class="primary-button" id="start-button" type="button">Sākt spēli <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="game-summary">
+        <h2>Kas Tevi sagaida?</h2>
+        <div class="summary-list">
+          <article>
+            <span class="summary-number">5</span>
+            <div>
+              <h3>Piecas mīklas</h3>
+              <p>Īsas mīklas ar vienu saprotamu atbildi.</p>
+            </div>
+          </article>
+          <article>
+            <span class="summary-number">6×6</span>
+            <div>
+              <h3>Liels burtu režģis</h3>
+              <p>Velc pāri burtiem horizontāli, vertikāli vai pa diagonāli.</p>
+            </div>
+          </article>
+          <article>
+            <span class="summary-icon" aria-hidden="true"><svg width="30" height="30"><use href="#i-heart"></use></svg></span>
+            <div>
+              <h3>Droši mēģini</h3>
+              <p>Par kļūdām punktus neatņemam.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-screen" id="game-screen" hidden>
+      <div class="status-bar">
+        <div class="progress-copy">
+          <span id="progress-label">Mīkla 1 no 5</span>
+          <strong id="birds-total"><svg width="19" height="19" aria-hidden="true"><use href="#i-bird"></use></svg><span>0 putniņi</span></strong>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span id="progress-fill"></span></div>
+      </div>
+
+      <div class="game-card">
+        <div class="riddle-card">
+          <p class="eyebrow" id="level-label">1. līmenis</p>
+          <h2 id="riddle-text"></h2>
+        </div>
+
+        <div class="answer-boxes" id="answer-boxes" aria-label="Atbildes burti"></div>
+        <p class="instruction" id="instruction">Turi un velc pāri burtiem, lai iezīmētu vārdu.</p>
+
+        <div class="play-area">
+          <div class="actions">
+            <button class="secondary-button" id="hint-button" type="button">
+              <svg width="20" height="20" aria-hidden="true"><use href="#i-heart"></use></svg>
+              <span>Uzvedne</span>
+              <span class="hint-count" id="hint-count">2</span>
+            </button>
+            <button class="secondary-button" id="shuffle-button" type="button">↻ Jaukt burtus</button>
+          </div>
+          <div class="grid-wrap">
+            <div class="letter-grid" id="letter-grid" role="grid" aria-label="Burtu režģis"></div>
+          </div>
+        </div>
+
+        <div class="message" id="message" aria-live="polite"></div>
+        <button class="primary-button next-button" id="next-button" type="button" hidden>Nākamā mīkla <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+  </main>
+
+  <div class="celebration" id="celebration" aria-hidden="true"></div>
+
+  <dialog class="result-dialog" id="result-dialog">
+    <button class="close-button" id="close-result" type="button" aria-label="Aizvērt">×</button>
+    <img src="assets/mark.svg" alt="">
+    <p class="eyebrow">Spēle pabeigta</p>
+    <h2 id="result-title">Lieliski!</h2>
+    <p class="result-birds" id="result-birds"><svg width="28" height="28" aria-hidden="true"><use href="#i-bird"></use></svg><span></span></p>
+    <p id="result-copy"></p>
+    <button class="primary-button" id="play-again" type="button">Spēlēt vēlreiz</button>
+  </dialog>
+
+  <footer>
+    <span>Mazais mīklu minētājs</span>
+    <a href="https://researchgames.eu/" target="_blank" rel="noopener">ResearchGames.eu ↗</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
