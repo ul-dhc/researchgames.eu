@@ -672,14 +672,14 @@ function modeLabel(mode) {
 }
 
 function generateShareText(score, maxScore, title, mode) {
-  return `Minēju mīklas.\nMans tituls: ${title}\n\n⭐ ${score.toLocaleString()} / ${maxScore.toLocaleString()} punkti\nSpēles versija: ${modeLabel(mode)}\n\nVai Tu vari labāk?\nhttps://ul-dhc.github.io/latviesu-miklu-rezgis\n\n#mīklurežģis`;
+  return `Minēju mīklas.\nMans tituls: ${title}\n\n⭐ ${score.toLocaleString()} / ${maxScore.toLocaleString()} punkti\nSpēles versija: ${modeLabel(mode)}\n\nVai Tu vari labāk?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis`;
 }
 
 function generateDailyShareText() {
   const solvedLine = state.dailySolved ? '✅ Atminēju dienas mīklu' : 'Apskatīju dienas mīklas atminējumu';
   const hintsUsed = state.hintLimit - state.hintsLeft;
   const attemptsUsed = MAX_LIVES - state.livesLeft + (state.dailySolved ? 1 : 0);
-  return `${solvedLine}\n⭐ ${state.totalScore} / 115 punkti\nĀtruma bonuss: +${state.totalTimeBonus}\nUzvednes: ${hintsUsed} · Mēģinājumi: ${Math.max(1, attemptsUsed)}\nLaiks: ${formatDuration(state.timerSeconds)}\n\nCik raiti Tev izdosies atminēt šodienas mīklu?\nhttps://ul-dhc.github.io/latviesu-miklu-rezgis\n\n#mīklurežģis #dienasmīkla`;
+  return `${solvedLine}\n⭐ ${state.totalScore} / 115 punkti\nĀtruma bonuss: +${state.totalTimeBonus}\nUzvednes: ${hintsUsed} · Mēģinājumi: ${Math.max(1, attemptsUsed)}\nLaiks: ${formatDuration(state.timerSeconds)}\n\nCik raiti Tev izdosies atminēt šodienas mīklu?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis #dienasmīkla`;
 }
 
 // ==== dataLoader.js ====
