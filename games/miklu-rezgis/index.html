@@ -10,12 +10,12 @@
 <meta name="description" content="Mini latviešu tautas mīklas. Atrodi atbildes burtu režģī.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mīklu režģis">
-<meta property="og:description" content=" Mini latviešu tautas mīklas. Atrodi atbildes burtu režģī.">
+<meta property="og:description" content="Mini latviešu tautas mīklas. Atrodi atbildes burtu režģī.">
 <meta property="og:url" content="https://researchgames.eu/games/miklu-rezgis/">
 <meta property="og:image" content="https://researchgames.eu/games/miklu-rezgis/assets/miklu-rezgis-mark-black.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mīklu režģis">
-<meta name="twitter:description" content=" Mini latviešu tautas mīklas. Atrodi atbildes burtu režģī.">
+<meta name="twitter:description" content="Mini latviešu tautas mīklas. Atrodi atbildes burtu režģī.">
 <meta name="twitter:image" content="https://researchgames.eu/games/miklu-rezgis/assets/miklu-rezgis-mark-black.png">
 <link rel="canonical" href="https://researchgames.eu/games/miklu-rezgis/">
 <link rel="icon" href="assets/miklu-rezgis-mark-black.svg?v=20260724-1" type="image/svg+xml">
@@ -28,6 +28,7 @@
 </head>
 <body>
 
+<!-- ===================== ICON SPRITE ===================== -->
 <svg style="display:none">
 <defs>
   <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -140,7 +141,7 @@
         </button>
         <button class="mode-card landing-mode-card" data-mode="daily">
           <span class="landing-mode-icon"><svg width="22" height="22"><use href="#i-calendar"/></svg></span>
-          <span class="landing-mode-copy"><span class="mode-title">Dienas mīkla</span><span class="mode-sub">1 mīkla · katru dienu cita</span></span>
+          <span class="landing-mode-copy"><span class="mode-title">Dienas mīkla</span><span id="daily-mode-sub" class="mode-sub">1 mīkla · katru dienu cita</span></span>
           <span class="mode-radio"></span>
         </button>
         <button class="mode-card landing-mode-card" data-mode="party">
@@ -169,6 +170,7 @@
 </section>
 
 <div class="app-shell" id="app-shell" style="display:none">
+  <!-- ===================== SIDEBAR (persistent) ===================== -->
   <aside class="sidebar">
     <p class="sidebar-desc">Izlasi mīklu un atrodi tās atbildi, kas paslēpusies burtu režģī! Vārdi var būt rakstīti horizontāli, vertikāli vai diagonāli. Veiksmi un asu prātu!</p>
 
@@ -204,6 +206,7 @@
     <div class="sidebar-spacer"></div>
   </aside>
 
+  <!-- ===================== MAIN COLUMN ===================== -->
   <main class="main-col">
     <div id="game">
       <div class="stats-bar">
