@@ -549,6 +549,7 @@ const MAX_GRID_SIZE = 16;
 
 function computeGridSize(level) {
   if (level === 1) return 7;
+  if (window.innerWidth <= 640) return 9;
   if (level <= 4) return 9;
   return 11;
 }
@@ -561,7 +562,15 @@ function resolveGridSize(level, answer) {
 }
 
 function cellSizePx(size) {
-  const maxWidth = Math.min(window.innerWidth, 520) - 32;
+  const puzzleArea = document.querySelector('.puzzle-area');
+  const puzzleStyle = puzzleArea ? window.getComputedStyle(puzzleArea) : null;
+  const puzzlePadding = puzzleStyle
+    ? parseFloat(puzzleStyle.paddingLeft) + parseFloat(puzzleStyle.paddingRight)
+    : 0;
+  const availableWidth = puzzleArea?.clientWidth
+    ? puzzleArea.clientWidth - puzzlePadding - 10
+    : Math.min(window.innerWidth - 40, 520);
+  const maxWidth = Math.max(220, Math.min(availableWidth, 520));
   const widthSize = Math.floor((maxWidth - (size - 1) * 3) / size);
   const cap = size === 7 ? 58 : size === 9 ? 48 : 38;
   const gridStageHeight = document.querySelector('.grid-stage')?.clientHeight || 0;
@@ -569,7 +578,8 @@ function cellSizePx(size) {
     ? (gridStageHeight > 120 ? gridStageHeight - 76 : Math.max(230, window.innerHeight - 500))
     : window.innerHeight * 0.62;
   const heightSize = Math.floor((gridHeight - (size - 1) * 3) / size);
-  return Math.max(24, Math.min(widthSize, heightSize, cap));
+  const minimum = window.innerWidth <= 640 ? 18 : 24;
+  return Math.max(minimum, Math.min(widthSize, heightSize, cap));
 }
 
 function fillerCount(size) {
