@@ -906,7 +906,7 @@ html[data-theme="light"] .lock-box{
 
 .mikla-card{position:relative;justify-content:center;padding-left:24px;padding-right:24px;}
 .mikla-card .mikla-body{text-align:center;}
-.mikla-card .mikla-text{font-size:calc(18px + var(--font-adjust));}
+.mikla-card .mikla-text{font-size:calc(20px + var(--font-adjust));}
 @media (max-width:520px){
   .mikla-card{padding-left:16px;padding-right:16px;}
 }
