@@ -876,15 +876,37 @@ function renderMiklaNum() {
 
 function renderGrid() {
   const size = state.gridSize;
-  const cs = cellSizePx(size);
   const el = document.getElementById('grid');
-  el.style.gridTemplateColumns = `repeat(${size},${cs}px)`;
-  el.style.gap = '3px';
-  el.innerHTML = '';
+  const cellCount = size * size;
+  const needsBuild = el.children.length !== cellCount || el.dataset.gridSize !== String(size);
+  const needsSizing = needsBuild || !el.dataset.cellSize;
+  const cs = needsSizing ? cellSizePx(size) : Number(el.dataset.cellSize);
 
+  if (needsBuild) {
+    el.replaceChildren();
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        const d = document.createElement('div');
+        const letter = document.createElement('span');
+        d.appendChild(letter);
+        d.dataset.r = r;
+        d.dataset.c = c;
+        el.appendChild(d);
+      }
+    }
+    el.dataset.gridSize = String(size);
+  }
+
+  if (needsSizing) {
+    el.dataset.cellSize = String(cs);
+    el.style.gridTemplateColumns = `repeat(${size},${cs}px)`;
+    el.style.gap = '3px';
+  }
+
+  const fontSize = cs <= 26 ? 11 : cs <= 32 ? 13 : cs <= 38 ? 14 : 16;
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
-      const d = document.createElement('div');
+      const d = el.children[r * size + c];
       const k = cellKey(r, c);
       let cls = 'cell';
       if (state.foundCells.has(k)) cls += ' found';
@@ -893,14 +915,8 @@ function renderGrid() {
         cls += ' highlight';
       }
       d.className = cls;
-      const fontSize = cs <= 26 ? 11 : cs <= 32 ? 13 : cs <= 38 ? 14 : 16;
-      d.style.cssText = `width:${cs}px;height:${cs}px;font-size:${fontSize}px;`;
-      const letter = document.createElement('span');
-      letter.textContent = state.grid[r][c];
-      d.appendChild(letter);
-      d.dataset.r = r;
-      d.dataset.c = c;
-      el.appendChild(d);
+      if (needsSizing) d.style.cssText = `width:${cs}px;height:${cs}px;font-size:${fontSize}px;`;
+      d.firstElementChild.textContent = state.grid[r][c];
     }
   }
 }
@@ -2010,6 +2026,8 @@ function init() {
   setInterval(renderTimer, 1000);
   window.addEventListener('online', flushAnalyticsQueue);
   window.addEventListener('resize', () => {
+    const grid = document.getElementById('grid');
+    if (grid) delete grid.dataset.cellSize;
     if (document.getElementById('lock-overlay').classList.contains('hidden')) {
       if (state.grid && state.grid.length) renderGrid();
     } else {
