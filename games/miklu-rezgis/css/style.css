@@ -1,6 +1,3 @@
-/* ===========================================================
-   Mīklu režģis – design tokens (matches supplied mockup)
-=========================================================== */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0A0C14;
@@ -216,14 +213,12 @@ html[data-theme="light"] .lock-overlay{background:rgba(240,241,248,.85);}
 .mikla-body{flex:1;min-width:0;}
 .mikla-label{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-weight:800;display:block;margin-bottom:8px;}
 .mikla-text{font-size:16px;line-height:1.65;color:var(--ink);font-family:var(--font-serif);}
-.mikla-meta{display:flex;align-items:flex-start;justify-content:flex-start;gap:6px;flex:1 0 100%;width:100%;font-size:12px;font-weight:400;line-height:1.45;color:var(--ink-muted);margin-top:8px;text-align:left;}
+.mikla-meta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;font-size:calc(10.5px + var(--font-adjust));font-weight:400;line-height:1.45;color:var(--ink-dim);margin-top:8px;text-align:center;}
 .mikla-meta[hidden]{display:none;}
 .mikla-meta svg{flex:0 0 auto;color:var(--accent);}
-.mikla-meta-content{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:4px;}
-.riddle-unit-number,.riddle-source-link{display:block;color:var(--ink-muted);font-weight:400;}
-.riddle-source-link{text-decoration:none;transition:color .18s ease;}
-.riddle-source-link:hover,.riddle-source-link:focus-visible{color:var(--accent);text-decoration:none;}
-.riddle-unit-number[hidden],.riddle-source-link[hidden]{display:none;}
+.mikla-meta-content{display:flex;min-width:0;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap;}
+.riddle-unit-number{display:block;color:inherit;font-weight:400;}
+.riddle-unit-number[hidden]{display:none;}
 
 .words-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1rem;align-items:flex-end;}
 .word-group{display:flex;flex-direction:column;gap:3px;}
@@ -925,7 +920,7 @@ html[data-theme="light"] .lock-box{
 @media (min-width:1100px) and (min-height:700px){
   .grid-stage{
     display:grid;grid-template-columns:minmax(205px,250px) auto minmax(205px,250px);
-    align-items:center;justify-content:center;width:100%;min-height:0;padding-top:6px;
+    position:relative;align-items:center;justify-content:center;width:100%;min-height:0;padding-top:6px;
   }
   .grid-stage::after{content:'';grid-column:3;}
   .grid-stage #grid-wrap{
@@ -937,7 +932,11 @@ html[data-theme="light"] .lock-box{
     width:165px;margin-right:58px;justify-self:end;align-self:center;
   }
   .grid-stage .controls-row .btn{width:100%;min-height:39px;}
-  .grid-stage .controls-row .mikla-meta{margin-top:10px;}
+}
+
+@media (max-width:720px){
+  .mikla-meta{margin-top:7px;padding:0 4px;}
+  .mikla-meta-content{gap:2px 7px;}
 }
 
 /* Separate start screen */
