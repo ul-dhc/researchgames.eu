@@ -1,5 +1,8 @@
 'use strict';
+// Bundled from ES modules into a single classic script so the game
+// works when opened directly (file://) as well as when served over http(s).
 
+// ==== constants.js ====
 const RIDDLES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrAe1vIq__WSCT4FUOA2gHDlkL4g7RCm43CJEDAdvKRzbRulSpqHjGwtXBGot0mgWO4yLYUuc7RMJ-/pub?output=csv';
 const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZte1RBtUIa6zVdDqGPtBd6y9BOMnG2QOFrv3CAFB1SEOd6_PNx8SNTHv-Yi/exec';
 
@@ -568,16 +571,19 @@ function cellSizePx(size) {
     ? parseFloat(puzzleStyle.paddingLeft) + parseFloat(puzzleStyle.paddingRight)
     : 0;
   const availableWidth = puzzleArea?.clientWidth
-    ? puzzleArea.clientWidth - puzzlePadding - 10
+    ? puzzleArea.clientWidth - puzzlePadding - 2
     : Math.min(window.innerWidth - 40, 520);
   const maxWidth = Math.max(220, Math.min(availableWidth, 520));
   const widthSize = Math.floor((maxWidth - (size - 1) * 3) / size);
   const cap = size === 7 ? 58 : size === 9 ? 48 : 38;
   const gridStageHeight = document.querySelector('.grid-stage')?.clientHeight || 0;
+  const compactLandscape = window.innerWidth > window.innerHeight && window.innerHeight <= 600;
   const gridHeight = window.innerWidth >= 1100
     ? (gridStageHeight > 120 ? gridStageHeight - 76 : Math.max(230, window.innerHeight - 500))
     : window.innerHeight * 0.62;
-  const heightSize = Math.floor((gridHeight - (size - 1) * 3) / size);
+  const heightSize = compactLandscape
+    ? Number.POSITIVE_INFINITY
+    : Math.floor((gridHeight - (size - 1) * 3) / size);
   const minimum = window.innerWidth <= 640 ? 18 : 24;
   return Math.max(minimum, Math.min(widthSize, heightSize, cap));
 }
@@ -943,6 +949,10 @@ function renderWordTags() {
     group.className = 'word-group';
     const boxes = document.createElement('div');
     boxes.className = 'letter-boxes';
+    const availableWidth = Math.max(220, Math.min(el.clientWidth || window.innerWidth - 32, 520));
+    const gap = window.innerWidth <= 640 ? 3 : 4;
+    const boxWidth = Math.max(18, Math.min(28, Math.floor((availableWidth - Math.max(0, wn.length - 1) * gap) / wn.length)));
+    boxes.style.setProperty('--answer-box-width', `${boxWidth}px`);
 
     for (let i = 0; i < wn.length; i++) {
       const box = document.createElement('div');
@@ -2039,10 +2049,23 @@ function init() {
     const grid = document.getElementById('grid');
     if (grid) delete grid.dataset.cellSize;
     if (document.getElementById('lock-overlay').classList.contains('hidden')) {
-      if (state.grid && state.grid.length) renderGrid();
+      if (state.grid && state.grid.length) {
+        renderGrid();
+        renderWordTags();
+      }
     } else {
       renderLockedGrid();
     }
+  });
+  window.addEventListener('orientationchange', () => {
+    window.setTimeout(() => {
+      const grid = document.getElementById('grid');
+      if (grid) delete grid.dataset.cellSize;
+      if (state.grid && state.grid.length) {
+        renderGrid();
+        renderWordTags();
+      }
+    }, 180);
   });
 }
 
