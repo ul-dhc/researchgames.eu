@@ -1,4 +1,6 @@
-
+/* ===========================================================
+   Mīklu režģis – design tokens (matches supplied mockup)
+=========================================================== */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0A0C14;
@@ -624,6 +626,8 @@ body.about-open .site-footer{order:2;flex:0 0 auto;margin-top:0;}
   .puzzle-area{padding:10px;}
   .mikla-card{padding:14px;}
   .mikla-text{font-size:15px;}
+  #grid-wrap{width:100%;max-width:100%;min-width:0;overflow:hidden;padding-left:0;padding-right:0;}
+  #grid{max-width:100%;}
   .controls-row .btn{flex:1 1 calc(50% - 8px);}
   #next-btn{flex-basis:100%;}
 }
