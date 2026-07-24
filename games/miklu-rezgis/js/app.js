@@ -1,8 +1,5 @@
 'use strict';
-// Bundled from ES modules into a single classic script so the game
-// works when opened directly (file://) as well as when served over http(s).
 
-// ==== constants.js ====
 const RIDDLES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrAe1vIq__WSCT4FUOA2gHDlkL4g7RCm43CJEDAdvKRzbRulSpqHjGwtXBGot0mgWO4yLYUuc7RMJ-/pub?output=csv';
 const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZte1RBtUIa6zVdDqGPtBd6y9BOMnG2QOFrv3CAFB1SEOd6_PNx8SNTHv-Yi/exec';
 
@@ -1688,7 +1685,7 @@ function startLevel() {
 }
 
 function renderRiddleMetadata(riddle) {
-  const { teller, recorder, place, year, unitNumber, sourceUrl } = datasetSourceMetadata(riddle);
+  const { teller, recorder, place, year, unitNumber } = datasetSourceMetadata(riddle);
   const details = [];
 
   if (teller) details.push(`Šo mīklu teica ${teller}.`);
@@ -1698,22 +1695,12 @@ function renderRiddleMetadata(riddle) {
   const meta = document.getElementById('riddle-meta');
   const text = document.getElementById('riddle-meta-text');
   const unitNumberText = document.getElementById('riddle-unit-number');
-  const sourceLink = document.getElementById('riddle-source-link');
-  const validSourceUrl = /^https:\/\/(?:www\.)?garamantas\.lv\//i.test(sourceUrl);
   const formattedUnitNumber = unitNumber
     ? (/^LFK\b/i.test(unitNumber) ? unitNumber : `LFK ${unitNumber}`)
     : '';
   text.textContent = details.join(' ');
-  sourceLink.hidden = !(unitNumber && validSourceUrl);
-  unitNumberText.hidden = !unitNumber || validSourceUrl;
+  unitNumberText.hidden = !unitNumber;
   unitNumberText.textContent = formattedUnitNumber;
-  if (!sourceLink.hidden) {
-    sourceLink.href = sourceUrl;
-    sourceLink.textContent = `${formattedUnitNumber} ↗`;
-  } else {
-    sourceLink.removeAttribute('href');
-    sourceLink.textContent = '';
-  }
   meta.hidden = details.length === 0 && !unitNumber;
 }
 
