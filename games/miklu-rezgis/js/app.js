@@ -952,7 +952,11 @@ function setNextEnabled(val) {
   button.disabled = !val;
   const label = val && state.participationMode === 'research' && state.gameMode !== 'party'
     ? 'Novērtēt mīklu'
-    : 'Nākamā';
+    : state.gameMode === 'daily'
+      ? 'Pabeigt'
+      : state.gameMode === 'party'
+        ? 'Turpināt'
+        : 'Nākamā';
   button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
 }
 
@@ -1732,11 +1736,6 @@ function loadRiddle() {
 
   document.getElementById('give-up-btn').disabled = false;
   document.getElementById('hint-btn').disabled = false;
-  document.getElementById('next-btn').innerHTML = state.gameMode === 'daily'
-    ? 'Rezultāts <svg width="15" height="15"><use href="#i-arrow-right"/></svg>'
-    : state.gameMode === 'party'
-      ? 'Turpināt <svg width="15" height="15"><use href="#i-arrow-right"/></svg>'
-    : 'Nākamā <svg width="15" height="15"><use href="#i-arrow-right"/></svg>';
   setNextEnabled(false);
 }
 
