@@ -1,1135 +1,2069 @@
+'use strict';
 
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#0A0C14;
-  --panel:#10131E;
-  --panel-2:#161A28;
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(201,233,74,0.5);
-  --ink:#F4F5FA;
-  --ink-muted:#8890A6;
-  --ink-dim:#525A70;
+const RIDDLES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrAe1vIq__WSCT4FUOA2gHDlkL4g7RCm43CJEDAdvKRzbRulSpqHjGwtXBGot0mgWO4yLYUuc7RMJ-/pub?output=csv';
+const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZte1RBtUIa6zVdDqGPtBd6y9BOMnG2QOFrv3CAFB1SEOd6_PNx8SNTHv-Yi/exec';
 
-  --accent:#C9E94A;
-  --accent-dim:#8FAF1E;
-  --red:#F2665B;
-  --gold:#F5B942;
+const LEVEL_BASE = [0, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 500];
+const BONUS_RIDDLE_POINTS = 500;
 
-  --radius-lg:20px;
-  --radius-md:13px;
-  --radius-sm:9px;
-  --shadow: 0 20px 60px rgba(0,0,0,.5);
+const MODE_MAX = { 10: 3335, 50: 12075, 100: 23000, daily: 115, party: 0 };
+const MODE_RPL = { 10: 1, 50: 5, 100: 10, daily: 1, party: 1 };
 
-  --font-display:'Manrope','Inter',system-ui,sans-serif;
-  --font-body:'Inter',system-ui,-apple-system,sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
-}
+const MODE_NAMES = { 10: 'Ātrā spēle', 50: 'Vidējā spēle', 100: 'Garā spēle', daily: 'Dienas mīkla', party: 'Ballītes versija' };
 
-html[data-theme="light"]{
-  --bg:#F2F3F8;
-  --panel:#FFFFFF;
-  --panel-2:#F3F4FA;
-  --border: rgba(20,20,40,0.09);
-  --border-strong: rgba(143,175,30,0.55);
-  --ink:#161A28;
-  --ink-muted:#5B6178;
-  --ink-dim:#9AA0B4;
+const MAX_LIVES = 3;
+const MAX_HINTS = 3;
+const MAX_HINTS_HARD = 5;
+const PENALTY_WRONG = 15;
+const PENALTY_HINT = 25;
 
-  --accent:#7FA023;
-  --accent-dim:#5D7A19;
-  --red:#D1453B;
-  --gold:#B8811E;
+const DIRS = [[0, 1], [1, 0], [1, 1], [1, -1]];
 
-  --shadow: 0 16px 40px rgba(40,40,70,.12);
-}
+const LV_ALPHABET = 'AĀBCČDEĒFGĢHIĪJKĶLĻMNŅOPRSŠTUŪVZŽ';
 
-html,body{height:100%;}
-body{
-  background:var(--bg);color:var(--ink);font-family:var(--font-body);
-  -webkit-font-smoothing:antialiased;transition:background .25s ease,color .25s ease;
-}
-h1,h2,h3{font-family:var(--font-display);}
-button{font-family:inherit;}
-a{color:inherit;}
-svg{display:block;}
+const STORAGE_KEY = 'lmg_progress';
+const ANALYTICS_QUEUE_KEY = 'lmg_analytics_queue';
+const DAILY_PLAYED_PREFIX = 'lmg_daily_played_';
+const PROGRESS_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
-/* ===========================================================
-   Two-column app shell
-=========================================================== */
-.app-shell{display:grid;grid-template-columns:360px 1fr;min-height:100vh;}
-.sidebar{
-  border-right:1px solid var(--border);
-  padding:2.25rem 2rem;
-  display:flex;flex-direction:column;
-}
-.main-col{padding:1.75rem 2rem 2.5rem;min-width:0;}
-
-@media (max-width:900px){
-  .app-shell{grid-template-columns:1fr;}
-  .sidebar{border-right:none;border-bottom:1px solid var(--border);}
-}
-
-/* ---------- sidebar: brand ---------- */
-.brand-row{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
-.logo{width:46px;height:46px;flex-shrink:0;color:var(--ink);}
-.logo .dot{fill:currentColor;opacity:.5;}
-.logo .dot.on{fill:var(--accent);opacity:1;}
-.logo .line{stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;}
-.brand-title{font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1.1;}
-.brand-tagline{
-  font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--accent);
-  text-transform:uppercase;margin:2px 0 1.75rem;
-}
-
-.logo-art{width:150px;height:150px;color:var(--ink);margin-bottom:1.5rem;}
-.logo-art .dot{fill:currentColor;opacity:.45;}
-.logo-art .dot.on{fill:var(--accent);opacity:1;}
-.logo-art .line{stroke:var(--accent);stroke-width:4;stroke-linecap:round;}
-
-.sidebar-desc{font-size:14px;line-height:1.65;color:var(--ink-muted);margin-bottom:1.75rem;}
-
-.section-label{
-  font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--ink-dim);
-  text-transform:uppercase;margin-bottom:.85rem;
-}
-
-.mode-list{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;}
-.mode-card{
-  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
-  padding:12px 14px;border-radius:var(--radius-md);
-  border:1px solid var(--border);background:var(--panel);color:var(--ink);
-  cursor:pointer;transition:border-color .15s,background .15s;
-}
-.mode-card:hover{border-color:var(--border-strong);}
-.mode-card.selected{border-color:var(--accent);background:var(--panel-2);}
-.mode-radio{
-  width:16px;height:16px;border-radius:50%;flex-shrink:0;
-  border:2px solid var(--ink-dim);position:relative;
-}
-.mode-card.selected .mode-radio{border-color:var(--accent);}
-.mode-card.selected .mode-radio::after{
-  content:'';position:absolute;inset:2px;border-radius:50%;background:var(--accent);
-}
-.mode-title{font-size:14.5px;font-weight:800;margin-bottom:1px;}
-.mode-sub{font-size:11.5px;color:var(--ink-muted);}
-
-.loading-msg{font-size:12.5px;color:var(--ink-muted);margin-bottom:.75rem;}
-
-.sidebar-spacer{flex:1;min-height:1.5rem;}
-
-.sidebar-foot{border-top:1px solid var(--border);padding-top:1.1rem;margin-top:1rem;}
-.sidebar-foot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;}
-.theme-switch{display:flex;align-items:center;gap:8px;color:var(--ink-dim);}
-.theme-switch .sw{
-  width:42px;height:23px;border-radius:99px;background:var(--panel-2);
-  border:1px solid var(--border);position:relative;cursor:pointer;flex-shrink:0;
-}
-.theme-switch .sw .knob{
-  position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;
-  background:var(--accent);transition:left .2s ease;
-}
-html[data-theme="light"] .theme-switch .sw .knob{left:21px;}
-.theme-switch svg{opacity:.7;}
-.sidebar-foot p{font-size:11px;color:var(--ink-dim);line-height:1.7;}
-.sidebar-foot a{color:var(--ink-muted);text-decoration:underline;}
-.sidebar-foot a:hover{color:var(--accent);}
-
-/* ---------- buttons (shared) ---------- */
-.btn{
-  font-family:var(--font-body);font-weight:800;font-size:13.5px;
-  border:1px solid var(--border);border-radius:11px;padding:10px 16px;
-  cursor:pointer;background:var(--panel-2);color:var(--ink);
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  transition:border-color .15s,transform .15s,opacity .15s,filter .15s;
-}
-.btn:hover:not(:disabled){border-color:var(--border-strong);}
-.btn:active:not(:disabled){transform:scale(.97);}
-.btn:disabled{opacity:.4;cursor:default;}
-.btn-block{width:100%;}
-.btn-primary{background:var(--accent);color:#0A0C14;border:none;}
-.btn-primary:not(:disabled):hover{filter:brightness(1.08);}
-.btn-danger{color:var(--red);border-color:rgba(242,102,91,.35);}
-.btn-danger:hover:not(:disabled){background:rgba(242,102,91,.1);}
-.btn-mini-count{font-size:11px;font-weight:800;background:rgba(255,255,255,.12);border-radius:99px;padding:1px 7px;}
-html[data-theme="light"] .btn-mini-count{background:rgba(0,0,0,.08);}
-.btn.active{border-color:var(--accent);color:var(--accent);}
-
-.icon-btn{
-  width:36px;height:36px;border-radius:10px;border:1px solid var(--border);
-  background:var(--panel-2);color:var(--ink-muted);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:color .15s,border-color .15s;flex-shrink:0;
-}
-.icon-btn:hover{color:var(--accent);border-color:var(--border-strong);}
-
-/* ---------- lock overlay (shown before a game is started) ---------- */
-.puzzle-area{position:relative;}
-.lock-overlay{
-  position:absolute;inset:-8px;display:flex;align-items:center;justify-content:center;
-  background:rgba(6,7,13,.78);backdrop-filter:blur(2px);border-radius:var(--radius-lg);
-  z-index:5;text-align:center;padding:2rem;
-}
-html[data-theme="light"] .lock-overlay{background:rgba(240,241,248,.85);}
-.lock-overlay.hidden{display:none;}
-.lock-box{max-width:300px;}
-.lock-box svg{color:var(--accent);margin:0 auto .75rem;}
-.lock-box h3{font-size:16px;font-weight:800;margin-bottom:.4rem;}
-.lock-box p{font-size:13px;color:var(--ink-muted);line-height:1.55;}
-
-/* ---------- stats row ---------- */
-.stats-bar{
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
-  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-lg);
-  padding:14px 18px;margin-bottom:1.1rem;
-}
-.stats-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
-.stat-item{display:flex;align-items:center;gap:10px;}
-.stat-icon{
-  width:34px;height:34px;border-radius:50%;flex-shrink:0;
-  border:1.5px solid var(--border-strong);color:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-}
-.stat-label{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--ink-dim);text-transform:uppercase;}
-.stat-value{font-size:16px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;}
-.stat-value .score-max{font-size:11px;font-weight:600;color:var(--ink-dim);}
-.level-pill{
-  font-size:12px;font-weight:800;color:var(--ink);background:var(--panel-2);
-  border:1px solid var(--border);border-radius:99px;padding:6px 13px;
-}
-.level-pill.bonus{background:rgba(245,185,66,.14);border-color:rgba(245,185,66,.4);color:var(--gold);}
-
-.progress-bar-wrap{width:100%;height:3px;background:var(--border);border-radius:2px;margin-bottom:1.1rem;overflow:hidden;}
-.progress-bar{height:100%;background:var(--accent);transition:width .4s ease;}
-
-/* ---------- mikla card ---------- */
-.mikla-card{
-  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-lg);
-  padding:18px 20px;margin-bottom:14px;display:flex;gap:14px;align-items:flex-start;
-}
-.mikla-icon{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
-  background:rgba(201,233,74,.12);border:1px solid rgba(201,233,74,.4);
-  display:flex;align-items:center;justify-content:center;color:var(--accent);
-}
-.mikla-body{flex:1;min-width:0;}
-.mikla-label{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-weight:800;display:block;margin-bottom:8px;}
-.mikla-text{font-size:16px;line-height:1.65;color:var(--ink);font-family:var(--font-serif);}
-.mikla-meta{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;font-size:calc(10.5px + var(--font-adjust));font-weight:400;line-height:1.45;color:var(--ink-dim);margin-top:8px;text-align:center;}
-.mikla-meta[hidden]{display:none;}
-.mikla-meta svg{flex:0 0 auto;color:var(--accent);}
-.mikla-meta-content{display:flex;min-width:0;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap;}
-.riddle-unit-number{display:block;color:inherit;font-weight:400;}
-.riddle-unit-number[hidden]{display:none;}
-
-.words-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1rem;align-items:flex-end;}
-.word-group{display:flex;flex-direction:column;gap:3px;}
-.letter-boxes{display:flex;gap:3px;}
-.letter-box{
-  width:27px;height:31px;display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;border-radius:6px;border:1px solid var(--border);
-  color:transparent;background:var(--panel-2);
-  transition:color .25s,background .25s,border-color .25s;
-}
-.letter-box.found{background:rgba(201,233,74,.14);color:var(--accent);border-color:rgba(201,233,74,.5);}
-.letter-box.hinted{background:rgba(245,185,66,.14);color:var(--gold);border-color:rgba(245,185,66,.5);}
-.letter-box.given-up{background:rgba(242,102,91,.14);color:var(--red);border-color:rgba(242,102,91,.5);}
-
-.status-line{font-size:13.5px;color:var(--ink-muted);margin-bottom:.5rem;min-height:20px;}
-.status-line.win{color:var(--accent);font-weight:700;}
-.status-line.lose{color:var(--red);}
-.instruction-line{font-size:12px;color:var(--ink-dim);margin-bottom:.75rem;}
-
-#grid-wrap{margin-bottom:1.1rem;overflow-x:auto;touch-action:none;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-#grid{display:inline-grid;touch-action:none;-webkit-user-select:none;user-select:none;}
-.grid-drag-instruction{
-  flex:0 0 auto;margin:0 0 11px;text-align:center;line-height:1.45;
-}
-.grid-direction-note{
-  margin:10px 0 0;color:var(--ink-dim);font-size:calc(10.5px + var(--font-adjust));
-  line-height:1.45;text-align:center;letter-spacing:.005em;
-}
-.cell{
-  display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);
-  border-radius:6px;border:1px solid var(--border);background:var(--panel);
-  cursor:pointer;user-select:none;touch-action:none;-webkit-user-select:none;
-  transition:background .12s,border-color .12s,color .12s;
-}
-.cell.filler{color:var(--ink-muted);}
-.cell.highlight{background:rgba(201,233,74,.28);color:var(--ink);border-color:var(--accent);}
-.cell.found{background:rgba(201,233,74,.18);color:var(--accent);border-color:rgba(201,233,74,.6);}
-.cell.wrong-flash{background:rgba(242,102,91,.2);color:var(--red);border-color:var(--red);}
-
-.controls-row{display:flex;gap:8px;flex-wrap:wrap;}
-
-/* ---------- overlays ---------- */
-.overlay{display:none;position:fixed;inset:0;background:rgba(6,8,18,.62);z-index:100;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;}
-html[data-theme="light"] .overlay{background:rgba(20,20,40,.4);}
-.overlay.show{display:flex;}
-.overlay-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.6rem;max-width:380px;width:100%;text-align:center;box-shadow:var(--shadow);margin:auto;}
-.feedback-box{position:relative;max-width:580px;text-align:left;}
-.final-overlay-box{position:relative;}
-.feedback-box>.overlay-title,.feedback-box>.overlay-msg{text-align:center;}
-.feedback-close{
-  position:absolute;right:14px;top:10px;width:36px;height:36px;border:0;background:transparent;
-  color:var(--ink-muted);font-size:27px;line-height:1;cursor:pointer;
-}
-.feedback-close:hover{color:var(--accent);}
-.feedback-fieldset{margin:18px 0 0;padding:0;border:0;}
-.feedback-fieldset legend,.feedback-comment-label{display:block;margin-bottom:9px;color:var(--ink);font-weight:800;font-size:14px;}
-.rating-options{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.rating-option,.age-option{
-  min-height:42px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;
-  background:var(--panel-2);color:var(--ink);font:750 13px var(--font-body);cursor:pointer;
-}
-.rating-option:hover,.age-option:hover{border-color:var(--accent);}
-.rating-option.selected,.age-option.selected{border-color:var(--accent);background:rgba(53,214,173,.14);color:var(--accent);}
-.rating-option{font-size:16px;}
-.age-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
-.feedback-comment-label{margin-top:18px;}
-.feedback-comment{
-  width:100%;resize:vertical;min-height:84px;margin:0 0 14px;padding:11px 12px;border:1px solid var(--border);
-  border-radius:10px;background:var(--panel-2);color:var(--ink);font:500 14px/1.5 var(--font-body);outline:none;
-}
-.feedback-comment:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(53,214,173,.1);}
-.feedback-confirm{min-height:20px;margin-top:7px;text-align:center;color:var(--accent);font-size:12px;font-weight:700;}
-html[data-theme="light"] .rating-option,html[data-theme="light"] .age-option,html[data-theme="light"] .feedback-comment{background:#f5f8f9;}
-.research-question-box{max-width:660px;}
-.research-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
-.research-options-wide{grid-template-columns:repeat(2,minmax(0,1fr));}
-.research-options button{
-  min-height:42px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;
-  background:var(--panel-2);color:var(--ink);font:750 13px var(--font-body);cursor:pointer;
-}
-.research-options button:hover{border-color:var(--accent);}
-.research-options button.selected{border-color:var(--accent);background:rgba(53,214,173,.14);color:var(--accent);}
-.research-difficulty{grid-template-columns:repeat(5,minmax(0,1fr));}
-.research-difficulty button span{display:block;margin-top:2px;font-size:10px;color:var(--ink-muted);}
-html[data-theme="light"] .research-options button{background:#f5f8f9;}
-@media (max-width:520px){
-  .research-question-box{padding:1.2rem;}
-  .research-options,.research-options-wide{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .research-difficulty{grid-template-columns:repeat(5,minmax(0,1fr));}
-  .research-difficulty button{padding:7px 4px;}
-}
-@media (max-width:520px){.age-options{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.overlay-title{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--ink);margin-bottom:.5rem;}
-.overlay-score{font-size:24px;font-weight:800;color:var(--ink);margin:.25rem 0;}
-.overlay-badge{font-size:12.5px;font-weight:800;color:var(--accent-dim);margin-bottom:.75rem;letter-spacing:.04em;text-transform:uppercase;}
-.overlay-msg{font-size:14px;color:var(--ink-muted);margin-bottom:1rem;line-height:1.65;white-space:pre-line;}
-.overlay-btn-primary{
-  font-family:var(--font-body);font-weight:800;font-size:14px;padding:11px 24px;border-radius:11px;
-  border:none;background:var(--accent);color:#0A0C14;cursor:pointer;width:100%;margin-bottom:8px;
-}
-.overlay-btn-primary:hover{filter:brightness(1.08);}
-.overlay-btn-secondary{
-  font-family:var(--font-body);font-weight:700;font-size:14px;padding:11px 24px;border-radius:11px;
-  border:1px solid var(--border);background:var(--panel-2);color:var(--ink-muted);cursor:pointer;width:100%;
-}
-.overlay-btn-secondary:hover{border-color:var(--border-strong);}
-#open-feedback-btn{
-  border-color:rgba(245,185,66,.58);background:rgba(245,185,66,.07);
-  color:#e8bf68;font-weight:800;box-shadow:0 8px 24px rgba(245,185,66,.06);
-}
-#open-feedback-btn:hover{
-  border-color:rgba(245,185,66,.9);background:rgba(245,185,66,.12);
-  box-shadow:0 10px 28px rgba(245,185,66,.11);transform:translateY(-1px);
-}
-#open-feedback-btn:disabled{opacity:.7;transform:none;cursor:default;}
-.final-section-gap{height:16px;}
-html[data-theme="light"] #open-feedback-btn{
-  border-color:rgba(174,119,17,.48);background:rgba(214,154,36,.07);color:#8b6215;
-}
-.overlay-btn-danger{
-  font-family:var(--font-body);font-weight:700;font-size:14px;padding:11px 24px;border-radius:11px;
-  border:none;background:var(--red);color:#fff;cursor:pointer;width:100%;margin-bottom:8px;
-}
-.overlay-btn-danger:hover{opacity:.85;}
-.overlay-divider{width:100%;height:1px;background:var(--border);margin:1rem 0;}
-.final-title-badge{
-  font-size:12.5px;font-weight:800;color:var(--gold);background:rgba(245,185,66,.14);
-  border:1px solid rgba(245,185,66,.4);border-radius:11px;padding:6px 14px;
-  display:inline-block;margin-bottom:.75rem;
-}
-#share-box{
-  background:var(--panel-2);border:1px solid var(--border);border-radius:11px;padding:12px;
-  font-family:monospace;font-size:12px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;
-  text-align:left;margin-bottom:1rem;color:var(--ink);max-width:100%;overflow-x:hidden;
-}
-#copy-confirm{font-size:13px;color:var(--accent);text-align:center;min-height:20px;margin-top:6px;}
-.research-thanks{
-  margin:0 0 1rem;padding:10px 12px;border:1px solid rgba(53,214,173,.35);
-  border-radius:11px;background:rgba(53,214,173,.09);color:var(--accent);
-  font-size:14px;font-weight:800;text-align:center;
-}
-html[data-theme="light"] .research-thanks{
-  border-color:rgba(15,132,109,.3);background:rgba(15,132,109,.07);color:#0f846d;
-}
-
-/* ---------- about screen ---------- */
-#about-screen{padding:2rem;max-width:680px;margin:0 auto;}
-#about-screen p{color:var(--ink-muted);}
-#about-screen a{color:#dce8f7;text-decoration:none;}
-#about-screen a:hover{color:var(--accent);text-decoration:none;}
-#about-screen h2{color:var(--ink);}
-#about-back-btn{color:var(--ink-muted);font-size:13px;border:none;background:none;cursor:pointer;padding:0;margin-bottom:1.5rem;}
-
-@media (max-width:640px){
-  .sidebar{padding:1.5rem 1.25rem;}
-  .main-col{padding:1.25rem 1rem 2rem;}
-  .stats-row{gap:14px;}
-  .logo-art{width:110px;height:110px;}
-}
-
-@media (prefers-reduced-motion: reduce){
-  *{transition-duration:0.001s !important;}
-}
-
-/* ===========================================================
-   ResearchGames navy / emerald redesign
-   The same approved PNG mark is used by every brand placement.
-=========================================================== */
-:root{
-  --bg:#071023;
-  --panel:#0b1630;
-  --panel-2:#0e1b38;
-  --border:rgba(135,164,207,.16);
-  --border-strong:rgba(61,218,181,.52);
-  --ink:#f4f8ff;
-  --ink-muted:#9aa9c2;
-  --ink-dim:#6f809f;
-  --accent:#35d6ad;
-  --accent-dim:#20ac8d;
-  --shadow:0 28px 75px rgba(0,4,18,.58);
-  --radius-lg:18px;
-}
-html[data-theme="light"]{
-  --bg:#eef5f5;
-  --panel:#fff;
-  --panel-2:#f3f8f8;
-  --border:rgba(13,59,80,.12);
-  --border-strong:rgba(13,151,123,.44);
-  --ink:#10223b;
-  --ink-muted:#5d7085;
-  --ink-dim:#8494a5;
-  --accent:#0c9f80;
-  --accent-dim:#08765f;
-}
-body{
-  background:
-    radial-gradient(circle at 83% 12%,rgba(27,143,154,.13),transparent 27rem),
-    radial-gradient(circle at 18% 78%,rgba(33,191,145,.08),transparent 25rem),
-    var(--bg);
-}
-.app-shell{grid-template-columns:minmax(300px,350px) minmax(0,1fr);max-width:1520px;margin:0 auto;}
-.sidebar{
-  padding:2rem 1.8rem 1.35rem;
-  background:linear-gradient(180deg,rgba(12,25,53,.8),rgba(7,16,35,.28));
-  border-right-color:rgba(130,158,202,.13);
-}
-.main-col{padding:1.7rem clamp(1rem,3vw,3rem) 2.5rem;display:flex;align-items:flex-start;}
-#game{width:100%;max-width:1050px;margin:0 auto;}
-.brand-row{gap:13px;margin-bottom:3px;}
-.brand-mark{display:block;object-fit:contain;filter:drop-shadow(0 0 13px rgba(53,214,173,.18));}
-.logo{width:42px;height:42px;}
-.brand-title{font-size:24px;letter-spacing:-.035em;}
-.brand-tagline{
-  margin:0 0 1.6rem 55px;color:#68e0c0;font-size:11px;letter-spacing:.18em;
-}
-.logo-art{width:122px;height:122px;margin:0 auto 1.25rem;opacity:.92;}
-.sidebar-desc{font-size:13px;line-height:1.7;color:var(--ink-muted);}
-.section-label{color:#7f91af;}
-.mode-card{
-  padding:13px 14px;background:rgba(13,27,57,.58);border-color:rgba(133,164,211,.14);
-  box-shadow:inset 0 1px rgba(255,255,255,.018);
-}
-.mode-card:hover{background:rgba(17,38,72,.72);}
-.mode-card.selected{
-  border-color:rgba(53,214,173,.65);
-  background:linear-gradient(115deg,rgba(23,113,104,.24),rgba(12,30,60,.7));
-  box-shadow:0 0 28px rgba(35,199,159,.07),inset 0 0 0 1px rgba(53,214,173,.08);
-}
-.mode-sub{line-height:1.45;}
-.btn{border-radius:10px;background:rgba(15,31,61,.78);}
-.btn-primary,.overlay-btn-primary{
-  color:#04231d;background:linear-gradient(135deg,#48e0b9,#1db18f);
-  box-shadow:0 10px 28px rgba(31,186,148,.16);
-}
-#start-btn{min-height:47px;letter-spacing:.01em;}
-.sidebar-foot{border-top-color:rgba(133,164,211,.12);}
-.sidebar-foot p{color:#6f809d;}
-.sidebar-foot a{color:#8295b3;text-decoration:none;}
-.researchgames-link{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;}
-.stats-bar,.mikla-card{
-  background:linear-gradient(145deg,rgba(13,28,59,.9),rgba(9,21,46,.78));
-  border-color:rgba(133,164,211,.15);box-shadow:0 16px 45px rgba(0,5,19,.16);
-}
-.stats-bar{padding:12px 16px;border-radius:15px;}
-.stats-row{width:100%;justify-content:space-between;gap:12px;}
-.stat-item{padding:3px 7px;}
-.stat-icon{border-color:rgba(53,214,173,.3);background:rgba(34,185,150,.06);}
-.stat-label{color:#7486a5;}
-.level-pill{background:rgba(20,44,78,.72);border-color:rgba(105,151,207,.18);}
-.progress-bar-wrap{height:2px;background:rgba(113,145,194,.13);}
-.progress-bar{background:linear-gradient(90deg,#1da985,#55e1bd);box-shadow:0 0 10px rgba(53,214,173,.55);}
-.puzzle-area{
-  padding:clamp(13px,2vw,22px);border:1px solid rgba(133,164,211,.14);border-radius:20px;
-  background:linear-gradient(155deg,rgba(9,21,46,.7),rgba(7,16,35,.36));
-}
-.mikla-card{padding:16px 18px;border-radius:14px;}
-.mikla-icon{background:rgba(53,214,173,.07);border-color:rgba(53,214,173,.28);}
-.mikla-label{color:#4fdab7;}
-.mikla-text{font-family:var(--font-body);font-size:16px;font-weight:650;line-height:1.55;}
-.mikla-meta,.status-line{color:#91a2bd;}
-.instruction-line{color:#71829f;}
-.words-row{gap:14px;margin:4px 0 1rem;}
-.letter-boxes{gap:4px;}
-.letter-box{
-  width:28px;height:33px;border-radius:7px;background:rgba(14,32,63,.62);
-  border-color:rgba(132,165,211,.18);box-shadow:inset 0 1px rgba(255,255,255,.025);
-}
-.letter-box.found{
-  color:#dffff7;background:linear-gradient(145deg,rgba(48,215,174,.24),rgba(23,130,116,.14));
-  border-color:rgba(76,224,188,.45);box-shadow:0 0 16px rgba(42,203,163,.09);
-}
-.letter-box.hinted{color:#f0c46b;background:rgba(202,148,45,.1);border-color:rgba(226,177,75,.34);}
-#grid-wrap{padding:10px 4px 15px;margin-bottom:.3rem;}
-#grid{position:relative;}
-.cell{
-  position:relative;isolation:isolate;overflow:visible;border-radius:7px;
-  color:#edf4ff;background:rgba(8,21,48,.72);border-color:rgba(117,151,201,.2);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.018);
-}
-.cell span{position:relative;z-index:3;text-shadow:0 1px 5px rgba(0,0,0,.7);}
-.cell.filler{color:#edf4ff;}
-.cell.highlight{
-  color:#f6fffc;background:rgba(42,206,166,.14);border-color:rgba(62,222,184,.52);
-  box-shadow:0 0 17px rgba(43,209,167,.13),inset 0 0 12px rgba(52,217,176,.08);
-}
-.cell.found{color:#effffb;background:rgba(28,142,126,.08);border-color:rgba(83,220,188,.3);}
-.cell.found::before{
-  content:'';position:absolute;inset:2px;z-index:1;border-radius:6px;
-  background:linear-gradient(145deg,rgba(44,218,177,.28),rgba(22,129,118,.15));
-  box-shadow:0 0 18px rgba(42,207,166,.14),inset 0 0 12px rgba(80,231,195,.07);
-}
-.controls-row{padding-top:3px;}
-.lock-overlay{
-  inset:0;background:rgba(5,13,31,.72);backdrop-filter:blur(5px);
-  border:1px solid rgba(130,163,210,.08);
-}
-.lock-box{padding:27px;border:1px solid rgba(128,161,209,.14);border-radius:16px;background:rgba(9,22,48,.75);}
-.overlay{background:rgba(2,8,21,.76);backdrop-filter:blur(10px);}
-.overlay-box{
-  max-width:430px;padding:2rem;background:linear-gradient(155deg,rgba(14,31,61,.98),rgba(7,19,42,.98));
-  border-color:rgba(92,206,178,.25);box-shadow:0 32px 90px rgba(0,3,14,.7),0 0 55px rgba(30,180,148,.06);
-}
-.overlay-mark{width:76px;height:76px;margin:0 auto 1.15rem;}
-.overlay-title{font-size:25px;letter-spacing:-.025em;}
-.overlay-score{font-size:30px;color:#dffff6;}
-.overlay-msg{color:#a2b1c8;}
-.final-title-badge{
-  display:block;margin:.55rem 0 .45rem;padding:0;border:0;border-radius:0;background:none;
-  color:#62e2c1;font-family:var(--font-display);font-size:clamp(28px,4vw,36px);
-  font-weight:900;line-height:1.15;letter-spacing:-.035em;
-}
-#fo-score{margin:.2rem 0 .8rem;color:#aebdd1;font-size:19px;font-weight:700;line-height:1.4;}
-#share-box{background:rgba(6,18,41,.72);border-color:rgba(133,164,211,.14);color:#b8c5d8;}
-#about-screen{
-  position:relative;z-index:20;width:min(920px,calc(100% - 32px));max-width:none;margin:34px auto 70px;padding:0;
-  color:var(--ink);background:transparent;border:0;border-radius:0;overflow:visible;
-}
-body.about-open{display:flex;flex-direction:column;min-height:100%;overflow:auto;background:#071226;}
-body.about-open .site-header{position:sticky;top:0;z-index:30;}
-body.about-open #about-screen{order:1;flex:0 0 auto;}
-body.about-open .site-footer{order:2;flex:0 0 auto;margin-top:0;}
-.about-hero{
-  padding:clamp(32px,6vw,64px);text-align:center;border:1px solid rgba(82,219,184,.22);
-  border-radius:24px;background:
-    radial-gradient(circle at 50% 0,rgba(49,205,168,.13),transparent 45%),
-    linear-gradient(155deg,rgba(14,31,61,.96),rgba(7,19,42,.98));
-  box-shadow:0 28px 80px rgba(0,3,14,.36);
-}
-.about-mark{width:76px;height:76px;margin:0 auto 22px;}
-.about-kicker,.about-card-label{
-  color:#52dbb8;font-size:12px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;
-}
-.about-hero h2{margin:10px 0 16px;color:var(--accent);font-family:var(--font-display);font-size:clamp(35px,6vw,58px);line-height:1;letter-spacing:-.045em;}
-.about-lead{max-width:660px;margin:0 auto;color:#acbbcf;font-size:clamp(16px,2vw,19px);line-height:1.7;}
-.about-content{display:flex;flex-direction:column;gap:16px;margin-top:18px;}
-.about-card{
-  padding:clamp(24px,4vw,38px);border:1px solid rgba(130,163,210,.16);border-radius:19px;
-  background:linear-gradient(155deg,rgba(13,29,57,.9),rgba(8,21,45,.94));
-  box-shadow:0 16px 42px rgba(0,4,17,.16);
-}
-.about-card h3{margin:7px 0 17px;color:var(--accent);font-family:var(--font-display);font-size:clamp(21px,3vw,28px);letter-spacing:-.025em;}
-.about-card p{margin:0 0 14px;color:#a8b7ca;font-size:15px;line-height:1.75;}
-.about-card .about-card-label,.about-inline-resource .about-inline-label{color:var(--accent);}
-.about-card p:last-child{margin-bottom:0;}
-.about-card a{color:#58dcbb;text-decoration:none;font-weight:700;}
-.about-card a:hover{color:var(--accent);text-decoration:none;}
-.about-inline-resource{margin-top:22px;padding-top:18px;border-top:1px solid rgba(130,163,210,.14);}
-.about-inline-resource .about-inline-label{margin-bottom:5px;color:#8193aa;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
-.about-inline-resource p:last-child{margin:0;color:#91a3b9;font-size:13.5px;line-height:1.65;}
-.about-resource-card{display:flex;align-items:flex-start;gap:22px;border-color:rgba(82,219,184,.32);background:linear-gradient(135deg,rgba(26,90,82,.24),rgba(9,25,49,.94));}
-.about-resource-icon{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;border-radius:14px;color:#071f1a;background:#4bd9b6;font-size:23px;font-weight:900;}
-.about-resource-card h3{margin-bottom:7px;}
-.about-resource-card p{margin-bottom:8px;}
-.about-resource-link{display:inline-flex;align-items:center;margin-top:2px;}
-.about-version{padding:17px 0;border-top:1px solid rgba(130,163,210,.14);}
-.about-version:last-child{padding-bottom:0;}
-.about-version>strong{display:block;margin-bottom:6px;color:#eaf4ff;font-size:17px;}
-.about-version p strong{color:#eaf4ff;font-weight:800;}
-.about-version p{margin:0;}
-.about-score-list{list-style:none;margin:4px 0 19px;padding:0;border-top:1px solid rgba(130,163,210,.14);}
-.about-score-list li{display:grid;grid-template-columns:minmax(170px,.75fr) 1fr;gap:22px;padding:13px 0;border-bottom:1px solid rgba(130,163,210,.14);}
-.about-score-list strong{color:#e5f0fc;font-size:14px;}
-.about-score-list span{color:#9fafc4;font-size:14px;line-height:1.55;}
-.about-note{padding:16px 18px;border-left:3px solid #3dd0aa;border-radius:0 10px 10px 0;background:rgba(48,201,164,.07);}
-.about-thanks{margin-top:42px!important;color:#7f91a9!important;font-size:13.5px!important;}
-.about-contact{display:flex;align-items:center;gap:11px;margin:21px 0!important;padding-top:19px;border-top:1px solid rgba(130,163,210,.14);}
-.about-contact-icon{
-  display:inline-flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;
-  color:var(--accent);background:none;border:0;line-height:1;
-}
-.about-contact-icon svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.about-partners{
-  display:flex;align-items:center;justify-content:center;gap:clamp(34px,8vw,84px);
-  margin:30px 0 0;padding:38px clamp(20px,4vw,38px) 12px;border-top:1px solid rgba(130,163,210,.16);
-}
-.about-partner{display:flex;align-items:center;justify-content:center;opacity:.82;transition:opacity .18s ease,transform .18s ease;}
-.about-partner:hover{opacity:1;transform:translateY(-2px);}
-.about-partner-dhc{width:min(330px,42%);}
-.about-partner-researchgames{width:min(350px,44%);}
-.partner-logo{display:block;width:100%;height:auto;object-fit:contain;}
-.theme-light-logo{display:none;}
-#about-back-btn{
-  position:fixed;right:24px;top:87px;z-index:40;width:42px;height:42px;margin:0;padding:0;
-  display:grid;place-items:center;border:1px solid var(--border);border-radius:50%;background:#102343;
-  color:var(--ink);font-size:28px;line-height:1;cursor:pointer;
-}
-#about-back-btn:hover{border-color:var(--accent);color:var(--accent);}
-@media (max-width:900px){
-  .app-shell{grid-template-columns:1fr;}
-  .sidebar{padding:1.45rem 1.25rem;}
-  .logo-art{display:none;}
-  .sidebar-desc{max-width:720px;margin-bottom:1.15rem;}
-  .mode-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}
-  .mode-card{align-items:flex-start;}
-  .main-col{padding:1.25rem 1rem 2rem;}
-}
-@media (max-width:640px){
-  .mode-list{grid-template-columns:1fr;}
-  .brand-tagline{margin-left:55px;margin-bottom:1.15rem;}
-  .stats-row{display:grid;grid-template-columns:repeat(2,1fr);width:100%;}
-  .stat-item{padding:4px 0;}
-  .puzzle-area{padding:10px;}
-  .mikla-card{padding:14px;}
-  .mikla-text{font-size:15px;}
-  #grid-wrap{width:100%;max-width:100%;min-width:0;overflow:hidden;padding-left:0;padding-right:0;}
-  #grid{max-width:100%;}
-  .controls-row .btn{flex:1 1 calc(50% - 8px);}
-  #next-btn{flex-basis:100%;}
-}
-
-/* ---------- refinement: restrained selection, header tools, real footer ---------- */
-.site-header{
-  min-height:72px;width:100%;padding:12px clamp(1rem,3vw,2.5rem);
-  display:flex;align-items:center;justify-content:space-between;gap:20px;
-  background:#080f22;border-bottom:1px solid rgba(133,164,211,.14);
-}
-.header-brand{display:inline-flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;}
-.header-brand .logo{width:36px;height:36px;}
-.header-brand .brand-title{font-size:20px;letter-spacing:-.025em;}
-.app-shell{min-height:calc(100vh - 122px);}
-.sidebar{padding-top:2rem;padding-bottom:2rem;}
-.sidebar-desc{margin-top:0;}
-.stats-bar{flex-wrap:nowrap;gap:18px;}
-.stats-row{width:auto;flex:1;}
-.header-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
-.header-actions .theme-switch{padding:6px 4px;}
-.header-actions .sw:focus-visible,.header-actions .icon-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-.cell.found{
-  background:rgba(35,180,150,.11);border-color:rgba(71,212,180,.38);
-  box-shadow:0 0 11px rgba(42,202,165,.07),inset 0 0 12px rgba(55,211,175,.055);
-}
-.cell.found::before{
-  inset:3px;background:rgba(43,205,169,.13);
-  box-shadow:inset 0 0 10px rgba(76,224,190,.06);
-}
-.site-footer{
-  min-height:50px;width:100%;padding:13px clamp(1rem,3vw,3rem);border-top:1px solid rgba(133,164,211,.13);
-  background:#080f22;color:#91a2bc;text-align:center;
-}
-.footer-links{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;font-size:12.5px;font-weight:600;line-height:1.5;}
-.footer-links a{color:#b5c3d7;text-decoration:none;}
-.footer-links a:hover{color:var(--accent);}
-.footer-separator{width:3px;height:3px;border-radius:50%;background:#4e607e;}
-
-/* Light mode is intentionally solid and high-contrast, not a faded dark skin. */
-html[data-theme="light"] body{
-  background:
-    radial-gradient(circle at 88% 8%,rgba(29,171,145,.09),transparent 28rem),
-    #edf3f5;
-}
-html[data-theme="light"] .site-header{background:#fff;border-bottom-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .sidebar{
-  background:#f7fafb;border-right-color:rgba(25,64,86,.14);
-}
-html[data-theme="light"] .brand-mark{filter:none;}
-html[data-theme="light"] .brand-tagline{color:#087c67;}
-html[data-theme="light"] .section-label{color:#62758a;}
-html[data-theme="light"] .mode-card{
-  background:#fff;border-color:rgba(27,65,88,.16);box-shadow:0 4px 14px rgba(29,60,76,.035);
-}
-html[data-theme="light"] .mode-card:hover{background:#f6fbfa;border-color:rgba(12,142,115,.3);}
-html[data-theme="light"] .mode-card.selected{
-  color:#102b38;background:#e9f7f3;border-color:#159a7f;
-  box-shadow:inset 0 0 0 1px rgba(18,155,127,.06);
-}
-html[data-theme="light"] .mode-sub{color:#53697d;}
-html[data-theme="light"] .btn{color:#173044;background:#fff;border-color:rgba(25,64,86,.18);}
-html[data-theme="light"] .btn-primary,html[data-theme="light"] .overlay-btn-primary{
-  color:#fff;background:linear-gradient(135deg,#139f83,#087c69);box-shadow:none;
-}
-html[data-theme="light"] .stats-bar,html[data-theme="light"] .mikla-card{
-  background:#fff;border-color:rgba(25,64,86,.14);box-shadow:0 8px 24px rgba(29,60,76,.045);
-}
-html[data-theme="light"] .stat-label{color:#607489;}
-html[data-theme="light"] .stat-icon{background:#edf9f6;border-color:rgba(13,142,116,.3);}
-html[data-theme="light"] .level-pill{color:#183447;background:#f1f6f7;border-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .puzzle-area{
-  background:#f8fbfc;border-color:rgba(25,64,86,.13);
-}
-html[data-theme="light"] .mikla-label{color:#087d68;}
-html[data-theme="light"] .mikla-meta,html[data-theme="light"] .status-line{color:#566d82;}
-html[data-theme="light"] .instruction-line{color:#687d90;}
-html[data-theme="light"] .letter-box{
-  color:transparent;background:#fff;border-color:rgba(28,66,90,.18);box-shadow:none;
-}
-html[data-theme="light"] .letter-box.found{color:#075f50;background:#dcf4ed;border-color:rgba(12,145,117,.38);}
-html[data-theme="light"] .letter-box.hinted{
-  color:#714c00;background:#fff2ca;border-color:#d39a23;box-shadow:0 0 0 1px rgba(211,154,35,.08);
-  font-weight:850;
-}
-html[data-theme="light"] .letter-box.given-up{color:#9d2d27;background:#fde8e5;border-color:rgba(190,65,55,.42);}
-html[data-theme="light"] .cell{
-  color:#173047;background:#fff;border-color:rgba(38,79,108,.2);box-shadow:none;
-}
-html[data-theme="light"] .cell span{text-shadow:none;}
-html[data-theme="light"] .cell.filler{color:#173047;}
-html[data-theme="light"] .cell.highlight{color:#083d34;background:#d9f4ed;border-color:#139d82;box-shadow:inset 0 0 0 1px rgba(19,157,130,.12);}
-html[data-theme="light"] .cell.found{color:#064e42;background:#e1f5ef;border-color:rgba(12,143,115,.42);box-shadow:none;}
-html[data-theme="light"] .cell.found::before{background:rgba(22,166,137,.08);box-shadow:none;}
-html[data-theme="light"] .lock-overlay{
-  background:rgba(240,246,247,.9);backdrop-filter:blur(4px);border-color:rgba(25,64,86,.1);
-}
-html[data-theme="light"] .lock-box{background:#fff;border-color:rgba(25,64,86,.14);box-shadow:0 18px 50px rgba(28,58,74,.12);}
-html[data-theme="light"] .overlay{background:rgba(21,41,55,.5);}
-html[data-theme="light"] .overlay-box{background:#fff;border-color:rgba(15,132,109,.24);box-shadow:0 28px 70px rgba(21,47,61,.2);}
-html[data-theme="light"] .overlay-title{color:#102a43;}
-html[data-theme="light"] .overlay-score{color:#0a725f;}
-html[data-theme="light"] .overlay-msg{color:#405d72;}
-html[data-theme="light"] .overlay-divider{background:rgba(25,64,86,.18);}
-html[data-theme="light"] .final-title-badge{
-  color:#08735f;background:none;border:0;box-shadow:none;font-weight:900;
-}
-html[data-theme="light"] #fo-score{color:#4d677a;}
-html[data-theme="light"] .overlay-btn-secondary{
-  color:#39566b;background:#f3f7f8;border-color:rgba(25,64,86,.2);
-}
-html[data-theme="light"] .overlay-btn-secondary:hover{color:#173047;background:#eaf2f3;border-color:rgba(15,132,109,.4);}
-html[data-theme="light"] #copy-confirm{color:#087c67;font-weight:750;}
-html[data-theme="light"] body.about-open{background:#edf3f5;}
-html[data-theme="light"] .about-hero{background:#fff;border-color:rgba(15,132,109,.2);box-shadow:0 24px 60px rgba(27,58,75,.09);}
-html[data-theme="light"] .about-hero h2{color:var(--accent);}
-html[data-theme="light"] .about-lead{color:#526b7e;}
-html[data-theme="light"] .about-kicker,html[data-theme="light"] .about-card-label{color:#087c67;}
-html[data-theme="light"] .about-card{background:#fff;border-color:rgba(25,64,86,.14);box-shadow:0 12px 36px rgba(27,58,75,.055);}
-html[data-theme="light"] .about-card h3{color:var(--accent);}
-html[data-theme="light"] .about-card p{color:#496477;}
-html[data-theme="light"] .about-card .about-card-label{color:var(--accent);}
-html[data-theme="light"] .about-card a{color:#087c67;}
-html[data-theme="light"] .about-card a:hover{color:var(--accent);}
-html[data-theme="light"] #about-screen a{color:#254d62;text-decoration:none;}
-html[data-theme="light"] #about-screen a:hover{color:var(--accent);text-decoration:none;}
-html[data-theme="light"] .about-inline-resource{border-top-color:rgba(25,64,86,.13);}
-html[data-theme="light"] .about-inline-resource .about-inline-label{color:var(--accent);}
-html[data-theme="light"] .about-inline-resource p:last-child{color:#60798a;}
-html[data-theme="light"] .about-resource-card{background:linear-gradient(135deg,#e9f7f3,#fff);border-color:rgba(15,132,109,.24);}
-html[data-theme="light"] .about-resource-icon{color:#fff;background:#0d8a72;}
-html[data-theme="light"] .about-version,html[data-theme="light"] .about-score-list,html[data-theme="light"] .about-score-list li{border-color:rgba(25,64,86,.13);}
-html[data-theme="light"] .about-version strong,html[data-theme="light"] .about-score-list strong{color:#183847;}
-html[data-theme="light"] .about-score-list span{color:#536d7f;}
-html[data-theme="light"] .about-note{background:#edf8f5;border-left-color:#159a7f;}
-html[data-theme="light"] .about-contact{border-top-color:rgba(25,64,86,.13);}
-html[data-theme="light"] .about-contact-icon{color:var(--accent);background:none;}
-html[data-theme="light"] .about-partners{border-top-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .theme-dark-logo{display:none;}
-html[data-theme="light"] .theme-light-logo{display:block;}
-html[data-theme="light"] #about-back-btn{color:#173047;background:#f2f7f8;border-color:rgba(25,64,86,.18);}
-html[data-theme="light"] #share-box{color:#294358;background:#f3f7f8;border-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .site-footer{color:#5d7286;background:#f7fafb;border-top-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .footer-links a{color:#254d62;}
-a{transition:color .16s ease;}
-a:hover{color:var(--accent);text-decoration:none;}
-
-@media (max-width:1080px){
-  .stats-bar{align-items:flex-start;}
-  .stats-row{justify-content:flex-start;}
-}
-@media (max-width:720px){
-  .site-header{min-height:64px;padding-block:10px;}
-  .header-brand .brand-title{font-size:18px;}
-  .stats-bar{flex-direction:column;}
-  .footer-links{gap:10px;}
-}
-
-/* Desktop game view: header, game and footer fit in one viewport. */
-@media (min-width:1100px) and (min-height:700px){
-  html,body{height:100%;overflow:hidden;}
-  body{display:grid;grid-template-rows:72px minmax(0,1fr) 50px;}
-  .site-header{height:72px;min-height:72px;}
-  .app-shell{height:100%;min-height:0;width:100%;overflow:hidden;}
-  .sidebar{height:100%;overflow:hidden;padding:1.25rem 1.65rem;}
-  .sidebar-desc{font-size:12.5px;line-height:1.55;margin-bottom:1rem;}
-  .section-label{margin-bottom:.55rem;}
-  .mode-list{gap:7px;margin-bottom:.85rem;}
-  .mode-card{padding:9px 12px;}
-  .mode-title{font-size:13.5px;}
-  .mode-sub{font-size:10.5px;line-height:1.3;}
-  #start-btn{min-height:42px;}
-  .main-col{height:100%;overflow:hidden;padding:12px clamp(1rem,2vw,2rem) 48px;}
-  #game{height:100%;display:flex;flex-direction:column;}
-  .stats-bar{padding:8px 14px;margin-bottom:7px;}
-  .stat-icon{width:30px;height:30px;}
-  .stat-value{font-size:14px;}
-  .progress-bar-wrap{margin-bottom:7px;}
-  .puzzle-area{min-height:0;flex:1;padding:10px 14px;display:flex;flex-direction:column;}
-  .mikla-card{padding:11px 14px;margin-bottom:8px;}
-  .mikla-icon{width:34px;height:34px;}
-  .mikla-label{margin-bottom:4px;}
-  .mikla-text{font-size:14px;line-height:1.4;}
-  .mikla-meta{margin-top:4px;}
-  .words-row{gap:9px;margin:2px 0 7px;}
-  .letter-box{height:28px;width:25px;}
-  .status-line{margin-bottom:8px;min-height:22px;font-size:12.5px;line-height:1.45;}
-  .instruction-line{margin-bottom:3px;font-size:11px;}
-  #grid-wrap{min-height:0;flex:1;padding:2px 4px 5px;margin:0;align-items:center;}
-  .controls-row{padding-top:0;}
-  .controls-row .btn{padding:8px 13px;font-size:12.5px;}
-  .site-footer{height:50px;min-height:50px;padding:12px 1rem;}
-  #about-screen{margin-top:0;}
-}
-
-@media (max-width:900px){
-  html,body{overflow:auto;}
-  #about-screen{width:calc(100% - 24px);margin-top:18px;}
-  #about-back-btn{right:16px;top:76px;}
-  .about-score-list li{grid-template-columns:1fr;gap:5px;}
-}
-@media (max-width:560px){
-  .about-resource-card{display:block;}
-  .about-resource-icon{margin-bottom:17px;}
-  .about-partners{flex-direction:column;gap:30px;padding-top:30px;}
-  .about-partner-dhc{width:min(300px,88%);}
-  .about-partner-researchgames{width:min(320px,90%);}
-}
-
-/* Readability controls */
-:root{--font-adjust:0px;}
-html[data-font-size="small"]{--font-adjust:-1px;}
-html[data-font-size="large"]{--font-adjust:2px;}
-html[data-font-size="extra-large"]{--font-adjust:4px;}
-.font-size-controls{
-  display:inline-flex;align-items:center;padding:2px;border:1px solid var(--border);
-  border-radius:9px;background:rgba(14,31,61,.62);
-}
-.font-size-controls button{
-  min-width:34px;height:30px;padding:0 8px;border:0;border-radius:7px;background:transparent;
-  color:#a9b8cd;font-size:13px;font-weight:800;cursor:pointer;
-}
-.font-size-controls button:hover:not(:disabled){color:var(--ink);background:rgba(88,127,178,.13);}
-.font-size-controls button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-.font-size-controls button:disabled{opacity:.32;cursor:default;}
-.sidebar-desc{font-size:calc(14px + var(--font-adjust));}
-.mode-sub{font-size:calc(12px + var(--font-adjust));}
-.section-label{font-size:calc(12px + var(--font-adjust));}
-.stat-label{font-size:calc(11px + var(--font-adjust));}
-.mikla-meta{font-size:calc(12.5px + var(--font-adjust));}
-.status-line{font-size:calc(13.5px + var(--font-adjust));}
-.instruction-line{font-size:calc(12.5px + var(--font-adjust));}
-.footer-links{font-size:calc(12.5px + var(--font-adjust));}
-.cell span{font-size:calc(1em + var(--font-adjust));}
-.letter-box{font-size:calc(13px + var(--font-adjust));}
-.mode-title{font-size:calc(14px + var(--font-adjust));}
-.stat-value{font-size:calc(16px + var(--font-adjust));}
-.btn,.overlay-btn-primary,.overlay-btn-secondary,.overlay-btn-danger{font-size:calc(14px + var(--font-adjust));}
-.overlay-msg{font-size:calc(14px + var(--font-adjust));}
-.about-lead{font-size:calc(18px + var(--font-adjust));}
-.about-card p{font-size:calc(17px + var(--font-adjust));line-height:1.72;}
-.about-card .about-card-label{font-size:calc(12px + var(--font-adjust));}
-.about-version>strong{font-size:calc(18px + var(--font-adjust));}
-.about-score-list strong,.about-score-list span{font-size:calc(16px + var(--font-adjust));}
-.about-inline-resource p:last-child{font-size:calc(15.5px + var(--font-adjust));}
-.about-thanks{font-size:calc(15px + var(--font-adjust))!important;}
-.party-field{font-size:calc(13px + var(--font-adjust));}
-.party-field input[type="text"],.party-field input[type="number"]{font-size:calc(14px + var(--font-adjust));}
-html[data-theme="light"] .font-size-controls{background:#f3f7f8;border-color:rgba(25,64,86,.16);}
-html[data-theme="light"] .font-size-controls button{color:#4e6579;}
-
-@media (min-width:1100px) and (min-height:700px){
-  .sidebar-desc{font-size:calc(13.5px + var(--font-adjust));line-height:1.55;}
-  .mode-sub{font-size:calc(11.5px + var(--font-adjust));}
-  .stat-label{font-size:calc(10.5px + var(--font-adjust));}
-  .mikla-text{font-size:calc(14px + var(--font-adjust));}
-  .instruction-line{font-size:calc(12px + var(--font-adjust));}
-}
-
-@media (max-width:520px){
-  .font-size-controls button{min-width:31px;padding-inline:6px;}
-  .header-actions{gap:6px;}
-  .theme-switch>svg{display:none;}
-}
-
-.lock-box{
-  max-width:390px;padding:0;background:transparent;border:0;box-shadow:none;
-}
-.lock-box p{
-  color:var(--ink-muted);font-size:calc(14px + var(--font-adjust));line-height:1.65;
-}
-.lock-hint-icon{margin:0 auto 12px;color:var(--accent);}
-html[data-theme="light"] .lock-box{
-  background:transparent;border:0;box-shadow:none;
-}
-
-/* Align the supporting game UI with the centered letter grid. */
-.words-row{justify-content:center;text-align:center;}
-.status-line,.instruction-line{text-align:center;}
-.controls-row{justify-content:center;}
-
-.mikla-card{position:relative;justify-content:center;padding-left:24px;padding-right:24px;}
-.mikla-card .mikla-body{text-align:center;}
-.mikla-card .mikla-text{font-size:calc(20px + var(--font-adjust));}
-@media (max-width:520px){
-  .mikla-card{padding-left:16px;padding-right:16px;}
-}
-
-.grid-stage{display:flex;flex:1;min-height:0;flex-direction:column;}
-.grid-stage #grid-wrap{order:1;}
-.grid-stage .controls-row{order:2;}
-#grid-wrap .grid-drag-instruction{
-  flex:0 0 auto;margin:0 0 12px;color:var(--ink-muted);font-size:calc(12px + var(--font-adjust));
-}
-
-@media (min-width:1100px) and (min-height:700px){
-  .grid-stage{
-    display:grid;grid-template-columns:minmax(205px,250px) auto minmax(205px,250px);
-    position:relative;align-items:center;justify-content:center;width:100%;min-height:0;padding-top:6px;
+// ==== wordUtils.js ====
+function shuffle(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-  .grid-stage::after{content:'';grid-column:3;}
-  .grid-stage #grid-wrap{
-    grid-column:2;grid-row:1;order:initial;flex:none;overflow:visible;
-    padding:8px 6px;margin:0;align-self:safe center;
+  return copy;
+}
+
+function norm(s) {
+  return s.toUpperCase().replace(/\s+/g, '');
+}
+
+function getWords(answer) {
+  return answer.split(/\s+/).filter(w => w.length > 0);
+}
+
+function cellKey(r, c) {
+  return `${r},${c}`;
+}
+
+function dailyDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function dailyDateLabel() {
+  return new Intl.DateTimeFormat('lv-LV', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date());
+}
+
+function dailyIndex(key, length) {
+  let hash = 2166136261;
+  for (const char of key) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
   }
-  .grid-stage .controls-row{
-    grid-column:1;grid-row:1;order:initial;flex-direction:column;align-items:stretch;
-    width:165px;margin-right:58px;justify-self:end;align-self:center;
+  return Math.abs(hash >>> 0) % length;
+}
+
+function dailyDifficultyLabel(level) {
+  if (level <= 2) return 'diezgan viegla';
+  if (level <= 4) return 'samērā viegla';
+  if (level <= 6) return 'ne visai grūta';
+  if (level <= 8) return 'diezgan grūta';
+  return 'ļoti izaicinoša';
+}
+
+function getDailySelection() {
+  const pool = [];
+  for (let level = 1; level <= 10; level += 1) {
+    (state.levels[level] || []).forEach(riddle => {
+      if (riddle && riddle.q && riddle.a) pool.push({ riddle, level });
+    });
   }
-  .grid-stage .controls-row .btn{width:100%;min-height:39px;}
+  if (!pool.length) return null;
+  return pool[dailyIndex(dailyDateKey(), pool.length)];
 }
 
-@media (max-width:720px){
-  .mikla-meta{margin-top:7px;padding:0 4px;}
-  .mikla-meta-content{gap:2px 7px;}
+function updateDailyModeSummary() {
+  const summary = document.getElementById('daily-mode-sub');
+  if (!summary) return;
+  const selection = getDailySelection();
+  summary.textContent = selection
+    ? `1 mīkla · katru dienu cita · šodien tā varētu būt ${dailyDifficultyLabel(selection.level)}`
+    : '1 mīkla · katru dienu cita';
 }
 
-/* Separate start screen */
-.start-screen{
-  min-height:calc(100vh - 122px);display:flex;flex-direction:column;justify-content:center;
-  width:100%;max-width:1320px;margin:0 auto;padding:clamp(24px,5vh,64px) clamp(22px,5vw,72px) 24px;
-}
-.start-screen-inner{display:grid;grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);gap:clamp(45px,8vw,110px);align-items:center;}
-.start-intro{max-width:500px;}
-.start-title-lockup{position:relative;display:block;margin-bottom:20px;}
-.start-mark{
-  position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%);
-  width:76px;height:76px;
-}
-.start-eyebrow,.start-modes-label{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:12px;}
-.start-intro h1{font-family:var(--font-display);font-size:clamp(44px,4.8vw,70px);line-height:1;letter-spacing:-.045em;white-space:nowrap;}
-.start-lead{font-family:var(--font-display);font-size:clamp(23px,2.2vw,34px);font-weight:700;line-height:1.18;letter-spacing:-.025em;margin-bottom:20px;color:#dfe9f7;}
-.start-copy{max-width:440px;color:var(--ink-muted);font-size:calc(16px + var(--font-adjust));line-height:1.65;margin-bottom:28px;}
-.start-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;width:100%;margin-top:28px;}
-.start-actions[hidden]{display:none;}
-.start-participation-label{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;}
-.start-path-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-.start-actions.party-only .start-path-list{grid-template-columns:1fr;}
-.start-cta{min-width:210px;min-height:48px;font-size:15px;}
-.start-path-btn{
-  width:100%;min-height:62px;padding:11px 16px;text-align:left;justify-content:space-between;
-  background:rgba(13,35,65,.72);border-color:rgba(53,214,173,.3);
-}
-.start-path-btn>span{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:2px;}
-.start-path-btn strong{font-size:calc(15px + var(--font-adjust));line-height:1.25;}
-.start-path-btn small{font-size:calc(11.5px + var(--font-adjust));font-weight:600;line-height:1.35;opacity:.78;}
-.start-path-btn:hover{color:var(--accent);background:rgba(18,50,76,.82);}
-html[data-theme="light"] .start-path-btn{background:#fff;border-color:rgba(15,151,122,.3);}
-.start-path-btn[hidden]{display:none;}
-.change-mode-btn{
-  width:max-content;padding:4px 0;border:0;background:transparent;color:var(--ink-muted);
-  font:700 calc(11.5px + var(--font-adjust)) var(--font-body);cursor:pointer;
-}
-.change-mode-btn:hover{color:var(--accent);}
-.landing-mode-list.has-selection .landing-mode-card:not(.selected){display:none;}
-.landing-mode-list.has-selection .landing-mode-card.selected{grid-column:1/-1;margin-top:0;}
-.start-modes{padding-left:clamp(28px,4vw,60px);border-left:1px solid var(--border);}
-.landing-mode-list{gap:12px;margin:0;}
-.landing-mode-card[data-mode="daily"]{margin-top:22px;}
-.landing-mode-card[data-mode="party"]{margin-top:8px;}
-.child-mode-card{margin-top:8px;color:inherit;text-decoration:none;}
-.landing-mode-card{display:grid;grid-template-columns:48px 1fr 22px;align-items:center;gap:14px;padding:18px 20px;}
-.landing-mode-icon{width:44px;height:44px;border:1px solid rgba(53,214,173,.38);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);}
-.landing-mode-copy{display:flex;flex-direction:column;gap:4px;}
-.landing-mode-card .mode-title{font-size:calc(17px + var(--font-adjust));}
-.landing-mode-card .mode-sub{font-size:calc(12.5px + var(--font-adjust));}
-.landing-mode-card .mode-radio{width:22px;height:22px;}
-.party-setup-box{text-align:left;max-width:480px;}
-.party-setup-box .overlay-title,.party-setup-box .overlay-msg{text-align:center;}
-.party-field{display:block;color:var(--ink-muted);font-size:calc(13px + var(--font-adjust));font-weight:700;margin:0 0 14px;}
-.party-field input[type="text"],.party-field input[type="number"]{
-  width:100%;margin-top:7px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;
-  background:rgba(6,18,41,.72);color:var(--ink);font:600 calc(14px + var(--font-adjust)) var(--font-body);outline:none;
-}
-.party-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(53,214,173,.1);}
-.party-field input::placeholder{color:#71839e;font-weight:500;opacity:1;}
-.party-count-row{display:grid;grid-template-columns:1fr 74px;gap:12px;align-items:center;margin-top:7px;}
-.party-count-row input[type="range"]{
-  --party-range-progress:1.03%;
-  width:100%;height:30px;margin:0;padding:0;border:0;border-radius:999px;outline:none;
-  appearance:none;-webkit-appearance:none;cursor:pointer;background:transparent;
-}
-.party-count-row input[type="range"]::-webkit-slider-runnable-track{
-  height:8px;border:1px solid rgba(126,161,209,.24);border-radius:999px;
-  background:linear-gradient(90deg,#45d8b5 0,var(--party-range-progress),rgba(15,34,65,.9) var(--party-range-progress),rgba(15,34,65,.9) 100%);
-  box-shadow:inset 0 1px 3px rgba(0,0,0,.38);
-}
-.party-count-row input[type="range"]::-webkit-slider-thumb{
-  width:24px;height:24px;margin-top:-9px;border:4px solid #09213b;border-radius:50%;
-  appearance:none;-webkit-appearance:none;background:#45d8b5;
-  box-shadow:0 0 0 2px rgba(69,216,181,.3),0 5px 16px rgba(26,193,153,.3);
-  transition:transform .15s ease,box-shadow .15s ease;
-}
-.party-count-row input[type="range"]:hover::-webkit-slider-thumb,
-.party-count-row input[type="range"]:focus-visible::-webkit-slider-thumb{
-  transform:scale(1.08);box-shadow:0 0 0 4px rgba(69,216,181,.2),0 6px 18px rgba(26,193,153,.36);
-}
-.party-count-row input[type="range"]::-moz-range-track{
-  height:8px;border:1px solid rgba(126,161,209,.24);border-radius:999px;
-  background:rgba(15,34,65,.9);box-shadow:inset 0 1px 3px rgba(0,0,0,.38);
-}
-.party-count-row input[type="range"]::-moz-range-progress{height:8px;border-radius:999px;background:#45d8b5;}
-.party-count-row input[type="range"]::-moz-range-thumb{
-  width:16px;height:16px;border:4px solid #09213b;border-radius:50%;background:#45d8b5;
-  box-shadow:0 0 0 2px rgba(69,216,181,.3),0 5px 16px rgba(26,193,153,.3);
-}
-.party-count-row input[type="range"]:focus-visible{filter:drop-shadow(0 0 5px rgba(69,216,181,.2));}
-.party-count-row input[type="number"]{margin-top:0;text-align:center;}
-html[data-theme="light"] .party-field input[type="text"],html[data-theme="light"] .party-field input[type="number"]{background:#f5f8f9;color:var(--ink);}
-html[data-theme="light"] .party-field input::placeholder{color:#718292;}
-html[data-theme="light"] .party-count-row input[type="range"]::-webkit-slider-runnable-track{
-  border-color:rgba(22,111,94,.2);
-  background:linear-gradient(90deg,#159f83 0,var(--party-range-progress),#dce8e9 var(--party-range-progress),#dce8e9 100%);
-  box-shadow:inset 0 1px 2px rgba(25,64,86,.12);
-}
-html[data-theme="light"] .party-count-row input[type="range"]::-webkit-slider-thumb{border-color:#fff;background:#159f83;}
-html[data-theme="light"] .party-count-row input[type="range"]::-moz-range-track{background:#dce8e9;border-color:rgba(22,111,94,.2);}
-html[data-theme="light"] .party-count-row input[type="range"]::-moz-range-progress{background:#159f83;}
-html[data-theme="light"] .party-count-row input[type="range"]::-moz-range-thumb{border-color:#fff;background:#159f83;}
-.party-player-pill{
-  display:inline-flex;align-items:center;gap:10px;padding:5px 7px 5px 13px;
-  color:#b8c7da;background:rgba(13,35,65,.94);border-color:rgba(53,214,173,.42);
-  box-shadow:0 0 22px rgba(40,202,166,.08);
-}
-.party-round-label{font-size:11px;font-weight:750;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap;}
-.party-player-name{
-  display:inline-flex;align-items:center;min-height:34px;padding:5px 15px;border-radius:999px;
-  color:#061e1a;background:linear-gradient(135deg,#4cddba,#25b995);
-  font-size:17px;font-weight:900;letter-spacing:-.015em;line-height:1;white-space:nowrap;
-  box-shadow:0 5px 18px rgba(36,190,151,.2);
-}
-html[data-theme="light"] .party-player-pill{color:#50687a;background:#fff;border-color:rgba(15,151,122,.38);}
-html[data-theme="light"] .party-player-name{color:#fff;background:linear-gradient(135deg,#159f83,#087c69);}
-.party-handoff-line{
-  font-family:var(--font-display);font-size:clamp(21px,3.2vw,27px);font-weight:800;
-  line-height:1.35;letter-spacing:-.025em;
-}
-.party-handoff-line + .party-handoff-line{margin-top:5px;}
-.party-handoff-name{color:#52dbb8;font:inherit;font-weight:900;white-space:nowrap;}
-html[data-theme="light"] .party-handoff-name{color:#08735f;}
-.app-shell{grid-template-columns:1fr;max-width:1600px;}
-.app-shell .sidebar{display:none;}
-.app-shell #game{max-width:1380px;}
-body:not(.game-active) #restart-btn{display:none;}
-body:not(.game-active) .header-brand{visibility:hidden;}
-html[data-theme="light"] .start-modes{border-left-color:rgba(25,64,86,.14);}
-html[data-theme="light"] .start-lead{color:#29475c;}
-
-@media (min-width:1100px) and (min-height:700px){
-  .start-screen{height:100%;min-height:0;overflow:visible;}
-  .app-shell{height:100%;}
-}
-@media (max-width:850px){
-  .start-screen{justify-content:flex-start;}
-  .start-screen-inner{grid-template-columns:1fr;gap:38px;}
-  .start-modes{padding-left:0;border-left:0;}
-  .start-title-lockup{display:flex;align-items:center;gap:16px;}
-  .start-mark{position:static;transform:none;width:58px;height:58px;flex:0 0 58px;}
-  .start-intro h1{font-size:clamp(36px,10vw,52px);}
-}
-@media (max-width:520px){
-  .start-title-lockup{display:flex;align-items:center;gap:13px;}
-  .start-mark{position:static;transform:none;width:46px;height:46px;flex:0 0 46px;}
-  .start-intro h1{font-size:clamp(34px,10vw,44px);}
-  .landing-mode-card{grid-template-columns:40px 1fr 20px;padding:14px;gap:10px;}
-  .landing-mode-icon{width:38px;height:38px;}
-  .start-path-list{grid-template-columns:1fr;}
-  .party-player-pill{gap:7px;padding-left:9px;}
-  .party-round-label{font-size:9px;}
-  .party-player-name{min-height:30px;padding:4px 11px;font-size:15px;max-width:180px;overflow:hidden;text-overflow:ellipsis;}
+function hasPlayedDaily() {
+  try { return Boolean(localStorage.getItem(DAILY_PLAYED_PREFIX + dailyDateKey())); }
+  catch (e) { return false; }
 }
 
-/* Keep the special-version cards orderly at intermediate viewport widths. */
-@media (min-width:641px) and (max-width:900px){
-  .landing-mode-list{align-items:stretch;}
-  .landing-mode-card[data-mode="daily"],
-  .landing-mode-card[data-mode="party"]{margin-top:22px;}
-  .landing-mode-card[data-mode="party"]{grid-column:span 2;}
-}
-@media (max-width:640px){
-  .landing-mode-card[data-mode="party"]{grid-column:auto;margin-top:0;}
+function markDailyPlayed(solved) {
+  if (state.gameMode !== 'daily') return;
+  try {
+    localStorage.setItem(DAILY_PLAYED_PREFIX + dailyDateKey(), JSON.stringify({ solved, score: state.totalScore, playedAt: Date.now() }));
+  } catch (e) { /* ignore */ }
 }
 
-/* Compact, balanced statistics on small screens. */
-@media (min-width:421px) and (max-width:640px){
-  .stats-bar{padding:10px 12px;}
-  .stats-row{
-    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:8px;width:100%;align-items:center;
+// ==== riddleData.js ====
+const FILLER_WORDS = [
+"MĀJA","LAIKS","SAULE","MĀTE","TĒVS","BĒRNS","ŪDENS","MAIZE","GAISS","ZEME","NAKTS","DIENA","MEŽS","CEĻŠ","LIETUS","SNIEGS","VĒJŠ","UGUNS","ZĀLE","PUTNS","ZIVS","ZIRGS","GOVS","KAĶIS","SUNS","BITE","LAPA","KOKS","ROKAS","KĀJAS","GALVA","SIRDS","ACIS","MUTE","AUSIS","MATI","ISTABA","LOGS","DURVIS","JUMTS","GALDS","KRĒSLS","GULTA","PIENS","SIERS","GAĻA","ĀBOLS","MEDUS","RUDENS","VASARA","ZIEMA","RĪTS","VAKARS","GADS","STUNDA","SKOLA","PILSĒTA","CIEMS","EZERS","UPE","KALNS","PĻAVA","JŪRA","DRAUGS","SIEVA","VĪRS","MĀSA","BRĀLIS","DARBS","NAUDA","LAIME","MIERS","PRIEKS"
+];
+
+const FALLBACK_LEVELS = {
+1:[{q:"Sarkans gailis zemē dzied.",a:"Burkāns"},{q:"Akmeņa kājas, koka rumpis, salmu cepure.",a:"Māja"},{q:"Kas stāv pie griestiem ar kājām uz augšu?",a:"Muša"},{q:"Mežā dzimis, mežā audzis, atnāk mājā par saimnieku būt.",a:"Galds"},{q:"Balta zeme, melna sēkla.",a:"Grāmata"},{q:"Maza muciņa divejāds alutiņš.",a:"Ola"},{q:"Kas taisa tiltu bez neviena baļķa.",a:"Sals"},{q:"Četri taisa vietu, divi rāda uguni, viens pats apgulstas.",a:"Suns"},{q:"Apaļš kā rullis, sarkans kā bullis, šķēres padusē.",a:"Vēzis"},{q:"Mēness skala galā.",a:"Svece"}],
+2:[{q:"Sarkans vīriņš, zaļa bārdiņa.",a:"Burkāns"},{q:"Mazs, mazs sunītis simts adatu mugurā.",a:"Ezis"},{q:"Bez rokām, bez cirvja uztaisa mājiņu.",a:"Skudra"},{q:"Krustiem šķērsiem kauli likti, pati miesa cauri spīd.",a:"Logs"},{q:"Kas dara raudas bez gaudām?",a:"Sīpols"},{q:"Cērt ledu, uzcērt sudrabu, cērt sudrabu, uzcērt zeltu.",a:"Ola"},{q:"Aka bez dibena.",a:"Gredzens"},{q:"Stabiņš sūnās, galdiņš virsū.",a:"Sēne"},{q:"Maza, maza mājiņa, ne tai logu, ne durvju.",a:"Ola"},{q:"Melns pirtī ienāk, sarkans iznāk.",a:"Vēzis"}],
+3:[{q:"Mazs, mazs vīriņš, ass, ass cirvīts.",a:"Bite"},{q:"Lec kā zaķis, nav zaķis. Peld kā zivs, nav zivs.",a:"Varde"},{q:"Kas ziemu nesalst un vasaru neizkūst.",a:"Akmens"},{q:"Ik rītus viešiņa pa istabu skrien.",a:"Izkapts"},{q:"Pieci kambari, vienas durvis.",a:"Cimds"},{q:"Mazs, mazs vīriņš līkām kājām zaļi svārki mugurā.",a:"Sienāzis"},{q:"Dzelža cūciņa, pakala astīte.",a:"Adata"},{q:"Mežs kalnā. Es lejā. Es par mežu lielāks.",a:"Kāposti un vagas"},{q:"Papriekš sarkans un tad melns.",a:"Ogle"},{q:"Divi mazi zirnīši apsēj visu pasauli.",a:"Acis"}],
+4:[{q:"Pelēka aitiņa – astīte sānos.",a:"Cimds"},{q:"Caurums pie cauruma, bet tomēr stipris.",a:"Ķēde"},{q:"Maza, maza mājiņa stāv uz tievas kājiņas. Simtu kambaru, katrā kambarī pa simts mamzelīšu.",a:"Magone"},{q:"Mazs, mazs vīriņš, deviņas ādiņas. Kas tās dīrās, tas gauži raudās.",a:"Sīpols"},{q:"Galds runā – saime klusē.",a:"Cūka ar sivēniem"},{q:"Pieci baļķi māju taisa visi pieci atliekās.",a:"Audekls"},{q:"Pilna kūtiņa sarkanu aitiņu, ieiet garais izvajā!",a:"Krāsns"},{q:"Maza, maza muciņa, melns alutiņš.",a:"Tintnīca"},{q:"Ne čiku, ne grabu, labrīt pie loga.",a:"Gaisma"},{q:"Kas iet uz galvas baznīcā?",a:"Kāja zābakā"}],
+5:[{q:"Div pilnas laktiņas baltu vistiņu.",a:"Zobi un mēle"},{q:"Divas ielas bērza malkas, vidū elkšņa pagale.",a:"Zobi un mēle"},{q:"Mazs, mazs zirdziņš, dienu nakti jājams.",a:"Slieksnis"},{q:"Sarkans suns lēkā aiz kaula sētiņas.",a:"Mēle"},{q:"Pakulu ķēve – linu aste.",a:"Adata un diegs"},{q:"Ozola dēlīts purviņā mirkst.",a:"Mute un mēle"},{q:"Pīpīts lēca, pīpīts deja, pīpa pēdu nepazina.",a:"Šūpulis"},{q:"Maza, maza sieviņa franciski runā.",a:"Bezdelīga"},{q:"Stabiņš sūnās, galdiņš virsū.",a:"Sēne"},{q:"Vīrs sēd uz jumta un pīpē.",a:"Skurstenis"}],
+6:[{q:"Divas māsiņas viena vienā ceļa malā, otra otrā. Viena otru neredz.",a:"Acis"},{q:"Pēdu garš, tomēr pēda nav.",a:"Kurpe"},{q:"Četri brāļi iet pa ceļu, visiem bārdas atpakaļ.",a:"Zirga kājas"},{q:"Četri mācītāji zem vienas cepures.",a:"Galda kājas"},{q:"Pa dienu apkārt staigā, pa nakti karājas.",a:"Pastalas"},{q:"Mūsu pašu lielam kungam lūku ritens uz pakaļas.",a:"Suns ar asti"},{q:"Sarkana cūciņa astru astīte.",a:"Dzērvene sūnās"},{q:"Plikais līkais karājās, spalvainais lūrējās.",a:"Kaķis un desa"},{q:"Papriekš bērni dzimst, tad tik māte.",a:"Siens un siena guba"},{q:"Maza, maza sieviņa simtu miču galvā.",a:"Kāpostgalva"}],
+7:[{q:"Ar kājām min, ar vēderu trin – papleš un iebāž.",a:"Auž"},{q:"Mežā dzimis, mežā audzis – pārnāk mājās – cilā asti.",a:"Akas vinda"},{q:"Mežā dzimis, mežā audzis, pārnāk mājās, gauži raud.",a:"Vijole"},{q:"Nasta pūš – nesējs nē.",a:"Jātnieks un zirgs"},{q:"Vīrs niķu niķiem svārks stiķu stiķiem; kaula seja, gaļas bārda.",a:"Gailis"},{q:"Tālāk nosviežu kā noeju.",a:"Prāts"},{q:"Divi dur, divi vēzās.",a:"Maizi mīca"},{q:"Sarkana telīte astē piesieta.",a:"Ķirsis"},{q:"Līdaka aizskrēja, līdaka atskrēja. Daugava sasala trinkšķēdama.",a:"Audekls"},{q:"Vienā galā tā kā kārts, otrā galā tā kā ķeksis, vidū kā kumoss, danco kā jaunava.",a:"Žagata"}],
+8:[{q:"Divi rulles, divi tulles, četri zemes mērītāji, devīts kaŗa vajātājs.",a:"Govs"},{q:"Jo cūciņa skrien, jo barojas.",a:"Ratiņa spole"},{q:"Melns dejo, melns lec, pēdas vien nepaliek.",a:"Blusa kož cilvēkam"},{q:"Sešders siekstu kustināja.",a:"Blusa kož cilvēkam"},{q:"Simtacs gāja viesus lūgt.",a:"Tīkls"},{q:"Zila govs zemi laiza.",a:"Izkapts"},{q:"Ielāps uz ielāpa nav ielāp, zied kā puķe nav puķe.",a:"Kāpostgalva"},{q:"Šmurgulīts ar vienu ausi.",a:"Ķipītis"},{q:"Avens vērša vēderā.",a:"Zeķe zābakā"},{q:"Tieva, gaŗa jumprava – utu pilna galva.",a:"Kaņepe"}],
+9:[{q:"Kad es biju maziņa, man bij balta kleitiņa. Nu es esmu liela – mana sirds ir tik cieta kā akmens.",a:"Ķirsis"},{q:"Kāpi, puisīti, man virsū, krati, grūsti – tev būs labums, man būs vieglums.",a:"Ābele"},{q:"Ej tu pa vienu pusi, es iešu pa otru pusi, un uz putras kalna satiksimies.",a:"Josta ap vidukli"},{q:"Tēvs vēl nav dzimis, jau dēls skursteņa galā.",a:"Uguns un dūmi"},{q:"Vēl zirgs nav sajūgts, jau stāvus.",a:"Dūmi un uguns"},{q:"Velns iet pa riju, boms mugurā.",a:"Kaķis"},{q:"Tieva gaŗa freilenīte – tālu spļauj.",a:"Šautene"},{q:"Pārcērt ledu, atrod sudrabu. Pārcērt sudrabu, atrod zeltu.",a:"Ola"},{q:"Balta, balta baznīciņa, ne logi, ne durvis. Ubags vidū dzied.",a:"Cālis olā"},{q:"Teļš bez mēles kalnu starpā bļauj.",a:"Pirdiens"}],
+10:[{q:"Viņa viņu mīl, viņš viņu nemīl. Ja viņa viņu atrod, tad viņa ir laimīga, bet ja viņš viņu atrod, tad viņai ir nāve.",a:"Suns un blusa"},{q:"Viņā zemē zirgu jūdzu, šai zemē loks atsprāga.",a:"Varavīksne"},{q:"Vīrs brauc pa mežu – zarnas klēpī.",a:"Braucējs un groži"},{q:"Arājs ar tīrumā samta svārki mugurā.",a:"Kurmis"},{q:"Cik vajag naglu labi apkaltam zirgam?",a:"Nevienas"},{q:"Kur gailis lec, kad gadu vecs?",a:"Otrā gadā"},{q:"Kurā krūzē nevar ieliet ūdeni?",a:"Pilnā"},{q:"Kas tas par suni, kas tikai septītā dienā rej.",a:"Mācītājs"},{q:"Jo atņem – top lielāks, liek klāt – mazāks.",a:"Bedre"},{q:"Mežā dzimis, mežā audzis, pārnāk mājās, gauži raud.",a:"Vijole"}],
+};
+
+const FALLBACK_BONUS = 
+[{q:"Tieva mana kājiņa, maza mana galviņa, bet kad meitas ģērbties sāk, bez manis maz ko darīt māk.",a:"Kniepadata"},{q:"Pelēks auns cauru muguru apēd visu vasaras krājumu.",a:"Dzirnavas"},{q:"Ne ugunī deg, ne ūdenī slīkst.",a:"Ēna"}];
+
+// ==== state.js ====
+function emptyLevels() {
+  return { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [] };
+}
+
+const state = {
+  levels: emptyLevels(),
+  bonusPool: [],
+  levelsLoaded: false,
+
+  gameMode: 10,
+  selectedMode: null,
+  participationMode: 'player',
+  riddlesPerLevel: 10,
+  maxScore: 20000,
+
+  currentLevel: 1,
+  riddleIdx: 0,
+  totalScore: 0,
+  levelScore: 0,
+  totalTimeBonus: 0,
+  currentTimeBonus: 0,
+  isBonus: false,
+  dailySolved: false,
+  party: null,
+  bonusRiddles: [],
+  shuffledLevel: [],
+
+  grid: [],
+  gridSize: 7,
+  placedWords: [],
+  fillerCells: new Set(),
+  foundWords: new Set(),
+  foundCells: new Set(),
+  hintedLetters: {},
+  wordState: {},
+
+  riddleScore: 0,
+  livesLeft: MAX_LIVES,
+  hintsLeft: MAX_HINTS,
+  hintLimit: MAX_HINTS,
+  gameOver: false,
+
+  dragging: false,
+  dragCells: [],
+  dragStart: null,
+
+  shareText: '',
+  sessionId: '',
+  sessionStartedAt: '',
+  survey: { rating: '', ageGroup: '', comment: '' },
+  feedbackSubmitted: false,
+  researchAnswers: {},
+  riddleOutcome: '',
+  currentAwardedPoints: 0,
+  currentShuffleCount: 0,
+  evaluationSaved: false,
+  sessionRiddleRecorded: false,
+  sessionFinishedAt: '',
+  sessionStats: null,
+  dailyReplay: false,
+
+  timerSeconds: 0,
+  riddleSeconds: 0,
+  timerHandle: null,
+};
+
+function startTimer() {
+  stopTimer();
+  state.timerHandle = setInterval(() => {
+    if (document.hidden) return;
+    state.timerSeconds++;
+    if (!state.gameOver) state.riddleSeconds++;
+  }, 1000);
+}
+
+function stopTimer() {
+  if (state.timerHandle) { clearInterval(state.timerHandle); state.timerHandle = null; }
+}
+
+function resetTimer() {
+  state.timerSeconds = 0;
+}
+
+function basePoints() {
+  return state.isBonus ? BONUS_RIDDLE_POINTS : LEVEL_BASE[state.currentLevel];
+}
+
+function calculateTimeBonus(base, seconds) {
+  if (seconds <= 30) return Math.round(base * 0.15);
+  if (seconds <= 60) return Math.round(base * 0.10);
+  if (seconds <= 90) return Math.round(base * 0.05);
+  return 0;
+}
+
+function formatDuration(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+  const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+  return `${minutes}:${seconds}`;
+}
+
+function currentRiddle() {
+  return state.isBonus ? state.bonusRiddles[state.riddleIdx] : state.shuffledLevel[state.riddleIdx];
+}
+
+function resetForNewGame() {
+  state.sessionId = typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `lmg-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  state.sessionStartedAt = new Date().toISOString();
+  state.survey = { rating: '', ageGroup: '', comment: '' };
+  state.feedbackSubmitted = false;
+  state.sessionFinishedAt = '';
+  state.sessionStats = {
+    completed: 0,
+    solved: 0,
+    givenUp: 0,
+    hintsUsed: 0,
+    wrongAttempts: 0,
+    shuffleCount: 0,
+    lastCompletedRiddle: ''
+  };
+  state.dailyReplay = false;
+  state.currentLevel = 1;
+  state.riddleIdx = 0;
+  state.totalScore = 0;
+  state.levelScore = 0;
+  state.totalTimeBonus = 0;
+  state.currentTimeBonus = 0;
+  state.isBonus = false;
+  state.dailySolved = false;
+  state.bonusRiddles = [];
+}
+
+function plannedRiddleCount() {
+  if (state.gameMode === 'party' && state.party) return state.party.riddlesPerPlayer * 2;
+  if (state.gameMode === 'daily') return 1;
+  return Number(state.gameMode) || 0;
+}
+
+function sessionTotals() {
+  if (state.gameMode === 'party' && state.party) {
+    return {
+      points: state.party.scores.reduce((sum, value) => sum + value, 0),
+      timeBonus: state.party.timeBonuses.reduce((sum, value) => sum + value, 0),
+      timeMs: state.party.totalTimes.reduce((sum, value) => sum + value, 0) * 1000
+    };
   }
-  .level-pill{padding:7px 8px;text-align:center;white-space:nowrap;font-size:11px;}
-  .stat-item{min-width:0;gap:7px;padding:2px 0;justify-content:center;}
-  .stat-icon{width:29px;height:29px;flex:0 0 29px;}
-  .stat-label{font-size:9px;letter-spacing:.055em;white-space:nowrap;}
-  .stat-value{font-size:14px;line-height:1.15;white-space:nowrap;}
-  .stat-value .score-max{display:block;font-size:9px;margin-top:2px;}
+  return {
+    points: state.totalScore,
+    timeBonus: state.totalTimeBonus,
+    timeMs: state.timerSeconds * 1000
+  };
 }
 
-@media (max-width:420px){
-  .stats-bar{padding:12px;}
-  .stats-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px;}
-  .level-pill{width:100%;text-align:center;}
-  .party-player-pill{justify-content:center;}
-  .stat-item{min-width:0;gap:9px;padding:2px 4px;}
-  .stat-icon{width:31px;height:31px;flex:0 0 31px;}
-  .stat-label{font-size:9.5px;}
-  .stat-value{font-size:15px;}
+function queueSessionUpdate(status, extra = {}) {
+  const stats = state.sessionStats;
+  // A session only becomes analytics data after at least one riddle was completed or given up.
+  if (!stats || stats.completed < 1) return;
+  const totals = sessionTotals();
+  const now = new Date().toISOString();
+  if (status === 'completed' && !state.sessionFinishedAt) state.sessionFinishedAt = now;
+  queueAnalyticsRecord({
+    record_type: 'session_update',
+    session_id: state.sessionId,
+    session_started_at: state.sessionStartedAt,
+    last_updated_at: now,
+    session_finished_at: state.sessionFinishedAt,
+    session_status: status,
+    game_version: String(state.gameMode),
+    participation_type: state.gameMode === 'party' ? 'party' : state.participationMode,
+    research_consent: state.gameMode !== 'party' && state.participationMode === 'research',
+    planned_riddle_count: plannedRiddleCount(),
+    completed_riddle_count: stats.completed,
+    last_completed_riddle: stats.lastCompletedRiddle,
+    total_time_ms: totals.timeMs,
+    total_points: totals.points,
+    time_bonus_points: totals.timeBonus,
+    solved_riddles: stats.solved,
+    given_up_riddles: stats.givenUp,
+    hints_used: stats.hintsUsed,
+    wrong_attempts: stats.wrongAttempts,
+    shuffle_count: stats.shuffleCount,
+    device_type: window.innerWidth < 768 ? 'mobile' : (window.innerWidth < 1100 ? 'tablet' : 'desktop'),
+    screen_size_group: `${window.innerWidth}x${window.innerHeight}`,
+    theme: document.documentElement.dataset.theme || 'dark',
+    font_size: document.documentElement.dataset.fontSize || 'default',
+    daily_replay: state.dailyReplay,
+    feedback_submitted: state.feedbackSubmitted,
+    app_version: 'demo-2026-07-23',
+    data_schema_version: '1',
+    ...extra
+  });
 }
+
+function recordCompletedRiddleForSession() {
+  if (state.sessionRiddleRecorded || !state.sessionStats) return;
+  const riddle = currentRiddle();
+  const stats = state.sessionStats;
+  stats.completed++;
+  if (state.riddleOutcome === 'solved') stats.solved++;
+  if (state.riddleOutcome === 'gave_up') stats.givenUp++;
+  stats.hintsUsed += state.hintLimit - state.hintsLeft;
+  stats.wrongAttempts += Math.max(0, MAX_LIVES - state.livesLeft);
+  stats.shuffleCount += state.currentShuffleCount;
+  stats.lastCompletedRiddle = datasetRiddleId(riddle);
+  state.sessionRiddleRecorded = true;
+  queueSessionUpdate('in_progress');
+}
+
+function queueAnalyticsRecord(record) {
+  try {
+    const queue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
+    queue.push(record);
+    localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(queue.slice(-250)));
+    flushAnalyticsQueue();
+  } catch (e) {
+    console.warn('Neizdevās saglabāt analītikas ierakstu lokāli:', e);
+  }
+}
+
+let analyticsFlushInProgress = false;
+
+function flushAnalyticsQueue() {
+  if (analyticsFlushInProgress || !ANALYTICS_SCRIPT_URL || !navigator.onLine) return;
+
+  let queuedRecords;
+  try {
+    queuedRecords = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
+  } catch (e) {
+    return;
+  }
+  if (!queuedRecords.length) return;
+
+  analyticsFlushInProgress = true;
+  const batch = queuedRecords.slice(0, 50);
+
+  fetch(ANALYTICS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ records: batch }),
+    redirect: 'follow'
+  })
+    .then(response => response.json())
+    .then(result => {
+      if (!result || result.ok !== true) throw new Error(result?.error || 'Analytics request failed.');
+      const latestQueue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
+      localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(latestQueue.slice(batch.length)));
+    })
+    .catch(error => console.warn('Analītikas dati palika lokālajā rindā:', error))
+    .finally(() => {
+      analyticsFlushInProgress = false;
+      try {
+        const remaining = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
+        if (remaining.length) setTimeout(flushAnalyticsQueue, 1200);
+      } catch (e) { /* ignore */ }
+    });
+}
+
+function stableRiddleId(riddle) {
+  const source = `${riddle?.q || ''}|${riddle?.a || ''}`;
+  let hash = 2166136261;
+  for (let i = 0; i < source.length; i++) {
+    hash ^= source.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `riddle-${(hash >>> 0).toString(16)}`;
+}
+
+function datasetRiddleId(riddle) {
+  const lookupKey = String(riddle?.q || '').normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+  const embeddedMetadata = typeof RIDDLE_DATASET_METADATA !== 'undefined'
+    ? RIDDLE_DATASET_METADATA[lookupKey]
+    : null;
+  return String(riddle?.gameId || embeddedMetadata?.gameId || stableRiddleId(riddle)).trim();
+}
+
+function datasetUnitNumber(riddle) {
+  const lookupKey = String(riddle?.q || '').normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+  const embeddedMetadata = typeof RIDDLE_DATASET_METADATA !== 'undefined'
+    ? RIDDLE_DATASET_METADATA[lookupKey]
+    : null;
+  return String(riddle?.unitNumber || embeddedMetadata?.unitNumber || '').trim();
+}
+
+function datasetSourceMetadata(riddle) {
+  const lookupKey = String(riddle?.q || '').normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+  const embeddedMetadata = typeof RIDDLE_DATASET_METADATA !== 'undefined'
+    ? RIDDLE_DATASET_METADATA[lookupKey]
+    : null;
+  return {
+    teller: String(riddle?.teller || embeddedMetadata?.teller || '').trim(),
+    recorder: String(riddle?.recorder || embeddedMetadata?.recorder || '').trim(),
+    place: String(riddle?.loc || embeddedMetadata?.place || '').trim(),
+    year: String(riddle?.year || embeddedMetadata?.year || '').trim(),
+    unitNumber: String(riddle?.unitNumber || embeddedMetadata?.unitNumber || '').trim(),
+    sourceUrl: String(riddle?.sourceUrl || embeddedMetadata?.sourceUrl || '').trim()
+  };
+}
+
+function currentResponseId() {
+  const partyTurn = state.gameMode === 'party' && state.party
+    ? `-p${state.party.currentPlayer + 1}-t${state.party.round + 1}`
+    : '';
+  return `${state.sessionId}-l${state.currentLevel}-r${state.riddleIdx + 1}${partyTurn}`;
+}
+
+function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
+  if (state.evaluationSaved) return;
+  const riddle = currentRiddle();
+  if (!riddle) return;
+  const hintsUsed = state.hintLimit - state.hintsLeft;
+  const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft);
+  const solutionMethod = researchAnswers.solution_method || '';
+  queueAnalyticsRecord({
+    record_type: 'evaluation',
+    response_id: currentResponseId(),
+    session_id: state.sessionId,
+    played_at: new Date().toISOString(),
+    riddle_order: `${state.currentLevel}.${state.riddleIdx + 1}`,
+    riddle_id: datasetRiddleId(riddle),
+    unit_number: datasetUnitNumber(riddle),
+    riddle_level: state.currentLevel,
+    game_version: String(state.gameMode),
+    participation_type: state.gameMode === 'party' ? 'party' : state.participationMode,
+    party_player_slot: state.gameMode === 'party' && state.party ? state.party.currentPlayer + 1 : '',
+    riddle_text: riddle.q || '',
+    answer: riddle.a || '',
+    riddle_location: riddle.loc || '',
+    riddle_collection: riddle.kolekcija || riddle.collection || '',
+    solved: state.riddleOutcome === 'solved',
+    gave_up: state.riddleOutcome === 'gave_up',
+    time_ms: state.riddleSeconds * 1000,
+    points: state.currentAwardedPoints,
+    time_bonus_points: state.currentTimeBonus,
+    hints_used: hintsUsed,
+    wrong_attempts: wrongAttempts,
+    shuffle_count: state.currentShuffleCount,
+    heard_before: researchAnswers.heard_before || '',
+    knew_answer_before_search: solutionMethod === 'knew' ? 'yes' : (solutionMethod ? 'no' : ''),
+    solution_method: solutionMethod,
+    difficulty_rating: researchAnswers.difficulty_rating || '',
+    knows_similar_variant: researchAnswers.knows_similar_variant || '',
+    similar_variant_text: researchAnswers.similar_variant_text || '',
+    variant_source: '',
+    research_questions_skipped: skipped
+  });
+  state.evaluationSaved = true;
+}
+
+function resetRiddleState() {
+  state.gameOver = false;
+  state.hintLimit = state.currentLevel >= 6 ? MAX_HINTS_HARD : MAX_HINTS;
+  state.hintsLeft = state.hintLimit;
+  state.livesLeft = MAX_LIVES;
+  state.foundCells = new Set();
+  state.foundWords = new Set();
+  state.hintedLetters = {};
+  state.wordState = {};
+  state.dragCells = [];
+  state.dragStart = null;
+  state.dragging = false;
+  state.riddleScore = basePoints();
+  state.currentTimeBonus = 0;
+  state.currentAwardedPoints = 0;
+  state.currentShuffleCount = 0;
+  state.riddleOutcome = '';
+  state.researchAnswers = {};
+  state.evaluationSaved = false;
+  state.sessionRiddleRecorded = false;
+  state.riddleSeconds = 0;
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      gameMode: state.gameMode,
+      participationMode: state.participationMode,
+      currentLevel: state.currentLevel,
+      riddleIdx: state.riddleIdx,
+      totalScore: state.totalScore,
+      levelScore: state.levelScore,
+      totalTimeBonus: state.totalTimeBonus,
+      isBonus: state.isBonus,
+      timestamp: Date.now(),
+    }));
+  } catch (e) {
+    console.warn('Neizdevās saglabāt progresu:', e);
+  }
+}
+
+function clearProgress() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (e) {
+    console.warn('Neizdevās notīrīt saglabāto progresu:', e);
+  }
+}
+
+function readSavedProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (Date.now() - data.timestamp > PROGRESS_MAX_AGE_MS) {
+      clearProgress();
+      return null;
+    }
+    return data;
+  } catch (e) {
+    console.warn('Neizdevās nolasīt saglabāto progresu:', e);
+    return null;
+  }
+}
+
+// ==== gridBuilder.js ====
+const MAX_GRID_SIZE = 16;
+
+function computeGridSize(level) {
+  if (level === 1) return 7;
+  if (window.innerWidth <= 640) return 9;
+  if (level <= 4) return 9;
+  return 11;
+}
+
+function resolveGridSize(level, answer) {
+  const base = computeGridSize(level);
+  const words = getWords(answer).map(w => norm(w).length);
+  const longest = words.length ? Math.max(...words) : 0;
+  return Math.min(Math.max(base, longest), MAX_GRID_SIZE);
+}
+
+function cellSizePx(size) {
+  const puzzleArea = document.querySelector('.puzzle-area');
+  const puzzleStyle = puzzleArea ? window.getComputedStyle(puzzleArea) : null;
+  const puzzlePadding = puzzleStyle
+    ? parseFloat(puzzleStyle.paddingLeft) + parseFloat(puzzleStyle.paddingRight)
+    : 0;
+  const availableWidth = puzzleArea?.clientWidth
+    ? puzzleArea.clientWidth - puzzlePadding - 2
+    : Math.min(window.innerWidth - 40, 520);
+  const maxWidth = Math.max(220, Math.min(availableWidth, 520));
+  const widthSize = Math.floor((maxWidth - (size - 1) * 3) / size);
+  const cap = size === 7 ? 58 : size === 9 ? 48 : 38;
+  const gridStageHeight = document.querySelector('.grid-stage')?.clientHeight || 0;
+  const compactLandscape = window.innerWidth > window.innerHeight && window.innerHeight <= 600;
+  const gridHeight = window.innerWidth >= 1100
+    ? (gridStageHeight > 120 ? gridStageHeight - 76 : Math.max(230, window.innerHeight - 500))
+    : window.innerHeight * 0.62;
+  const heightSize = compactLandscape
+    ? Number.POSITIVE_INFINITY
+    : Math.floor((gridHeight - (size - 1) * 3) / size);
+  const minimum = window.innerWidth <= 640 ? 18 : 24;
+  return Math.max(minimum, Math.min(widthSize, heightSize, cap));
+}
+
+function fillerCount(size) {
+  if (size <= 7) return 3;
+  if (size <= 9) return 5;
+  return 7;
+}
+
+function tryPlace(grid, word, size, markSet) {
+  const wlen = word.length;
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const [dr, dc] = DIRS[Math.floor(Math.random() * DIRS.length)];
+    const rMin = dr > 0 ? 0 : dr < 0 ? wlen - 1 : 0;
+    const rMax = dr > 0 ? size - wlen : dr < 0 ? size - 1 : size - 1;
+    const cMin = dc > 0 ? 0 : dc < 0 ? wlen - 1 : 0;
+    const cMax = dc > 0 ? size - wlen : dc < 0 ? size - 1 : size - 1;
+    if (rMin > rMax || cMin > cMax) continue;
+
+    const sr = rMin + Math.floor(Math.random() * (rMax - rMin + 1));
+    const sc = cMin + Math.floor(Math.random() * (cMax - cMin + 1));
+
+    const cells = [];
+    let valid = true;
+    for (let i = 0; i < wlen; i++) {
+      const r = sr + dr * i, c = sc + dc * i;
+      if (r < 0 || r >= size || c < 0 || c >= size) { valid = false; break; }
+      if (grid[r][c] !== '' && grid[r][c] !== word[i]) { valid = false; break; }
+      cells.push([r, c]);
+    }
+    if (valid) {
+      for (let i = 0; i < wlen; i++) grid[cells[i][0]][cells[i][1]] = word[i];
+      if (markSet) cells.forEach(([r, c]) => markSet.add(cellKey(r, c)));
+      return cells;
+    }
+  }
+  return null;
+}
+
+function shuffleFillers(grid, placedWords, size) {
+  const protectedCells = new Set();
+  placedWords.forEach(pw => {
+    if (pw.cells) pw.cells.forEach(([r, c]) => protectedCells.add(cellKey(r, c)));
+  });
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (protectedCells.has(cellKey(r, c))) continue;
+      grid[r][c] = LV_ALPHABET[Math.floor(Math.random() * LV_ALPHABET.length)];
+    }
+  }
+  return grid;
+}
+
+function buildGrid(answer, size) {
+  const grid = Array.from({ length: size }, () => Array(size).fill(''));
+  const placedWords = [];
+  const fillerCells = new Set();
+  const usedWords = new Set();
+
+  for (const word of getWords(answer)) {
+    const wn = norm(word);
+    if (usedWords.has(wn)) {
+      placedWords.push({ word: wn, cells: null, duplicate: true });
+      continue;
+    }
+    if (wn.length > size) {
+      placedWords.push({ word: wn, cells: null, unplaceable: true });
+      continue;
+    }
+    const cells = tryPlace(grid, wn, size, null);
+    if (cells) { placedWords.push({ word: wn, cells }); usedWords.add(wn); }
+    else placedWords.push({ word: wn, cells: null, unplaceable: true });
+  }
+
+  const candidates = shuffle([...FILLER_WORDS].filter(w => w.length <= size));
+  for (const fw of candidates.slice(0, fillerCount(size))) {
+    if (usedWords.has(fw)) continue;
+    const cells = tryPlace(grid, fw, size, fillerCells);
+    if (cells) usedWords.add(fw);
+  }
+
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (!grid[r][c]) grid[r][c] = LV_ALPHABET[Math.floor(Math.random() * LV_ALPHABET.length)];
+    }
+  }
+
+  return { grid, placedWords, fillerCells };
+}
+
+// ==== messages.js ====
+const LEVEL_MSGS = {
+  1:{excellent:"Lielisks sākums! Tu atrisināji gandrīz visas vai visas mīklas un uzreiz parādīji īstu attapību.",good:"Labs sākums! Daļa mīklu jau ir pieveikta, un tavs prāts ir gatavs nākamajam izaicinājumam.",try:"Pirmais līmenis ir tikai iesildīšanās. Pat ja šoreiz neizdevās daudz, nākamās mīklas dos jaunu iespēju!"},
+  2:{excellent:"Brīnišķīgi! Tu mini droši un vērīgi, un tautas mīklu viltības tevi nemaz nebiedē.",good:"Ļoti labi! Tu jau sāc pamanīt pavedienus un atkost mīklu noslēpumus.",try:"Šīs mīklas nemaz nebija tik vieglas, bet nepadodies – ar katru līmeni attapība aug."},
+  3:{excellent:"Malacis! Tu lieliski atpazīsti seno gudrību noslēpumus un dodies uz priekšu pārliecinoši.",good:"Lieliski! Tu atrisināji vairākas mīklas un parādīji, ka proti domāt radoši.",try:"Dažām mīklām atminējumi bija tiešām izaicinoši. Dodies uz priekšu bez raizēm – arī minēšanas process ir daļa no prieka!"},
+  4:{excellent:"Teicami! Tavs prāts ir ass, un atbildes birst kā graudi no labi izkulta rudzu kūļa.",good:"Lieliski! Pat sarežģītākās mīklās Tev izdodas atrast pareizo virzienu.",try:"Nebēdā! Arī neatminēta mīkla māca domāt gudrāk un uzmanīgāk."},
+  5:{excellent:"Puse ceļa pieveikta izcili! Tu mini veikli, droši un ar īstu tautas attapības garu.",good:"Puse spēles jau pieveikta! Tu krāj punktus, pieredzi un topi viedāks un viedāks.",try:"Puse ceļa vēl nav beigas. Saņemies – otrajā pusē vari krietni atspēlēties!"},
+  6:{excellent:"Brīnišķīgi! Tu atrisināji lielāko daļu mīklu un pierādīji, ka Tava attapība kļūst arvien jaudīgāka.",good:"Labs veikums! Šis līmenis nebija viegls, bet Tu neatlaidīgi tiki galā ar vairākām mīklām.",try:"Šis līmenis bija ciets rieksts. Bet katrs rieksts reiz padodas pacietīgam minētājam!"},
+  7:{excellent:"Iespaidīgi! Tu mini kā īsts meistars un neļauj mīklām sevi apvest ap stūri.",good:"Ļoti pieklājīgs veikums! Tu atradi vairākas pareizās atbildes, pat ja mīklas ir vēl sarežģītākas.",try:"Šoreiz mīklas lika pasvīst. Neapstājies – vēl ir iespēja uzlabot rezultātu!"},
+  8:{excellent:"Tu esi ļoti tuvu meistara līmenim! Tavas atbildes rāda gan vērīgumu, gan attapību.",good:"Labs sniegums! Tu jau esi ticis tālu, un katra atminētā mīkla ved tuvāk finišam.",try:"Vēl mazliet pacietības! Jo tuvāk beigām, jo mīklas kļūst viltīgākas."},
+  9:{excellent:"Gandrīz galā, un Tava attapība spīguļot spīguļo! Jau tagad Tev pienākas uzslavas.",good:"Tu esi gandrīz finišā! Vairākas mīklas izdevās atrisināt, un tas tiešām ir labs panākums.",try:"Šis bija nopietns pārbaudījums. Neļauj grūtībām apturēt Tavu aizrautību!"},
+  10:{excellent:"Apsveicam! Tu izgāji pēdējo līmeni izcili un pierādīji, ka esi īsts tautas gudrības zinātājs.",good:"Apsveicam! Tu esi ticis līdz galam un godam pabeidzis latviešu tautas mīklu spēli.",try:"Ceļš ir pabeigts! Pat ja pēdējais līmenis bija grūts, katra mīkla deva pieredzi nākamajam mēģinājumam."},
+};
+
+const FINAL_TITLES = [
+  {pct:0,   title:"Pastarītis",          msg:"Tu vēl tikai sāc iepazīt latviešu tautas mīklu viltības. Katra atminēta mīkla ir solis uz priekšu. Nepadodies!"},
+  {pct:20,  title:"Stiprais Ansis",      msg:"Tu jau sāc uztvert latviešu tautas mīklu viltības. Spēka Tev daudz, un gan jau arī attapība vairosies. Turpini un Tev izdosies!"},
+  {pct:40,  title:"Gudrais zellis",      msg:"Labs rezultāts! Mīklu minēšanas amats Tev jau ir rokā. Turpini minēt, kamēr kļūsti par īstu meistaru!"},
+  {pct:60,  title:"Apķērīgais ganuzēns", msg:"Ļoti labi! Tu vari lepoties ar savu attapību. Tev izdevās pieveikt patiešām lielu daļu mīklu."},
+  {pct:75,  title:"Gudrā ķēniņa meita",  msg:"Izcili! Tavas mīklu minēšanas prasmes ir lieliskas, un Tu proti atrast atbildes pat visviltīgākajām mīklām."},
+  {pct:90,  title:"Attapīgais Mačatiņš", msg:"Neviena mīkla Tev nav par grūtu un apvest ap stūri Tu varētu ikvienu, un zupu spētu izvārīt pat no cirvja kāta. Apsveicam! Tu esi sasniedzis augstāko iespējamo mīklu attapības pakāpi."},
+];
+
+function getFinalTitle(score, maxScore) {
+  const pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
+  let result = FINAL_TITLES[0];
+  for (const t of FINAL_TITLES) {
+    if (pct >= t.pct) result = t;
+  }
+  return result;
+}
+
+function getLevelRating(level, levelScore, riddlesPerLevel) {
+  const max = Math.round(LEVEL_BASE[level] * riddlesPerLevel * 1.15);
+  const ratio = max > 0 ? levelScore / max : 0;
+  if (ratio >= 0.7) return 'excellent';
+  if (ratio >= 0.4) return 'good';
+  return 'try';
+}
+
+function getLevelMsg(level, rating) {
+  const m = LEVEL_MSGS[level];
+  if (rating === 'excellent') return { badge: 'Izcili ✦', msg: m.excellent };
+  if (rating === 'good') return { badge: 'Labi', msg: m.good };
+  return { badge: 'Mēģini vēl', msg: m.try };
+}
+
+function modeLabel(mode) {
+  const riddleCounts = { 10: 10, 50: 50, 100: 100, daily: 1 };
+  return `${MODE_NAMES[mode]} (${riddleCounts[mode]} mīklas)`;
+}
+
+function generateShareText(score, maxScore, title, mode) {
+  return `Minēju mīklas.\nMans tituls: ${title}\n\n⭐ ${score.toLocaleString('lv-LV')} / ${maxScore.toLocaleString('lv-LV')} punkti\nSpēles versija: ${modeLabel(mode)}\n\nVai Tu vari labāk?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis`;
+}
+
+function generateDailyShareText() {
+  const solvedLine = state.dailySolved ? '✅ Atminēju dienas mīklu' : 'Apskatīju dienas mīklas atminējumu';
+  const hintsUsed = state.hintLimit - state.hintsLeft;
+  const attemptsUsed = MAX_LIVES - state.livesLeft + (state.dailySolved ? 1 : 0);
+  return `${solvedLine}\n⭐ ${state.totalScore} / 115 punkti\nĀtruma bonuss: +${state.totalTimeBonus}\nUzvednes: ${hintsUsed} · Mēģinājumi: ${Math.max(1, attemptsUsed)}\nLaiks: ${formatDuration(state.timerSeconds)}\n\nCik raiti Tev izdosies atminēt šodienas mīklu?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis #dienasmīkla`;
+}
+
+// ==== dataLoader.js ====
+function normalizeCsvHeader(value) {
+  return String(value || '')
+    .replace(/^\uFEFF/, '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+}
+
+function parseCsvObjects(text) {
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let quoted = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (quoted) {
+      if (char === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+      else if (char === '"') quoted = false;
+      else cell += char;
+    } else if (char === '"') quoted = true;
+    else if (char === ',') { row.push(cell); cell = ''; }
+    else if (char === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+    else if (char !== '\r') cell += char;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  if (!rows.length) return [];
+
+  const headers = rows[0].map(normalizeCsvHeader);
+  return rows.slice(1).filter(values => values.some(value => value.trim())).map(values => {
+    const record = {};
+    headers.forEach((header, index) => { if (header) record[header] = values[index] || ''; });
+    return record;
+  });
+}
+
+function loadRiddlesFromSheets(callback) {
+  if (state.levelsLoaded) { callback(true); return; }
+
+  const loadingEl = document.getElementById('loading-msg');
+  if (loadingEl) loadingEl.style.display = 'block';
+
+  fetch(`${RIDDLES_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error(`Mīklu CSV atbildēja ar ${response.status}.`);
+      return response.text();
+    })
+    .then(csvText => {
+      const levels = { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [] };
+      const bonusPool = [];
+      const riddles = parseCsvObjects(csvText);
+
+      riddles.forEach(r => {
+        const mikla = (r.mikla || '').toString().trim();
+        const atminejums = (r.atminejums || '').toString().trim();
+        const lvl = (r.limenis || '').toString().trim();
+        const gameId = (r.game_id || '').toString().trim();
+        const vienibasNumurs = (r.vienibas_nr || r.vienibas_numurs || '').toString().trim();
+        if (!mikla || !atminejums || !lvl) return;
+
+        const entry = {
+          id: gameId,
+          gameId: gameId,
+          unitNumber: vienibasNumurs,
+          q: mikla,
+          a: atminejums,
+          loc: r.vieta || '',
+          teller: r.teicejs || '',
+          recorder: r.pierakstitajs || '',
+          year: r.gads || '',
+          kolekcija: r.kolekcija || '',
+          sourceUrl: r.id || ''
+        };
+        if (lvl === 'Bonuss') {
+          bonusPool.push(entry);
+        } else {
+          const n = parseInt(lvl, 10);
+          if (n >= 1 && n <= 10 && levels[n]) levels[n].push(entry);
+        }
+      });
+
+      const totalRiddles = bonusPool.length + Object.values(levels).reduce((n, l) => n + l.length, 0);
+      if (totalRiddles === 0) {
+        console.warn('Publicētais CSV nesatur nevienu izmantojamu mīklu, izmanto rezerves datus.');
+        loadFallbackLevels();
+        if (loadingEl) loadingEl.style.display = 'none';
+        callback(false);
+        return;
+      }
+
+      state.levels = levels;
+      state.bonusPool = bonusPool;
+      state.levelsLoaded = true;
+      if (loadingEl) loadingEl.style.display = 'none';
+      callback(true);
+    })
+    .catch(err => {
+      console.warn('Nevarēja ielādēt publicēto mīklu CSV, izmanto rezerves datus:', err);
+      if (loadingEl) loadingEl.style.display = 'none';
+      loadFallbackLevels();
+      callback(false);
+    });
+}
+
+function loadFallbackLevels() {
+  state.levels = FALLBACK_LEVELS;
+  state.bonusPool = FALLBACK_BONUS;
+  state.levelsLoaded = true;
+}
+
+// ==== render.js ====
+function renderTopBar() {
+  const badge = document.getElementById('level-badge');
+  badge.className = 'level-pill' + (state.isBonus ? ' bonus' : '') + (state.gameMode === 'party' && state.party ? ' party-player-pill' : '');
+  badge.replaceChildren();
+  if (state.gameMode === 'party' && state.party) {
+    const round = document.createElement('span');
+    round.className = 'party-round-label';
+    round.textContent = `${state.party.round + 1}. kārta`;
+    const player = document.createElement('strong');
+    player.className = 'party-player-name';
+    player.textContent = state.party.names[state.party.currentPlayer];
+    badge.append(round, player);
+  } else {
+    badge.textContent = state.gameMode === 'daily'
+      ? 'Dienas mīkla'
+      : state.isBonus ? '⭐ Bonusa kārta' : `${state.currentLevel}. līmenis`;
+  }
+  document.getElementById('score-display').textContent = state.totalScore.toLocaleString('lv-LV');
+  document.getElementById('score-max').textContent = `/ ${state.maxScore.toLocaleString('lv-LV')}`;
+  document.getElementById('progress-bar').style.width =
+    Math.min(100, (state.totalScore / state.maxScore) * 100) + '%';
+}
+
+function renderTimer() {
+  const el = document.getElementById('timer-display');
+  if (!el) return;
+  const total = state.riddleSeconds || 0;
+  const m = Math.floor(total / 60).toString().padStart(2, '0');
+  const s = (total % 60).toString().padStart(2, '0');
+  el.textContent = `${m}:${s}`;
+}
+
+function renderMiklaNum() {
+  const total = state.isBonus ? state.bonusRiddles.length : state.shuffledLevel.length;
+  document.getElementById('mikla-num').textContent = `${state.riddleIdx + 1} / ${total}`;
+}
+
+function renderGrid() {
+  const size = state.gridSize;
+  const el = document.getElementById('grid');
+  const cellCount = size * size;
+  const needsBuild = el.children.length !== cellCount || el.dataset.gridSize !== String(size);
+  const needsSizing = needsBuild || !el.dataset.cellSize;
+  const cs = needsSizing ? cellSizePx(size) : Number(el.dataset.cellSize);
+
+  if (needsBuild) {
+    el.replaceChildren();
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        const d = document.createElement('div');
+        const letter = document.createElement('span');
+        d.appendChild(letter);
+        d.dataset.r = r;
+        d.dataset.c = c;
+        el.appendChild(d);
+      }
+    }
+    el.dataset.gridSize = String(size);
+  }
+
+  if (needsSizing) {
+    el.dataset.cellSize = String(cs);
+    el.style.gridTemplateColumns = `repeat(${size},${cs}px)`;
+    el.style.gap = '3px';
+  }
+
+  const fontSize = cs <= 26 ? 11 : cs <= 32 ? 13 : cs <= 38 ? 14 : 16;
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      const d = el.children[r * size + c];
+      const k = cellKey(r, c);
+      let cls = 'cell';
+      if (state.foundCells.has(k)) cls += ' found';
+      else if (state.fillerCells.has(k)) cls += ' filler';
+      if (state.dragCells.some(([dr, dc]) => dr === r && dc === c) && !state.foundCells.has(k)) {
+        cls += ' highlight';
+      }
+      d.className = cls;
+      if (needsSizing) d.style.cssText = `width:${cs}px;height:${cs}px;font-size:${fontSize}px;`;
+      d.firstElementChild.textContent = state.grid[r][c];
+    }
+  }
+}
+
+function renderWordTags() {
+  const el = document.getElementById('words-row');
+  el.innerHTML = '';
+  getWords(currentRiddle().a).forEach((w, wi) => {
+    const wn = norm(w);
+    const wState = state.wordState[wi] || 'normal';
+    const revealed = state.hintedLetters[wi] || 0;
+
+    const group = document.createElement('div');
+    group.className = 'word-group';
+    const boxes = document.createElement('div');
+    boxes.className = 'letter-boxes';
+    const availableWidth = Math.max(220, Math.min(el.clientWidth || window.innerWidth - 32, 520));
+    const gap = window.innerWidth <= 640 ? 3 : 4;
+    const boxWidth = Math.max(18, Math.min(28, Math.floor((availableWidth - Math.max(0, wn.length - 1) * gap) / wn.length)));
+    boxes.style.setProperty('--answer-box-width', `${boxWidth}px`);
+
+    for (let i = 0; i < wn.length; i++) {
+      const box = document.createElement('div');
+      if (wState === 'found') { box.className = 'letter-box found'; box.textContent = w[i]; }
+      else if (wState === 'given-up') { box.className = 'letter-box given-up'; box.textContent = w[i]; }
+      else if (i < revealed) { box.className = 'letter-box hinted'; box.textContent = w[i]; }
+      else { box.className = 'letter-box'; box.textContent = ''; }
+      boxes.appendChild(box);
+    }
+    group.appendChild(boxes);
+    el.appendChild(group);
+  });
+}
+
+function renderPips() {
+  const headerHintsEl = document.getElementById('hints-display');
+  if (headerHintsEl) headerHintsEl.textContent = state.hintsLeft;
+
+  const hintsEl = document.getElementById('hints-left-badge');
+  if (hintsEl) hintsEl.textContent = state.hintsLeft;
+
+  document.getElementById('hint-btn').disabled = state.hintsLeft <= 0 || state.gameOver;
+}
+
+function setStatus(msg, cls) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status-line' + (cls ? ' ' + cls : '');
+}
+
+function setNextEnabled(val) {
+  const button = document.getElementById('next-btn');
+  button.disabled = !val;
+  const label = val && state.participationMode === 'research' && state.gameMode !== 'party'
+    ? 'Novērtēt mīklu'
+    : state.gameMode === 'daily'
+      ? 'Pabeigt'
+      : state.gameMode === 'party'
+        ? 'Turpināt'
+        : 'Nākamā';
+  button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
+}
+
+// ==== input.js ====
+function getDragLine(sr, sc, er, ec) {
+  const dr = er - sr, dc = ec - sc;
+  if (dr === 0 && dc === 0) return [[sr, sc]];
+
+  const len = Math.max(Math.abs(dr), Math.abs(dc));
+  if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) return null;
+
+  const stepR = dr === 0 ? 0 : dr / Math.abs(dr);
+  const stepC = dc === 0 ? 0 : dc / Math.abs(dc);
+  const cells = [];
+  for (let i = 0; i <= len; i++) cells.push([sr + stepR * i, sc + stepC * i]);
+  return cells;
+}
+
+function rowColAt(clientX, clientY) {
+  const target = document.elementFromPoint(clientX, clientY);
+  const cell = target && target.closest ? target.closest('.cell') : null;
+  if (!cell || cell.dataset.r === undefined) return null;
+  return [+cell.dataset.r, +cell.dataset.c];
+}
+
+function initGridInput(onWordSelected) {
+  const gridEl = document.getElementById('grid');
+  gridEl.style.touchAction = 'none';
+
+  gridEl.addEventListener('pointerdown', (e) => {
+    if (state.gameOver) return;
+    e.preventDefault();
+    const rc = rowColAt(e.clientX, e.clientY);
+    if (!rc) return;
+
+    gridEl.setPointerCapture(e.pointerId);
+    state.dragging = true;
+    state.dragStart = rc;
+    state.dragCells = [rc];
+    renderGrid();
+  }, { passive: false });
+
+  gridEl.addEventListener('pointermove', (e) => {
+    if (!state.dragging || state.gameOver) return;
+    e.preventDefault();
+    const rc = rowColAt(e.clientX, e.clientY);
+    if (!rc) return;
+    const line = getDragLine(state.dragStart[0], state.dragStart[1], rc[0], rc[1]);
+    state.dragCells = line || [state.dragStart];
+    renderGrid();
+  }, { passive: false });
+
+  gridEl.addEventListener('pointerup', (e) => {
+    if (!state.dragging || state.gameOver) return;
+    e.preventDefault();
+    state.dragging = false;
+    if (state.dragCells.length > 1) onWordSelected(state.dragCells);
+    state.dragCells = [];
+    state.dragStart = null;
+    renderGrid();
+  }, { passive: false });
+
+  gridEl.addEventListener('pointercancel', () => {
+    state.dragging = false;
+    state.dragCells = [];
+    state.dragStart = null;
+    renderGrid();
+  });
+}
+
+// ==== theme.js ====
+const THEME_KEY = 'lmg_theme';
+const FONT_SIZE_KEY = 'lmg_font_size';
+const FONT_SIZES = ['small', 'medium', 'large', 'extra-large'];
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-switch .sw').forEach(sw => {
+    sw.setAttribute('aria-checked', theme === 'light' ? 'true' : 'false');
+  });
+  try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* ignore */ }
+}
+
+function currentTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+}
+
+function toggleTheme() {
+  applyTheme(currentTheme() === 'light' ? 'dark' : 'light');
+}
+
+function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* ignore */ }
+  if (saved === 'light' || saved === 'dark') {
+    applyTheme(saved);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    applyTheme('light');
+  }
+
+  document.querySelectorAll('.theme-switch .sw').forEach(sw => {
+    sw.addEventListener('click', toggleTheme);
+    sw.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleTheme();
+      }
+    });
+  });
+}
+
+function applyFontSize(size) {
+  const safeSize = FONT_SIZES.includes(size) ? size : 'medium';
+  document.documentElement.setAttribute('data-font-size', safeSize);
+  const index = FONT_SIZES.indexOf(safeSize);
+  const decrease = document.getElementById('font-decrease-btn');
+  const increase = document.getElementById('font-increase-btn');
+  if (decrease) decrease.disabled = index === 0;
+  if (increase) increase.disabled = index === FONT_SIZES.length - 1;
+  try { localStorage.setItem(FONT_SIZE_KEY, safeSize); } catch (e) { /* ignore */ }
+}
+
+function initFontSizeControls() {
+  let saved = 'medium';
+  try { saved = localStorage.getItem(FONT_SIZE_KEY) || 'medium'; } catch (e) { /* ignore */ }
+  applyFontSize(saved);
+
+  document.getElementById('font-decrease-btn').addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-font-size') || 'medium';
+    applyFontSize(FONT_SIZES[Math.max(0, FONT_SIZES.indexOf(current) - 1)]);
+  });
+  document.getElementById('font-increase-btn').addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-font-size') || 'medium';
+    applyFontSize(FONT_SIZES[Math.min(FONT_SIZES.length - 1, FONT_SIZES.indexOf(current) + 1)]);
+  });
+}
+
+// ==== navigation.js ====
+const CONTROL_IDS = ['hint-btn', 'shuffle-btn', 'give-up-btn'];
+
+function lockGame() {
+  stopTimer();
+  document.body.classList.remove('game-active');
+  document.getElementById('lock-overlay').classList.remove('hidden');
+  CONTROL_IDS.forEach(id => { document.getElementById(id).disabled = true; });
+  document.getElementById('next-btn').disabled = true;
+  hideFinalOverlay();
+  hideLevelOverlay();
+}
+
+function unlockGame() {
+  document.body.classList.add('game-active');
+  document.getElementById('lock-overlay').classList.add('hidden');
+  CONTROL_IDS.forEach(id => { document.getElementById(id).disabled = false; });
+}
+
+function showAbout() {
+  const aboutScreen = document.getElementById('about-screen');
+  document.body.classList.add('about-open');
+  document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'none';
+  document.querySelector('.site-footer').style.display = '';
+  aboutScreen.style.display = 'block';
+  window.location.hash = 'about';
+}
+
+function hideAbout() {
+  document.body.classList.remove('about-open');
+  document.getElementById('about-screen').style.display = 'none';
+  document.querySelector('.site-footer').style.display = '';
+  history.pushState('', '', window.location.pathname);
+  if (document.body.classList.contains('game-active')) showGameScreen();
+  else showLandingScreen();
+}
+
+function showGameScreen() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('app-shell').style.display = 'grid';
+}
+
+function showLandingScreen() {
+  document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'flex';
+}
+
+function hideLevelOverlay() {
+  document.getElementById('level-overlay').classList.remove('show');
+}
+
+function hideBonusOverlay() {
+  document.getElementById('bonus-overlay').classList.remove('show');
+}
+
+function hideFinalOverlay() {
+  document.getElementById('final-overlay').classList.remove('show');
+}
+
+function returnToLandingFromFinal() {
+  hideFinalOverlay();
+  renderLockedGrid();
+  lockGame();
+  state.party = null;
+  setParticipationMode('player');
+  selectMode(null);
+  showLandingScreen();
+}
+
+function showFeedbackOverlay() {
+  document.getElementById('feedback-overlay').classList.add('show');
+  document.getElementById('feedback-confirm').textContent = '';
+}
+
+function hideFeedbackOverlay() {
+  document.getElementById('feedback-overlay').classList.remove('show');
+}
+
+function selectSurveyOption(selector, value, stateKey, dataKey) {
+  state.survey[stateKey] = value;
+  document.querySelectorAll(selector).forEach(button => {
+    button.classList.toggle('selected', button.dataset[dataKey] === value);
+  });
+}
+
+function submitGameFeedback() {
+  state.survey.comment = document.getElementById('feedback-comment').value.trim();
+  const party = state.gameMode === 'party' ? state.party : null;
+  const totalPoints = party ? party.scores.reduce((sum, points) => sum + points, 0) : state.totalScore;
+  queueAnalyticsRecord({
+    record_type: 'session_feedback',
+    session_id: state.sessionId,
+    submitted_at: new Date().toISOString(),
+    session_started_at: state.sessionStartedAt,
+    game_version: String(state.gameMode),
+    participation_type: state.gameMode === 'party' ? 'party' : state.participationMode,
+    total_time_ms: state.timerSeconds * 1000,
+    total_points: totalPoints,
+    game_rating: state.survey.rating,
+    age_group: state.survey.ageGroup,
+    player_comment: state.survey.comment
+  });
+  state.feedbackSubmitted = true;
+  document.getElementById('open-feedback-btn').textContent = 'Atsauksme nosūtīta ✓';
+  document.getElementById('open-feedback-btn').disabled = true;
+  document.getElementById('feedback-confirm').textContent = 'Paldies par atsauksmi!';
+  setTimeout(hideFeedbackOverlay, 700);
+}
+
+function hideContinueOverlay() {
+  document.getElementById('continue-overlay').classList.remove('show');
+}
+
+function showRestartConfirm() {
+  document.getElementById('restart-overlay').classList.add('show');
+}
+
+function hideRestart() {
+  document.getElementById('restart-overlay').classList.remove('show');
+}
+
+function doRestart() {
+  hideRestart();
+  clearProgress();
+  state.party = null;
+  lockGame();
+  renderLockedGrid();
+  showLandingScreen();
+}
+
+// ==== gameLogic.js ====
+function checkWord(cells) {
+  const selected = cells.map(([r, c]) => state.grid[r][c]).join('');
+  const selectedReversed = [...selected].reverse().join('');
+  let matched = null, matchedWi = -1;
+
+  for (let wi = 0; wi < state.placedWords.length; wi++) {
+    const pw = state.placedWords[wi];
+    if (state.foundWords.has(pw.word)) continue;
+    if (pw.duplicate) continue;
+    if (pw.unplaceable) continue;
+    if (selected === pw.word || selectedReversed === pw.word) { matched = pw; matchedWi = wi; break; }
+  }
+
+  if (matched) {
+    matched.cells.forEach(([r, c]) => state.foundCells.add(cellKey(r, c)));
+    state.foundWords.add(matched.word);
+    state.wordState[matchedWi] = 'found';
+
+    for (let wi = 0; wi < state.placedWords.length; wi++) {
+      const pw = state.placedWords[wi];
+      if (pw.duplicate && pw.word === matched.word && state.wordState[wi] !== 'found') {
+        state.wordState[wi] = 'found';
+        state.foundWords.add(pw.word + ':dup:' + wi);
+      }
+    }
+
+    renderGrid();
+    renderWordTags();
+
+    const allFound = state.placedWords.every((_, wi) => state.wordState[wi] === 'found');
+    if (allFound) { completeRiddle(); return; }
+    setStatus('Atrasts!', '');
+  } else {
+    flashWrong(cells);
+    state.livesLeft--;
+    state.riddleScore = Math.max(0, state.riddleScore - PENALTY_WRONG);
+    renderPips();
+    renderTopBar();
+    if (state.livesLeft <= 0) { giveUp(); return; }
+    setStatus(`Nepareizi. Vēl ${state.livesLeft} mēģinājumi.`, 'lose');
+  }
+}
+
+function flashWrong(cells) {
+  cells.forEach(([r, c]) => {
+    const el = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+    if (el && !state.foundCells.has(cellKey(r, c))) {
+      el.classList.add('wrong-flash');
+      setTimeout(() => renderGrid(), 400);
+    }
+  });
+}
+
+function completeRiddle() {
+  state.gameOver = true;
+  state.currentTimeBonus = calculateTimeBonus(basePoints(), state.riddleSeconds);
+  const awardedPoints = state.riddleScore + state.currentTimeBonus;
+  state.riddleOutcome = 'solved';
+  state.currentAwardedPoints = awardedPoints;
+  if (state.gameMode === 'party') {
+    recordPartyTurn(true, awardedPoints);
+  } else {
+    state.totalTimeBonus += state.currentTimeBonus;
+    state.totalScore += awardedPoints;
+    state.levelScore += awardedPoints;
+  }
+  if (state.gameMode === 'daily') {
+    state.dailySolved = true;
+    markDailyPlayed(true);
+  }
+  renderTopBar();
+  const bonusText = state.currentTimeBonus > 0 ? ` · ātruma bonuss +${state.currentTimeBonus}` : '';
+  setStatus(`Pareizi! +${awardedPoints} punkti${bonusText} ✓`, 'win');
+  document.getElementById('give-up-btn').disabled = true;
+  document.getElementById('hint-btn').disabled = true;
+  setNextEnabled(true);
+  if (state.gameMode !== 'daily' && state.gameMode !== 'party') saveProgress();
+  recordCompletedRiddleForSession();
+}
+
+function recordPartyTurn(solved, awardedPoints) {
+  const party = state.party;
+  if (!party) return;
+  const player = party.currentPlayer;
+  party.scores[player] += awardedPoints;
+  party.timeBonuses[player] += state.currentTimeBonus;
+  party.totalTimes[player] += state.riddleSeconds;
+  party.hintsUsed[player] += state.hintLimit - state.hintsLeft;
+  party.attemptsUsed[player] += Math.max(1, MAX_LIVES - state.livesLeft + (solved ? 1 : 0));
+  if (solved) party.solved[player]++;
+  state.totalScore = party.scores[player];
+  state.totalTimeBonus = party.timeBonuses[player];
+}
+
+function giveHint() {
+  if (state.hintsLeft <= 0 || state.gameOver) return;
+  const words = getWords(currentRiddle().a);
+
+  for (let wi = 0; wi < words.length; wi++) {
+    const wn = norm(words[wi]);
+    if (state.wordState[wi] === 'found' || state.wordState[wi] === 'given-up') continue;
+    const revealed = state.hintedLetters[wi] || 0;
+    if (revealed < wn.length) {
+      state.hintedLetters[wi] = revealed + 1;
+      state.wordState[wi] = 'hinted';
+      state.hintsLeft--;
+      state.riddleScore = Math.max(0, state.riddleScore - PENALTY_HINT);
+      renderPips();
+      renderWordTags();
+      renderTopBar();
+      setStatus('Uzvedne: nākamais burts atklāts.', '');
+      return;
+    }
+  }
+}
+
+function giveUp() {
+  if (state.gameOver) return;
+  state.gameOver = true;
+  state.riddleOutcome = 'gave_up';
+  state.currentAwardedPoints = 0;
+
+  getWords(currentRiddle().a).forEach((w, wi) => {
+    if (state.wordState[wi] !== 'found') {
+      state.wordState[wi] = 'given-up';
+      state.hintedLetters[wi] = norm(w).length;
+    }
+  });
+  state.placedWords.forEach(pw => {
+    if (!state.foundWords.has(pw.word) && pw.cells) {
+      pw.cells.forEach(([r, c]) => state.foundCells.add(cellKey(r, c)));
+    }
+  });
+
+  renderGrid();
+  renderWordTags();
+  setStatus('Atminējums atklāts. 0 punkti.', 'lose');
+  document.getElementById('hint-btn').disabled = true;
+  document.getElementById('give-up-btn').disabled = true;
+  setNextEnabled(true);
+  if (state.gameMode === 'party') recordPartyTurn(false, 0);
+  if (state.gameMode === 'daily') {
+    state.dailySolved = false;
+    markDailyPlayed(false);
+  }
+  recordCompletedRiddleForSession();
+}
+
+function shuffleLetters() {
+  if (state.gameOver) return;
+  state.currentShuffleCount++;
+  shuffleFillers(state.grid, state.placedWords, state.gridSize);
+  renderGrid();
+  setStatus('Burti sajaukti.', '');
+}
+
+function showResearchQuestions() {
+  state.researchAnswers = {};
+  document.querySelectorAll('#research-overlay .research-options button').forEach(button => button.classList.remove('selected'));
+  const solutionMethodField = document.querySelector('#research-overlay [data-question="solution_method"]');
+  const gaveUp = state.riddleOutcome === 'gave_up';
+  solutionMethodField.hidden = gaveUp;
+  if (gaveUp) state.researchAnswers.solution_method = 'gave_up';
+  document.getElementById('research-similar-text').value = '';
+  document.getElementById('research-overlay').classList.add('show');
+}
+
+function continueAfterEvaluation() {
+  if (state.gameMode === 'party') { advancePartyTurn(); return; }
+  if (state.gameMode === 'daily') { showFinalResults(); return; }
+  state.riddleIdx++;
+  const total = state.isBonus ? state.bonusRiddles.length : state.shuffledLevel.length;
+  if (state.riddleIdx >= total) { showLevelComplete(); return; }
+  loadRiddle();
+}
+
+function nextRiddle() {
+  if (!state.gameOver) return;
+  if (state.gameMode !== 'party' && state.participationMode === 'research' && !state.evaluationSaved) {
+    showResearchQuestions();
+    return;
+  }
+  queueCurrentEvaluation({}, false);
+  continueAfterEvaluation();
+}
+
+function submitResearchQuestions(skipped = false) {
+  state.researchAnswers.similar_variant_text = document.getElementById('research-similar-text').value.trim();
+  queueCurrentEvaluation(state.researchAnswers, skipped);
+  document.getElementById('research-overlay').classList.remove('show');
+  continueAfterEvaluation();
+}
+
+function showLevelComplete() {
+  if (state.isBonus) { showFinalResults(); return; }
+
+  const rating = getLevelRating(state.currentLevel, state.levelScore, state.riddlesPerLevel);
+  const { badge, msg } = getLevelMsg(state.currentLevel, rating);
+  document.getElementById('lo-title').textContent = `${state.currentLevel}. līmenis pabeigts`;
+  document.getElementById('lo-score').textContent = `${state.totalScore.toLocaleString('lv-LV')} punkti`;
+  document.getElementById('lo-badge').textContent = badge;
+
+  const msgEl = document.getElementById('lo-msg');
+  msgEl.textContent = state.gameMode === 100 ? msg : '';
+  msgEl.style.marginBottom = state.gameMode === 100 ? '1.5rem' : '0.5rem';
+
+  if (state.currentLevel === 10) {
+    showBonusChoice();
+    return;
+  }
+
+  const btn = document.getElementById('lo-btn');
+  btn.textContent = `Uz ${state.currentLevel + 1}. līmeni →`;
+  btn.onclick = () => { hideLevelOverlay(); state.currentLevel++; startLevel(); };
+  document.getElementById('level-overlay').classList.add('show');
+}
+
+function showBonusChoice() {
+  hideLevelOverlay();
+  document.getElementById('bo-score').textContent = `${state.totalScore.toLocaleString('lv-LV')} punkti`;
+  const rating = getLevelRating(10, state.levelScore, state.riddlesPerLevel);
+  const { badge } = getLevelMsg(10, rating);
+  const badgeEl = document.getElementById('bo-badge');
+  if (badgeEl) badgeEl.textContent = badge;
+  document.getElementById('bonus-overlay').classList.add('show');
+}
+
+function startBonusRound() {
+  state.isBonus = true;
+  state.bonusRiddles = shuffle([...state.bonusPool]).slice(0, 2);
+  state.riddleIdx = 0;
+  state.levelScore = 0;
+  loadRiddle();
+}
+
+function showFinalResults() {
+  stopTimer();
+  clearProgress();
+  queueSessionUpdate('completed');
+  document.getElementById('research-thanks').hidden =
+    state.gameMode === 'party' || state.participationMode !== 'research';
+  const feedbackBtn = document.getElementById('open-feedback-btn');
+  feedbackBtn.disabled = state.feedbackSubmitted;
+  feedbackBtn.textContent = state.feedbackSubmitted ? 'Atsauksme nosūtīta ✓' : 'Novērtēt spēli';
+  ['level-overlay', 'bonus-overlay', 'restart-overlay'].forEach(id => {
+    document.getElementById(id)?.classList.remove('show');
+  });
+
+  if (state.gameMode === 'party' && state.party) {
+    const p = state.party;
+    const winner = p.scores[0] === p.scores[1] ? -1 : (p.scores[0] > p.scores[1] ? 0 : 1);
+    document.getElementById('fo-score').textContent = `${p.names[0]} ${p.scores[0].toLocaleString('lv-LV')} · ${p.names[1]} ${p.scores[1].toLocaleString('lv-LV')}`;
+    document.getElementById('fo-title').textContent = winner < 0 ? 'Neizšķirts! ✨' : `${p.names[winner]} uzvar! ✨`;
+    document.getElementById('fo-msg').textContent = `${p.riddlesPerPlayer} mīklas katram · ātruma bonuss ${p.names[0]} +${p.timeBonuses[0]}, ${p.names[1]} +${p.timeBonuses[1]} · laiks ${formatDuration(p.totalTimes[0])} un ${formatDuration(p.totalTimes[1])}`;
+    const resultLines = winner < 0
+      ? [`${p.names[0]} – ${p.scores[0]} punkti`, `${p.names[1]} – ${p.scores[1]} punkti`]
+      : [`🏆 ${p.names[winner]} – ${p.scores[winner]} punkti`, `🥈 ${p.names[1 - winner]} – ${p.scores[1 - winner]} punkti`];
+    state.shareText = [`Mīklu režģis – Ballītes versija 🎉`, ...resultLines, `${p.riddlesPerPlayer} mīklas katram`, `Ātruma bonuss: ${p.names[0]} +${p.timeBonuses[0]} · ${p.names[1]} +${p.timeBonuses[1]}`, '#mīklurežģis'].join('\n');
+    document.getElementById('share-box').textContent = state.shareText;
+    document.getElementById('copy-confirm').textContent = '';
+    document.getElementById('final-overlay').classList.add('show');
+    return;
+  }
+
+  if (state.gameMode === 'daily') {
+    const hintsUsed = state.hintLimit - state.hintsLeft;
+    const attemptsUsed = Math.max(1, MAX_LIVES - state.livesLeft + (state.dailySolved ? 1 : 0));
+    document.getElementById('fo-score').textContent = `${state.totalScore} / 115 punkti`;
+    document.getElementById('fo-title').textContent = state.dailySolved ? 'Dienas mīkla atminēta!' : 'Dienas mīkla pabeigta';
+    document.getElementById('fo-msg').textContent = `${dailyDateLabel()} · ātruma bonuss +${state.totalTimeBonus} · ${hintsUsed} uzvednes · ${attemptsUsed} mēģinājumi · ${formatDuration(state.timerSeconds)}`;
+    state.shareText = generateDailyShareText();
+    document.getElementById('share-box').textContent = state.shareText;
+    document.getElementById('copy-confirm').textContent = '';
+    document.getElementById('final-overlay').classList.add('show');
+    return;
+  }
+
+  const final = getFinalTitle(state.totalScore, state.maxScore);
+  document.getElementById('fo-score').textContent =
+    `${state.totalScore.toLocaleString('lv-LV')} / ${state.maxScore.toLocaleString('lv-LV')} punkti`;
+  document.getElementById('fo-title').textContent = final.title;
+  document.getElementById('fo-msg').textContent = `${final.msg}\nĀtruma bonuss: +${state.totalTimeBonus} punkti. Kopējais laiks: ${formatDuration(state.timerSeconds)}.`;
+
+  state.shareText = generateShareText(state.totalScore, state.maxScore, final.title, state.gameMode);
+  document.getElementById('share-box').textContent = state.shareText;
+  document.getElementById('copy-confirm').textContent = '';
+  document.getElementById('final-overlay').classList.add('show');
+}
+
+function copyShare() {
+  const confirmEl = document.getElementById('copy-confirm');
+  const announce = () => {
+    confirmEl.textContent = '✓ Nokopēts!';
+    setTimeout(() => { confirmEl.textContent = ''; }, 2500);
+  };
+
+  navigator.clipboard.writeText(state.shareText).then(announce).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = state.shareText;
+    ta.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    announce();
+  });
+}
+
+function startMode(mode, repeatDaily = false) {
+  if (mode === 'daily' && hasPlayedDaily() && !repeatDaily) {
+    document.getElementById('daily-repeat-overlay').classList.add('show');
+    return;
+  }
+  const startBtn = document.getElementById('start-btn');
+  const researchStartBtn = document.getElementById('research-start-btn');
+  startBtn.disabled = true;
+  researchStartBtn.disabled = true;
+  state.gameMode = mode;
+  state.riddlesPerLevel = MODE_RPL[mode];
+  state.maxScore = MODE_MAX[mode];
+  resetForNewGame();
+  state.dailyReplay = mode === 'daily' && repeatDaily;
+  resetTimer();
+  loadRiddlesFromSheets(() => {
+    if (mode === 'daily') startDailyGame();
+    else startLevel();
+    showGameScreen();
+    unlockGame();
+    startTimer();
+    startBtn.disabled = false;
+    researchStartBtn.disabled = false;
+  });
+}
+
+function buildPartyPlan(count) {
+  const pools = {};
+  const cursors = {};
+  for (let level = 1; level <= 10; level++) {
+    pools[level] = shuffle([...state.levels[level]]);
+    cursors[level] = 0;
+  }
+  const take = (level, avoid) => {
+    if (!pools[level].length) return null;
+    if (cursors[level] >= pools[level].length) {
+      pools[level] = shuffle([...state.levels[level]]);
+      cursors[level] = 0;
+    }
+    let item = pools[level][cursors[level]++];
+    if (avoid && item === avoid && pools[level].length > 1) {
+      if (cursors[level] >= pools[level].length) cursors[level] = 0;
+      item = pools[level][cursors[level]++];
+    }
+    return item;
+  };
+  const plan = [];
+  for (let round = 0; round < count; round++) {
+    const level = Math.min(10, Math.floor(round * 10 / count) + 1);
+    const first = take(level);
+    plan.push({ level, riddles: [first, take(level, first)] });
+  }
+  return plan;
+}
+
+function beginPartyGame(names, count) {
+  const startBtn = document.getElementById('start-btn');
+  setParticipationMode('player');
+  startBtn.disabled = true;
+  state.gameMode = 'party';
+  resetForNewGame();
+  resetTimer();
+  loadRiddlesFromSheets(() => {
+    const plan = buildPartyPlan(count);
+    const maxScore = plan.reduce((sum, entry) => sum + Math.round(LEVEL_BASE[entry.level] * 1.15), 0);
+    state.party = {
+      names, riddlesPerPlayer: count, round: 0, currentPlayer: 0, plan, maxScore,
+      scores: [0, 0], timeBonuses: [0, 0], totalTimes: [0, 0], hintsUsed: [0, 0],
+      attemptsUsed: [0, 0], solved: [0, 0]
+    };
+    state.maxScore = maxScore;
+    loadPartyTurn();
+    showGameScreen();
+    unlockGame();
+    startTimer();
+    startBtn.disabled = false;
+  });
+}
+
+function loadPartyTurn() {
+  const p = state.party;
+  const entry = p.plan[p.round];
+  state.currentLevel = entry.level;
+  state.shuffledLevel = [entry.riddles[p.currentPlayer]];
+  state.riddleIdx = 0;
+  state.totalScore = p.scores[p.currentPlayer];
+  state.totalTimeBonus = p.timeBonuses[p.currentPlayer];
+  state.maxScore = p.maxScore;
+  loadRiddle();
+}
+
+function advancePartyTurn() {
+  const p = state.party;
+  if (p.currentPlayer === 1 && p.round >= p.riddlesPerPlayer - 1) {
+    showFinalResults();
+    return;
+  }
+  if (p.currentPlayer === 0) {
+    const previousPlayer = p.names[0];
+    p.currentPlayer = 1;
+    renderPartyPassHandoff(previousPlayer, p.names[1]);
+  } else {
+    const previousPlayer = p.names[1];
+    p.currentPlayer = 0;
+    p.round++;
+    renderPartyPassHandoff(previousPlayer, p.names[0]);
+  }
+  document.getElementById('party-pass-overlay').classList.add('show');
+}
+
+function renderPartyPassHandoff(previousPlayer, nextPlayer) {
+  const title = document.getElementById('party-pass-title');
+  const completedLine = document.createElement('div');
+  completedLine.className = 'party-handoff-line';
+  const completedLabel = document.createElement('span');
+  completedLabel.textContent = 'Gājienu pabeidza: ';
+  const previous = document.createElement('strong');
+  previous.className = 'party-handoff-name';
+  previous.textContent = previousPlayer;
+  completedLine.append(completedLabel, previous);
+
+  const continuesLine = document.createElement('div');
+  continuesLine.className = 'party-handoff-line';
+  const continuesLabel = document.createElement('span');
+  continuesLabel.textContent = 'Turpina: ';
+  const next = document.createElement('strong');
+  next.className = 'party-handoff-name';
+  next.textContent = nextPlayer;
+  continuesLine.append(continuesLabel, next);
+  title.replaceChildren(completedLine, continuesLine);
+
+  const message = document.getElementById('party-pass-msg');
+  message.textContent = 'Kad var turpināt, klikšķini uz zaļās pogas.';
+}
+
+function startDailyGame() {
+  const selection = getDailySelection();
+  if (!selection) return;
+  state.currentLevel = 1;
+  state.riddlesPerLevel = 1;
+  state.maxScore = 115;
+  state.shuffledLevel = [selection.riddle];
+  state.riddleIdx = 0;
+  state.levelScore = 0;
+  loadRiddle();
+}
+
+function startLevel() {
+  state.shuffledLevel = shuffle([...state.levels[state.currentLevel]]).slice(0, state.riddlesPerLevel);
+  state.riddleIdx = 0;
+  state.levelScore = 0;
+  loadRiddle();
+}
+
+function renderRiddleMetadata(riddle) {
+  const { teller, recorder, place, year, unitNumber } = datasetSourceMetadata(riddle);
+  const details = [];
+
+  if (teller) details.push(`Šo mīklu teica ${teller}.`);
+  else if (recorder) details.push(`Šo mīklu pierakstīja ${recorder}.`);
+  if (place || year) details.push(`${place}${place && year ? ', ' : ''}${year}.`);
+
+  const meta = document.getElementById('riddle-meta');
+  const text = document.getElementById('riddle-meta-text');
+  const unitNumberText = document.getElementById('riddle-unit-number');
+  const formattedUnitNumber = unitNumber
+    ? (/^LFK\b/i.test(unitNumber) ? unitNumber : `LFK ${unitNumber}`)
+    : '';
+  text.textContent = details.join(' ');
+  unitNumberText.hidden = !unitNumber;
+  unitNumberText.textContent = formattedUnitNumber;
+  meta.hidden = details.length === 0 && !unitNumber;
+}
+
+function loadRiddle() {
+  resetRiddleState();
+  setStatus('', '');
+  const riddle = currentRiddle();
+  document.getElementById('riddle-text').textContent = riddle.q;
+  renderRiddleMetadata(riddle);
+
+  state.gridSize = resolveGridSize(state.currentLevel, riddle.a);
+  const { grid, placedWords, fillerCells } = buildGrid(riddle.a, state.gridSize);
+  state.grid = grid;
+  state.placedWords = placedWords;
+  state.fillerCells = fillerCells;
+
+  placedWords.forEach((pw, wi) => {
+    if (pw.unplaceable) {
+      state.wordState[wi] = 'found';
+      state.foundWords.add(pw.word + ':unplaceable:' + wi);
+    }
+  });
+
+  renderGrid();
+  renderWordTags();
+  renderPips();
+  renderTopBar();
+  renderMiklaNum();
+
+  document.getElementById('give-up-btn').disabled = false;
+  document.getElementById('hint-btn').disabled = false;
+  setNextEnabled(false);
+}
+
+function loadSavedProgress() {
+  const data = readSavedProgress();
+  if (!data) { startMode(state.gameMode); return; }
+
+  try {
+    showGameScreen();
+    state.gameMode = data.gameMode || 10;
+    setParticipationMode(data.participationMode === 'research' ? 'research' : 'player');
+    state.riddlesPerLevel = MODE_RPL[state.gameMode];
+    state.maxScore = MODE_MAX[state.gameMode];
+    state.currentLevel = data.currentLevel || 1;
+    state.totalScore = data.totalScore || 0;
+    state.levelScore = data.levelScore || 0;
+    state.totalTimeBonus = data.totalTimeBonus || 0;
+    state.isBonus = data.isBonus || false;
+
+    resetTimer();
+
+    loadRiddlesFromSheets(() => {
+      if (state.isBonus) {
+        state.bonusRiddles = shuffle([...state.bonusPool]).slice(0, 2);
+        state.riddleIdx = 0;
+      } else {
+        state.shuffledLevel = shuffle([...state.levels[state.currentLevel]]).slice(0, state.riddlesPerLevel);
+        state.riddleIdx = Math.min(data.riddleIdx || 0, state.shuffledLevel.length - 1);
+      }
+      loadRiddle();
+      unlockGame();
+      startTimer();
+    });
+  } catch (e) {
+    console.warn('Neizdevās atjaunot saglabāto spēli, sāku no jauna:', e);
+    startMode(10);
+  }
+}
+
+// ==== main.js ====
+function selectMode(mode) {
+  state.selectedMode = mode;
+  document.querySelectorAll('.mode-card[data-mode]').forEach(card => {
+    const cardMode = parseMode(card.dataset.mode);
+    card.classList.toggle('selected', cardMode === mode);
+  });
+  updateStartPaths(mode);
+}
+
+function updateStartPaths(mode) {
+  const actions = document.querySelector('.start-actions');
+  const modeList = document.querySelector('.landing-mode-list');
+  const participationLabel = document.getElementById('participation-label');
+  const regularBtn = document.getElementById('start-btn');
+  const researchBtn = document.getElementById('research-start-btn');
+  actions.hidden = mode === null || mode === undefined;
+  modeList.classList.toggle('has-selection', !actions.hidden);
+  if (actions.hidden) {
+    actions.classList.remove('party-only');
+    return;
+  }
+  const isParty = mode === 'party';
+  const isChild = mode === 'child';
+  actions.classList.toggle('party-only', isParty || isChild);
+  participationLabel.hidden = isParty || isChild;
+  researchBtn.hidden = isParty || isChild;
+  regularBtn.querySelector('strong').textContent = isParty ? 'Sākt sacensību' : isChild ? 'Bērnu spēle' : 'Spēlētājs';
+  regularBtn.querySelector('small').textContent = isParty ? 'Ievadīt spēlētāju vārdus' : isChild ? 'Sākt spēli' : 'Spēlē';
+}
+
+function setParticipationMode(mode) {
+  state.participationMode = mode;
+  document.body.dataset.participationMode = mode;
+}
+
+function parseMode(value) {
+  return value === 'daily' || value === 'party' || value === 'child' ? value : Number(value);
+}
+
+function wireModeCards() {
+  document.querySelectorAll('.mode-card[data-mode]').forEach(card => {
+    card.addEventListener('click', () => {
+      const mode = parseMode(card.dataset.mode);
+      if (mode === 'child') {
+        window.location.href = 'berniem/';
+        return;
+      }
+      selectMode(mode);
+    });
+  });
+  setParticipationMode('player');
+  selectMode(state.selectedMode);
+
+  document.getElementById('start-btn').addEventListener('click', () => {
+    if (state.selectedMode === null || state.selectedMode === undefined) return;
+    setParticipationMode('player');
+    if (state.selectedMode === 'party') document.getElementById('party-setup-overlay').classList.add('show');
+    else if (state.selectedMode === 'child') window.location.href = 'berniem/';
+    else startMode(state.selectedMode);
+  });
+  document.getElementById('research-start-btn').addEventListener('click', () => {
+    if (state.selectedMode === null || state.selectedMode === undefined || state.selectedMode === 'party' || state.selectedMode === 'child') return;
+    setParticipationMode('research');
+    startMode(state.selectedMode);
+  });
+  document.getElementById('change-mode-btn').addEventListener('click', () => {
+    selectMode(null);
+  });
+}
+
+function renderLockedGrid() {
+  const size = 9;
+  const el = document.getElementById('grid');
+  if (!el) return;
+  const cs = cellSizePx(size);
+  el.style.gridTemplateColumns = `repeat(${size},${cs}px)`;
+  el.style.gap = '3px';
+  el.innerHTML = '';
+  for (let i = 0; i < size * size; i++) {
+    const d = document.createElement('div');
+    d.className = 'cell filler';
+    d.style.width = cs + 'px';
+    d.style.height = cs + 'px';
+    d.textContent = LV_ALPHABET[Math.floor(Math.random() * LV_ALPHABET.length)];
+    el.appendChild(d);
+  }
+}
+
+function wireEvents() {
+  wireModeCards();
+
+  document.querySelectorAll('.about-link').forEach(link => {
+    link.addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
+  });
+  document.getElementById('about-back-btn').addEventListener('click', hideAbout);
+
+  document.getElementById('hint-btn').addEventListener('click', giveHint);
+  document.getElementById('next-btn').addEventListener('click', nextRiddle);
+  document.getElementById('give-up-btn').addEventListener('click', giveUp);
+  document.getElementById('shuffle-btn').addEventListener('click', shuffleLetters);
+  document.getElementById('restart-btn').addEventListener('click', showRestartConfirm);
+
+  document.getElementById('daily-repeat-yes-btn').addEventListener('click', () => {
+    document.getElementById('daily-repeat-overlay').classList.remove('show');
+    startMode('daily', true);
+  });
+  document.getElementById('daily-repeat-no-btn').addEventListener('click', () => {
+    document.getElementById('daily-repeat-overlay').classList.remove('show');
+  });
+
+  const partyRange = document.getElementById('party-riddle-range');
+  const partyCount = document.getElementById('party-riddle-count');
+  const clampPartyCount = value => Math.max(3, Math.min(100, Number(value) || 4));
+  const updatePartyRangeProgress = () => {
+    const progress = ((Number(partyRange.value) - 3) / 97) * 100;
+    partyRange.style.setProperty('--party-range-progress', `${progress}%`);
+  };
+  updatePartyRangeProgress();
+  partyRange.addEventListener('input', () => {
+    partyCount.value = partyRange.value;
+    updatePartyRangeProgress();
+  });
+  partyCount.addEventListener('input', () => {
+    const value = clampPartyCount(partyCount.value);
+    partyRange.value = value;
+    updatePartyRangeProgress();
+  });
+  partyCount.addEventListener('change', () => {
+    partyCount.value = clampPartyCount(partyCount.value);
+    partyRange.value = partyCount.value;
+    updatePartyRangeProgress();
+  });
+  document.getElementById('party-setup-cancel-btn').addEventListener('click', () => {
+    document.getElementById('party-setup-overlay').classList.remove('show');
+  });
+  document.getElementById('party-start-btn').addEventListener('click', () => {
+    const count = clampPartyCount(partyCount.value);
+    const first = document.getElementById('party-player-1').value.trim() || 'Spēlētājs 1';
+    const second = document.getElementById('party-player-2').value.trim() || 'Spēlētājs 2';
+    partyCount.value = count;
+    partyRange.value = count;
+    updatePartyRangeProgress();
+    document.getElementById('party-setup-overlay').classList.remove('show');
+    beginPartyGame([first, second], count);
+  });
+  document.getElementById('party-ready-btn').addEventListener('click', () => {
+    document.getElementById('party-pass-overlay').classList.remove('show');
+    loadPartyTurn();
+  });
+
+  document.getElementById('copy-btn').addEventListener('click', copyShare);
+  document.getElementById('open-feedback-btn').addEventListener('click', showFeedbackOverlay);
+  document.getElementById('feedback-close-btn').addEventListener('click', hideFeedbackOverlay);
+  document.getElementById('feedback-skip-btn').addEventListener('click', hideFeedbackOverlay);
+  document.getElementById('feedback-submit-btn').addEventListener('click', submitGameFeedback);
+  document.querySelectorAll('.rating-option').forEach(button => {
+    button.addEventListener('click', () => selectSurveyOption('.rating-option', button.dataset.rating, 'rating', 'rating'));
+  });
+  document.querySelectorAll('.age-option').forEach(button => {
+    button.addEventListener('click', () => selectSurveyOption('.age-option', button.dataset.age, 'ageGroup', 'age'));
+  });
+  document.querySelectorAll('#research-overlay .research-fieldset').forEach(fieldset => {
+    fieldset.querySelectorAll('.research-options button').forEach(button => {
+      button.addEventListener('click', () => {
+        state.researchAnswers[fieldset.dataset.question] = button.dataset.value;
+        fieldset.querySelectorAll('.research-options button').forEach(option => {
+          option.classList.toggle('selected', option === button);
+        });
+      });
+    });
+  });
+  document.getElementById('research-submit-btn').addEventListener('click', () => submitResearchQuestions(false));
+  document.getElementById('research-skip-btn').addEventListener('click', () => submitResearchQuestions(true));
+  document.getElementById('final-close-btn').addEventListener('click', returnToLandingFromFinal);
+  document.getElementById('fo-new-game-btn').addEventListener('click', returnToLandingFromFinal);
+
+  document.getElementById('bo-yes-btn').addEventListener('click', () => {
+    hideBonusOverlay();
+    startBonusRound();
+  });
+  document.getElementById('bo-no-btn').addEventListener('click', showFinalResults);
+
+  document.getElementById('co-continue-btn').addEventListener('click', () => {
+    hideContinueOverlay();
+    loadSavedProgress();
+  });
+  document.getElementById('co-restart-btn').addEventListener('click', () => {
+    hideContinueOverlay();
+    clearProgress();
+    renderLockedGrid();
+    lockGame();
+  });
+
+  document.getElementById('ro-confirm-btn').addEventListener('click', doRestart);
+  document.getElementById('ro-cancel-btn').addEventListener('click', hideRestart);
+
+  initGridInput(checkWord);
+}
+
+function checkAboutDeepLink() {
+  if (window.location.hash === '#about') {
+    document.body.classList.add('about-open');
+    document.getElementById('app-shell').style.display = 'none';
+    document.getElementById('start-screen').style.display = 'none';
+    document.querySelector('.site-footer').style.display = '';
+    document.getElementById('about-screen').style.display = 'block';
+  }
+}
+
+function checkContinuePrompt() {
+  const data = readSavedProgress();
+  if (!data) return;
+  const desc = document.getElementById('co-desc');
+  if (desc) {
+    desc.textContent =
+      `${MODE_NAMES[data.gameMode] || ''} · ${data.currentLevel || 1}. līmenis · ${(data.totalScore || 0).toLocaleString('lv-LV')} punkti`;
+  }
+  document.getElementById('continue-overlay').classList.add('show');
+}
+
+function init() {
+  console.log('Latviešu tautas mīklu režģis');
+  initTheme();
+  initFontSizeControls();
+  renderLockedGrid();
+  lockGame();
+  wireEvents();
+  loadRiddlesFromSheets(() => updateDailyModeSummary());
+  checkAboutDeepLink();
+  checkContinuePrompt();
+  flushAnalyticsQueue();
+  setInterval(renderTimer, 1000);
+  window.addEventListener('online', flushAnalyticsQueue);
+  window.addEventListener('resize', () => {
+    const grid = document.getElementById('grid');
+    if (grid) delete grid.dataset.cellSize;
+    if (document.getElementById('lock-overlay').classList.contains('hidden')) {
+      if (state.grid && state.grid.length) {
+        renderGrid();
+        renderWordTags();
+      }
+    } else {
+      renderLockedGrid();
+    }
+  });
+  window.addEventListener('orientationchange', () => {
+    window.setTimeout(() => {
+      const grid = document.getElementById('grid');
+      if (grid) delete grid.dataset.cellSize;
+      if (state.grid && state.grid.length) {
+        renderGrid();
+        renderWordTags();
+      }
+    }, 180);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
