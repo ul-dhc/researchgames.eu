@@ -769,7 +769,7 @@ main>section.section-settle{animation:none}
   .dna-research-mobile-heading{padding:23px 22px 18px;border-bottom:1px solid rgba(54,131,134,.3)}
   .dna-research-mobile-heading h2{margin:8px 0 0!important;font-size:clamp(34px,10vw,44px)!important;line-height:.98!important}
   .dna-research-mobile-heading>p:last-child{margin:11px 0 0;color:#12cfc5;font-size:14px;line-height:1.45}
-  .dna-research-mobile-profile{display:grid;grid-template-columns:minmax(116px,36%) 1fr;gap:16px;align-items:center;padding:20px 22px}
+  .dna-research-mobile-profile{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;padding:20px 22px}
   .dna-research-mobile-profile img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center;border:1px solid #285d63;border-radius:10px}
   .dna-research-mobile-profile blockquote{margin:0;padding:1px 0 1px 14px;border-left:2px solid #18d0c3;color:#e0e9e9;font-size:15px;line-height:1.48}
   .dna-research-mobile-evidence{display:grid;grid-template-columns:1fr 92px;gap:14px;align-items:center;padding:19px 22px;border-top:1px solid rgba(54,131,134,.32);background:rgba(4,20,26,.72)}
