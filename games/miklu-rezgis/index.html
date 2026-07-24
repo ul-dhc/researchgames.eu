@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20260724-source-2">
+<link rel="stylesheet" href="css/style.css?v=20260724-source-6">
 </head>
 <body>
 
@@ -137,7 +137,7 @@
         <img class="brand-mark start-mark" src="assets/miklu-rezgis-mark.svg" alt="">
         <h1>Mīklu režģis</h1>
       </div>
-      <p class="start-lead">Atmini mīklu.<br>Atrodi atbildi režģī.</p>
+      <p class="start-lead">Atmini mīklu.<br>Atrodi atbildi burtu režģī.</p>
     </div>
 
     <div class="start-modes">
@@ -258,6 +258,13 @@
           <div class="mikla-body">
             <span class="mikla-label">Mīkla <span id="mikla-num"></span></span>
             <div id="riddle-text" class="mikla-text">Izvēlies spēles versiju un nospied "Sākt spēli", lai atklātu pirmo mīklu.</div>
+            <div id="riddle-meta" class="mikla-meta" hidden>
+              <svg width="13" height="13" aria-hidden="true"><use href="#i-component"></use></svg>
+              <div class="mikla-meta-content">
+                <span id="riddle-meta-text"></span>
+                <span id="riddle-unit-number" class="riddle-unit-number" hidden></span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -279,14 +286,6 @@
             <button id="next-btn" class="btn btn-primary" disabled>
               Nākamā <svg width="15" height="15"><use href="#i-arrow-right"/></svg>
             </button>
-            <div id="riddle-meta" class="mikla-meta" hidden>
-              <svg width="13" height="13" aria-hidden="true"><use href="#i-component"></use></svg>
-              <div class="mikla-meta-content">
-                <span id="riddle-meta-text"></span>
-                <span id="riddle-unit-number" class="riddle-unit-number" hidden></span>
-                <a id="riddle-source-link" class="riddle-source-link" href="#" target="_blank" rel="noopener" hidden></a>
-              </div>
-            </div>
           </div>
           <div id="grid-wrap">
             <p id="drag-instruction" class="instruction-line grid-drag-instruction">Turiet un velciet pa burtiem, lai iezīmētu vārdu</p>
@@ -570,6 +569,6 @@
 </div>
 
 <script src="js/riddleDatasetIds.js?v=20260724-source-meta-2"></script>
-<script src="js/app.js?v=20260724-source-meta-5"></script>
+<script src="js/app.js?v=20260724-source-meta-6"></script>
 </body>
 </html>
