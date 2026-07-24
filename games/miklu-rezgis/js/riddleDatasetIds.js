@@ -1,0 +1,931 @@
+'use strict';
+
+const RIDDLE_DATASET_METADATA = Object.freeze({
+  "aka bez dibena.": {
+    "gameId": "MR-0001",
+    "unitNumber": "LFK 1227, 13",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430330",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "akmeņa kājas, koka rumpis, salmu cepure.": {
+    "gameId": "MR-0002",
+    "unitNumber": "LFK 1602, 1029",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2008187",
+    "teller": "",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Ērberģe, Mazzalves pagasts",
+    "year": "1937"
+  },
+  "apaļš kā rullis, sarkans kā bullis, šķēres padusē.": {
+    "gameId": "MR-0003",
+    "unitNumber": "LFK 717, 228",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423914",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "ar kājām min, ar vēderu trin – papleš un iebāž.": {
+    "gameId": "MR-0004",
+    "unitNumber": "LFK 717, 479",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425581",
+    "teller": "Kristīne Jurciņa",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1928"
+  },
+  "arājs ar tīrumā samta svārki mugurā.": {
+    "gameId": "MR-0005",
+    "unitNumber": "LFK 1602, 3029",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2028512",
+    "teller": "Ansis Landbergs un Anna Landberga",
+    "recorder": "",
+    "place": "Remtes pagasts, Saldus novads",
+    "year": "1938"
+  },
+  "avens vērša vēderā.": {
+    "gameId": "MR-0006",
+    "unitNumber": "LFK 727, 335",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1398307/LFK-727-335",
+    "teller": "Anna Rūnika",
+    "recorder": "Vilma Rūnika",
+    "place": "\"Mežgravas\", Mālpils pagasts",
+    "year": "1928"
+  },
+  "balta zeme, melna sēkla.": {
+    "gameId": "MR-0007",
+    "unitNumber": "LFK 1602, 3090",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2028575",
+    "teller": "Ansis Landbergs un Anna Landberga",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Remtes pagasts, Saldus novads",
+    "year": "1938"
+  },
+  "balta, balta baznīciņa, ne logi, ne durvis. ubags vidū dzied.": {
+    "gameId": "MR-0008",
+    "unitNumber": "LFK 1227, 14",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430331",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "bez rokām, bez cirvja uztaisa mājiņu.": {
+    "gameId": "MR-0009",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "caurums pie cauruma, bet tomēr stipris.": {
+    "gameId": "MR-0010",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "cērt ledu, uzcērt sudrabu, cērt sudrabu, uzcērt zeltu.": {
+    "gameId": "MR-0011",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "cik vajag naglu labi apkaltam zirgam?": {
+    "gameId": "MR-0012",
+    "unitNumber": "LFK 717, 1122",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666869",
+    "teller": "Ede Eilande",
+    "recorder": "Vilma Greble",
+    "place": "Praulienas pagasts",
+    "year": "1950"
+  },
+  "četri brāļi iet pa ceļu, visiem bārdas atpakaļ.": {
+    "gameId": "MR-0013",
+    "unitNumber": "LFK 717, 241",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423927",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "četri mācītāji zem vienas cepures.": {
+    "gameId": "MR-0014",
+    "unitNumber": "LFK 717, 316",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425193",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "četri taisa vietu, divi rāda uguni, viens pats apgulstas.": {
+    "gameId": "MR-0015",
+    "unitNumber": "LFK 1602, 3010",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2028492",
+    "teller": "Ansis Landbergs un Anna Landberga",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Remtes pagasts, Saldus novads",
+    "year": "1938"
+  },
+  "div pilnas laktiņas baltu vistiņu.": {
+    "gameId": "MR-0016",
+    "unitNumber": "LFK 1227, 8",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430325",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "divas ielas bērza malkas, vidū elkšņa pagale.": {
+    "gameId": "MR-0017",
+    "unitNumber": "LFK 717, 313",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425189",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "divas māsiņas viena vienā ceļa malā, otra otrā. viena otru neredz.": {
+    "gameId": "MR-0018",
+    "unitNumber": "LFK 1895, 194",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2053650",
+    "teller": "Alma Ancelāne",
+    "recorder": "Alma Ancelāne",
+    "place": "Nereta, Neretas pagasts",
+    "year": "1952-1962"
+  },
+  "divi dur, divi vēzās.": {
+    "gameId": "MR-0019",
+    "unitNumber": "LFK 717, 1033",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666168",
+    "teller": "Kristīne Greble",
+    "recorder": "Vilma Greble",
+    "place": "Kalncempju pagasts",
+    "year": "1950"
+  },
+  "divi mazi zirnīši apsēj visu pasauli.": {
+    "gameId": "MR-0020",
+    "unitNumber": "LFK 1602, 1102",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2008260",
+    "teller": "",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Ērberģe, Mazzalves pagasts",
+    "year": "1937"
+  },
+  "divi rulles, divi tulles, četri zemes mērītāji, devīts kaŗa vajātājs.": {
+    "gameId": "MR-0021",
+    "unitNumber": "LFK 717, 486",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425599",
+    "teller": "Kristīne Jurciņa",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1928"
+  },
+  "dzelža cūciņa, pakala astīte.": {
+    "gameId": "MR-0022",
+    "unitNumber": "LFK 1602, 3028",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2028511",
+    "teller": "Ansis Landsbergs un Anna Landsberga",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Remtes pagasts, Saldus novads",
+    "year": "1938"
+  },
+  "ej tu pa vienu pusi, es iešu pa otru pusi, un uz putras kalna satiksimies.": {
+    "gameId": "MR-0023",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "galds runā – saime klusē.": {
+    "gameId": "MR-0024",
+    "unitNumber": "LFK 717, 309",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425181",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "ielāps uz ielāpa nav ielāp, zied kā puķe nav puķe.": {
+    "gameId": "MR-0025",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "ik rītus viešiņa pa istabu skrien.": {
+    "gameId": "MR-0026",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "jo atņem – top lielāks, liek klāt – mazāks.": {
+    "gameId": "MR-0027",
+    "unitNumber": "LFK 717, 1120",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666866",
+    "teller": "Ede Eilande",
+    "recorder": "Vilma Greble",
+    "place": "Praulienas pagasts",
+    "year": "1950"
+  },
+  "jo cūciņa skrien, jo barojas.": {
+    "gameId": "MR-0028",
+    "unitNumber": "LFK 717, 235",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423921",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "kad es biju maziņa, man bij balta kleitiņa. nu es esmu liela – mana sirds ir tik cieta kā akmens.": {
+    "gameId": "MR-0029",
+    "unitNumber": "LFK 717, 221",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423906",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "kas dara raudas bez gaudām?": {
+    "gameId": "MR-0030",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "kas iet uz galvas baznīcā?": {
+    "gameId": "MR-0031",
+    "unitNumber": "LFK 717, 481",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425587",
+    "teller": "Kristīne Jurciņa",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1928"
+  },
+  "kas stāv pie griestiem ar kājām uz augšu?": {
+    "gameId": "MR-0032",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "kas taisa tiltu bez neviena baļķa.": {
+    "gameId": "MR-0033",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "kas tas par suni, kas tikai septītā dienā rej.": {
+    "gameId": "MR-0034",
+    "unitNumber": "LFK 717, 1030",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666165",
+    "teller": "Kristīne Greble",
+    "recorder": "Vilma Greble",
+    "place": "Kalncempju pagasts",
+    "year": "1950"
+  },
+  "kas ziemu nesalst un vasaru neizkūst.": {
+    "gameId": "MR-0035",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "kāpi, puisīti, man virsū, krati, grūsti – tev būs labums, man būs vieglums.": {
+    "gameId": "MR-0036",
+    "unitNumber": "LFK 717, 234",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423920",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "krustiem šķērsiem kauli likti, pati miesa cauri spīd.": {
+    "gameId": "MR-0037",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "kur gailis lec, kad gadu vecs?": {
+    "gameId": "MR-0038",
+    "unitNumber": "LFK 717, 1123",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666870",
+    "teller": "Ede Eilande",
+    "recorder": "Vilma Greble",
+    "place": "Praulienas pagasts",
+    "year": "1950"
+  },
+  "kurā krūzē nevar ieliet ūdeni?": {
+    "gameId": "MR-0039",
+    "unitNumber": "LFK 717, 1121",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666867",
+    "teller": "Ede Eilande",
+    "recorder": "Vilma Greble",
+    "place": "Praulienas pagasts",
+    "year": "1950"
+  },
+  "lec kā zaķis, nav zaķis. peld kā zivs, nav zivs.": {
+    "gameId": "MR-0040",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "liels, liels putns tīruma galā, spārnus vien plīvina aizlaisties nevar.": {
+    "gameId": "MR-0041",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "līdaka aizskrēja, līdaka atskrēja. daugava sasala trinkšķēdama.": {
+    "gameId": "MR-0042",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza muciņa divejāds alutiņš.": {
+    "gameId": "MR-0043",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza, maza mājiņa stāv uz tievas kājiņas. simtu kambaru, katrā kambarī pa simts mamzelīšu.": {
+    "gameId": "MR-0044",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza, maza mājiņa, ne tai logu, ne durvju.": {
+    "gameId": "MR-0045",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza, maza muciņa, melns alutiņš.": {
+    "gameId": "MR-0046",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza, maza sieviņa franciski runā.": {
+    "gameId": "MR-0047",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "maza, maza sieviņa simtu miču galvā.": {
+    "gameId": "MR-0048",
+    "unitNumber": "LFK 1227, 15",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430332",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "mazs, mazs sunītis simts adatu mugurā.": {
+    "gameId": "MR-0049",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mazs, mazs vīriņš līkām kājām zaļi svārki mugurā.": {
+    "gameId": "MR-0050",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mazs, mazs vīriņš, ass, ass cirvīts.": {
+    "gameId": "MR-0051",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mazs, mazs vīriņš, deviņas ādiņas. kas tās dīrās, tas gauži raudās.": {
+    "gameId": "MR-0052",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mazs, mazs zirdziņš, dienu nakti jājams.": {
+    "gameId": "MR-0053",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "melns dejo, melns lec, pēdas vien nepaliek.": {
+    "gameId": "MR-0054",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "melns pirtī ienāk, sarkans iznāk.": {
+    "gameId": "MR-0055",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mežā dzimis, mežā audzis – pārnāk mājās – cilā asti.": {
+    "gameId": "MR-0056",
+    "unitNumber": "LFK 717, 485",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425597",
+    "teller": "Kristīne Jurciņa",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1928"
+  },
+  "mežā dzimis, mežā audzis, atnāk mājā par saimnieku būt.": {
+    "gameId": "MR-0057",
+    "unitNumber": "LFK 1227, 11",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430328",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "mežā dzimis, mežā audzis, pārnāk mājās, gauži raud.": {
+    "gameId": "MR-0058",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mežs kalnā. es lejā. es par mežu lielāks.": {
+    "gameId": "MR-0059",
+    "unitNumber": "LFK 1227, 5",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430322",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "mēness skala galā.": {
+    "gameId": "MR-0060",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "mūsu pašu lielam kungam lūku ritens uz pakaļas.": {
+    "gameId": "MR-0061",
+    "unitNumber": "LFK 717, 883",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1665268",
+    "teller": "Kristīne Greble",
+    "recorder": "Vilma Greble",
+    "place": "Kalncempju pagasts",
+    "year": "1948"
+  },
+  "nasta pūš – nesējs nē.": {
+    "gameId": "MR-0062",
+    "unitNumber": "LFK 717, 311",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425186",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "ne čiku, ne grabu, labrīt pie loga.": {
+    "gameId": "MR-0063",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "ozola dēlīts purviņā mirkst.": {
+    "gameId": "MR-0064",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "pa dienu apkārt staigā, pa nakti karājas.": {
+    "gameId": "MR-0065",
+    "unitNumber": "LFK 717, 797",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1664300",
+    "teller": "Vilis Eglītis",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1948"
+  },
+  "pakulu ķēve – linu aste.": {
+    "gameId": "MR-0066",
+    "unitNumber": "LFK 717, 319",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425196",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "papriekš bērni dzimst, tad tik māte.": {
+    "gameId": "MR-0067",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "papriekš sarkans un tad melns.": {
+    "gameId": "MR-0068",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "pārcērt ledu, atrod sudrabu. pārcērt sudrabu, atrod zeltu.": {
+    "gameId": "MR-0069",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "pelēka aitiņa – astīte sānos.": {
+    "gameId": "MR-0070",
+    "unitNumber": "LFK 717, 221a",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423907",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "pēdu garš, tomēr pēda nav.": {
+    "gameId": "MR-0071",
+    "unitNumber": "LFK 717, 1119",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666864",
+    "teller": "Ede Eilande",
+    "recorder": "Vilma Greble",
+    "place": "Praulienas pagasts",
+    "year": "1950"
+  },
+  "pieci baļķi māju taisa visi pieci atliekās.": {
+    "gameId": "MR-0072",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "pieci kambari, vienas durvis.": {
+    "gameId": "MR-0073",
+    "unitNumber": "LFK 1227, 9",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430326",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "pilna kūtiņa sarkanu aitiņu, ieiet garais izvajā!": {
+    "gameId": "MR-0074",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "pīpīts lēca, pīpīts deja, pīpa pēdu nepazina.": {
+    "gameId": "MR-0075",
+    "unitNumber": "LFK 717, 484",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425595",
+    "teller": "Kristīne Jurciņa",
+    "recorder": "Vilma Greble",
+    "place": "Litene",
+    "year": "1928"
+  },
+  "plikais līkais karājās, spalvainais lūrējās.": {
+    "gameId": "MR-0076",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sarkana cūciņa astru astīte.": {
+    "gameId": "MR-0077",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sarkana telīte astē piesieta.": {
+    "gameId": "MR-0078",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sarkans gailis zemē dzied.": {
+    "gameId": "MR-0079",
+    "unitNumber": "LFK 1227, 4",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430321",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "sarkans suns lēkā aiz kaula sētiņas.": {
+    "gameId": "MR-0080",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sarkans vīriņš, zaļa bārdiņa.": {
+    "gameId": "MR-0081",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sešders siekstu kustināja.": {
+    "gameId": "MR-0082",
+    "unitNumber": "LFK 717, 223",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423909",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "simtacs gāja viesus lūgt.": {
+    "gameId": "MR-0083",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "sprunguļu muižiņa, simtu, simtu cilvēciņu.": {
+    "gameId": "MR-0084",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "stabiņš sūnās, galdiņš virsū.": {
+    "gameId": "MR-0085",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "šmurgulīts ar vienu ausi.": {
+    "gameId": "MR-0086",
+    "unitNumber": "LFK 717, 306",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425177",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "tālāk nosviežu kā noeju.": {
+    "gameId": "MR-0087",
+    "unitNumber": "LFK 1227, 17",
+    "sourceUrl": "https://garamantas.lv/lv/unit/430334",
+    "teller": "",
+    "recorder": "",
+    "place": "Rudbāržu pagasts",
+    "year": "1930"
+  },
+  "teļš bez mēles kalnu starpā bļauj.": {
+    "gameId": "MR-0088",
+    "unitNumber": "LFK 717, 314",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425191",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Kalniena, Stāmerienas pagasts",
+    "year": "1928"
+  },
+  "tēvs vēl nav dzimis, jau dēls skursteņa galā.": {
+    "gameId": "MR-0089",
+    "unitNumber": "LFK 717, 230",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423916",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "tieva gaŗa freilenīte – tālu spļauj.": {
+    "gameId": "MR-0090",
+    "unitNumber": "LFK 717, 225",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423911",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "tieva, gaŗa jumprava – utu pilna galva.": {
+    "gameId": "MR-0091",
+    "unitNumber": "LFK 717, 318",
+    "sourceUrl": "https://garamantas.lv/lv/unit/425195",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "",
+    "year": "1928"
+  },
+  "velns iet pa riju, boms mugurā.": {
+    "gameId": "MR-0092",
+    "unitNumber": "LFK 717, 1027",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1666160",
+    "teller": "Kristīne Greble",
+    "recorder": "Vilma Greble",
+    "place": "Kalncempju pagasts",
+    "year": "1950"
+  },
+  "vēl zirgs nav sajūgts, jau stāvus.": {
+    "gameId": "MR-0093",
+    "unitNumber": "LFK 717, 236",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423922",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "vienā galā tā kā kārts, otrā galā tā kā ķeksis, vidū kā kumoss, danco kā jaunava.": {
+    "gameId": "MR-0094",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "viņa viņu mīl, viņš viņu nemīl. ja viņa viņu atrod, tad viņa ir laimīga, bet ja viņš viņu atrod, tad viņai ir nāve.": {
+    "gameId": "MR-0095",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "viņā zemē zirgu jūdzu, šai zemē loks atsprāga.": {
+    "gameId": "MR-0096",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "vīrs brauc pa mežu – zarnas klēpī.": {
+    "gameId": "MR-0097",
+    "unitNumber": "LFK 717, 240",
+    "sourceUrl": "https://garamantas.lv/lv/unit/423926",
+    "teller": "Dore Vanaga",
+    "recorder": "Vilma Greble",
+    "place": "Alsviķi",
+    "year": "1928"
+  },
+  "vīrs niķu niķiem svārks stiķu stiķiem; kaula seja, gaļas bārda.": {
+    "gameId": "MR-0098",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "vīrs sēd uz jumta un pīpē.": {
+    "gameId": "MR-0099",
+    "unitNumber": "",
+    "sourceUrl": "",
+    "teller": "",
+    "recorder": "",
+    "place": "",
+    "year": ""
+  },
+  "zila govis zemi laiza.": {
+    "gameId": "MR-0100",
+    "unitNumber": "LFK 1219, 23",
+    "sourceUrl": "https://garamantas.lv/lv/unit/363169/LFK-1219-23",
+    "teller": "",
+    "recorder": "",
+    "place": "Krišjāņi, Krišjāņu pagasts, Balvu novads",
+    "year": "1930"
+  },
+  "tieva mana kājiņa, maza mana galviņa, bet kad meitas ģērbties sāk, bez manis maz ko darīt māk.": {
+    "gameId": "MR-0101",
+    "unitNumber": "LFK 727, 294",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1398237",
+    "teller": "Anna Rūnika",
+    "recorder": "",
+    "place": "Mālpils pagasts",
+    "year": "1928"
+  },
+  "pelēks auns cauru muguru apēd visu vasaras krājumu.": {
+    "gameId": "MR-0102",
+    "unitNumber": "LFK 1508, 31",
+    "sourceUrl": "https://garamantas.lv/lv/unit/1427355",
+    "teller": "R. Vanags",
+    "recorder": "",
+    "place": "Dzelzava",
+    "year": "1936"
+  },
+  "ne ugunī deg, ne ūdenī slīkst.": {
+    "gameId": "MR-0103",
+    "unitNumber": "LFK 1602, 802",
+    "sourceUrl": "https://garamantas.lv/lv/unit/2007937",
+    "teller": "K. Uļģe",
+    "recorder": "Alfrēds Kvālis",
+    "place": "Salas pagasts, Jēkabpils novads",
+    "year": "1937"
+  }
+});
