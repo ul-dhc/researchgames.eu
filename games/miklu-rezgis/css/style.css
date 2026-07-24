@@ -1,3 +1,4 @@
+
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0A0C14;
@@ -314,7 +315,7 @@ html[data-theme="light"] .research-options button{background:#f5f8f9;}
 .overlay-title{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--ink);margin-bottom:.5rem;}
 .overlay-score{font-size:24px;font-weight:800;color:var(--ink);margin:.25rem 0;}
 .overlay-badge{font-size:12.5px;font-weight:800;color:var(--accent-dim);margin-bottom:.75rem;letter-spacing:.04em;text-transform:uppercase;}
-.overlay-msg{font-size:14px;color:var(--ink-muted);margin-bottom:1rem;line-height:1.65;}
+.overlay-msg{font-size:14px;color:var(--ink-muted);margin-bottom:1rem;line-height:1.65;white-space:pre-line;}
 .overlay-btn-primary{
   font-family:var(--font-body);font-weight:800;font-size:14px;padding:11px 24px;border-radius:11px;
   border:none;background:var(--accent);color:#0A0C14;cursor:pointer;width:100%;margin-bottom:8px;
