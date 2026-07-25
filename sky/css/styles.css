@@ -345,12 +345,15 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .livonian .fact-icon{color:#67d4aa;border-color:#3c7569}
 .game-collections{margin:0 0 16px}
 .game-collections p{margin:0 0 7px;color:#bec1cb;font-size:11px}
-.game-collections span{display:inline-flex;align-items:center;min-height:28px;margin:0 5px 5px 0;padding:5px 10px;border:1px solid #56447a;border-radius:20px;background:#7f5ce512;color:#d8ccfb;font-size:10px;font-weight:500}
-.livonian .game-collections span{border-color:#316a5c;background:#39a97b12;color:#a9e9d0}
+.game-collections span,.game-collections a{display:inline-flex;align-items:center;min-height:28px;margin:0 5px 5px 0;padding:5px 10px;border:1px solid;border-radius:20px;font-size:10px;font-weight:500;line-height:1.1;text-decoration:none!important}
+.game-collections .tag-thematic{border-color:#745db4;background:rgba(62,45,112,.62);color:#d6cbff}
+.game-collections .tag-horizontal{border-color:#34836e;background:rgba(19,91,72,.6);color:#9aecd5}
+.game-collections .tag-institutional{border-color:#4778cc;background:rgba(32,72,148,.58);color:#afd0ff}
 [data-theme="light"] .fact-icon{background:#ffffffb8;border-color:#9b91ae;color:#7250b8}
 [data-theme="light"] .livonian .fact-icon{color:#19795a;border-color:#75a794}
-[data-theme="light"] .game-collections span{color:#553c7e;background:#7650b80d}
-[data-theme="light"] .livonian .game-collections span{color:#1c6c52;background:#31906d0d}
+[data-theme="light"] .game-collections .tag-thematic{border-color:#806bb7;background:#eee9fa;color:#514181}
+[data-theme="light"] .game-collections .tag-horizontal{border-color:#4d8b79;background:#e3f2ed;color:#285f51}
+[data-theme="light"] .game-collections .tag-institutional{border-color:#6280b9;background:#e6edf9;color:#365c91}
 
 .process{padding-bottom:clamp(28px,4vw,52px)}
 .researcher-callout{padding-top:0}
@@ -662,7 +665,7 @@ main>section.section-settle{animation:none}
 .research-collab__materials>span{display:inline-flex;align-items:center;gap:9px;min-width:0;padding:10px 15px;border:1px solid #51466d;border-radius:999px;background:linear-gradient(110deg,rgba(48,39,73,.52),rgba(25,28,51,.46));color:#d7cfeb;font-size:13px;white-space:nowrap;transition:transform .22s ease,border-color .22s ease,background-color .22s ease,box-shadow .22s ease,color .22s ease}
 .research-collab__materials>span:hover{transform:translateY(-2px);border-color:#9b69ca;background:linear-gradient(110deg,rgba(79,55,112,.64),rgba(35,38,70,.58));color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.2),0 0 20px rgba(169,83,220,.1)}
 .research-collab__materials svg{width:16px;height:16px;fill:none;stroke:#bd73eb;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s ease,stroke .22s ease}.research-collab__materials>span:hover svg{stroke:#d99af7;transform:scale(1.08)}
-.game-collections .institution-tag{display:inline-flex;align-items:center;gap:6px;width:max-content;padding:6px 10px;border:1px solid #665b94;border-radius:999px;background:rgba(54,43,91,.62);color:#cfc6f4;font-size:11px;line-height:1.1;text-decoration:none!important;white-space:nowrap;transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}.game-collections .institution-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.game-collections .institution-tag b{font-size:13px;text-decoration:none}.game-collections .institution-tag:hover{transform:translateY(-2px);border-color:#8e7bd1;background:rgba(72,57,119,.78);box-shadow:0 8px 20px rgba(66,48,123,.2);text-decoration:none}
+.game-collections .institution-tag{width:max-content;white-space:nowrap;transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}.game-collections .institution-tag:hover{transform:translateY(-2px);border-color:#75a0ee;background:rgba(42,87,174,.72);box-shadow:0 8px 20px rgba(40,76,155,.24);text-decoration:none}
 .research-collab__process{display:flex;flex-direction:column;justify-content:center}
 .research-collab__process-header>p{margin:0;color:#c17bf1;font-size:12px;font-weight:650;letter-spacing:.18em;text-transform:uppercase}
 .research-collab__process-header h3{max-width:690px;margin:15px 0 0;color:#bbc0cc;font-size:clamp(18px,1.45vw,22px);font-weight:400;line-height:1.5}

@@ -30,7 +30,7 @@
 .collection-game__content{display:flex;flex-direction:column;padding:clamp(34px,4.5vw,68px)}
 .collection-game__type{margin:0 0 18px;color:#9d8dff!important;font-size:12px!important;font-weight:650;letter-spacing:.15em;text-transform:uppercase}
 .collection-game__content h3{margin:0;font-size:clamp(38px,4vw,64px);font-weight:500;line-height:.98;letter-spacing:-.05em}.collection-game__content>p{margin:28px 0 0;color:#aeb5c3;font-size:16px;line-height:1.7}
-.collection-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}.collection-tags span{padding:8px 12px;border:1px solid #4c4770;border-radius:999px;background:#211d3a66;color:#d3cef3;font-size:12px}.collection-game--livonian .collection-tags span{border-color:#51468c;background:#251f4a80;color:#c9c0ff}.collection-game--riddles .collection-tags span{border-color:#276957;background:#103f3880;color:#9be8d1}.collection-tags .citizen-science{border-color:#3ea68b!important;background:#155447!important;color:#d1fff2!important;box-shadow:0 0 16px rgba(53,213,174,.09)}
+.collection-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}.collection-tags span,.collection-tags a{padding:8px 12px;border:1px solid #4c4770;border-radius:999px;background:#211d3a66;color:#d3cef3;font-size:12px;text-decoration:none}.collection-tags .citizen-science{border-color:#3ea68b!important;background:#155447!important;color:#d1fff2!important;box-shadow:0 0 16px rgba(53,213,174,.09)}
 .collection-partners{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:28px}
 .collection-partner{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:30px}.collection-partners .collection-partner{margin:0;padding:16px;border:1px solid #273246;border-radius:10px;background:#0a101d}
 .collection-partner img{width:76px;height:48px;object-fit:contain;filter:grayscale(1) brightness(2)}.collection-partner p{margin:0;color:#d7dbe4;font-size:12px;line-height:1.4}.collection-partner small{display:block;margin-bottom:3px;color:#7f899d;font-size:9px;letter-spacing:.09em;text-transform:uppercase}.collection-partner--garamantas img{width:92px}
@@ -68,14 +68,15 @@
 .collection-game--riddles .collection-game__visual:hover .collection-game__play,.collection-game--riddles .collection-game__visual:focus-visible .collection-game__play{border-color:#3ec6a6;box-shadow:0 8px 26px rgba(42,177,147,.2)}
 .collection-game__visual:hover .collection-game__play b,.collection-game__visual:focus-visible .collection-game__play b{transform:translate(3px,-3px)}
 .collection-game__visual:focus-visible{outline:2px solid #8b7bf0;outline-offset:3px}
-.collection-tags span{padding:8px 12px;font-size:11px;letter-spacing:.01em}
-.collection-game .collection-tags span.tag-thematic{border-color:#745db4;background:rgba(62,45,112,.62);color:#d6cbff}
-.collection-game .collection-tags span.tag-horizontal{border-color:#34836e;background:rgba(19,91,72,.6);color:#9aecd5}
-.collection-game .collection-tags span.tag-institutional{border-color:#4778cc;background:rgba(32,72,148,.58);color:#afd0ff}
+.collection-tags span,.collection-tags a{padding:8px 12px;font-size:11px;letter-spacing:.01em}
+.collection-game .collection-tags .tag-thematic{border-color:#745db4;background:rgba(62,45,112,.62);color:#d6cbff}
+.collection-game .collection-tags .tag-horizontal{border-color:#34836e;background:rgba(19,91,72,.6);color:#9aecd5}
+.collection-game .collection-tags .tag-institutional{border-color:#4778cc;background:rgba(32,72,148,.58);color:#afd0ff;transition:transform .22s,border-color .22s,background .22s,box-shadow .22s}
+.collection-game .collection-tags .tag-institutional:hover{transform:translateY(-2px);border-color:#75a0ee;background:rgba(42,87,174,.72);box-shadow:0 8px 20px rgba(40,76,155,.24)}
 .collection-game--riddles .collection-game__visual{display:grid;place-items:center;padding:42px 24px 24px}
 .collection-game--riddles .collection-game__visual img{width:94%;height:92%;object-fit:contain;object-position:center;transform:none}
 .collection-game--riddles:hover .collection-game__visual img{transform:scale(1.012)}
-.collection-credits{margin-top:auto;padding-top:32px;border-top:1px solid #263044}
+.collection-credits{margin-top:auto;padding-top:32px}
 .collection-credits p{margin:0;color:#c8ccd6;font-size:13px;line-height:1.5}
 .collection-credits p:not(:first-child){margin-top:17px}
 .collection-credits a{display:inline-flex;gap:7px;margin-top:5px;color:#8f9aaf;font-size:12px;text-decoration:none;transition:color .2s,transform .2s}
@@ -93,13 +94,14 @@
 [data-theme="light"] .collection-university-logo:hover img,[data-theme="light"] .collection-university-logo:focus-visible img{filter:invert(1) drop-shadow(0 12px 24px rgba(84,61,162,.18))}
 [data-theme="light"] .collection-credits{border-color:#d7d3dc}[data-theme="light"] .collection-credits p{color:#454650}[data-theme="light"] .collection-credits a{color:#62569b}
 [data-theme="light"] .research-portal{border-color:#d5d1db}[data-theme="light"] .research-portal>div:last-child>p{color:#5d6270}[data-theme="light"] .research-portal a{border-color:#9488bb;background:rgba(228,222,241,.7);color:#453677}
-[data-theme="light"] .collection-game .collection-tags span.tag-thematic{border-color:#806bb7;background:#eee9fa;color:#514181}
-[data-theme="light"] .collection-game .collection-tags span.tag-horizontal{border-color:#4d8b79;background:#e3f2ed;color:#285f51}
-[data-theme="light"] .collection-game .collection-tags span.tag-institutional{border-color:#6280b9;background:#e6edf9;color:#365c91}
+[data-theme="light"] .collection-game .collection-tags .tag-thematic{border-color:#806bb7;background:#eee9fa;color:#514181}
+[data-theme="light"] .collection-game .collection-tags .tag-horizontal{border-color:#4d8b79;background:#e3f2ed;color:#285f51}
+[data-theme="light"] .collection-game .collection-tags .tag-institutional{border-color:#6280b9;background:#e6edf9;color:#365c91}
 
 @media(max-width:1080px){.collection-university-logo{width:min(100%,560px)}.research-portal{grid-template-columns:1fr;gap:30px}}
 @media(max-width:760px){.collection-university-logo{width:min(100%,480px);padding-block:14px}.collection-summary{gap:24px}.collection-summary strong{font-size:37px}.collection-summary small{font-size:14px}.collection-credits{margin-top:30px}.collection-game__visual .collection-game__play{padding:12px 15px}.collection-game--riddles .collection-game__visual{padding:34px 10px 14px}.collection-game--riddles .collection-game__visual img{width:98%;height:95%}}
 
+/* Hero after removing the optional game selector */
 .collection-hero{grid-template-columns:minmax(0,1fr);min-height:auto}
 .collection-hero__copy{width:100%;max-width:980px}
 .collection-university-logo{width:min(100%,660px)}
