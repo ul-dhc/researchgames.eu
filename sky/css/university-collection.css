@@ -62,25 +62,6 @@
 .collection-summary .summary-partners{color:#a982f0;text-shadow:0 0 22px rgba(169,130,240,.23)}
 .collection-summary span:first-child{color:#41d5b3}.collection-summary span:last-child{color:#a982f0}
 
-.collection-arcade{position:relative;min-height:350px;overflow:hidden;background:transparent;isolation:isolate}
-.arcade-grid{position:absolute;left:0;right:0;top:62px;height:260px;opacity:.42;background-image:linear-gradient(rgba(103,177,222,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(103,177,222,.22) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.collection-arcade:before{content:"";position:absolute;left:0;right:0;top:322px;height:1px;background:linear-gradient(90deg,transparent,rgba(103,177,222,.52) 9%,rgba(103,177,222,.52) 91%,transparent);pointer-events:none}
-.arcade-label{position:absolute;z-index:2;top:25px;left:27px;margin:0;color:#81899b;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
-.arcade-ball{position:absolute;z-index:3;left:0;top:0;width:28px;height:28px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;overflow:hidden;cursor:pointer;color:#fff;will-change:transform;box-shadow:none;transition:filter .2s,transform .2s}
-.arcade-ball:before,.arcade-ball:after{display:none}
-.arcade-ball span{position:relative;z-index:1;font:700 6px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0;text-shadow:none}
-.arcade-ball--livonian{color:#fff;background:#8065e8}
-.arcade-ball--riddles{color:#06251e;background:#43d5b1}
-.arcade-ball:hover,.arcade-ball:focus-visible{filter:brightness(1.14);outline:2px solid rgba(255,255,255,.76);outline-offset:3px;box-shadow:none}
-.arcade-paddle{display:none}
-@keyframes arcade-paddle{0%{transform:translateX(-130px)}100%{transform:translateX(130px)}}
-.arcade-card{position:absolute;z-index:6;left:50%;top:50%;width:min(245px,calc(100% - 42px));padding:16px;border:1px solid rgba(154,143,208,.42);border-radius:9px;background:rgba(8,12,25,.92);box-shadow:0 12px 34px rgba(0,0,0,.42);backdrop-filter:blur(14px);opacity:0;transform:translate(-50%,-46%) scale(.96);transition:opacity .18s,transform .18s}
-.arcade-card.is-open{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.arcade-card__close{position:absolute;right:8px;top:5px;border:0;background:none;color:#9098aa;font-size:18px;cursor:pointer}
-.arcade-card p{margin:0 0 5px;color:#9a89ee;font-size:8px;letter-spacing:.12em;text-transform:uppercase}
-.arcade-card h2{margin:0 24px 12px 0;font-size:18px;font-weight:500;line-height:1.08;letter-spacing:-.03em}
-.arcade-card a{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid #30384c;color:#e9eaff;font-size:11px}
-
 .collection-game__play{border-color:rgba(165,172,194,.42);background:rgba(6,10,20,.78);color:#fff;text-decoration:none!important;transition:transform .25s,border-color .25s,background .25s,box-shadow .25s}
 .collection-game__play b{display:inline-block;text-decoration:none;transition:transform .25s}
 .collection-game__visual:hover .collection-game__play,.collection-game__visual:focus-visible .collection-game__play{transform:translateY(-3px);border-color:#8978eb;background:rgba(20,22,43,.9);box-shadow:0 8px 26px rgba(75,56,172,.23)}
@@ -88,9 +69,9 @@
 .collection-game__visual:hover .collection-game__play b,.collection-game__visual:focus-visible .collection-game__play b{transform:translate(3px,-3px)}
 .collection-game__visual:focus-visible{outline:2px solid #8b7bf0;outline-offset:3px}
 .collection-tags span{padding:8px 12px;font-size:11px;letter-spacing:.01em}
-.collection-tags .tag-thematic{border-color:#6855a5;background:rgba(58,43,104,.54);color:#cfc2ff}
-.collection-tags .tag-horizontal{border-color:#347a69;background:rgba(20,83,68,.54);color:#90e4cc}
-.collection-tags .tag-institutional{border-color:#416fc0;background:rgba(34,70,136,.5);color:#9fc5ff}
+.collection-game .collection-tags span.tag-thematic{border-color:#745db4;background:rgba(62,45,112,.62);color:#d6cbff}
+.collection-game .collection-tags span.tag-horizontal{border-color:#34836e;background:rgba(19,91,72,.6);color:#9aecd5}
+.collection-game .collection-tags span.tag-institutional{border-color:#4778cc;background:rgba(32,72,148,.58);color:#afd0ff}
 .collection-game--riddles .collection-game__visual{display:grid;place-items:center;padding:42px 24px 24px}
 .collection-game--riddles .collection-game__visual img{width:94%;height:92%;object-fit:contain;object-position:center;transform:none}
 .collection-game--riddles:hover .collection-game__visual img{transform:scale(1.012)}
@@ -110,52 +91,15 @@
 
 [data-theme="light"] .collection-university-logo img{filter:invert(1)}
 [data-theme="light"] .collection-university-logo:hover img,[data-theme="light"] .collection-university-logo:focus-visible img{filter:invert(1) drop-shadow(0 12px 24px rgba(84,61,162,.18))}
-[data-theme="light"] .collection-arcade{background:transparent;box-shadow:none}
-[data-theme="light"] .arcade-grid{opacity:.45}[data-theme="light"] .arcade-card{background:rgba(250,249,251,.96);border-color:#c3bad3}[data-theme="light"] .arcade-card h2{color:#171821}[data-theme="light"] .arcade-card a{color:#4d3c91;border-color:#d8d2df}
 [data-theme="light"] .collection-credits{border-color:#d7d3dc}[data-theme="light"] .collection-credits p{color:#454650}[data-theme="light"] .collection-credits a{color:#62569b}
 [data-theme="light"] .research-portal{border-color:#d5d1db}[data-theme="light"] .research-portal>div:last-child>p{color:#5d6270}[data-theme="light"] .research-portal a{border-color:#9488bb;background:rgba(228,222,241,.7);color:#453677}
-[data-theme="light"] .collection-tags .tag-thematic{border-color:#806bb7;background:#eee9fa;color:#514181}
-[data-theme="light"] .collection-tags .tag-horizontal{border-color:#4d8b79;background:#e3f2ed;color:#285f51}
-[data-theme="light"] .collection-tags .tag-institutional{border-color:#6280b9;background:#e6edf9;color:#365c91}
+[data-theme="light"] .collection-game .collection-tags span.tag-thematic{border-color:#806bb7;background:#eee9fa;color:#514181}
+[data-theme="light"] .collection-game .collection-tags span.tag-horizontal{border-color:#4d8b79;background:#e3f2ed;color:#285f51}
+[data-theme="light"] .collection-game .collection-tags span.tag-institutional{border-color:#6280b9;background:#e6edf9;color:#365c91}
 
-@media(max-width:1080px){.collection-university-logo{width:min(100%,560px)}.collection-arcade{min-height:350px}.research-portal{grid-template-columns:1fr;gap:30px}}
-@media(max-width:760px){.collection-university-logo{width:min(100%,480px);padding-block:14px}.collection-summary{gap:24px}.collection-summary strong{font-size:37px}.collection-summary small{font-size:14px}.collection-arcade{min-height:292px}.arcade-label{left:20px;top:16px}.arcade-grid{top:45px;height:228px;background-size:46px 46px}.collection-arcade:before{top:273px}.arcade-ball{width:24px;height:24px}.arcade-ball:before,.arcade-ball:after{height:29px}.collection-credits{margin-top:30px}.collection-game__visual .collection-game__play{padding:12px 15px}.collection-game--riddles .collection-game__visual{padding:34px 10px 14px}.collection-game--riddles .collection-game__visual img{width:98%;height:95%}}
-@media(prefers-reduced-motion:reduce){.arcade-ball,.arcade-paddle{animation:none}}
+@media(max-width:1080px){.collection-university-logo{width:min(100%,560px)}.research-portal{grid-template-columns:1fr;gap:30px}}
+@media(max-width:760px){.collection-university-logo{width:min(100%,480px);padding-block:14px}.collection-summary{gap:24px}.collection-summary strong{font-size:37px}.collection-summary small{font-size:14px}.collection-credits{margin-top:30px}.collection-game__visual .collection-game__play{padding:12px 15px}.collection-game--riddles .collection-game__visual{padding:34px 10px 14px}.collection-game--riddles .collection-game__visual img{width:98%;height:95%}}
 
-/* Borderless Pong collection selector */
-.collection-arcade{position:relative;min-height:440px;overflow:visible;background:transparent;isolation:isolate}
-.collection-arcade:before{content:"";position:absolute;z-index:-1;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 4px);opacity:.5;pointer-events:none;animation:pong-flicker 8s steps(1,end) infinite}
-@keyframes pong-flicker{0%,96%,100%{opacity:.46}97%{opacity:.38}98%{opacity:.5}}
-.arcade-grid,.arcade-paddle,.arcade-card{display:none!important}
-.arcade-label{position:static;margin:0 0 30px;color:#9582ff;font:600 clamp(10px,1vw,13px)/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-align:center;text-transform:uppercase;text-shadow:0 0 10px rgba(126,99,239,.25)}
-.pong-playfield{position:relative;height:275px;margin-inline:10px}
-.pong-centre-line{position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);background:repeating-linear-gradient(to bottom,rgba(119,103,241,.72) 0 10px,transparent 10px 22px);filter:drop-shadow(0 0 3px rgba(119,103,241,.35))}
-.pong-paddle{position:absolute;top:50%;width:7px;height:72px;transform:translateY(-50%);background:currentColor;box-shadow:0 0 10px currentColor;image-rendering:pixelated}
-.pong-paddle--left{left:5px;color:#8465eb}.pong-paddle--right{right:5px;color:#43d5b1}
-.arcade-ball{position:absolute;z-index:3;left:0;top:0;width:42px;height:42px;padding:0;border:0;border-radius:0;display:grid;place-items:center;overflow:visible;cursor:pointer;color:#fff;background:transparent!important;box-shadow:none;will-change:transform}
-.arcade-ball__dot{position:relative;display:block!important;width:18px;height:18px;border-radius:1px;background:currentColor;box-shadow:0 0 9px currentColor;image-rendering:pixelated;transition:transform .18s ease,box-shadow .18s ease}
-.arcade-ball__dot:after{content:"";position:absolute;z-index:-1;left:50%;top:50%;width:64px;height:8px;transform-origin:0 50%;transform:translateY(-50%) rotate(var(--trail-angle));background:linear-gradient(90deg,currentColor,transparent);filter:blur(2px);opacity:.18;transition:opacity .18s}
-.arcade-ball--livonian{color:#8568ee}.arcade-ball--riddles{color:#43d5b1}
-.arcade-ball:hover,.arcade-ball:focus-visible,.arcade-ball.is-active{filter:none;outline:none;box-shadow:none}
-.arcade-ball:hover .arcade-ball__dot,.arcade-ball:focus-visible .arcade-ball__dot,.arcade-ball.is-active .arcade-ball__dot{transform:scale(1.28);box-shadow:0 0 15px currentColor}
-.arcade-ball:hover .arcade-ball__dot:after,.arcade-ball:focus-visible .arcade-ball__dot:after,.arcade-ball.is-active .arcade-ball__dot:after{opacity:.3}
-.arcade-ball__tooltip{position:absolute;z-index:8;bottom:calc(100% + 4px);display:block!important;width:170px;padding:10px 11px;border:1px solid color-mix(in srgb,currentColor 58%,transparent);border-radius:2px;background:rgba(6,9,20,.94);color:#f1f0f6;font:500 11px/1.3 var(--sans);letter-spacing:0;text-align:left;text-transform:none;box-shadow:0 8px 22px rgba(0,0,0,.32),0 0 13px color-mix(in srgb,currentColor 16%,transparent);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(4px);transition:opacity .16s,transform .16s,visibility .16s}
-.arcade-ball--livonian .arcade-ball__tooltip{left:20px}.arcade-ball--riddles .arcade-ball__tooltip{right:20px}
-.arcade-ball__tooltip small,.arcade-ball__tooltip b{display:block}
-.arcade-ball__tooltip small{margin-bottom:3px;color:currentColor;font:600 8px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase}
-.arcade-ball__tooltip b{margin-top:7px;color:#aab0bf;font-size:9px;font-weight:500}
-.arcade-ball:hover .arcade-ball__tooltip,.arcade-ball:focus-visible .arcade-ball__tooltip,.arcade-ball.is-active .arcade-ball__tooltip{opacity:1;visibility:visible;transform:translateY(0)}
-.pong-game-labels{display:grid;grid-template-columns:1fr 1fr;margin-top:24px;text-align:center}
-.pong-game-label{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}
-.pong-game-label strong,.pong-game-label span{display:block}
-.pong-game-label strong{font-size:25px;line-height:1}.pong-game-label span{margin-top:8px;font-size:10px;letter-spacing:.08em}
-.pong-game-label--livonian{color:#8d72f0}.pong-game-label--riddles{color:#47d9b5}
-[data-theme="light"] .collection-arcade:before{opacity:.14}
-[data-theme="light"] .arcade-ball__tooltip{background:rgba(250,249,252,.96);color:#181922;box-shadow:0 8px 22px rgba(39,31,54,.16)}
-@media(max-width:760px){.collection-arcade{min-height:338px}.arcade-label{margin-bottom:20px;font-size:9px}.pong-playfield{height:195px;margin-inline:0}.pong-paddle{width:5px;height:52px}.arcade-ball{width:38px;height:38px}.arcade-ball__dot{width:15px;height:15px}.arcade-ball__dot:after{width:45px;height:6px}.arcade-ball__tooltip{width:145px;padding:8px;font-size:10px}.pong-game-labels{margin-top:17px}.pong-game-label strong{font-size:20px}.pong-game-label span{padding-inline:8px;font-size:8px;line-height:1.3}}
-@media(prefers-reduced-motion:reduce){.collection-arcade:before{animation:none}.arcade-ball__dot:after{display:none}}
-
-/* Hero after removing the optional game selector */
 .collection-hero{grid-template-columns:minmax(0,1fr);min-height:auto}
 .collection-hero__copy{width:100%;max-width:980px}
 .collection-university-logo{width:min(100%,660px)}
