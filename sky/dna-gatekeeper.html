@@ -12,12 +12,12 @@
   <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon/favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('researchgames-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
-  <link rel="stylesheet" href="css/styles.css?v=20260723-21">
+  <script>document.documentElement.dataset.theme='dark'</script>
+  <link rel="stylesheet" href="css/styles.css?v=20260725-3">
   <link rel="stylesheet" href="css/shared-components.css?v=20260723-2">
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script src="js/dna-showcase.js?v=20260723-4" defer></script>
+  <script src="js/dna-showcase.js?v=20260725-3" defer></script>
   <script src="js/dna-title-ambient.js?v=20260722-1" defer></script>
 </head>
 <body class="game-detail-page dna-showcase-page">
@@ -25,15 +25,15 @@
   <header class="site-header" id="site-header">
     <a class="brand" href="index.html" aria-label="ResearchGames.eu home"><span class="logo-lockup" aria-hidden="true"><span class="logo-icon logo-icon-brand"></span><span class="logo-type">Research<strong>Games</strong><small>.eu</small></span></span></a>
     <nav id="site-nav" aria-label="Main navigation"><a href="index.html#games">Games</a><a href="index.html#researchers">For researchers</a><a href="index.html#how">How it works</a><a href="index.html#about">About</a><a class="nav-cta" href="index.html#how">Start a collaboration</a></nav>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" title="Switch to light theme"><span class="theme-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2.25M12 19.75V22M4.93 4.93l1.59 1.59M17.48 17.48l1.59 1.59M2 12h2.25M19.75 12H22M4.93 19.07l1.59-1.59M17.48 6.52l1.59-1.59"/></svg></span><span class="theme-knob" aria-hidden="true"></span><span class="theme-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.1 15.1A8.5 8.5 0 0 1 8.9 3.9 8.5 8.5 0 1 0 20.1 15.1Z"/></svg></span></button>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Dark theme" title="DNA Gatekeeper uses dark theme" hidden><span class="theme-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2.25M12 19.75V22M4.93 4.93l1.59 1.59M17.48 17.48l1.59 1.59M2 12h2.25M19.75 12H22M4.93 19.07l1.59-1.59M17.48 6.52l1.59-1.59"/></svg></span><span class="theme-knob" aria-hidden="true"></span><span class="theme-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.1 15.1A8.5 8.5 0 0 1 8.9 3.9 8.5 8.5 0 1 0 20.1 15.1Z"/></svg></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open menu</span></button>
   </header>
 
   <main id="main" class="dna-showcase-main">
     <section class="dna-showcase-hero" aria-labelledby="dna-title">
       <picture class="dna-showcase-image">
-        <source media="(max-width: 650px)" srcset="assets/dna-gatekeeper-mobile/dna-mobile-hero.webp">
-        <img src="assets/dna-gatekeeper-showcase/00-title.png" alt="DNA Gatekeeper title scene with DNA, enzyme structures and moxifloxacin" fetchpriority="high">
+        <source media="(max-width: 650px)" srcset="assets/dna-gatekeeper-hero/dna-gatekeeper-hero-mobile.png">
+        <img src="assets/dna-gatekeeper-hero/dna-gatekeeper-hero-desktop.png" alt="DNA strands held open by the topoisomerase molecular gate" fetchpriority="high">
       </picture>
       <div class="dna-showcase-shade"></div>
       <div class="dna-showcase-hero-inner">
@@ -59,35 +59,50 @@
       </div>
       <div class="dna-intro-grid reveal">
         <p>Players do more than click through facts. They inspect a DNA break, align and insert moxifloxacin, construct a magnesium-and-water bridge, then compare a resistant mutation with the working molecular trap.</p>
-        <div class="dna-impact-card"><strong>Research → interaction</strong><span>Structure, geometry and resistance become decisions with visible consequences.</span></div>
-        <div class="dna-impact-card"><strong>Built for learning</strong><span>Immediate feedback links every successful action to the underlying biology.</span></div>
+        <div class="dna-impact-card">
+          <span class="dna-impact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>
+          <strong>Curiosity through interaction</strong>
+          <span>Players engage directly with the molecular mechanism by examining structures, testing relationships and observing the consequences of their decisions.</span>
+        </div>
+        <div class="dna-impact-card">
+          <span class="dna-impact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg></span>
+          <strong>Learning through feedback</strong>
+          <span>Clear, immediate feedback helps players connect each action with the underlying biological process.</span>
+        </div>
+        <div class="dna-impact-card">
+          <span class="dna-impact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg></span>
+          <strong>Designed without distraction</strong>
+          <span>The game avoids unnecessary movement and overstimulation, so players can concentrate on the task and explore the challenge at their own pace.</span>
+        </div>
       </div>
     </section>
 
     <section class="dna-journey section" id="journey" aria-labelledby="journey-title">
-      <div class="section-heading reveal"><p class="eyebrow">The playable journey</p><h2 id="journey-title">Six connected decisions, not a slideshow.</h2></div>
+      <div class="section-heading reveal"><div><p class="eyebrow">The playable journey</p><h2 id="journey-title">From story to discovery.</h2></div><p class="dna-journey-intro">Follow the evidence through seven connected moments. Each step reveals another part of the molecular mechanism.</p></div>
       <div class="dna-journey-grid reveal">
         <div class="dna-stage-list" role="tablist" aria-label="DNA Gatekeeper stages">
-          <button class="dna-stage-tab is-active" type="button" role="tab" aria-selected="true" data-stage="1"><span>01</span><strong>Meet the gate</strong><small>Watch DNA cut and reseal.</small></button>
-          <button class="dna-stage-tab" type="button" role="tab" aria-selected="false" data-stage="2"><span>02</span><strong>Find the gap</strong><small>Inspect the staggered break.</small></button>
-          <button class="dna-stage-tab" type="button" role="tab" aria-selected="false" data-stage="3"><span>03</span><strong>Wedge it in</strong><small>Align and intercalate the drug.</small></button>
-          <button class="dna-stage-tab" type="button" role="tab" aria-selected="false" data-stage="4"><span>04</span><strong>Bridge the ion</strong><small>Build the molecular lock.</small></button>
-          <button class="dna-stage-tab" type="button" role="tab" aria-selected="false" data-stage="5"><span>05</span><strong>Diagnose resistance</strong><small>Find the broken contact.</small></button>
-          <button class="dna-stage-tab" type="button" role="tab" aria-selected="false" data-stage="6"><span>06</span><strong>Read the structure</strong><small>Connect play with discovery.</small></button>
+          <button class="dna-stage-tab is-active" id="dna-stage-tab-1" type="button" role="tab" aria-selected="true" aria-controls="dna-stage-panel" tabindex="0" data-stage="1"><span>01</span><strong>The story</strong><small>Enter the molecular mystery.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-2" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="2"><span>02</span><strong>Meet the molecular cast</strong><small>Get to know the key players.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-3" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="3"><span>03</span><strong>Decode the molecular team</strong><small>Identify each role in the mechanism.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-4" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="4"><span>04</span><strong>Find the two cleavage sites</strong><small>Locate the paired DNA breaks.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-5" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="5"><span>05</span><strong>Lock both Moxi wedges</strong><small>Fit a molecule into each DNA gap.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-6" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="6"><span>06</span><strong>Connect the six-point bridge</strong><small>Build the stabilising contact path.</small></button>
+          <button class="dna-stage-tab" id="dna-stage-tab-7" type="button" role="tab" aria-selected="false" aria-controls="dna-stage-panel" tabindex="-1" data-stage="7"><span>07</span><strong>Test the hypothesis</strong><small>Predict whether the break will reseal.</small></button>
         </div>
-        <div class="dna-stage-visual" role="tabpanel" aria-live="polite">
-          <picture>
-            <source id="dna-stage-mobile-source" media="(max-width: 650px)" srcset="assets/dna-gatekeeper-mobile/dna-mobile-stage-1.webp">
-            <img id="dna-stage-image" src="assets/dna-gatekeeper-showcase/02-stage-1-meet-the-gate.png" alt="Stage 1: the player observes the DNA gate cycle">
-          </picture>
-          <div class="dna-stage-caption"><span id="dna-stage-kicker">Stage 1</span><strong id="dna-stage-title">Meet the gate</strong><p id="dna-stage-copy">Activate the enzyme cycle and see why an open, cut DNA gate is the crucial moment for intervention.</p></div>
+        <div class="dna-stage-visual" id="dna-stage-panel" role="tabpanel" aria-labelledby="dna-stage-tab-1" aria-live="polite">
+          <div class="dna-stage-media">
+            <video id="dna-stage-video" controls autoplay muted playsinline preload="auto"><source src="assets/dna-gatekeeper-journey/opening-story.mp4" type="video/mp4">Your browser does not support embedded video.</video>
+            <img id="dna-stage-image" src="assets/dna-gatekeeper-journey/02-meet-molecular-cast.png" alt="" hidden>
+            <span class="dna-stage-counter" id="dna-stage-counter">01 / 07</span>
+          </div>
+          <div class="dna-stage-caption"><div><span id="dna-stage-kicker">Opening story</span><strong id="dna-stage-title">Enter the DNA gate</strong></div><p id="dna-stage-copy">Begin with the research story, then step inside the molecular mechanism you will investigate.</p><div class="dna-stage-progress" aria-hidden="true"><i id="dna-stage-progress-fill"></i></div></div>
         </div>
       </div>
     </section>
 
     <section class="dna-research section reveal" aria-labelledby="research-title">
       <div class="dna-research-heading"><p class="eyebrow">Research integrity</p><h2 id="research-title">The research and scholar behind it stay visible.</h2></div>
-      <div class="dna-research-image"><picture><source media="(max-width: 650px)" srcset="assets/dna-gatekeeper-mobile/dna-mobile-researcher.webp"><img src="assets/dna-gatekeeper-showcase/meet-the-researcher-light-photo-frame-1920x1080.webp" alt="DNA Gatekeeper Meet the Researcher screen featuring structural biologist Alexandre Wohlkonig and the published research" loading="lazy" decoding="async"></picture><div class="dna-research-card-identity"><span>Meet the researcher</span><strong>Dr. Alexandre Wohlkonig</strong><small>Structural biologist</small></div></div>
+      <div class="dna-research-image"><picture><img src="assets/dna-gatekeeper-showcase/meet-the-researcher-game-card.png?v=20260725-2" alt="DNA Gatekeeper Meet the Researcher game card featuring structural biologist Alexandre Wohlkonig, the decoded mechanism and published research" loading="lazy" decoding="async"></picture></div>
       <div class="dna-research-copy"><p>Developed with structural biologist Dr. Alexandre Wohlkonig. The game connects every interaction back to the published evidence and introduces players to the people behind the discovery.</p><blockquote>Players learn how molecular structures work by inspecting, aligning and comparing them.</blockquote><p class="game-detail-reference">Research basis: Wohlkonig, A., Chan, P. F., Fosberry, A. P. et al. “Structural basis of quinolone inhibition of type IIA topoisomerases and target-mediated resistance.” <a href="https://doi.org/10.1038/nsmb.1892" target="_blank" rel="noopener"><em>Nature Structural &amp; Molecular Biology</em> 17, 1152–1153 (2010)</a>.</p></div>
       <article class="dna-research-mobile-card">
         <header class="dna-research-mobile-heading">
