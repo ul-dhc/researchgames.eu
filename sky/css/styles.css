@@ -766,8 +766,9 @@ main>section.section-settle{animation:none}
   .dna-stage-tab strong{font-size:14px}
   .dna-stage-tab small{font-size:11px}
   .dna-stage-visual{position:relative;aspect-ratio:auto;overflow:hidden;border-radius:13px}
-  .dna-stage-media{aspect-ratio:4/5}
-  .dna-stage-media img,.dna-stage-media video{width:100%;height:100%;object-fit:contain;background:#02070b}
+  .dna-stage-media{display:block;aspect-ratio:auto}
+  .dna-stage-media img{width:100%;height:auto;object-fit:contain;background:#02070b}
+  .dna-stage-media video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#000}
   .dna-stage-caption{position:static;z-index:2;display:block;inset:auto;max-width:none;margin:0;padding:17px 18px;border:0;border-top:1px solid rgba(53,206,196,.38);border-radius:0;background:rgba(3,15,21,.92);box-shadow:none;backdrop-filter:none}
   .dna-stage-caption strong{font-size:22px}
   .dna-stage-caption p{display:block;margin-top:7px;color:#c5d4d5;font-size:13px;line-height:1.45}.dna-stage-progress{margin-top:14px}
