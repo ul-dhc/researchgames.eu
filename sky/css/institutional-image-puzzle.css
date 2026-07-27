@@ -94,17 +94,21 @@
   }
   .image-puzzle__control{
     display:grid;place-items:center;width:42px;height:42px;padding:0;border:0;border-radius:11px;
-    background:rgba(15,24,42,.7);color:#aab9d4;cursor:pointer;transition:color .18s,transform .18s,box-shadow .18s,background .18s
+    background:transparent;color:#aab9d4;box-shadow:none;cursor:pointer;transition:color .18s,transform .18s cubic-bezier(.22,1.35,.36,1)
   }
   .image-puzzle__control svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
-  .image-puzzle__control:hover{color:#fff;background:rgba(31,43,70,.8);transform:translateY(-1px);box-shadow:0 7px 18px rgba(0,0,0,.28)}
+  .image-puzzle__control:hover{
+    color:var(--collection-violet,#7b66ff);
+    background:transparent;
+    transform:scale(1.12);box-shadow:none
+  }
   .image-puzzle__skip{
     display:grid;place-items:center;align-self:center;width:34px;height:34px;margin-left:4px;padding:0;border:0;border-radius:8px;
     background:transparent;color:#8290aa;cursor:pointer;
-    transition:color .18s,background .18s
+    transition:color .18s,transform .18s cubic-bezier(.22,1.35,.36,1)
   }
   .image-puzzle__skip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
-  .image-puzzle__skip:hover{color:#c3cce0;background:rgba(31,43,70,.46)}
+  .image-puzzle__skip:hover{color:var(--collection-violet,#7b66ff);background:transparent;transform:scale(1.12)}
   .image-puzzle__piece:focus-visible,.image-puzzle__slot:focus-visible,.image-puzzle__control:focus-visible,.image-puzzle__skip:focus-visible{outline:2px solid #9b8aff;outline-offset:3px}
   .image-puzzle__completion{
     display:none;min-height:82px;margin:10px 0 0;padding-top:20px;color:#aebbd1;font-size:12px;
@@ -130,6 +134,68 @@
   .collection-hero:has(.institutional-image-puzzle){grid-template-columns:minmax(420px,.9fr) minmax(500px,1.1fr);gap:42px}
   .collection-university-logo{width:min(100%,540px)}
   .collection-intro{font-size:18px}
+}
+
+@media (min-width:1200px){
+  [data-theme="light"] .institutional-image-puzzle{
+    --puzzle-line:rgba(92,83,135,.2);
+    color:#4f5870
+  }
+  [data-theme="light"] .institutional-image-puzzle:before{
+    background-image:linear-gradient(rgba(105,89,165,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(105,89,165,.045) 1px,transparent 1px);
+    opacity:.65
+  }
+  [data-theme="light"] .image-puzzle__shell{
+    filter:drop-shadow(0 18px 28px rgba(47,43,63,.12))
+  }
+  [data-theme="light"] .image-puzzle__board{
+    background:#e8e9ef;
+    box-shadow:0 1px 0 rgba(63,56,89,.08),inset 0 0 18px rgba(61,55,82,.05)
+  }
+  [data-theme="light"] .image-puzzle__slot{background-color:#ebeaf1}
+  [data-theme="light"] .image-puzzle__slot.is-empty{
+    background-image:linear-gradient(rgba(111,95,167,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(111,95,167,.055) 1px,transparent 1px)!important;
+    box-shadow:inset 0 0 0 1px rgba(91,80,137,.2)
+  }
+  [data-theme="light"] .image-puzzle__slot.is-empty:before,
+  [data-theme="light"] .image-puzzle__slot.is-empty:after{
+    background:#7d739f;opacity:.48
+  }
+  [data-theme="light"] .image-puzzle__slot.is-pair-cue{
+    box-shadow:inset 0 0 0 1px rgba(116,91,225,.64),0 0 11px rgba(112,88,218,.1)
+  }
+  [data-theme="light"] .institutional-image-puzzle.is-dragging-puzzle .image-puzzle__slot.is-empty{
+    box-shadow:inset 0 0 0 1px rgba(108,88,196,.42)
+  }
+  [data-theme="light"] .image-puzzle__piece{
+    box-shadow:0 7px 17px rgba(46,42,58,.18)
+  }
+  [data-theme="light"] .image-puzzle__piece:hover{
+    box-shadow:0 9px 20px rgba(46,42,58,.2),0 0 0 1px rgba(121,99,211,.2)
+  }
+  [data-theme="light"] .image-puzzle__piece.is-pair-cue{
+    box-shadow:0 0 0 1px rgba(118,91,225,.58),0 8px 19px rgba(46,42,58,.2),0 0 12px rgba(112,88,218,.12)
+  }
+  [data-theme="light"] .image-puzzle__controls{gap:5px}
+  [data-theme="light"] .image-puzzle__control{
+    width:36px;height:36px;border-radius:9px;
+    background:transparent;
+    color:#687289;
+    box-shadow:none
+  }
+  [data-theme="light"] .image-puzzle__control:hover{
+    background:transparent;color:#168f78;
+    box-shadow:none;transform:scale(1.12)
+  }
+  [data-theme="light"] .image-puzzle__skip{
+    width:36px;height:36px;margin-left:0;color:#788198
+  }
+  [data-theme="light"] .image-puzzle__skip:hover{color:#168f78;background:transparent;transform:scale(1.12)}
+  [data-theme="light"] .image-puzzle__completion{color:#5b657c}
+  [data-theme="light"] .image-puzzle__drag-ghost{
+    border-color:rgba(115,92,215,.66);
+    box-shadow:0 14px 30px rgba(48,43,62,.25),0 0 16px rgba(110,87,215,.15)
+  }
 }
 
 @media (prefers-reduced-motion:reduce){
