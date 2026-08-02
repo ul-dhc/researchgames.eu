@@ -1,0 +1,332 @@
+[
+  {
+    "id": "IMG01",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU muzejs",
+      "LU bibliotēka",
+      "LU administrācijas telpas",
+      "LU galvenā ēka"
+    ],
+    "correct": "A",
+    "answer": "LU muzejs",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/ncmx2b5q7u",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/lu-muzejs.jpeg",
+    "options_en": [
+      "UL Museum",
+      "UL Library",
+      "UL Administration Offices",
+      "UL Main Building"
+    ],
+    "answer_en": "UL Museum",
+    "explanation_lv": "LU Muzejs glabā un pēta liecības par Latvijas Universitātes vēsturi, zinātni un akadēmiskajām tradīcijām.",
+    "explanation_en": "The UL Museum preserves and studies evidence of the University’s history, research and academic traditions."
+  },
+  {
+    "id": "IMG02",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU muzejs",
+      "LU bibliotēka",
+      "LU Zinātnes departaments",
+      "LU galvenā ēka"
+    ],
+    "correct": "A",
+    "answer": "LU muzejs",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/bgd8whs8us",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/lu_muzejs2.jpeg",
+    "options_en": [
+      "UL Museum",
+      "UL Library",
+      "UL Science Department",
+      "UL Main Building"
+    ],
+    "answer_en": "UL Museum",
+    "explanation_lv": "LU Muzeja kolekcijās atrodami vēsturiski zinātniskie instrumenti un priekšmeti, kas saistīti ar pētniecību Universitātē.",
+    "explanation_en": "The UL Museum collections include historic scientific instruments and objects connected with research at the University."
+  },
+  {
+    "id": "IMG03",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU Dabas māja",
+      "LU bibliotēka",
+      "LU muzejs",
+      "LU Botāniskais dārzs"
+    ],
+    "correct": "A",
+    "answer": "LU Dabas māja",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/3jt2ea3rt3",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/dabas-maja.jpeg",
+    "options_en": [
+      "UL House of Nature",
+      "UL Library",
+      "UL Museum",
+      "UL Botanical Garden"
+    ],
+    "answer_en": "UL House of Nature",
+    "explanation_lv": "Dabas māja bija pirmā jaunā ēka LU Akadēmiskajā centrā Torņakalnā.",
+    "explanation_en": "The House of Nature was the first new building completed at the UL Academic Centre in Torņakalns."
+  },
+  {
+    "id": "IMG04",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU Zinātņu māja",
+      "LU Dabas māja",
+      "HZF Visvalža 4a",
+      "LU Botāniskais dārzs"
+    ],
+    "correct": "A",
+    "answer": "LU Zinātņu māja",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/df26y2s6c",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/zinatnu-maja.jpeg",
+    "options_en": [
+      "UL House of Science",
+      "UL House of Nature",
+      "Faculty of Humanities, 4a Visvalža Street",
+      "UL Botanical Garden"
+    ],
+    "answer_en": "UL House of Science",
+    "explanation_lv": "Zinātņu mājā vienuviet apvienotas modernas studiju un pētniecības telpas.",
+    "explanation_en": "The House of Science brings modern teaching and research facilities together under one roof."
+  },
+  {
+    "id": "IMG05",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "Studentu karceris Raiņa 19",
+      "Auditorija Visvalža ielā 4a",
+      "Atpūtas telpa Kalpaka ielā 4",
+      "ESZF dekanāts"
+    ],
+    "correct": "A",
+    "answer": "Studentu karceris Raiņa 19",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/m2rf9gzx9r",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/karceris.jpeg",
+    "options_en": [
+      "Student Detention Cell, 19 Raiņa Boulevard",
+      "Lecture Room at 4a Visvalža Street",
+      "Lounge at 4 Kalpaka Street",
+      "Faculty of Economics and Social Sciences Dean’s Office"
+    ],
+    "answer_en": "Student Detention Cell, 19 Raiņa Boulevard",
+    "explanation_lv": "Studentu karceris atrodas LU galvenajā ēkā Raiņa bulvārī 19; uz tā sienām saglabājušies vēsturiski studentu uzraksti.",
+    "explanation_en": "The student detention cell is in the UL Main Building at 19 Raiņa Boulevard, with historic student inscriptions preserved on its walls."
+  },
+  {
+    "id": "IMG06",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "Palmu māja",
+      "Dabas māja",
+      "Zinātņu māja",
+      "LU muzejs"
+    ],
+    "correct": "A",
+    "answer": "Palmu māja",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/vygt5xv3w9",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/palmu-maja.jpeg",
+    "options_en": [
+      "Palm House",
+      "UL House of Nature",
+      "UL House of Science",
+      "UL Museum"
+    ],
+    "answer_en": "Palm House",
+    "explanation_lv": "Palmu māja ir viens no atpazīstamākajiem LU Botāniskā dārza objektiem un mājvieta tropu un subtropu augiem.",
+    "explanation_en": "The Palm House is one of the best-known features of the UL Botanical Garden and houses tropical and subtropical plants."
+  },
+  {
+    "id": "IMG07",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU Humanitāro zinātņu fakultāte Visvalža ielā 4a",
+      "LU Dabas māja",
+      "LU galvenās ēkas pagalms",
+      "LU Ekonomikas un sociālo zinātņu fakultāte Lauvas ielā 4"
+    ],
+    "correct": "A",
+    "answer": "LU Humanitāro zinātņu fakultāte Visvalža ielā 4a",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/g5tx2deyhc",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/visvalza.jpeg",
+    "options_en": [
+      "UL Faculty of Humanities, 4a Visvalža Street",
+      "UL House of Nature",
+      "UL Main Building Courtyard",
+      "UL Faculty of Economics and Social Sciences, 4 Lauvas Street"
+    ],
+    "answer_en": "UL Faculty of Humanities, 4a Visvalža Street",
+    "explanation_lv": "LU Humanitāro zinātņu fakultāte atrodas Visvalža ielā 4a Rīgā.",
+    "explanation_en": "The UL Faculty of Humanities is located at 4a Visvalža Street in Riga."
+  },
+  {
+    "id": "IMG08",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "Raiņa 19",
+      "LU muzejs",
+      "LU bibliotēka",
+      "HZF, Visvalža 4a"
+    ],
+    "correct": "A",
+    "answer": "Raiņa 19",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/vazmfe348w",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/garderobe.jpeg",
+    "options_en": [
+      "19 Raiņa Boulevard",
+      "UL Museum",
+      "UL Library",
+      "Faculty of Humanities, 4a Visvalža Street"
+    ],
+    "answer_en": "19 Raiņa Boulevard",
+    "explanation_lv": "Raiņa bulvārī 19 atrodas LU galvenā ēka — vecākā augstskolu ēka Latvijā.",
+    "explanation_en": "The UL Main Building at 19 Raiņa Boulevard is the oldest higher-education building in Latvia."
+  },
+  {
+    "id": "IMG09",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU Zinātņu māja",
+      "LU Atpūtas un konferenču komplekss “Ratnieki”",
+      "LU rektorāts Raiņa bulvārī 19",
+      "LU koncertzāle"
+    ],
+    "correct": "A",
+    "answer": "LU Zinātņu māja",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/a5s6smbtt",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/zinatnu-maja1.jpeg",
+    "options_en": [
+      "UL House of Science",
+      "UL Recreation and Conference Centre ‘Ratnieki’",
+      "UL Rectorate, 19 Raiņa Boulevard",
+      "UL Concert Hall"
+    ],
+    "answer_en": "UL House of Science",
+    "explanation_lv": "Zinātņu māja ir daļa no LU Akadēmiskā centra Torņakalnā.",
+    "explanation_en": "The House of Science is part of the UL Academic Centre in Torņakalns."
+  },
+  {
+    "id": "IMG10",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "LU Botāniskais dārzs",
+      "LU Atpūtas un konferenču komplekss “Ratnieki”",
+      "LU muzejs",
+      "LU Bērnudārzs"
+    ],
+    "correct": "A",
+    "answer": "LU Botāniskais dārzs",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/m5u8cnxbv",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/botaniskais.jpeg",
+    "options_en": [
+      "UL Botanical Garden",
+      "UL Recreation and Conference Centre ‘Ratnieki’",
+      "UL Museum",
+      "UL Kindergarten"
+    ],
+    "answer_en": "UL Botanical Garden",
+    "explanation_lv": "LU Botāniskais dārzs ir vieta augu daudzveidības iepazīšanai, pētniecībai un sugu saglabāšanai.",
+    "explanation_en": "The UL Botanical Garden supports learning about plant diversity, research and species conservation."
+  },
+  {
+    "id": "IMG11",
+    "round": "Atpazīsti attēlu",
+    "subcategory": "LU vietas",
+    "type": "Attēla atpazīšana",
+    "question_lv": "Kas redzams attēlā?",
+    "question_en": "What is shown in the image?",
+    "options": [
+      "Lielā aula",
+      "LU Atpūtas un konferenču komplekss “Ratnieki”",
+      "LU muzejs",
+      "LU Koncertzāle"
+    ],
+    "correct": "A",
+    "answer": "Lielā aula",
+    "difficulty": "Vidēja",
+    "time": 25,
+    "source": "https://failiem.lv/LatvijasUniversitate/f/dh3pgd9jcu",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "image_url": "./assets/places/liela-aula.jpeg",
+    "options_en": [
+      "Great Hall",
+      "UL Recreation and Conference Centre ‘Ratnieki’",
+      "UL Museum",
+      "UL Concert Hall"
+    ],
+    "answer_en": "Great Hall",
+    "explanation_lv": "LU Lielo aulu atklāja 1935. gada 28. septembrī, un tā joprojām ir nozīmīga akadēmisko ceremoniju vieta.",
+    "explanation_en": "The UL Great Hall opened on 28 September 1935 and remains an important venue for academic ceremonies."
+  }
+]
