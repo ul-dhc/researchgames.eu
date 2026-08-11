@@ -461,7 +461,7 @@ body{
 .researchgames-link{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;}
 .stats-bar,.mikla-card{
   background:linear-gradient(145deg,rgba(13,28,59,.9),rgba(9,21,46,.78));
-  border-color:rgba(133,164,211,.15);box-shadow:0 16px 45px rgba(0,5,19,.16);
+  border:0;box-shadow:0 16px 45px rgba(0,5,19,.16);
 }
 .stats-bar{padding:12px 16px;border-radius:15px;}
 .stats-row{width:100%;justify-content:space-between;gap:12px;}
@@ -469,10 +469,10 @@ body{
 .stat-icon{border-color:rgba(53,214,173,.3);background:rgba(34,185,150,.06);}
 .stat-label{color:#7486a5;}
 .level-pill{background:rgba(20,44,78,.72);border-color:rgba(105,151,207,.18);}
-.progress-bar-wrap{height:2px;background:rgba(113,145,194,.13);}
+.progress-bar-wrap{height:2px;background:transparent;}
 .progress-bar{background:linear-gradient(90deg,#1da985,#55e1bd);box-shadow:0 0 10px rgba(53,214,173,.55);}
 .puzzle-area{
-  padding:clamp(13px,2vw,22px);border:1px solid rgba(133,164,211,.14);border-radius:20px;
+  padding:clamp(13px,2vw,22px);border:0;border-radius:20px;
   background:linear-gradient(155deg,rgba(9,21,46,.7),rgba(7,16,35,.36));
 }
 .mikla-card{padding:16px 18px;border-radius:14px;}
@@ -703,13 +703,13 @@ html[data-theme="light"] .btn-primary,html[data-theme="light"] .overlay-btn-prim
   color:#fff;background:linear-gradient(135deg,#139f83,#087c69);box-shadow:none;
 }
 html[data-theme="light"] .stats-bar,html[data-theme="light"] .mikla-card{
-  background:#fff;border-color:rgba(25,64,86,.14);box-shadow:0 8px 24px rgba(29,60,76,.045);
+  background:#fff;border:0;box-shadow:0 8px 24px rgba(29,60,76,.045);
 }
 html[data-theme="light"] .stat-label{color:#607489;}
 html[data-theme="light"] .stat-icon{background:#edf9f6;border-color:rgba(13,142,116,.3);}
 html[data-theme="light"] .level-pill{color:#183447;background:#f1f6f7;border-color:rgba(25,64,86,.14);}
 html[data-theme="light"] .puzzle-area{
-  background:#f8fbfc;border-color:rgba(25,64,86,.13);
+  background:#f8fbfc;border-color:transparent;
 }
 html[data-theme="light"] .mikla-label{color:#087d68;}
 html[data-theme="light"] .mikla-meta,html[data-theme="light"] .status-line{color:#566d82;}
