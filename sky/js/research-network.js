@@ -46,7 +46,7 @@
       name: 'DNA Gatekeeper',
       description: 'Manipulate proteins, DNA and antibiotic molecules to discover how bacterial DNA is untangled and how resistance can emerge.',
       displayMechanic: 'Molecular puzzle',
-      status: 'Playable now',
+      status: 'Preview',
       url: 'dna-gatekeeper.html',
       tags: ['Proteins', 'DNA', 'Medicine']
     });
@@ -212,9 +212,12 @@
     const circle = document.createElementNS(NS, 'circle');
     circle.classList.add('idea-node');
     if (idea.status === 'Playable now') circle.classList.add('game-playable');
+    if (idea.status === 'Preview') circle.classList.add('game-preview');
     if (idea.status === 'In progress') circle.classList.add('game-progress');
     circle.setAttribute('cx', point.x * 10); circle.setAttribute('cy', point.y * 7); circle.setAttribute('r', '2.65');
     circle.setAttribute('fill', discipline.color); circle.style.setProperty('--dot', discipline.color);
+    circle.style.setProperty('--breath-duration', `${6.8 + index % 9 * .47}s`);
+    circle.style.setProperty('--breath-delay', `${-(index % 13) * .61}s`);
     circle.dataset.index = index; circle.setAttribute('tabindex', '0'); circle.setAttribute('role', 'button');
     circle.setAttribute('aria-label', `${idea.name}, ${discipline.label}, ${idea.status || idea.displayMechanic || idea.mechanic}`);
     const open = event => { event.stopPropagation(); showPoint(index, circle); };
@@ -241,8 +244,8 @@
     dots.append(circle, label);
   });
 
-  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .04, vy: Math.cos(index * 1.73) * .04, phase: index * .73, pinned: false }));
-  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .035, vy: Math.sin(index * 1.91) * .035, phase: index * .91 + 2, pinned: false }));
+  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .04, vy: Math.cos(index * 1.73) * .04, phase: index * .73, driftRateX: .0002 + index % 7 * .000019, driftRateY: .00017 + index % 5 * .000023, driftForceX: .00125 + index % 6 * .00009, driftForceY: .0011 + index % 8 * .000075, pinned: false }));
+  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .035, vy: Math.sin(index * 1.91) * .035, phase: index * .91 + 2, driftRateX: .00018 + index % 6 * .000017, driftRateY: .00015 + index % 4 * .000021, driftForceX: .001 + index % 5 * .00008, driftForceY: .0009 + index % 7 * .00007, pinned: false }));
   const physicsNodes = [...points, ...terms];
   const physicsEdges = [...svg.querySelectorAll('line')].map(line => {
     let source, target;
@@ -286,8 +289,8 @@
     for (let a = 0; a < physicsNodes.length; a++) {
       const node = physicsNodes[a];
       if (node.pinned) continue;
-      node.vx += Math.sin(time * .00031 + node.phase) * .00145 + (node.homeX - node.x) * .000008;
-      node.vy += Math.cos(time * .00023 + node.phase * 1.17) * .00125 + (node.homeY - node.y) * .000008;
+      node.vx += Math.sin(time * node.driftRateX + node.phase) * node.driftForceX + (node.homeX - node.x) * .000008;
+      node.vy += Math.cos(time * node.driftRateY + node.phase * 1.17) * node.driftForceY + (node.homeY - node.y) * .000008;
       for (let b = a + 1; b < physicsNodes.length; b++) {
         const other = physicsNodes[b];
         const dx = other.x - node.x;
@@ -361,11 +364,15 @@
     const tags = idea.tags || [terms[point.termIndexes[0]].name];
     target.querySelector('.network-card-tag').textContent = tags.map(tag => `#${tag.replace(/\s+/g, '')}`).join(' ');
     target.querySelector('.network-card-availability').textContent = idea.status || 'Future game idea';
-    target.querySelector('.network-card-availability').className = `network-card-availability ${idea.status === 'Playable now' ? 'is-playable' : idea.status === 'In progress' ? 'is-progress' : ''}`;
+    target.querySelector('.network-card-availability').className = `network-card-availability ${idea.status === 'Playable now' ? 'is-playable' : idea.status === 'Preview' ? 'is-preview' : idea.status === 'In progress' ? 'is-progress' : ''}`;
     target.querySelector('.network-card-status').textContent = idea.displayMechanic || idea.mechanic;
     const action = target.querySelector('.network-card-action');
     action.hidden = !idea.url;
-    if (idea.url) { action.href = idea.url; action.setAttribute('aria-label', `Play ${idea.name}`); }
+    if (idea.url) {
+      action.href = idea.url;
+      action.innerHTML = `${idea.status === 'Preview' ? 'Open preview' : 'Play game'} <span aria-hidden="true">↗</span>`;
+      action.setAttribute('aria-label', `${idea.status === 'Preview' ? 'Open preview of' : 'Play'} ${idea.name}`);
+    }
     target.style.setProperty('--idea-color', discipline.color);
   }
 
