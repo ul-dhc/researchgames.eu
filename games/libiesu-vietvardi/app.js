@@ -73,6 +73,8 @@
     "Samērā sarežģīti nosaukumi": "Fairly complex names",
     "To spēs zinātāji un apsviedīgie": "For the knowledgeable and quick-witted",
     "Uzzini vairāk par lībiešiem": "Learn more about the Livonians",
+    "Par spēli": "About the game",
+    "LU Lībiešu institūts ↗": "University of Latvia Livonian Institute ↗",
     "© 2026 LU Digitālo humanitāro zinātņu centrs": "© 2026 University of Latvia Digital Humanities Centre",
     "Kā spēlēt": "How to play",
     "Katrā kārtā redzēsi divas vārdu kolonnas –": "In each round you will see two columns of words —",
@@ -137,6 +139,7 @@
       "Atbilžu varianti": "Answer options",
       "Spēles vērtējums no 1 līdz 5": "Game rating from 1 to 5",
       "Vecuma grupas": "Age groups",
+      "Papildu saites": "Additional links",
       "1 zvaigzne": "1 star", "2 zvaigznes": "2 stars", "3 zvaigznes": "3 stars",
       "4 zvaigznes": "4 stars", "5 zvaigznes": "5 stars"
     };
@@ -177,6 +180,9 @@
         button.addEventListener("click", () => {
           const next = button.dataset.lang;
           if (next === LANG) return;
+          const gameInProgress = screens && screens.game && !screens.game.classList.contains("hidden");
+          if (gameInProgress && !confirm(UI.exitConfirm)) return;
+          if (gameInProgress) markCurrentSessionAbandoned();
           if (next === "en") location.hash = "en";
           else location.href = location.href.split("#")[0];
         });
@@ -382,10 +388,16 @@
     ALL_PAIRS.forEach(p => {
       L.circleMarker([p.lat, p.lon], { radius: 3.2, className: "geo-dot dim", weight: 0, fillOpacity: 0.8, interactive: false }).addTo(constellationMap);
     });
-    requestAnimationFrame(() => {
+    const fitConstellation = () => {
       constellationMap.invalidateSize();
       constellationMap.fitBounds(OVERVIEW_BOUNDS);
-    });
+    };
+    requestAnimationFrame(fitConstellation);
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(() => requestAnimationFrame(fitConstellation));
+      observer.observe(container);
+      constellationMap._sizeObserver = observer;
+    }
   }
   buildConstellation();
   window.addEventListener("resize", () => { if (constellationMap) constellationMap.invalidateSize(); });
@@ -770,8 +782,8 @@
   function drawConnectorPath(livEl, lvEl, cRect, isMatched) {
     const r1 = livEl.getBoundingClientRect();
     const r2 = lvEl.getBoundingClientRect();
-    const p0 = { x: r1.right - cRect.left, y: r1.top + r1.height / 2 - cRect.top };
-    const p1 = { x: r2.left - cRect.left, y: r2.top + r2.height / 2 - cRect.top };
+    const p0 = { x: r1.right - cRect.left + matchRows.scrollLeft, y: r1.top + r1.height / 2 - cRect.top + matchRows.scrollTop };
+    const p1 = { x: r2.left - cRect.left + matchRows.scrollLeft, y: r2.top + r2.height / 2 - cRect.top + matchRows.scrollTop };
     const path = document.createElementNS(SVG_NS, "path");
     path.setAttribute("class", "connector-path" + (isMatched ? " correct" : ""));
     path.setAttribute("d", `M${p0.x},${p0.y} C${p0.x + 40},${p0.y} ${p1.x - 40},${p1.y} ${p1.x},${p1.y}`);
@@ -780,6 +792,13 @@
 
   function redrawAllConnectors() {
     connectorSvg.querySelectorAll("path.connector-path").forEach(p => p.remove());
+    const contentHeight = Math.max(matchRows.scrollHeight, matchRows.clientHeight);
+    const contentWidth = Math.max(matchRows.scrollWidth, matchRows.clientWidth);
+    connectorSvg.setAttribute("width", contentWidth);
+    connectorSvg.setAttribute("height", contentHeight);
+    connectorSvg.setAttribute("viewBox", `0 0 ${contentWidth} ${contentHeight}`);
+    connectorSvg.style.width = `${contentWidth}px`;
+    connectorSvg.style.height = `${contentHeight}px`;
     const cRect = matchRows.getBoundingClientRect();
     matchedPairEls.forEach(({ livEl, lvEl }) => drawConnectorPath(livEl, lvEl, cRect, true));
     if (state.selLiv && state.selLv) drawConnectorPath(state.selLiv.el, state.selLv.el, cRect, false);
@@ -787,6 +806,7 @@
   function clearConnector() { redrawAllConnectors(); }
   function updateConnector() { redrawAllConnectors(); }
   window.addEventListener("resize", () => redrawAllConnectors());
+  matchRows.addEventListener("scroll", redrawAllConnectors, { passive: true });
 
   function onChipClick(chipEl, pair, side) {
     if (state.busy || chipEl.classList.contains("correct")) return;
