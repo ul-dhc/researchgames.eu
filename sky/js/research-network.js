@@ -46,9 +46,22 @@
       name: 'DNA Gatekeeper',
       description: 'Manipulate proteins, DNA and antibiotic molecules to discover how bacterial DNA is untangled and how resistance can emerge.',
       displayMechanic: 'Molecular puzzle',
-      status: 'In progress'
+      status: 'Playable now',
+      url: 'dna-gatekeeper.html',
+      tags: ['Proteins', 'DNA', 'Medicine']
     });
   }
+  ideas.push({
+    name: 'Folk Riddles Grid / Mīklu režģis',
+    discipline: 'humanities',
+    mechanic: 'Reconstruction',
+    displayMechanic: 'Riddle and word-search puzzle',
+    description: 'Solve Latvian folk riddles, then find each answer hidden across a letter grid.',
+    status: 'Playable now',
+    url: '../games/miklu-rezgis/',
+    tags: ['Riddles', 'Language', 'Folklore'],
+    seed: 36
+  });
   ideas.forEach(idea => grouped[idea.discipline]?.push(idea));
 
   const points = [];
@@ -154,7 +167,8 @@
     point.termIndexes = [disciplineTermIndex, mechanicTermIndex];
     if (point.idea.name === 'AI Archive Detective') point.termIndexes.push(28);
     if (point.idea.name === 'Livonian Place Names' && !point.termIndexes.includes(0)) point.termIndexes.push(0);
-    if (point.idea.name === 'DNA Gatekeeper') [21,22].forEach(termIndex => { if (!point.termIndexes.includes(termIndex)) point.termIndexes.push(termIndex); });
+    if (point.idea.name === 'DNA Gatekeeper') point.termIndexes = [22,21,36];
+    if (point.idea.name === 'Folk Riddles Grid / Mīklu režģis') point.termIndexes = [0,4,5,37];
     point.termIndexes.forEach(termIndex => {
       const term = terms[termIndex];
       const line = drawLine(point.x, point.y, term.x, term.y, 'term-connection', { idea: index, term: termIndex });
@@ -227,8 +241,8 @@
     dots.append(circle, label);
   });
 
-  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .17, vy: Math.cos(index * 1.73) * .17, phase: index * .73, pinned: false }));
-  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .13, vy: Math.sin(index * 1.91) * .13, phase: index * .91 + 2, pinned: false }));
+  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .04, vy: Math.cos(index * 1.73) * .04, phase: index * .73, pinned: false }));
+  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .035, vy: Math.sin(index * 1.91) * .035, phase: index * .91 + 2, pinned: false }));
   const physicsNodes = [...points, ...terms];
   const physicsEdges = [...svg.querySelectorAll('line')].map(line => {
     let source, target;
@@ -263,7 +277,7 @@
       const dx = edge.target.x - edge.source.x;
       const dy = edge.target.y - edge.source.y;
       const distance = Math.max(1, Math.hypot(dx, dy));
-      const force = (distance - edge.rest) * .00012;
+      const force = (distance - edge.rest) * .00006;
       const fx = dx / distance * force;
       const fy = dy / distance * force;
       if (!edge.source.pinned) { edge.source.vx += fx; edge.source.vy += fy; }
@@ -272,21 +286,21 @@
     for (let a = 0; a < physicsNodes.length; a++) {
       const node = physicsNodes[a];
       if (node.pinned) continue;
-      node.vx += Math.sin(time * .00108 + node.phase) * .0062 + (node.homeX - node.x) * .000002;
-      node.vy += Math.cos(time * .00086 + node.phase) * .0062 + (node.homeY - node.y) * .000002;
+      node.vx += Math.sin(time * .00031 + node.phase) * .00145 + (node.homeX - node.x) * .000008;
+      node.vy += Math.cos(time * .00023 + node.phase * 1.17) * .00125 + (node.homeY - node.y) * .000008;
       for (let b = a + 1; b < physicsNodes.length; b++) {
         const other = physicsNodes[b];
         const dx = other.x - node.x;
         const dy = other.y - node.y;
         const distance = Math.max(1, Math.hypot(dx, dy));
         if (distance < 24) {
-          const push = (24 - distance) * .00072;
+          const push = (24 - distance) * .0003;
           node.vx -= dx / distance * push; node.vy -= dy / distance * push;
           if (!other.pinned) { other.vx += dx / distance * push; other.vy += dy / distance * push; }
         }
       }
-      node.vx = Math.max(-.92, Math.min(.92, node.vx * .995));
-      node.vy = Math.max(-.92, Math.min(.92, node.vy * .995));
+      node.vx = Math.max(-.28, Math.min(.28, node.vx * .985));
+      node.vy = Math.max(-.28, Math.min(.28, node.vy * .985));
       node.x += node.vx; node.y += node.vy;
     }
     updateGraph();
@@ -344,7 +358,8 @@
     target.querySelector('h3').textContent = idea.name;
     target.querySelector('.network-card-description').textContent = idea.description;
     target.querySelector('.network-card-collection').textContent = discipline.collection;
-    target.querySelector('.network-card-tag').textContent = `#${terms[point.termIndexes[0]].name.replace(/\s+/g, '')}`;
+    const tags = idea.tags || [terms[point.termIndexes[0]].name];
+    target.querySelector('.network-card-tag').textContent = tags.map(tag => `#${tag.replace(/\s+/g, '')}`).join(' ');
     target.querySelector('.network-card-availability').textContent = idea.status || 'Future game idea';
     target.querySelector('.network-card-availability').className = `network-card-availability ${idea.status === 'Playable now' ? 'is-playable' : idea.status === 'In progress' ? 'is-progress' : ''}`;
     target.querySelector('.network-card-status').textContent = idea.displayMechanic || idea.mechanic;

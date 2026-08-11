@@ -266,8 +266,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network circle{opacity:.56}
 .is-dragging #research-network{cursor:grabbing}
 .is-dragging-node #research-network{cursor:grabbing}
-#research-network .idea-connection{opacity:.12}
-#research-network .term-connection{stroke-width:.55;opacity:.12;stroke-dasharray:1.5 1.6}
+#research-network .idea-connection{opacity:.085}
+#research-network .term-connection{stroke-width:.55;opacity:.085;stroke-dasharray:1.5 1.6}
 #research-network .term-bridge{stroke:#a19aaf;stroke-width:.7;opacity:.2;stroke-dasharray:2 2}
 #research-network line.connected{stroke-width:1.55;opacity:.46;stroke-dasharray:none;pointer-events:stroke;cursor:pointer}
 #research-network .term-node{cursor:default;opacity:.62;stroke-width:1.25;filter:drop-shadow(0 0 4px var(--dot));animation:none}
@@ -282,7 +282,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .idea-node:hover,#research-network .term-group:hover{cursor:pointer}
 .is-dragging-node #research-network .idea-node,.is-dragging-node #research-network .term-group{cursor:grabbing!important}
 .has-term-selection #research-network .idea-node.network-neighbour:hover,.has-term-selection #research-network .idea-node.network-neighbour:focus-visible{transform:scale(3.1);filter:drop-shadow(0 0 17px var(--dot))}
-#research-network .idea-node.game-playable{filter:drop-shadow(0 0 8px var(--dot));animation:live-game-node 2.2s ease-in-out infinite alternate}
+#research-network .idea-node.game-playable{--dot:#ffd166!important;fill:#ffd166;opacity:1;stroke:#fff1bd;stroke-width:.7;filter:drop-shadow(0 0 7px #ffd16699);animation:none}
 #research-network .idea-node.game-progress{filter:drop-shadow(0 0 6px var(--dot));stroke:var(--dot);stroke-width:1.2;stroke-dasharray:2 2}
 .has-open-card .idea-node:not(.selected):not(.network-neighbour),.has-term-selection .idea-node:not(.network-neighbour){opacity:.2}
 #research-network .idea-node.network-neighbour{opacity:.7;transform:scale(1.4);stroke:transparent;filter:drop-shadow(0 0 5px var(--dot))}
@@ -430,10 +430,9 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-card.pinned-note.connection-focus{transform:rotate(var(--note-tilt,0deg)) scale(1.045);filter:brightness(1.14);border-color:var(--idea-color,#b884ee);box-shadow:0 22px 48px #000a,0 0 34px color-mix(in srgb,var(--idea-color,#8b66ff) 40%,transparent)}
 .network-card-pin{position:absolute;z-index:3;right:40px;top:11px;width:27px;height:27px;padding:0;border:0;border-radius:50%;background:transparent;color:#9399a9;cursor:pointer;transition:color .25s,background .25s,transform .3s cubic-bezier(.2,1.35,.35,1)}
 .network-card-pin:hover{color:var(--idea-color,#b884ee);background:#ffffff0b;transform:translateY(-1px) rotate(-5deg)}
-.network-card-pin span{position:absolute;left:9px;top:6px;width:9px;height:9px;border:1.5px solid currentColor;border-radius:3px 3px 1px 1px;transform:rotate(45deg)}
-.network-card-pin span:after{content:'';position:absolute;left:7px;top:7px;width:7px;height:1.5px;border-radius:2px;background:currentColor;transform:rotate(45deg);transform-origin:left center}
+.network-card-pin svg{display:block;width:17px;height:17px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .network-card-pin.is-pinned{color:var(--idea-color,#b884ee);background:color-mix(in srgb,var(--idea-color,#8b66ff) 17%,transparent);box-shadow:0 0 12px color-mix(in srgb,var(--idea-color,#8b66ff) 28%,transparent)}
-.network-card-pin.is-pinned span{background:currentColor;border-color:currentColor}
+.network-card-pin.is-pinned svg{stroke-width:2.35;filter:drop-shadow(0 0 4px currentColor)}
 .network-card.pinned-note .network-card-pin{cursor:default;opacity:1}
 @keyframes note-pin-in{from{opacity:0;transform:scale(.82) rotate(0deg)}to{opacity:1;transform:scale(1) rotate(var(--note-tilt,0deg))}}
 @keyframes note-attention{50%{transform:rotate(0deg) scale(1.055);filter:brightness(1.16)}100%{transform:rotate(var(--note-tilt,0deg)) scale(1)}}
