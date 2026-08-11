@@ -1204,3 +1204,59 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
   .start-lead{font-size:clamp(21px,2vw,29px);}
 }
 
+/* ===========================================================
+   Tester fixes: keep the brand and the complete puzzle visible
+=========================================================== */
+/* The mark used to sit outside the lockup and could be clipped at the left
+   edge on wide/zoomed desktop layouts. It now participates in normal flow. */
+.start-title-lockup{
+  display:flex;
+  align-items:center;
+  gap:clamp(12px,1.5vw,20px);
+}
+.start-mark{
+  position:static;
+  right:auto;
+  top:auto;
+  transform:none;
+  flex:0 0 76px;
+}
+
+/* A puzzle must never be trapped behind the footer. Keep the compact desktop
+   composition, but allow vertical scrolling whenever zoom, font size, or a
+   short laptop viewport makes the content taller than the available space. */
+@media (min-width:1100px) and (min-height:700px){
+  body.game-active{
+    height:auto;
+    min-height:100%;
+    overflow-x:hidden;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+  }
+  body.game-active .site-header,
+  body.game-active .site-footer{flex:0 0 auto;}
+  body.game-active .app-shell{
+    flex:1 0 auto;
+    height:auto;
+    min-height:calc(100vh - 122px);
+    overflow:visible;
+  }
+  body.game-active .sidebar,
+  body.game-active .main-col{
+    height:auto;
+    min-height:0;
+    overflow:visible;
+  }
+  body.game-active #game{height:auto;min-height:0;}
+  body.game-active .puzzle-area{min-height:max-content;}
+  body.game-active .grid-stage{min-height:max-content;}
+  body.game-active #grid-wrap{min-height:max-content;}
+}
+
+@media (max-width:850px){
+  .start-mark{flex-basis:58px;}
+}
+@media (max-width:520px){
+  .start-mark{flex-basis:46px;}
+}

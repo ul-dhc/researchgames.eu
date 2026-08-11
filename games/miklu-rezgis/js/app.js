@@ -575,9 +575,15 @@ function cellSizePx(size) {
   const cap = size === 7 ? 58 : size === 9 ? 48 : 38;
   const gridStageHeight = document.querySelector('.grid-stage')?.clientHeight || 0;
   const compactLandscape = window.innerWidth > window.innerHeight && window.innerHeight <= 600;
+  const gridWrapTop = document.getElementById('grid-wrap')?.getBoundingClientRect().top || 0;
+  const footerHeight = document.querySelector('.site-footer')?.getBoundingClientRect().height || 50;
+  // On desktop the grid must fit between its current top edge and the footer.
+  // Using the flex container's height here was circular: the existing grid made
+  // that container taller, so the next calculation kept the grid oversized.
+  const desktopViewportHeight = Math.max(180, window.innerHeight - gridWrapTop - footerHeight - 58);
   const gridHeight = window.innerWidth >= 1100
-    ? (gridStageHeight > 120 ? gridStageHeight - 76 : Math.max(230, window.innerHeight - 500))
-    : window.innerHeight * 0.62;
+    ? desktopViewportHeight
+    : (gridStageHeight > 120 ? gridStageHeight - 76 : window.innerHeight * 0.62);
   const heightSize = compactLandscape
     ? Number.POSITIVE_INFINITY
     : Math.floor((gridHeight - (size - 1) * 3) / size);
@@ -1144,6 +1150,14 @@ function unlockGame() {
   document.body.classList.add('game-active');
   document.getElementById('lock-overlay').classList.add('hidden');
   CONTROL_IDS.forEach(id => { document.getElementById(id).disabled = false; });
+  // The first grid render happens while the landing screen is still changing
+  // into the game layout. Measure once more after that layout is visible.
+  requestAnimationFrame(() => {
+    const grid = document.getElementById('grid');
+    if (!grid || !grid.children.length) return;
+    delete grid.dataset.cellSize;
+    renderGrid();
+  });
 }
 
 function showAbout() {
@@ -1410,7 +1424,24 @@ function giveUp() {
 function shuffleLetters() {
   if (state.gameOver) return;
   state.currentShuffleCount++;
-  shuffleFillers(state.grid, state.placedWords, state.gridSize);
+
+  // Build a fresh puzzle instead of changing only the filler cells. Keeping
+  // the answer in the same place made its unchanged letters stand out after
+  // every shuffle. Rebuilding also moves the answer while preserving any
+  // words the player has already found.
+  const { grid, placedWords, fillerCells } = buildGrid(currentRiddle().a, state.gridSize);
+  state.grid = grid;
+  state.placedWords = placedWords;
+  state.fillerCells = fillerCells;
+  state.foundCells.clear();
+  placedWords.forEach((pw, wi) => {
+    if (state.wordState[wi] === 'found' && pw.cells) {
+      pw.cells.forEach(([r, c]) => state.foundCells.add(cellKey(r, c)));
+    }
+  });
+
+  const gridEl = document.getElementById('grid');
+  delete gridEl.dataset.cellSize;
   renderGrid();
   setStatus('Burti sajaukti.', '');
 }
