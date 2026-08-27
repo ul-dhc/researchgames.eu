@@ -250,9 +250,9 @@
   const prepareOrbit = (node, index, isTerm = false) => Object.assign(node, {
     x:node.x * 10, y:node.y * 7, homeX:node.x * 10, homeY:node.y * 7,
     phase:index * .79 + (isTerm ? 1.7 : 0),
-    orbitX:(isTerm ? 2.4 : 3.4) + index % 5 * .55,
-    orbitY:(isTerm ? 2 : 2.9) + index % 4 * .48,
-    orbitRate:.000045 + index % 7 * .0000035,
+    orbitX:(isTerm ? 7.5 : 10.5) + index % 5 * 1.2,
+    orbitY:(isTerm ? 5.8 : 8.2) + index % 4 * 1.05,
+    orbitRate:.000085 + index % 7 * .0000065,
     orbitOffsetX:0, orbitOffsetY:0, pinned:false
   });
   points.forEach((point, index) => prepareOrbit(point, index));

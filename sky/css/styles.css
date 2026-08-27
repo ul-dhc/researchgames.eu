@@ -281,13 +281,13 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .term-group.active-related .term-node{opacity:1;stroke-width:2;transform:scale(1.6);filter:drop-shadow(0 0 10px var(--dot))}
 #research-network .term-group.active-related text{fill:#fff;font-size:10px;opacity:1}
 #research-network .idea-node:hover,#research-network .idea-node:focus-visible{transform:scale(2)}
-#research-network .idea-node{pointer-events:all;stroke:transparent;stroke-width:8;opacity:.24;animation:idea-node-breathe var(--breath-duration,8s) ease-in-out var(--breath-delay,0s) infinite}
+#research-network .idea-node{pointer-events:all;stroke:transparent;stroke-width:8;opacity:.32;animation:none}
 #research-network .idea-node:hover,#research-network .idea-node:focus-visible{opacity:1;transform:scale(2.65);filter:drop-shadow(0 0 13px var(--dot)) drop-shadow(0 0 4px var(--dot))}
 #research-network .idea-node:hover,#research-network .term-group:hover{cursor:pointer}
 .is-dragging-node #research-network .idea-node,.is-dragging-node #research-network .term-group{cursor:grabbing!important}
 .has-term-selection #research-network .idea-node.network-neighbour:hover,.has-term-selection #research-network .idea-node.network-neighbour:focus-visible{transform:scale(3.1);filter:drop-shadow(0 0 17px var(--dot))}
 #research-network .idea-node.game-playable{--dot:#d9a84f!important;fill:#d9a84f;opacity:.76;stroke:#ead5a2;stroke-width:.55;filter:drop-shadow(0 0 4px #d9a84f59);animation:none}
-#research-network .idea-node.game-preview{--dot:#6fa9c9!important;fill:#6fa9c9;opacity:.7;stroke:#b8d5e4;stroke-width:.55;filter:drop-shadow(0 0 4px #6fa9c959);animation:preview-node-breathe 7.8s ease-in-out infinite}
+#research-network .idea-node.game-preview{--dot:#6fa9c9!important;fill:#6fa9c9;opacity:.7;stroke:#b8d5e4;stroke-width:.55;filter:drop-shadow(0 0 4px #6fa9c959);animation:none}
 #research-network .idea-node.game-progress{filter:drop-shadow(0 0 6px var(--dot));stroke:var(--dot);stroke-width:1.2;stroke-dasharray:2 2}
 .has-open-card #research-network .idea-node:not(.selected):not(.network-neighbour),.has-term-selection #research-network .idea-node:not(.network-neighbour){opacity:.065;animation:none}
 #research-network .idea-node.network-neighbour{opacity:.7;transform:scale(1.4);stroke:transparent;filter:drop-shadow(0 0 5px var(--dot))}
