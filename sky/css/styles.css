@@ -262,7 +262,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-intro h2{margin:0;font-size:clamp(25px,2.7vw,40px);font-weight:500;line-height:1;letter-spacing:-.045em}
 .network-intro span{display:block;margin-top:10px;color:#858c9d;font-size:12px;line-height:1.5}
 .network-camera,.network-drift{will-change:transform}
-.network-drift{transform-box:fill-box;transform-origin:center}
+.network-drift{transform-box:fill-box;transform-origin:center;will-change:transform;animation:network-cosmic-drift 54s cubic-bezier(.45,0,.55,1) infinite}
 #research-network{touch-action:pan-y pinch-zoom;cursor:grab;user-select:none;overscroll-behavior:contain}
 #research-network circle{opacity:.28}
 .is-dragging #research-network{cursor:grabbing}
@@ -333,6 +333,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-card-field,.network-card h3{cursor:grab}.network-card.card-dragging{user-select:none}.network-card.card-dragging .network-card-field,.network-card.card-dragging h3{cursor:grabbing}
 @keyframes network-drift{0%{transform:translate3d(-5px,3px,0) scale(1.006)}45%{transform:translate3d(7px,-5px,0) scale(.997)}100%{transform:translate3d(-2px,7px,0) scale(1.004)}}
 @keyframes network-breathe{0%{transform:translate3d(-7px,5px,0) scale(.994)}45%{transform:translate3d(9px,-7px,0) scale(1.008)}100%{transform:translate3d(-4px,9px,0) scale(1.002)}}
+@keyframes network-cosmic-drift{0%,100%{transform:translate3d(-10px,5px,0) rotate(-.08deg)}22%{transform:translate3d(4px,-9px,0) rotate(.05deg)}47%{transform:translate3d(12px,2px,0) rotate(.1deg)}71%{transform:translate3d(-2px,10px,0) rotate(-.02deg)}87%{transform:translate3d(-12px,-2px,0) rotate(-.1deg)}}
 @keyframes pinned-thread-glow{from{opacity:.16;filter:drop-shadow(0 0 0 transparent)}to{opacity:.28;filter:drop-shadow(0 0 1.5px var(--line,var(--dot)))}}
 @keyframes idea-node-breathe{0%,100%{opacity:.18;filter:brightness(.86)}50%{opacity:.42;filter:brightness(1.12) drop-shadow(0 0 3px var(--dot))}}
 @keyframes preview-node-breathe{0%,100%{opacity:.56;filter:drop-shadow(0 0 3px #6fa9c94d)}50%{opacity:.78;filter:drop-shadow(0 0 5px #6fa9c973)}}

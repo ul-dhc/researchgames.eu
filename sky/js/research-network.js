@@ -247,17 +247,8 @@
     dots.append(circle, label);
   });
 
-  const prepareOrbit = (node, index, isTerm = false) => Object.assign(node, {
-    x:node.x * 10, y:node.y * 7, homeX:node.x * 10, homeY:node.y * 7,
-    phase:index * .79 + (isTerm ? 1.7 : 0),
-    orbitX:(isTerm ? 7.5 : 10.5) + index % 5 * 1.2,
-    orbitY:(isTerm ? 5.8 : 8.2) + index % 4 * 1.05,
-    orbitRate:.000085 + index % 7 * .0000065,
-    orbitOffsetX:0, orbitOffsetY:0, pinned:false
-  });
-  points.forEach((point, index) => prepareOrbit(point, index));
-  terms.forEach((term, index) => prepareOrbit(term, index, true));
-  const physicsNodes = [...points, ...terms];
+  points.forEach(point => Object.assign(point, { x:point.x * 10, y:point.y * 7, homeX:point.x * 10, homeY:point.y * 7, pinned:false }));
+  terms.forEach(term => Object.assign(term, { x:term.x * 10, y:term.y * 7, homeX:term.x * 10, homeY:term.y * 7, pinned:false }));
   const physicsEdges = [...svg.querySelectorAll('line')].map(line => {
     let source, target;
     if (line.dataset.a !== undefined) { source = points[+line.dataset.a]; target = points[+line.dataset.b]; }
@@ -267,7 +258,6 @@
   });
   let selectedPointIndex = null;
   let lastPhysicsFrame = 0;
-  let orbitStart = 0;
 
   const updateGraph = () => {
     points.forEach(point => {
@@ -285,21 +275,8 @@
   };
 
   const simulate = time => {
-    if (!orbitStart) orbitStart = time;
     const delta = Math.min(40, Math.max(0, time - (lastPhysicsFrame || time)));
     lastPhysicsFrame = time;
-    const elapsed = time - orbitStart;
-    physicsNodes.forEach(node => {
-      if (node.pinned) return;
-      const angle = elapsed * node.orbitRate;
-      const targetX = node.homeX + (Math.sin(angle + node.phase) - Math.sin(node.phase)) * node.orbitX;
-      const targetY = node.homeY + (Math.cos(angle * .83 + node.phase * 1.21) - Math.cos(node.phase * 1.21)) * node.orbitY;
-      const settle = Math.exp(-delta / 1800);
-      node.orbitOffsetX *= settle;
-      node.orbitOffsetY *= settle;
-      node.x = targetX + node.orbitOffsetX;
-      node.y = targetY + node.orbitOffsetY;
-    });
     if (!dragging && (Math.abs(cameraVX) > .01 || Math.abs(cameraVY) > .01)) {
       panX += cameraVX;
       panY += cameraVY;
@@ -308,8 +285,6 @@
       cameraVY *= cameraDrag;
       updateCamera();
     }
-    updateGraph();
-    if (selectedPointIndex !== null) positionCard(points[selectedPointIndex].element);
     requestAnimationFrame(simulate);
   };
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(simulate);
@@ -721,12 +696,6 @@
     if (wasDragged) closeCard();
     if (draggedNode) {
       draggedNode.pinned = false;
-      const elapsed = lastPhysicsFrame - orbitStart;
-      const angle = elapsed * draggedNode.orbitRate;
-      const orbitX = draggedNode.homeX + (Math.sin(angle + draggedNode.phase) - Math.sin(draggedNode.phase)) * draggedNode.orbitX;
-      const orbitY = draggedNode.homeY + (Math.cos(angle * .83 + draggedNode.phase * 1.21) - Math.cos(draggedNode.phase * 1.21)) * draggedNode.orbitY;
-      draggedNode.orbitOffsetX = draggedNode.x - orbitX;
-      draggedNode.orbitOffsetY = draggedNode.y - orbitY;
       (draggedNode.element || draggedNode.group).classList.remove('pinned-node');
       cameraVX = 0; cameraVY = 0;
     }
