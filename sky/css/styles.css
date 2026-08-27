@@ -268,10 +268,10 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .is-dragging #research-network{cursor:grabbing}
 .is-dragging-node #research-network{cursor:grabbing}
 #research-network .idea-connection{opacity:.085}
-#research-network .term-connection{stroke-width:.55;opacity:.085;stroke-dasharray:1.5 1.6}
-#research-network .term-bridge{stroke:#a19aaf;stroke-width:.7;opacity:.2;stroke-dasharray:2 2}
-#research-network line.connected{stroke:color-mix(in srgb,var(--line,#707999) 55%,#707999);stroke-width:1.05;opacity:.2;stroke-dasharray:none;pointer-events:stroke;cursor:pointer;animation:pinned-thread-glow 5.4s ease-in-out infinite alternate}
-#research-network line.connected.active-connected{stroke:var(--line,#b9b3d4);stroke-width:2.15;opacity:.92;filter:drop-shadow(0 0 4px var(--line,var(--dot))) drop-shadow(0 0 9px var(--line,var(--dot)));animation:none}
+#research-network .term-connection{stroke-width:.42;opacity:.085;stroke-dasharray:1.5 1.8}
+#research-network .term-bridge{stroke:#a19aaf;stroke-width:.52;opacity:.2;stroke-dasharray:2 2.4}
+#research-network line.connected{stroke:color-mix(in srgb,var(--line,#707999) 55%,#707999);stroke-width:.78;opacity:.2;stroke-dasharray:none;pointer-events:stroke;cursor:pointer;animation:pinned-thread-glow 5.4s ease-in-out infinite alternate}
+#research-network line.connected.active-connected{stroke:var(--line,#b9b3d4);stroke-width:1.5;opacity:.88;filter:drop-shadow(0 0 3px var(--line,var(--dot))) drop-shadow(0 0 6px var(--line,var(--dot)));animation:none}
 #research-network .term-node{cursor:default;opacity:.38;stroke-width:1.25;filter:drop-shadow(0 0 3px var(--dot));animation:none}
 #research-network .term-group,#research-network .idea-node{cursor:grab;outline:none;pointer-events:bounding-box}
 #research-network .term-group:hover .term-node,#research-network .term-group:focus-visible .term-node{opacity:1;stroke-width:2;transform:scale(1.45)}
@@ -286,7 +286,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .idea-group:hover .idea-label{opacity:1}
 .has-network-hover #research-network line:not(.hover-connected):not(.connected){opacity:.045}
 .has-network-hover #research-network .idea-node:not(.hover-focus):not(.hover-neighbour):not(.selected){opacity:.18}
-#research-network line.hover-connected{stroke:var(--line,#a19aaf);stroke-width:1.45;opacity:.62;stroke-dasharray:3 4;filter:drop-shadow(0 0 2px var(--line,#a19aaf));animation:network-signal-flow 2.8s linear infinite}
+#research-network line.hover-connected{stroke:var(--line,#a19aaf);stroke-width:1;opacity:.62;stroke-dasharray:2.4 4.4;filter:drop-shadow(0 0 1.5px var(--line,#a19aaf));animation:network-signal-flow 2.8s linear infinite}
 #research-network .idea-node.hover-focus{opacity:1;transform:scale(2.25);filter:drop-shadow(0 0 12px var(--dot))}
 #research-network .idea-node.hover-neighbour{opacity:.72;transform:scale(1.35);filter:drop-shadow(0 0 5px var(--dot))}
 #research-network .term-group.hover-related .term-node{opacity:.9;stroke-width:1.8;transform:scale(1.45);filter:drop-shadow(0 0 8px var(--dot))}
@@ -302,7 +302,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .idea-node.selected{opacity:.58;stroke:transparent!important;filter:drop-shadow(0 0 5px var(--dot))}
 #research-network .idea-node.selected.active-selected{opacity:1;transform:scale(2);filter:drop-shadow(0 0 13px var(--dot))}
 #research-network .idea-node.selected,#research-network .idea-node.network-neighbour,#research-network .idea-node.thread-focus{animation:none}
-#research-network line.connected.thread-focus{opacity:.96;stroke-width:2.35;filter:drop-shadow(0 0 3px var(--line,var(--dot)))}
+#research-network line.connected.thread-focus{opacity:.94;stroke-width:1.65;filter:drop-shadow(0 0 2px var(--line,var(--dot)))}
 #research-network .idea-node.thread-focus{opacity:1;transform:scale(2.65);filter:drop-shadow(0 0 14px var(--dot))}
 #research-network .term-group.thread-focus .term-node{opacity:1;stroke-width:2.2;transform:scale(1.72);filter:drop-shadow(0 0 12px var(--dot))}
 #research-network .term-group.thread-focus text{fill:#fff;opacity:1}
