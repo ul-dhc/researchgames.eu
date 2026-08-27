@@ -247,8 +247,16 @@
     dots.append(circle, label);
   });
 
-  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .11, vy: Math.cos(index * 1.73) * .11, phase: index * .73, driftRateX: .00028 + index % 7 * .000025, driftRateY: .00023 + index % 5 * .000029, driftForceX: .0025 + index % 6 * .00015, driftForceY: .0022 + index % 8 * .00013, pinned: false }));
-  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .09, vy: Math.sin(index * 1.91) * .09, phase: index * .91 + 2, driftRateX: .00024 + index % 6 * .000023, driftRateY: .0002 + index % 4 * .000027, driftForceX: .002 + index % 5 * .00013, driftForceY: .0018 + index % 7 * .00012, pinned: false }));
+  const prepareOrbit = (node, index, isTerm = false) => Object.assign(node, {
+    x:node.x * 10, y:node.y * 7, homeX:node.x * 10, homeY:node.y * 7,
+    phase:index * .79 + (isTerm ? 1.7 : 0),
+    orbitX:(isTerm ? 2.4 : 3.4) + index % 5 * .55,
+    orbitY:(isTerm ? 2 : 2.9) + index % 4 * .48,
+    orbitRate:.000045 + index % 7 * .0000035,
+    orbitOffsetX:0, orbitOffsetY:0, pinned:false
+  });
+  points.forEach((point, index) => prepareOrbit(point, index));
+  terms.forEach((term, index) => prepareOrbit(term, index, true));
   const physicsNodes = [...points, ...terms];
   const physicsEdges = [...svg.querySelectorAll('line')].map(line => {
     let source, target;
@@ -258,8 +266,8 @@
     return { line, source, target, rest: Math.hypot(target.x - source.x, target.y - source.y) * 1.1 };
   });
   let selectedPointIndex = null;
-  let animationFrame = 0;
   let lastPhysicsFrame = 0;
+  let orbitStart = 0;
 
   const updateGraph = () => {
     points.forEach(point => {
@@ -277,47 +285,31 @@
   };
 
   const simulate = time => {
-    if (time - lastPhysicsFrame < 16) { requestAnimationFrame(simulate); return; }
+    if (!orbitStart) orbitStart = time;
+    const delta = Math.min(40, Math.max(0, time - (lastPhysicsFrame || time)));
     lastPhysicsFrame = time;
-    physicsEdges.forEach(edge => {
-      const dx = edge.target.x - edge.source.x;
-      const dy = edge.target.y - edge.source.y;
-      const distance = Math.max(1, Math.hypot(dx, dy));
-      const force = (distance - edge.rest) * .000045;
-      const fx = dx / distance * force;
-      const fy = dy / distance * force;
-      if (!edge.source.pinned) { edge.source.vx += fx; edge.source.vy += fy; }
-      if (!edge.target.pinned) { edge.target.vx -= fx; edge.target.vy -= fy; }
+    const elapsed = time - orbitStart;
+    physicsNodes.forEach(node => {
+      if (node.pinned) return;
+      const angle = elapsed * node.orbitRate;
+      const targetX = node.homeX + (Math.sin(angle + node.phase) - Math.sin(node.phase)) * node.orbitX;
+      const targetY = node.homeY + (Math.cos(angle * .83 + node.phase * 1.21) - Math.cos(node.phase * 1.21)) * node.orbitY;
+      const settle = Math.exp(-delta / 1800);
+      node.orbitOffsetX *= settle;
+      node.orbitOffsetY *= settle;
+      node.x = targetX + node.orbitOffsetX;
+      node.y = targetY + node.orbitOffsetY;
     });
-    for (let a = 0; a < physicsNodes.length; a++) {
-      const node = physicsNodes[a];
-      if (node.pinned) continue;
-      node.vx += Math.sin(time * node.driftRateX + node.phase) * node.driftForceX + (node.homeX - node.x) * .000012;
-      node.vy += Math.cos(time * node.driftRateY + node.phase * 1.17) * node.driftForceY + (node.homeY - node.y) * .000012;
-      for (let b = a + 1; b < physicsNodes.length; b++) {
-        const other = physicsNodes[b];
-        const dx = other.x - node.x;
-        const dy = other.y - node.y;
-        const distance = Math.max(1, Math.hypot(dx, dy));
-        if (distance < 24) {
-          const push = (24 - distance) * .0003;
-          node.vx -= dx / distance * push; node.vy -= dy / distance * push;
-          if (!other.pinned) { other.vx += dx / distance * push; other.vy += dy / distance * push; }
-        }
-      }
-      node.vx = Math.max(-.46, Math.min(.46, node.vx * .982));
-      node.vy = Math.max(-.46, Math.min(.46, node.vy * .982));
-      node.x += node.vx; node.y += node.vy;
-    }
     if (!dragging && (Math.abs(cameraVX) > .01 || Math.abs(cameraVY) > .01)) {
       panX += cameraVX;
       panY += cameraVY;
-      cameraVX *= .9;
-      cameraVY *= .9;
+      const cameraDrag = Math.exp(-delta / 145);
+      cameraVX *= cameraDrag;
+      cameraVY *= cameraDrag;
       updateCamera();
     }
     updateGraph();
-    if (selectedPointIndex !== null && animationFrame++ % 3 === 0) positionCard(points[selectedPointIndex].element);
+    if (selectedPointIndex !== null) positionCard(points[selectedPointIndex].element);
     requestAnimationFrame(simulate);
   };
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(simulate);
@@ -706,7 +698,6 @@
     }
     if (draggedNode) {
       draggedNode.pinned = true;
-      draggedNode.vx = 0; draggedNode.vy = 0;
       (draggedNode.element || draggedNode.group).classList.add('pinned-node');
       draggedNode.x = dragStart.nodeX + dx / scale;
       draggedNode.y = dragStart.nodeY + dy / scale;
@@ -730,8 +721,12 @@
     if (wasDragged) closeCard();
     if (draggedNode) {
       draggedNode.pinned = false;
-      draggedNode.vx = cameraVX / scale * .45;
-      draggedNode.vy = cameraVY / scale * .45;
+      const elapsed = lastPhysicsFrame - orbitStart;
+      const angle = elapsed * draggedNode.orbitRate;
+      const orbitX = draggedNode.homeX + (Math.sin(angle + draggedNode.phase) - Math.sin(draggedNode.phase)) * draggedNode.orbitX;
+      const orbitY = draggedNode.homeY + (Math.cos(angle * .83 + draggedNode.phase * 1.21) - Math.cos(draggedNode.phase * 1.21)) * draggedNode.orbitY;
+      draggedNode.orbitOffsetX = draggedNode.x - orbitX;
+      draggedNode.orbitOffsetY = draggedNode.y - orbitY;
       (draggedNode.element || draggedNode.group).classList.remove('pinned-node');
       cameraVX = 0; cameraVY = 0;
     }

@@ -262,7 +262,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-intro h2{margin:0;font-size:clamp(25px,2.7vw,40px);font-weight:500;line-height:1;letter-spacing:-.045em}
 .network-intro span{display:block;margin-top:10px;color:#858c9d;font-size:12px;line-height:1.5}
 .network-camera,.network-drift{will-change:transform}
-.network-drift{transform-box:fill-box;transform-origin:center;animation:network-breathe 15s ease-in-out infinite alternate}
+.network-drift{transform-box:fill-box;transform-origin:center}
 #research-network{touch-action:pan-y pinch-zoom;cursor:grab;user-select:none;overscroll-behavior:contain}
 #research-network circle{opacity:.28}
 .is-dragging #research-network{cursor:grabbing}
