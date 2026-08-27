@@ -115,6 +115,9 @@
   let wasDragged = false;
   let dragStart = null;
   let draggedNode = null;
+  let lastDragSample = null;
+  let cameraVX = 0;
+  let cameraVY = 0;
   let cardDragging = false;
   let cardPinned = false;
   let cardPointer = null;
@@ -244,8 +247,8 @@
     dots.append(circle, label);
   });
 
-  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .04, vy: Math.cos(index * 1.73) * .04, phase: index * .73, driftRateX: .0002 + index % 7 * .000019, driftRateY: .00017 + index % 5 * .000023, driftForceX: .00125 + index % 6 * .00009, driftForceY: .0011 + index % 8 * .000075, pinned: false }));
-  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .035, vy: Math.sin(index * 1.91) * .035, phase: index * .91 + 2, driftRateX: .00018 + index % 6 * .000017, driftRateY: .00015 + index % 4 * .000021, driftForceX: .001 + index % 5 * .00008, driftForceY: .0009 + index % 7 * .00007, pinned: false }));
+  points.forEach((point, index) => Object.assign(point, { x: point.x * 10, y: point.y * 7, homeX: point.x * 10, homeY: point.y * 7, vx: Math.sin(index * 2.17) * .11, vy: Math.cos(index * 1.73) * .11, phase: index * .73, driftRateX: .00028 + index % 7 * .000025, driftRateY: .00023 + index % 5 * .000029, driftForceX: .0025 + index % 6 * .00015, driftForceY: .0022 + index % 8 * .00013, pinned: false }));
+  terms.forEach((term, index) => Object.assign(term, { x: term.x * 10, y: term.y * 7, homeX: term.x * 10, homeY: term.y * 7, vx: Math.cos(index * 1.41) * .09, vy: Math.sin(index * 1.91) * .09, phase: index * .91 + 2, driftRateX: .00024 + index % 6 * .000023, driftRateY: .0002 + index % 4 * .000027, driftForceX: .002 + index % 5 * .00013, driftForceY: .0018 + index % 7 * .00012, pinned: false }));
   const physicsNodes = [...points, ...terms];
   const physicsEdges = [...svg.querySelectorAll('line')].map(line => {
     let source, target;
@@ -274,13 +277,13 @@
   };
 
   const simulate = time => {
-    if (time - lastPhysicsFrame < 32) { requestAnimationFrame(simulate); return; }
+    if (time - lastPhysicsFrame < 16) { requestAnimationFrame(simulate); return; }
     lastPhysicsFrame = time;
     physicsEdges.forEach(edge => {
       const dx = edge.target.x - edge.source.x;
       const dy = edge.target.y - edge.source.y;
       const distance = Math.max(1, Math.hypot(dx, dy));
-      const force = (distance - edge.rest) * .00006;
+      const force = (distance - edge.rest) * .000045;
       const fx = dx / distance * force;
       const fy = dy / distance * force;
       if (!edge.source.pinned) { edge.source.vx += fx; edge.source.vy += fy; }
@@ -289,8 +292,8 @@
     for (let a = 0; a < physicsNodes.length; a++) {
       const node = physicsNodes[a];
       if (node.pinned) continue;
-      node.vx += Math.sin(time * node.driftRateX + node.phase) * node.driftForceX + (node.homeX - node.x) * .000008;
-      node.vy += Math.cos(time * node.driftRateY + node.phase * 1.17) * node.driftForceY + (node.homeY - node.y) * .000008;
+      node.vx += Math.sin(time * node.driftRateX + node.phase) * node.driftForceX + (node.homeX - node.x) * .000012;
+      node.vy += Math.cos(time * node.driftRateY + node.phase * 1.17) * node.driftForceY + (node.homeY - node.y) * .000012;
       for (let b = a + 1; b < physicsNodes.length; b++) {
         const other = physicsNodes[b];
         const dx = other.x - node.x;
@@ -302,9 +305,16 @@
           if (!other.pinned) { other.vx += dx / distance * push; other.vy += dy / distance * push; }
         }
       }
-      node.vx = Math.max(-.28, Math.min(.28, node.vx * .985));
-      node.vy = Math.max(-.28, Math.min(.28, node.vy * .985));
+      node.vx = Math.max(-.46, Math.min(.46, node.vx * .982));
+      node.vy = Math.max(-.46, Math.min(.46, node.vy * .982));
       node.x += node.vx; node.y += node.vy;
+    }
+    if (!dragging && (Math.abs(cameraVX) > .01 || Math.abs(cameraVY) > .01)) {
+      panX += cameraVX;
+      panY += cameraVY;
+      cameraVX *= .9;
+      cameraVY *= .9;
+      updateCamera();
     }
     updateGraph();
     if (selectedPointIndex !== null && animationFrame++ % 3 === 0) positionCard(points[selectedPointIndex].element);
@@ -331,9 +341,13 @@
   }
 
   function applyProjectHighlights(activeIndex = selectedPointIndex) {
+    const pinnedIndexes = new Set(pinnedCards.keys());
     const indexes = highlightedIndexes(activeIndex);
     const neighbours = new Set();
     const relatedTerms = new Set();
+    const pinnedTerms = new Set();
+    const activeTerms = new Set(activeIndex === null ? [] : points[activeIndex].termIndexes);
+    pinnedIndexes.forEach(index => points[index].termIndexes.forEach(termIndex => pinnedTerms.add(termIndex)));
     indexes.forEach(index => {
       points[index].termIndexes.forEach(termIndex => relatedTerms.add(termIndex));
       svg.querySelectorAll('.idea-connection').forEach(line => {
@@ -343,12 +357,22 @@
     });
     svg.querySelectorAll('.idea-node').forEach((dot, index) => {
       dot.classList.toggle('selected', indexes.has(index));
+      dot.classList.toggle('pinned-selected', pinnedIndexes.has(index));
+      dot.classList.toggle('active-selected', index === activeIndex);
       dot.classList.toggle('network-neighbour', !indexes.has(index) && neighbours.has(index));
     });
-    svg.querySelectorAll('line').forEach(line => line.classList.toggle('connected', [...indexes].some(index =>
-      +line.dataset.a === index || +line.dataset.b === index || +line.dataset.idea === index
-    )));
-    svg.querySelectorAll('.term-group').forEach(group => group.classList.toggle('related', relatedTerms.has(+group.dataset.term)));
+    const lineBelongsTo = (line, index) => +line.dataset.a === index || +line.dataset.b === index || +line.dataset.idea === index;
+    svg.querySelectorAll('line').forEach(line => {
+      line.classList.toggle('connected', [...indexes].some(index => lineBelongsTo(line, index)));
+      line.classList.toggle('pinned-connected', [...pinnedIndexes].some(index => lineBelongsTo(line, index)));
+      line.classList.toggle('active-connected', activeIndex !== null && lineBelongsTo(line, activeIndex));
+    });
+    svg.querySelectorAll('.term-group').forEach(group => {
+      const termIndex = +group.dataset.term;
+      group.classList.toggle('related', relatedTerms.has(termIndex));
+      group.classList.toggle('pinned-related', pinnedTerms.has(termIndex));
+      group.classList.toggle('active-related', activeTerms.has(termIndex));
+    });
     section.classList.toggle('has-open-card', indexes.size > 0);
   }
 
@@ -383,7 +407,9 @@
     if (existingNote) {
       existingNote.classList.remove('note-attention');
       requestAnimationFrame(() => existingNote.classList.add('note-attention'));
-      applyProjectHighlights();
+      selectedPointIndex = index;
+      applyProjectHighlights(index);
+      setHint(`${idea.name} is active. Click beside the network to return it to its pinned glow.`);
       return;
     }
     cardPinned = false;
@@ -445,7 +471,7 @@
     card.hidden = true;
     selectedPointIndex = null;
     section.classList.remove('has-term-selection');
-    svg.querySelectorAll('.selected,.connected,.related').forEach(element => element.classList.remove('selected','connected','related'));
+    svg.querySelectorAll('.selected,.connected,.related,.active-selected,.active-connected,.active-related').forEach(element => element.classList.remove('selected','connected','related','active-selected','active-connected','active-related'));
     svg.querySelectorAll('.network-neighbour').forEach(element => element.classList.remove('network-neighbour'));
     svg.querySelectorAll('.idea-label.visible').forEach(element => { element.classList.remove('visible'); element.setAttribute('tabindex', '-1'); element.setAttribute('aria-hidden', 'true'); });
     applyProjectHighlights(null);
@@ -659,7 +685,9 @@
     const ideaElement = event.target.closest?.('.idea-node');
     const termElement = event.target.closest?.('.term-group');
     draggedNode = ideaElement ? points[+ideaElement.dataset.index] : termElement ? terms[+termElement.dataset.term] : null;
+    cameraVX = 0; cameraVY = 0;
     dragStart = { x: event.clientX, y: event.clientY, panX, panY, nodeX: draggedNode?.x, nodeY: draggedNode?.y };
+    lastDragSample = { x:event.clientX, y:event.clientY, time:event.timeStamp };
     section.classList.add(draggedNode ? 'is-dragging-node' : 'is-dragging');
   });
   svg.addEventListener('pointermove', event => {
@@ -667,7 +695,7 @@
     const rect = svg.getBoundingClientRect();
     const dx = (event.clientX - dragStart.x) / rect.width * 1000;
     const dy = (event.clientY - dragStart.y) / rect.height * 700;
-    if (Math.abs(dx) + Math.abs(dy) > 14 && !wasDragged) {
+    if (Math.abs(dx) + Math.abs(dy) > 6 && !wasDragged) {
       wasDragged = true;
       svg.setPointerCapture(event.pointerId);
     }
@@ -683,6 +711,10 @@
       panY = dragStart.panY + dy;
       updateCamera();
     }
+    const elapsed = Math.max(8, event.timeStamp - lastDragSample.time);
+    cameraVX = (event.clientX - lastDragSample.x) / rect.width * 1000 * 16 / elapsed;
+    cameraVY = (event.clientY - lastDragSample.y) / rect.height * 700 * 16 / elapsed;
+    lastDragSample = { x:event.clientX, y:event.clientY, time:event.timeStamp };
   });
   const finishDrag = event => {
     if (!dragging) return;
@@ -691,6 +723,13 @@
     section.classList.remove('is-dragging-node');
     if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
     if (wasDragged) closeCard();
+    if (draggedNode) {
+      draggedNode.pinned = false;
+      draggedNode.vx = cameraVX / scale * .45;
+      draggedNode.vy = cameraVY / scale * .45;
+      (draggedNode.element || draggedNode.group).classList.remove('pinned-node');
+      cameraVX = 0; cameraVY = 0;
+    }
     draggedNode = null;
     setTimeout(() => { wasDragged = false; }, 0);
   };
@@ -700,7 +739,7 @@
   zoomOutButton.addEventListener('click', event => { event.stopPropagation(); zoomAt(scale / 1.22); });
   resetButton.addEventListener('click', event => {
     event.stopPropagation();
-    scale = 1; panX = 0; panY = 0;
+    scale = 1; panX = 0; panY = 0; cameraVX = 0; cameraVY = 0;
     updateCamera();
     clearPinnedCards();
     closeCard();

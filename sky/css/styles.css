@@ -261,7 +261,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-intro p{margin:0 0 7px;color:#bd6fe4;font-size:11px;font-weight:650;letter-spacing:.16em;text-transform:uppercase}
 .network-intro h2{margin:0;font-size:clamp(25px,2.7vw,40px);font-weight:500;line-height:1;letter-spacing:-.045em}
 .network-intro span{display:block;margin-top:10px;color:#858c9d;font-size:12px;line-height:1.5}
-.network-drift{transform-box:fill-box;transform-origin:center;animation:network-breathe 22s ease-in-out infinite alternate}
+.network-camera,.network-drift{will-change:transform}
+.network-drift{transform-box:fill-box;transform-origin:center;animation:network-breathe 15s ease-in-out infinite alternate}
 #research-network{touch-action:pan-y pinch-zoom;cursor:grab;user-select:none;overscroll-behavior:contain}
 #research-network circle{opacity:.28}
 .is-dragging #research-network{cursor:grabbing}
@@ -269,13 +270,16 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .idea-connection{opacity:.085}
 #research-network .term-connection{stroke-width:.55;opacity:.085;stroke-dasharray:1.5 1.6}
 #research-network .term-bridge{stroke:#a19aaf;stroke-width:.7;opacity:.2;stroke-dasharray:2 2}
-#research-network line.connected{stroke-width:1.55;opacity:.46;stroke-dasharray:none;pointer-events:stroke;cursor:pointer}
+#research-network line.connected{stroke-width:1.25;opacity:.28;stroke-dasharray:none;pointer-events:stroke;cursor:pointer;animation:pinned-thread-glow 4.8s ease-in-out infinite alternate}
+#research-network line.connected.active-connected{stroke-width:1.8;opacity:.72;filter:drop-shadow(0 0 2.5px var(--line,var(--dot)));animation:none}
 #research-network .term-node{cursor:default;opacity:.38;stroke-width:1.25;filter:drop-shadow(0 0 3px var(--dot));animation:none}
 #research-network .term-group,#research-network .idea-node{cursor:grab;outline:none;pointer-events:bounding-box}
 #research-network .term-group:hover .term-node,#research-network .term-group:focus-visible .term-node{opacity:1;stroke-width:2;transform:scale(1.45)}
 #research-network .term-group text{fill:#a6abba;font:500 9px var(--sans);letter-spacing:.035em;opacity:.62;pointer-events:none;transition:opacity .35s,fill .35s,font-size .35s}
-#research-network .term-group.related .term-node{opacity:.78;stroke-width:1.7;transform:scale(1.48);filter:drop-shadow(0 0 7px var(--dot))}
-#research-network .term-group.related text{fill:#e7e8ed;font-size:10px;opacity:.8}
+#research-network .term-group.related .term-node{opacity:.58;stroke-width:1.55;transform:scale(1.35);filter:drop-shadow(0 0 5px var(--dot))}
+#research-network .term-group.related text{fill:#d6d8df;font-size:9.5px;opacity:.68}
+#research-network .term-group.active-related .term-node{opacity:1;stroke-width:2;transform:scale(1.6);filter:drop-shadow(0 0 10px var(--dot))}
+#research-network .term-group.active-related text{fill:#fff;font-size:10px;opacity:1}
 #research-network .idea-node:hover,#research-network .idea-node:focus-visible{transform:scale(2)}
 #research-network .idea-node{pointer-events:all;stroke:transparent;stroke-width:8;opacity:.24;animation:idea-node-breathe var(--breath-duration,8s) ease-in-out var(--breath-delay,0s) infinite}
 #research-network .idea-node:hover,#research-network .idea-node:focus-visible{opacity:1;transform:scale(2.65);filter:drop-shadow(0 0 13px var(--dot)) drop-shadow(0 0 4px var(--dot))}
@@ -287,7 +291,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .idea-node.game-progress{filter:drop-shadow(0 0 6px var(--dot));stroke:var(--dot);stroke-width:1.2;stroke-dasharray:2 2}
 .has-open-card #research-network .idea-node:not(.selected):not(.network-neighbour),.has-term-selection #research-network .idea-node:not(.network-neighbour){opacity:.065;animation:none}
 #research-network .idea-node.network-neighbour{opacity:.7;transform:scale(1.4);stroke:transparent;filter:drop-shadow(0 0 5px var(--dot))}
-#research-network .idea-node.selected{opacity:.78;stroke:transparent!important;filter:drop-shadow(0 0 7px var(--dot))}
+#research-network .idea-node.selected{opacity:.58;stroke:transparent!important;filter:drop-shadow(0 0 5px var(--dot))}
+#research-network .idea-node.selected.active-selected{opacity:1;transform:scale(2);filter:drop-shadow(0 0 13px var(--dot))}
 #research-network .idea-node.selected,#research-network .idea-node.network-neighbour,#research-network .idea-node.thread-focus{animation:none}
 #research-network line.connected.thread-focus{opacity:.96;stroke-width:2.35;filter:drop-shadow(0 0 3px var(--line,var(--dot)))}
 #research-network .idea-node.thread-focus{opacity:1;transform:scale(2.65);filter:drop-shadow(0 0 14px var(--dot))}
@@ -327,7 +332,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-card.card-dragged,.network-card.card-dragged.card-left{transform:none;animation:none}
 .network-card-field,.network-card h3{cursor:grab}.network-card.card-dragging{user-select:none}.network-card.card-dragging .network-card-field,.network-card.card-dragging h3{cursor:grabbing}
 @keyframes network-drift{0%{transform:translate3d(-5px,3px,0) scale(1.006)}45%{transform:translate3d(7px,-5px,0) scale(.997)}100%{transform:translate3d(-2px,7px,0) scale(1.004)}}
-@keyframes network-breathe{0%{transform:translate3d(-3px,2px,0) scale(.998)}45%{transform:translate3d(4px,-3px,0) scale(1.004)}100%{transform:translate3d(-1px,4px,0) scale(1.001)}}
+@keyframes network-breathe{0%{transform:translate3d(-7px,5px,0) scale(.994)}45%{transform:translate3d(9px,-7px,0) scale(1.008)}100%{transform:translate3d(-4px,9px,0) scale(1.002)}}
+@keyframes pinned-thread-glow{from{opacity:.22;filter:drop-shadow(0 0 0 transparent)}to{opacity:.36;filter:drop-shadow(0 0 1.5px var(--line,var(--dot)))}}
 @keyframes idea-node-breathe{0%,100%{opacity:.18;filter:brightness(.86)}50%{opacity:.42;filter:brightness(1.12) drop-shadow(0 0 3px var(--dot))}}
 @keyframes preview-node-breathe{0%,100%{opacity:.56;filter:drop-shadow(0 0 3px #6fa9c94d)}50%{opacity:.78;filter:drop-shadow(0 0 5px #6fa9c973)}}
 @keyframes idea-bubble-in{0%{opacity:0;scale:.82}72%{scale:1.025}100%{opacity:1;scale:1}}
@@ -341,7 +347,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 [data-theme="light"] .network-card:after{background:#fffef8}
 [data-theme="light"] .network-card-collection{color:#414552}
 @media(max-width:700px){.network-intro{left:20px;top:24px;max-width:280px}.network-intro h2{font-size:27px}.network-intro span{font-size:11px}.network-controls{right:14px;bottom:14px}.network-card,.network-card.card-left{left:20px!important;right:20px;width:auto;max-height:250px;border-radius:15px}.network-card:after,.network-card.card-left:after{display:none}#research-network .term-group text{font-size:8px;opacity:.7}}
-@media(prefers-reduced-motion:reduce){.network-drift,#research-network .idea-node{animation:none}.network-card{animation:none}}
+@media(prefers-reduced-motion:reduce){.network-drift,#research-network .idea-node,#research-network line.connected{animation:none}.network-card{animation:none}}
 
 .facts{margin-bottom:18px}
 .facts li{align-items:flex-start;gap:12px}
