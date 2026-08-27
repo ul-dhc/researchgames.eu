@@ -559,9 +559,10 @@
     enablePinnedNote(note, index);
     card.hidden = true;
     card.classList.remove('card-dragged','card-dragging');
-    selectedPointIndex = null;
+    selectedPointIndex = index;
     cardPinned = false;
-    applyProjectHighlights(null);
+    applyProjectHighlights(index);
+    setHint(`${points[index].idea.name} is pinned and active. Click beside the network to soften its connections.`);
   }
 
   function clearPinnedCards() {

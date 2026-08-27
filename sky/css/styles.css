@@ -270,8 +270,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 #research-network .idea-connection{opacity:.085}
 #research-network .term-connection{stroke-width:.55;opacity:.085;stroke-dasharray:1.5 1.6}
 #research-network .term-bridge{stroke:#a19aaf;stroke-width:.7;opacity:.2;stroke-dasharray:2 2}
-#research-network line.connected{stroke-width:1.25;opacity:.28;stroke-dasharray:none;pointer-events:stroke;cursor:pointer;animation:pinned-thread-glow 4.8s ease-in-out infinite alternate}
-#research-network line.connected.active-connected{stroke-width:1.8;opacity:.72;filter:drop-shadow(0 0 2.5px var(--line,var(--dot)));animation:none}
+#research-network line.connected{stroke:color-mix(in srgb,var(--line,#707999) 55%,#707999);stroke-width:1.05;opacity:.2;stroke-dasharray:none;pointer-events:stroke;cursor:pointer;animation:pinned-thread-glow 5.4s ease-in-out infinite alternate}
+#research-network line.connected.active-connected{stroke:var(--line,#b9b3d4);stroke-width:2.15;opacity:.92;filter:drop-shadow(0 0 4px var(--line,var(--dot))) drop-shadow(0 0 9px var(--line,var(--dot)));animation:none}
 #research-network .term-node{cursor:default;opacity:.38;stroke-width:1.25;filter:drop-shadow(0 0 3px var(--dot));animation:none}
 #research-network .term-group,#research-network .idea-node{cursor:grab;outline:none;pointer-events:bounding-box}
 #research-network .term-group:hover .term-node,#research-network .term-group:focus-visible .term-node{opacity:1;stroke-width:2;transform:scale(1.45)}
@@ -333,7 +333,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .network-card-field,.network-card h3{cursor:grab}.network-card.card-dragging{user-select:none}.network-card.card-dragging .network-card-field,.network-card.card-dragging h3{cursor:grabbing}
 @keyframes network-drift{0%{transform:translate3d(-5px,3px,0) scale(1.006)}45%{transform:translate3d(7px,-5px,0) scale(.997)}100%{transform:translate3d(-2px,7px,0) scale(1.004)}}
 @keyframes network-breathe{0%{transform:translate3d(-7px,5px,0) scale(.994)}45%{transform:translate3d(9px,-7px,0) scale(1.008)}100%{transform:translate3d(-4px,9px,0) scale(1.002)}}
-@keyframes pinned-thread-glow{from{opacity:.22;filter:drop-shadow(0 0 0 transparent)}to{opacity:.36;filter:drop-shadow(0 0 1.5px var(--line,var(--dot)))}}
+@keyframes pinned-thread-glow{from{opacity:.16;filter:drop-shadow(0 0 0 transparent)}to{opacity:.28;filter:drop-shadow(0 0 1.5px var(--line,var(--dot)))}}
 @keyframes idea-node-breathe{0%,100%{opacity:.18;filter:brightness(.86)}50%{opacity:.42;filter:brightness(1.12) drop-shadow(0 0 3px var(--dot))}}
 @keyframes preview-node-breathe{0%,100%{opacity:.56;filter:drop-shadow(0 0 3px #6fa9c94d)}50%{opacity:.78;filter:drop-shadow(0 0 5px #6fa9c973)}}
 @keyframes idea-bubble-in{0%{opacity:0;scale:.82}72%{scale:1.025}100%{opacity:1;scale:1}}
