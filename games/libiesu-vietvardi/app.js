@@ -167,7 +167,7 @@
       aboutLink.href = `about.html${IS_EN ? "#en" : ""}`;
       aboutLink.setAttribute("aria-label", IS_EN ? "About this game" : "Par šo spēli");
       aboutLink.title = IS_EN ? "About this game" : "Par šo spēli";
-      aboutLink.innerHTML = '<svg width="18" height="18" aria-hidden="true"><use href="#i-info"/></svg>';
+      aboutLink.innerHTML = '<svg width="18" height="18" aria-hidden="true"><use href="vendor/lucide-icons.svg#i-info"/></svg>';
       const switcher = document.createElement("div");
       switcher.className = "lang-switch";
       switcher.setAttribute("role", "group");
@@ -834,8 +834,8 @@
   function toast(kind, title) {
     toastCard.className = "toast-card show" + (kind === "bad" ? " bad" : "");
     toastIcon.innerHTML = kind === "bad"
-      ? '<svg width="16" height="16"><use href="#i-close"/></svg>'
-      : '<svg width="16" height="16"><use href="#i-check"/></svg>';
+      ? '<svg width="16" height="16"><use href="vendor/lucide-icons.svg#i-close"/></svg>'
+      : '<svg width="16" height="16"><use href="vendor/lucide-icons.svg#i-check"/></svg>';
     toastTitle.textContent = title;
     clearTimeout(toast._t);
     toast._t = setTimeout(() => { toastCard.classList.remove("show"); }, 1500);
@@ -968,8 +968,8 @@
 
     const isLast = state.round >= TOTAL_ROUNDS;
     $("#btn-next-round").innerHTML = isLast
-      ? `${UI.seeResults} <svg width="16" height="16"><use href="#i-arrow-right"/></svg>`
-      : `${UI.nextRound} <svg width="16" height="16"><use href="#i-arrow-right"/></svg>`;
+      ? `${UI.seeResults} <svg width="16" height="16"><use href="vendor/lucide-icons.svg#i-arrow-right"/></svg>`
+      : `${UI.nextRound} <svg width="16" height="16"><use href="vendor/lucide-icons.svg#i-arrow-right"/></svg>`;
   }
 
   $("#btn-next-round").addEventListener("click", () => {
