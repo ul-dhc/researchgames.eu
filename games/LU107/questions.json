@@ -53,9 +53,9 @@
     "notes": null,
     "options_en": [
       "in Riga",
-      "In Turbat",
+      "In Dorbat",
       "in Jelgava",
-      "in Petersburg"
+      "in St. Petersburg"
     ],
     "answer_en": "In Turbat",
     "explanation_lv": "1917. gada jūnijā Tērbatā notikušajā kongresā izveidoja Augstskolas komiteju un pieņēma rezolūciju “Par latviešu augstskolu”.",
@@ -66,7 +66,7 @@
     "round": "LU vēsture",
     "subcategory": "Nacionālās universitātes ideja",
     "type": "Izvēles jautājums",
-    "question_lv": "Kas vadīja 1917. gadā izveidoto Augstskolas komiteju?",
+    "question_lv": "Kurš vadīja 1917. gadā izveidoto Augstskolas komiteju?",
     "question_en": "Who headed the University Committee established in 1917?",
     "options": [
       "Pauls Dāle",
@@ -111,7 +111,6 @@
     "time": 15,
     "source": "https://www.lu.lv/par-mums/par-lu/vesture/",
     "verification_required": false,
-    "skip_en": true,
     "image_url": null,
     "notes": null,
     "options_en": [
@@ -122,7 +121,8 @@
     ],
     "answer_en": "University of Latvia",
     "explanation_lv": "1919. gada atklāšanas brīdī iestādi sauca par Latvijas Augstskolu; nosaukumu “Latvijas Universitāte” tā ieguva pēc Satversmes izstrādāšanas.",
-    "explanation_en": "At its opening in 1919, the institution was called the Higher School of Latvia; it became the University of Latvia after its Constitution was drafted."
+    "explanation_en": "At its opening in 1919, the institution was called the Higher School of Latvia; it became the University of Latvia after its Constitution was drafted.",
+    "skip_en": true
   },
   {
     "id": "V05",
@@ -246,7 +246,8 @@
     ],
     "answer_en": "Heir to the throne boulevard",
     "explanation_lv": "Kad 1866. gadā sāka ēkas būvniecību, tagadējais Raiņa bulvāris saucās Troņmantnieka bulvāris.",
-    "explanation_en": "When construction began in 1866, present-day Raiņa Boulevard was called Heir to the Throne Boulevard."
+    "explanation_en": "When construction began in 1866, present-day Raiņa Boulevard was called Heir to the Throne Boulevard.",
+    "skip_en": true
   },
   {
     "id": "V09",
@@ -270,8 +271,8 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "In the great hall",
-      "In the small hall",
+      "In the Great Hall",
+      "In the Small Hall",
       "in the Senate Hall",
       "In the library reading room"
     ],
@@ -307,8 +308,8 @@
       "150"
     ],
     "answer_en": "120",
-    "explanation_lv": "LU Mazajā aulā ir 120 sēdvietu; tā ir viena no vēsturiski nozīmīgākajām Universitātes telpām.",
-    "explanation_en": "The UL Small Hall has 120 seats and is one of the University’s most historically significant rooms."
+    "explanation_lv": "LU Mazajā aulā ir 120 sēdvietu; tā ir viena no vēsturiski nozīmīgākajām Latvijas Universitātes telpām.",
+    "explanation_en": "The UL Small Hall has 120 seats and is one of the University of Latvia’s most historically significant rooms."
   },
   {
     "id": "V11",
@@ -338,7 +339,7 @@
       "September 28, 1938"
     ],
     "answer_en": "September 28, 1935",
-    "explanation_lv": "Lielo aulu atklāja un iesvētīja LU 16. gadadienā – 1935. gada 28. septembrī.",
+    "explanation_lv": "Lielo aulu atklāja un iesvētīja LU 16. gadadienā — 1935. gada 28. septembrī.",
     "explanation_en": "The Great Hall was opened and consecrated on UL’s 16th anniversary, 28 September 1935."
   },
   {
@@ -400,7 +401,7 @@
       "12"
     ],
     "answer_en": "11",
-    "explanation_lv": "Vienpadsmit Lielās aulas ciļņi attēloja tālaika LU fakultātes, bet divpadsmitais – ozols – simbolizēja tās visas kopā.",
+    "explanation_lv": "Vienpadsmit Lielās aulas ciļņi attēloja tālaika LU fakultātes, bet divpadsmitais — ozols — simbolizēja tās visas kopā.",
     "explanation_en": "Eleven reliefs in the Great Hall represented the faculties of the time, while the twelfth, an oak tree, symbolised them all together."
   },
   {
@@ -425,7 +426,7 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "regions of Latvia",
+      "Regions of Latvia",
       "UL rectors",
       "All faculties",
       "Study programs"
@@ -586,7 +587,7 @@
       "The year of the opening of the Astronomical Tower"
     ],
     "answer_en": "The year of founding of Riga Polytechnic",
-    "explanation_lv": "Gadskaitlis “1862” uz fasādes norāda uz Rīgas Politehnikuma dibināšanu – ar to cieši saistīta ēkas un augstākās izglītības vēsture.",
+    "explanation_lv": "Gadskaitlis “1862” uz fasādes norāda uz Rīgas Politehnikuma dibināšanu — ar to cieši saistīta ēkas un augstākās izglītības vēsture.",
     "explanation_en": "The year 1862 on the façade marks the founding of Riga Polytechnic, an institution closely linked to the building’s history and higher education in Latvia."
   },
   {
@@ -661,7 +662,7 @@
     "options": [
       "Gundars Bērziņš",
       "Guntars Kitenbergs",
-      "Jānis Priede",
+      "Zanda Rubene",
       "Andris Sarnovičs"
     ],
     "correct": "A",
@@ -675,10 +676,12 @@
     "options_en": [
       "Gundars Bērziņš",
       "Guntars Kitenbergs",
-      "Jānis Priede",
+      "Zanda Rubene",
       "Andris Sarnovičs"
     ],
-    "answer_en": "Gundars Bērziņš"
+    "answer_en": "Gundars Bērziņš",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M02",
@@ -707,7 +710,9 @@
       "Gundars Bērziņš",
       "Antra Boča"
     ],
-    "answer_en": "Guntars Kitenbergs"
+    "answer_en": "Guntars Kitenbergs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M03",
@@ -736,7 +741,9 @@
       "Uldis Zariņš",
       "Edvīns Danovskis"
     ],
-    "answer_en": "Enno Ence"
+    "answer_en": "Enno Ence",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M04",
@@ -749,7 +756,7 @@
       "Andris Sarnovičs",
       "Guntars Kitenbergs",
       "Jānis Priede",
-      "Uldis Zariņš"
+      "Gunita Deksne"
     ],
     "correct": "A",
     "answer": "Andris Sarnovičs",
@@ -763,9 +770,11 @@
       "Andris Sarnovičs",
       "Guntars Kitenbergs",
       "Jānis Priede",
-      "Uldis Zariņš"
+      "Gunita Deksne"
     ],
-    "answer_en": "Andris Sarnovičs"
+    "answer_en": "Andris Sarnovičs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M05",
@@ -777,7 +786,7 @@
     "options": [
       "Ilze Kūka",
       "Zanda Rubene",
-      "Renāte Lagzdiņa",
+      "Andris Sarnovičs",
       "Iveta Gudakovska"
     ],
     "correct": "A",
@@ -791,10 +800,12 @@
     "options_en": [
       "Ilze Kūka",
       "Zanda Rubene",
-      "Renāte Lagzdiņa",
+      "Andris Sarnovičs",
       "Iveta Gudakovska"
     ],
-    "answer_en": "Ilze Kūka"
+    "answer_en": "Ilze Kūka",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M06",
@@ -807,7 +818,7 @@
       "Zanda Rubene",
       "Antra Boča",
       "Linda Daniela",
-      "Dace Balode"
+      "Vjačeslavs Kaščejevs"
     ],
     "correct": "A",
     "answer": "Zanda Rubene",
@@ -821,9 +832,11 @@
       "Zanda Rubene",
       "Antra Boča",
       "Linda Daniela",
-      "Dace Balode"
+      "Vjačeslavs Kaščejevs"
     ],
-    "answer_en": "Zanda Rubene"
+    "answer_en": "Zanda Rubene",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M07",
@@ -852,7 +865,9 @@
       "22",
       "24"
     ],
-    "answer_en": "22"
+    "answer_en": "22",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M08",
@@ -864,7 +879,7 @@
     "options": [
       "Kristīne Strada-Rozenberga",
       "Olga Bogdanova",
-      "Zanda Rubene",
+      "Enno Ence",
       "Antra Boča"
     ],
     "correct": "B",
@@ -878,10 +893,12 @@
     "options_en": [
       "Kristīne Strada-Rozenberga",
       "Olga Bogdanova",
-      "Zanda Rubene",
+      "Enno Ence",
       "Antra Boča"
     ],
-    "answer_en": "Olga Bogdanova"
+    "answer_en": "Olga Bogdanova",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M09",
@@ -893,7 +910,7 @@
     "options": [
       "Antra Boča",
       "Zanda Rubene",
-      "Iveta Reinholde",
+      "Guntars Kitenbergs",
       "Vita Rovīte"
     ],
     "correct": "A",
@@ -907,10 +924,12 @@
     "options_en": [
       "Antra Boča",
       "Zanda Rubene",
-      "Iveta Reinholde",
+      "Guntars Kitenbergs",
       "Vita Rovīte"
     ],
-    "answer_en": "Antra Boča"
+    "answer_en": "Antra Boča",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M10",
@@ -922,7 +941,7 @@
     "options": [
       "Zinātnes departaments",
       "Doktorantūras skola",
-      "Studiju departaments",
+      "Zinātņu akadēmija",
       "LU bibliotēka"
     ],
     "correct": "A",
@@ -936,10 +955,12 @@
     "options_en": [
       "Science Department",
       "Doctoral School",
-      "Department of Studies",
+      "Zinātņu akadēmija",
       "UL library"
     ],
-    "answer_en": "Science Department"
+    "answer_en": "Science Department",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M11",
@@ -949,10 +970,10 @@
     "question_lv": "Kurš šobrīd ir LU Padomes priekšsēdētājs?",
     "question_en": "Who is currently the chairperson of the UL Council?",
     "options": [
-      "Inna Šteinbuka",
+      "Mārcis Auziņš",
       "Dace Kārkle",
       "Sanda Liepiņa",
-      "Zanda Rubene"
+      "Kristaps Jaudzems"
     ],
     "correct": "C",
     "answer": "Sanda Liepiņa",
@@ -963,12 +984,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Inna Šteinbuka",
+      "Mārcis Auziņš",
       "Dace Kārkle",
       "Sanda Liepiņa",
-      "Zanda Rubene"
+      "Kristaps Jaudzems"
     ],
-    "answer_en": "Sanda Liepiņa"
+    "answer_en": "Sanda Liepiņa",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M12",
@@ -997,7 +1020,9 @@
       "9",
       "11"
     ],
-    "answer_en": "7"
+    "answer_en": "7",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M13",
@@ -1009,7 +1034,7 @@
     "options": [
       "Jānis Priede",
       "Aigars Ekers",
-      "Edvīns Danovskis",
+      "Inta Mieriņa",
       "Kristaps Jaudzems"
     ],
     "correct": "A",
@@ -1023,10 +1048,12 @@
     "options_en": [
       "Jānis Priede",
       "Aigars Ekers",
-      "Edvīns Danovskis",
+      "Inta Mieriņa",
       "Kristaps Jaudzems"
     ],
-    "answer_en": "Jānis Priede"
+    "answer_en": "Jānis Priede",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M14",
@@ -1038,7 +1065,7 @@
     "options": [
       "Jānis Priede",
       "Aigars Ekers",
-      "Guntars Kitenbergs",
+      "Gundars Bērziņš",
       "Andris Bērziņš"
     ],
     "correct": "B",
@@ -1052,10 +1079,12 @@
     "options_en": [
       "Jānis Priede",
       "Aigars Ekers",
-      "Guntars Kitenbergs",
+      "Gundars Bērziņš",
       "Andris Bērziņš"
     ],
-    "answer_en": "Aigars Ekers"
+    "answer_en": "Aigars Ekers",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M15",
@@ -1065,8 +1094,8 @@
     "question_lv": "Kurš šobrīd ir Humanitāro zinātņu fakultātes dekāns?",
     "question_en": "Who is currently the Dean of the Faculty of Humanities?",
     "options": [
-      "Linda Daniela",
-      "Inese Muzikante",
+      "Egils Levits",
+      "Uldis Zariņš",
       "Dace Balode",
       "Margarita Dunska"
     ],
@@ -1079,12 +1108,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Linda Daniela",
-      "Inese Muzikante",
+      "Egils Levits",
+      "Uldis Zariņš",
       "Dace Balode",
       "Margarita Dunska"
     ],
-    "answer_en": "Dace Balode"
+    "answer_en": "Dace Balode",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M16",
@@ -1096,7 +1127,7 @@
     "options": [
       "Dace Balode",
       "Linda Daniela",
-      "Inese Muzikante",
+      "Kaspars Kiris",
       "Anika Miltuze"
     ],
     "correct": "B",
@@ -1110,10 +1141,12 @@
     "options_en": [
       "Dace Balode",
       "Linda Daniela",
-      "Inese Muzikante",
+      "Kaspars Kiris",
       "Anika Miltuze"
     ],
-    "answer_en": "Linda Daniela"
+    "answer_en": "Linda Daniela",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M17",
@@ -1124,7 +1157,7 @@
     "question_en": "Who is currently the Dean of the Faculty of Law?",
     "options": [
       "Edmunds Broks",
-      "Vadims Mantrovs",
+      "Gunita Deksne",
       "Edvīns Danovskis",
       "Jānis Priede"
     ],
@@ -1138,11 +1171,13 @@
     "notes": null,
     "options_en": [
       "Edmunds Broks",
-      "Vadims Mantrovs",
+      "Gunita Deksne",
       "Edvīns Danovskis",
       "Jānis Priede"
     ],
-    "answer_en": "Edvīns Danovskis"
+    "answer_en": "Edvīns Danovskis",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M18",
@@ -1153,7 +1188,7 @@
     "question_en": "Who is currently the Dean of the Faculty of Medicine and Life Sciences?",
     "options": [
       "Jāzeps Logins",
-      "Aigars Ekers",
+      "Una Riekstiņa",
       "Jānis Kloviņš",
       "Kristaps Jaudzems"
     ],
@@ -1167,11 +1202,13 @@
     "notes": null,
     "options_en": [
       "Jāzeps Logins",
-      "Aigars Ekers",
+      "Una Riekstiņa",
       "Jānis Kloviņš",
       "Kristaps Jaudzems"
     ],
-    "answer_en": "Kristaps Jaudzems"
+    "answer_en": "Kristaps Jaudzems",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M19",
@@ -1182,7 +1219,7 @@
     "question_en": "Who is currently the dean of the University School of Banking?",
     "options": [
       "Inese Muzikante",
-      "Linda Daniela",
+      "Andris Fomins",
       "Dace Balode",
       "Margarita Dunska"
     ],
@@ -1196,11 +1233,13 @@
     "notes": null,
     "options_en": [
       "Inese Muzikante",
-      "Linda Daniela",
+      "Andris Fomins",
       "Dace Balode",
       "Margarita Dunska"
     ],
-    "answer_en": "Inese Muzikante"
+    "answer_en": "Inese Muzikante",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M20",
@@ -1229,7 +1268,9 @@
       "7",
       "13"
     ],
-    "answer_en": "6"
+    "answer_en": "6",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M21",
@@ -1258,7 +1299,9 @@
       "13",
       "16"
     ],
-    "answer_en": "13"
+    "answer_en": "13",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M22",
@@ -1269,7 +1312,7 @@
     "question_en": "Which structural units were united to create the Faculty of Economics and Social Sciences?",
     "options": [
       "Sociālo zinātņu fakultāti, Biznesa, vadības un ekonomikas fakultāti un Eiropas un sabiedrības attīstības studiju akadēmisko centru",
-      "Humanitāro zinātņu fakultāti, Juridisko fakultāti un Banku augstskolu",
+      "Humanitāro zinātņu fakultāti, Ekonomikas fakultāti, Juridisko fakultāti un Banku augstskolu",
       "Datorikas fakultāti, Fizikas, matemātikas un optometrijas fakultāti un Ģeogrāfijas un Zemes zinātņu fakultāti",
       "Bioloģijas fakultāti, Ķīmijas fakultāti un Medicīnas fakultāti"
     ],
@@ -1283,11 +1326,13 @@
     "notes": null,
     "options_en": [
       "Faculty of Social Sciences, Faculty of Business, Management and Economics and Academic Center for European and Society Development Studies",
-      "Faculty of Humanities, Faculty of Law and University of Banking",
+      "Faculty of Humanities, Faculty of Economics, Faculty of Law and University of Banking",
       "Faculties of Computer Science, Faculties of Physics, Mathematics and Optometry and Faculties of Geography and Earth Sciences",
       "Faculty of Biology, Faculty of Chemistry and Faculty of Medicine"
     ],
-    "answer_en": "Faculty of Social Sciences, Faculty of Business, Management and Economics and Academic Center for European and Society Development Studies"
+    "answer_en": "Faculty of Social Sciences, Faculty of Business, Management and Economics and Academic Center for European and Society Development Studies",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M23",
@@ -1297,7 +1342,7 @@
     "question_lv": "Kuras trīs agrākās fakultātes veido Eksakto zinātņu un tehnoloģiju fakultātes pamatu?",
     "question_en": "Which three earlier faculties form the basis of the Faculty of Exact Sciences and Technologies?",
     "options": [
-      "Datorikas fakultāte, Fizikas, matemātikas un optometrijas fakultāte un Bioloģijas fakultāte",
+      "Datorikas fakultāte, Fizikas, matemātikas un optometrijas fakultāte un Juridiskā fakultāte",
       "Datorikas fakultāte, Fizikas, matemātikas un optometrijas fakultāte un Ģeogrāfijas un Zemes zinātņu fakultāte",
       "Datorikas fakultāte, Ģeogrāfijas un Zemes zinātņu fakultāte un Ķīmijas fakultāte",
       "Fizikas, matemātikas un optometrijas fakultāte, Ģeogrāfijas un Zemes zinātņu fakultāte un Bioloģijas fakultāte"
@@ -1311,12 +1356,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Faculty of Computer Science, Faculty of Physics, Mathematics and Optometry and Faculty of Biology",
+      "Faculty of Computer Science, Faculty of Physics, Mathematics and Optometry and Faculty of Law",
       "Faculty of Computing, Faculty of Physics, Mathematics and Optometry and Faculty of Geography and Earth Sciences",
       "Faculty of Computer Science, Faculty of Geography and Earth Sciences and Faculty of Chemistry",
       "Faculty of Physics, Mathematics and Optometry, Faculty of Geography and Earth Sciences and Faculty of Biology"
     ],
-    "answer_en": "Faculty of Computing, Faculty of Physics, Mathematics and Optometry and Faculty of Geography and Earth Sciences"
+    "answer_en": "Faculty of Computing, Faculty of Physics, Mathematics and Optometry and Faculty of Geography and Earth Sciences",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M24",
@@ -1326,10 +1373,10 @@
     "question_lv": "Kuras trīs fakultātes apvienoja, izveidojot Medicīnas un dzīvības zinātņu fakultāti?",
     "question_en": "Which three faculties merged to form the Faculty of Medicine and Life Sciences?",
     "options": [
-      "Datorikas, Fizikas un Ģeogrāfijas fakultāti",
-      "Humanitāro zinātņu, Vēstures un filozofijas un Teoloģijas fakultāti",
+      "Datorikas, Fizikas un Ķīmijas fakultāti",
+      "Bioloģijas, Ģeogrāfijas un Ķīmijas fakultāti",
       "Bioloģijas, Ķīmijas un Medicīnas fakultāti",
-      "Sociālo zinātņu, Biznesa, vadības un ekonomikas un Juridisko fakultāti"
+      "Ķīmijas, Sociālo zinātņu un Bioloģijas fakultāti"
     ],
     "correct": "C",
     "answer": "Bioloģijas, Ķīmijas un Medicīnas fakultāti",
@@ -1341,11 +1388,13 @@
     "notes": null,
     "options_en": [
       "Faculties of Computer Science, Physics and Geography",
-      "Faculty of Humanities, History and Philosophy and Theology",
+      "Faculties of Biology, Geography and Chemistry",
       "Faculties of Biology, Chemistry and Medicine",
-      "Faculties of Social Sciences, Business, Management and Economics and Law"
+      "Faculties of Chemistry, Social Sciences and Biology"
     ],
-    "answer_en": "Faculties of Biology, Chemistry and Medicine"
+    "answer_en": "Faculties of Biology, Chemistry and Medicine",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M25",
@@ -1355,9 +1404,9 @@
     "question_lv": "Kuras agrākās fakultātes apvienoja pašreizējā Humanitāro zinātņu fakultātē?",
     "question_en": "Which former faculties were merged into the current Faculty of Humanities?",
     "options": [
-      "Sociālo zinātņu, Biznesa, vadības un ekonomikas un Juridisko fakultāti",
-      "Bioloģijas, Ķīmijas un Medicīnas fakultāti",
-      "Datorikas, Fizikas, matemātikas un optometrijas un Ģeogrāfijas un Zemes zinātņu fakultāti",
+      "Sociālo zinātņu, Vēstures un Mākslas fakultāti",
+      "Filoloģijas, Filozofijas un Filatēlijas fakultāti",
+      "Humanitāro zinātņu, Sociālo zinātņu un Pedagoģijas fakultāti",
       "Humanitāro zinātņu, Vēstures un filozofijas un Teoloģijas fakultāti"
     ],
     "correct": "D",
@@ -1369,12 +1418,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Faculties of Social Sciences, Business, Management and Economics and Law",
-      "Faculties of Biology, Chemistry and Medicine",
-      "Faculties of Computer Science, Physics, Mathematics and Optometry and Geography and Earth Sciences",
+      "Faculties of Social Sciences, History and Art",
+      "Faculties of Philology, Philosophy and Philately",
+      "Faculties of Humanities, Social Sciences and Pedagogy",
       "Faculty of Humanities, History and Philosophy and Theology"
     ],
-    "answer_en": "Faculty of Humanities, History and Philosophy and Theology"
+    "answer_en": "Faculty of Humanities, History and Philosophy and Theology",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M26",
@@ -1403,7 +1454,9 @@
       "Faculty of Pedagogy and Social Sciences",
       "Faculty of Educational Sciences and Arts"
     ],
-    "answer_en": "Faculty of Pedagogy, Psychology and Arts"
+    "answer_en": "Faculty of Pedagogy, Psychology and Arts",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M27",
@@ -1427,12 +1480,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "University of Banking",
+      "School of Business and Finance",
       "Rezekne Academy of Technology",
       "Riga Law School",
       "Vidzeme University"
     ],
-    "answer_en": "University of Banking"
+    "answer_en": "University of Banking",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M28",
@@ -1461,7 +1516,9 @@
       "Faculty of Economics and Social Sciences",
       "Faculty of Educational Sciences and Psychology"
     ],
-    "answer_en": "Faculty of Economics and Social Sciences"
+    "answer_en": "Faculty of Economics and Social Sciences",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M29",
@@ -1473,8 +1530,8 @@
     "options": [
       "Ekonomikas un sociālo zinātņu fakultāte",
       "Eksakto zinātņu un tehnoloģiju fakultāte",
-      "Izglītības zinātņu un psiholoģijas fakultāte",
-      "Medicīnas un dzīvības zinātņu fakultāte"
+      "Datorikas un mākslīgā intelekta fakultāte",
+      "Datu un diplomātijas fakultāte"
     ],
     "correct": "B",
     "answer": "Eksakto zinātņu un tehnoloģiju fakultāte",
@@ -1487,10 +1544,12 @@
     "options_en": [
       "Faculty of Economics and Social Sciences",
       "Faculty of Exact Sciences and Technologies",
-      "Faculty of Educational Sciences and Psychology",
-      "Faculty of Medicine and Life Sciences"
+      "Faculty of Computter Science and Artificial Intelligence",
+      "Faculty of Data and Diplomacy"
     ],
-    "answer_en": "Faculty of Exact Sciences and Technologies"
+    "answer_en": "Faculty of Exact Sciences and Technologies",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M30",
@@ -1519,7 +1578,9 @@
       "Faculty of Humanities",
       "Faculty of Economics and Social Sciences"
     ],
-    "answer_en": "Faculty of Educational Sciences and Psychology"
+    "answer_en": "Faculty of Educational Sciences and Psychology",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M31",
@@ -1548,7 +1609,9 @@
       "Faculty of Exact Sciences and Technologies",
       "Faculty of Humanities"
     ],
-    "answer_en": "Faculty of Humanities"
+    "answer_en": "Faculty of Humanities",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M33",
@@ -1577,7 +1640,9 @@
       "Faculty of Medicine and Life Sciences",
       "Faculty of Economics and Social Sciences"
     ],
-    "answer_en": "Faculty of Medicine and Life Sciences"
+    "answer_en": "Faculty of Medicine and Life Sciences",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M34",
@@ -1601,12 +1666,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "UL Banking Graduate School",
+      "School of Business and Finance of the University of Latvia",
       "Faculty of Economics and Social Sciences",
       "Faculty of Law",
       "Faculty of Exact Sciences and Technologies"
     ],
-    "answer_en": "UL Banking Graduate School"
+    "answer_en": "UL Banking Graduate School",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M35",
@@ -1635,7 +1702,9 @@
       "Faculty of Economics and Social Sciences",
       "Faculty of Medicine and Life Sciences"
     ],
-    "answer_en": "Faculty of Exact Sciences and Technologies"
+    "answer_en": "Faculty of Exact Sciences and Technologies",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M36",
@@ -1646,7 +1715,7 @@
     "question_en": "Who is currently the Vice-Dean for Studies at the Faculty of Economics and Social Sciences?",
     "options": [
       "Margarita Dunska",
-      "Iveta Reinholde",
+      "Ivars Ijabs",
       "Indra Karapetjana",
       "Aiga Švede"
     ],
@@ -1660,11 +1729,13 @@
     "notes": null,
     "options_en": [
       "Margarita Dunska",
-      "Iveta Reinholde",
+      "Ivars Ijabs",
       "Indra Karapetjana",
       "Aiga Švede"
     ],
-    "answer_en": "Margarita Dunska"
+    "answer_en": "Margarita Dunska",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M37",
@@ -1674,7 +1745,7 @@
     "question_lv": "Kurš šobrīd ir EZTF studiju prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Studies at the Faculty of Exact Sciences and Technologies?",
     "options": [
-      "Margarita Dunska",
+      "Jānis Karušs",
       "Aiga Švede",
       "Anika Miltuze",
       "Vita Rovīte"
@@ -1688,12 +1759,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Margarita Dunska",
+      "Jānis Karušs",
       "Aiga Švede",
       "Anika Miltuze",
       "Vita Rovīte"
     ],
-    "answer_en": "Aiga Švede"
+    "answer_en": "Aiga Švede",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M38",
@@ -1703,7 +1776,7 @@
     "question_lv": "Kurš šobrīd ir HZF studiju prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Studies at the Faculty of Humanities?",
     "options": [
-      "Dace Balode",
+      "Valdis Muktupāvels",
       "Margarita Dunska",
       "Indra Karapetjana",
       "Linda Mihno"
@@ -1717,12 +1790,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Dace Balode",
+      "Valdis Muktupāvels",
       "Margarita Dunska",
       "Indra Karapetjana",
       "Linda Mihno"
     ],
-    "answer_en": "Indra Karapetjana"
+    "answer_en": "Indra Karapetjana",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M39",
@@ -1732,7 +1807,7 @@
     "question_lv": "Kurš šobrīd ir IZPF studiju prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Studies at the Faculty of Education Sciences and Psychology?",
     "options": [
-      "Linda Mihno",
+      "Mārtiņš Priedols",
       "Anika Miltuze",
       "Linda Daniela",
       "Indra Karapetjana"
@@ -1746,12 +1821,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Linda Mihno",
+      "Mārtiņš Priedols",
       "Anika Miltuze",
       "Linda Daniela",
       "Indra Karapetjana"
     ],
-    "answer_en": "Anika Miltuze"
+    "answer_en": "Anika Miltuze",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M40",
@@ -1761,8 +1838,8 @@
     "question_lv": "Kurš šobrīd ir Juridiskās fakultātes studiju prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Studies at the Faculty of Law?",
     "options": [
-      "Vadims Mantrovs",
-      "Edvīns Danovskis",
+      "Inga Kačevska",
+      "Arnis Buka",
       "Edmunds Broks",
       "Jāzeps Logins"
     ],
@@ -1775,12 +1852,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Vadims Mantrovs",
-      "Edvīns Danovskis",
+      "Inga Kačevska",
+      "Arnis Buka",
       "Edmunds Broks",
       "Jāzeps Logins"
     ],
-    "answer_en": "Edmunds Broks"
+    "answer_en": "Edmunds Broks",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M41",
@@ -1792,7 +1871,7 @@
     "options": [
       "Kristaps Jaudzems",
       "Edmunds Broks",
-      "Andris Bērziņš",
+      "Elīna Dāce",
       "Jāzeps Logins"
     ],
     "correct": "D",
@@ -1806,10 +1885,12 @@
     "options_en": [
       "Kristaps Jaudzems",
       "Edmunds Broks",
-      "Andris Bērziņš",
+      "Elīna Dāce",
       "Jāzeps Logins"
     ],
-    "answer_en": "Jāzeps Logins"
+    "answer_en": "Jāzeps Logins",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M42",
@@ -1821,7 +1902,7 @@
     "options": [
       "Iveta Reinholde",
       "Margarita Dunska",
-      "Vita Rovīte",
+      "Andrejs Cekuls",
       "Linda Mihno"
     ],
     "correct": "A",
@@ -1835,10 +1916,12 @@
     "options_en": [
       "Iveta Reinholde",
       "Margarita Dunska",
-      "Vita Rovīte",
+      "Andrejs Cekuls",
       "Linda Mihno"
     ],
-    "answer_en": "Iveta Reinholde"
+    "answer_en": "Iveta Reinholde",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M43",
@@ -1850,7 +1933,7 @@
     "options": [
       "Aigars Ekers",
       "Andris Bērziņš",
-      "Guntars Kitenbergs",
+      "Baiba Bela",
       "Toms Ķencis"
     ],
     "correct": "B",
@@ -1864,10 +1947,12 @@
     "options_en": [
       "Aigars Ekers",
       "Andris Bērziņš",
-      "Guntars Kitenbergs",
+      "Baiba Bela",
       "Toms Ķencis"
     ],
-    "answer_en": "Andris Bērziņš"
+    "answer_en": "Andris Bērziņš",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M44",
@@ -1877,8 +1962,8 @@
     "question_lv": "Kurš šobrīd ir HZF zinātņu prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Research at the Faculty of Humanities?",
     "options": [
-      "Andris Bērziņš",
-      "Vadims Mantrovs",
+      "Anne Sauka",
+      "Valts Ernštreits",
       "Toms Ķencis",
       "Edvīns Danovskis"
     ],
@@ -1891,12 +1976,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Andris Bērziņš",
-      "Vadims Mantrovs",
+      "Anne Sauka",
+      "Valts Ernštreits",
       "Toms Ķencis",
       "Edvīns Danovskis"
     ],
-    "answer_en": "Toms Ķencis"
+    "answer_en": "Toms Ķencis",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M45",
@@ -1906,7 +1993,7 @@
     "question_lv": "Kurš šobrīd ir IZPF zinātņu prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Research at the Faculty of Education Sciences and Psychology?",
     "options": [
-      "Anika Miltuze",
+      "Oskars Teikmanis",
       "Linda Daniela",
       "Iveta Reinholde",
       "Linda Mihno"
@@ -1920,12 +2007,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Anika Miltuze",
+      "Oskars Teikmanis",
       "Linda Daniela",
       "Iveta Reinholde",
       "Linda Mihno"
     ],
-    "answer_en": "Linda Mihno"
+    "answer_en": "Linda Mihno",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M46",
@@ -1937,7 +2026,7 @@
     "options": [
       "Vadims Mantrovs",
       "Edmunds Broks",
-      "Edvīns Danovskis",
+      "Sanita Osipova",
       "Toms Ķencis"
     ],
     "correct": "A",
@@ -1951,10 +2040,12 @@
     "options_en": [
       "Vadims Mantrovs",
       "Edmunds Broks",
-      "Edvīns Danovskis",
+      "Sanita Osipova",
       "Toms Ķencis"
     ],
-    "answer_en": "Vadims Mantrovs"
+    "answer_en": "Vadims Mantrovs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "M47",
@@ -1964,7 +2055,7 @@
     "question_lv": "Kurš šobrīd ir MDZF zinātņu prodekāns?",
     "question_en": "Who is currently the Vice-Dean for Research at the Faculty of Medicine and Life Sciences?",
     "options": [
-      "Iveta Reinholde",
+      "Nils Rostoks",
       "Linda Mihno",
       "Margarita Dunska",
       "Vita Rovīte"
@@ -1978,12 +2069,14 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Iveta Reinholde",
+      "Nils Rostoks",
       "Linda Mihno",
       "Margarita Dunska",
       "Vita Rovīte"
     ],
-    "answer_en": "Vita Rovīte"
+    "answer_en": "Vita Rovīte",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "K01",
@@ -2056,9 +2149,9 @@
     "question_en": "Which of the following is the UL dance group?",
     "options": [
       "Dancis",
-      "Dziedonis",
-      "Juventus",
-      "Vāpe"
+      "Vieglais solis",
+      "Palēciens",
+      "Trīs par daudz"
     ],
     "correct": "A",
     "answer": "Dancis",
@@ -2069,10 +2162,10 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Dancer",
-      "Song",
-      "Juventus",
-      "Vape"
+      "Dancis",
+      "Vieglais solis",
+      "Palēciens",
+      "Trīs par daudz"
     ],
     "answer_en": "Dancer",
     "explanation_lv": "“Dancis” ir viens no Latvijas Universitātes deju kolektīviem.",
@@ -2087,9 +2180,9 @@
     "question_en": "What is the name of the folklore ensemble of UL dances?",
     "options": [
       "Dandari",
-      "Minjona",
-      "Dziedonis",
-      "Pērle"
+      "Svilpaunieki",
+      "Vilkači",
+      "Budēļi"
     ],
     "correct": "A",
     "answer": "Dandari",
@@ -2101,9 +2194,9 @@
     "notes": null,
     "options_en": [
       "Dandari",
-      "Minion",
-      "Song",
-      "Pearl"
+      "Svilpaunieki",
+      "Vilkači",
+      "Budēļi"
     ],
     "answer_en": "Dandari",
     "explanation_lv": "“Dandari” ir LU deju folkloras kopa, kas kopj latviešu tradicionālo deju un muzicēšanu.",
@@ -2118,9 +2211,9 @@
     "question_en": "What is the name of the ceramics studio of folk applied art at the University of Warsaw?",
     "options": [
       "Vāpe",
-      "Aura",
-      "Juventus",
-      "Dancis"
+      "Māla spēks",
+      "Tīne",
+      "Audums"
     ],
     "correct": "A",
     "answer": "Vāpe",
@@ -2131,12 +2224,12 @@
     "image_url": null,
     "notes": null,
     "options_en": [
-      "Vape",
-      "Aura",
-      "Juventus",
-      "Dancer"
+      "Vāpe",
+      "Māla spēks",
+      "Tīne",
+      "Audums"
     ],
-    "answer_en": "Vape",
+    "answer_en": "Vāpe",
     "explanation_lv": "“Vāpe” ir LU tautas lietišķās mākslas studija, kuras galvenā darbības joma ir keramika.",
     "explanation_en": "Vāpe is a UL applied folk art studio specialising in ceramics."
   },
@@ -2242,9 +2335,9 @@
     "question_en": "Which UL structural unit organizes sports life at the University?",
     "options": [
       "LU Sporta centrs",
-      "LU Kultūras centrs",
-      "Studiju departaments",
-      "LU Muzejs"
+      "Latvijas Sporta akadēmija",
+      "LU Sporta zāle",
+      "LU Veselības centrs"
     ],
     "correct": "A",
     "answer": "LU Sporta centrs",
@@ -2256,9 +2349,9 @@
     "notes": null,
     "options_en": [
       "UL Sports Center",
-      "UL Cultural Center",
-      "Department of Studies",
-      "UL Museum"
+      "Latvian Academy of Sports",
+      "UL Sports Hall",
+      "UL Health Center"
     ],
     "answer_en": "UL Sports Center",
     "explanation_lv": "LU Sporta centrs organizē Universitātes sporta dzīvi, nodarbības un sacensības.",
@@ -2506,7 +2599,7 @@
       "UL Main Building",
       "UL House of Nature",
       "UL House of Science",
-      "House of writing"
+      "House of Letters"
     ],
     "answer_en": "UL Main Building",
     "explanation_lv": "LU galvenā ēka Raiņa bulvārī 19 ir vecākā augstskolu ēka Latvijā un valsts nozīmes arhitektūras piemineklis.",
@@ -2534,7 +2627,7 @@
     "image_url": null,
     "notes": "Izmantot Lielās aulas kopskatu.",
     "options_en": [
-      "The small hall",
+      "Small Hall",
       "Great Hall",
       "Senate Hall",
       "Student cell"
@@ -2565,7 +2658,7 @@
     "image_url": null,
     "notes": "Izmantot Mazās aulas interjeru.",
     "options_en": [
-      "The small hall",
+      "Small Hall",
       "Great Hall",
       "Atrium of the House of Sciences",
       "Library reading room"
@@ -2596,7 +2689,7 @@
     "image_url": null,
     "notes": "Izmantot Studentu karcera sienas ar vēsturiskajiem uzrakstiem.",
     "options_en": [
-      "Student cell",
+      "Student prison",
       "Astronomical tower",
       "Friedrich Cander's exposition",
       "Geology Collection"
@@ -2628,9 +2721,9 @@
     "notes": "Izmantot torņa attēlu uz LU galvenās ēkas jumta.",
     "options_en": [
       "Astronomical tower",
-      "Student cell",
+      "Student prison",
       "Palm House",
-      "The small hall"
+      "Small Hall"
     ],
     "answer_en": "Astronomical tower",
     "explanation_lv": "LU galvenās ēkas Astronomiskais tornis vēsturiski izmantots debess novērojumiem un astronomijas popularizēšanai.",
@@ -2660,7 +2753,7 @@
     "options_en": [
       "UL House of Nature",
       "UL House of Science",
-      "House of writing",
+      "House of Letters",
       "UL Main Building"
     ],
     "answer_en": "UL House of Nature",
@@ -2691,7 +2784,7 @@
     "options_en": [
       "UL House of Nature",
       "UL House of Science",
-      "House of writing",
+      "House of Letters",
       "UL Main Building"
     ],
     "answer_en": "UL House of Science",
@@ -2804,7 +2897,7 @@
       "MDZF → Bioloģijas, Ķīmijas un Medicīnas fakultāte",
       "HZF → Humanitāro zinātņu, Vēstures un filozofijas un Teoloģijas fakultāte"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Piektais pāris: IZPF → Pedagoģijas, psiholoģijas un mākslas fakultāte",
     "difficulty": "Grūta",
     "time": 60,
@@ -2818,7 +2911,9 @@
       "MDZF → Faculty of Biology, Chemistry and Medicine",
       "HZF → Faculty of Humanities, History and Philosophy and Theology"
     ],
-    "answer_en": "Fifth pair: IZPF → Faculty of Pedagogy, Psychology and Arts"
+    "answer_en": "Fifth pair: IZPF → Faculty of Pedagogy, Psychology and Arts",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P02",
@@ -2833,7 +2928,7 @@
       "Psiholoģija → Izglītības zinātņu un psiholoģijas fakultāte",
       "Vēsture un arheoloģija → Humanitāro zinātņu fakultāte"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Papildu pāri: Tiesību zinātne → JF; Radiogrāfija → MDZF",
     "difficulty": "Vidēja",
     "time": 50,
@@ -2847,7 +2942,9 @@
       "Psychology → Faculty of Educational Sciences and Psychology",
       "History and Archeology → Faculty of Humanities"
     ],
-    "answer_en": "Additional pairs: Law → JF; Radiography → MDZF"
+    "answer_en": "Additional pairs: Law → JF; Radiography → MDZF",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P03",
@@ -2862,7 +2959,7 @@
       "Gunita Deksne → LU Inovāciju un akselerācijas centra direktors",
       "Zanda Rubene → LU Doktorantūras skolas direktors"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Visi četri pāri",
     "difficulty": "Vidēja",
     "time": 50,
@@ -2876,7 +2973,9 @@
       "Gunita Deksne → Director of the UL Innovation and Acceleration Centre",
       "Zanda Rubene → Director of the UL Doctoral School"
     ],
-    "answer_en": "All four pairs"
+    "answer_en": "All four pairs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P04",
@@ -2891,7 +2990,7 @@
       "Acāliju kolekcija → LU Botāniskais dārzs",
       "Frīdriha Candera un Latvijas astronomijas kolekcija → LU Muzejs"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Papildu pāri: Bibliotheca Rigensis → LU bibliotēka; Rododendru audzētava “Babīte” → LU Botāniskais dārzs",
     "difficulty": "Viegla",
     "time": 45,
@@ -2900,12 +2999,14 @@
     "image_url": null,
     "notes": "Platformā ievietot 6 pārus.",
     "options_en": [
-      "Student cell → UL Museum",
-      "Mišina library → UL library",
+      "Student prison → UL Museum",
+      "Misiņš Library → UL library",
       "Azaleas collection → UL Botanical Garden",
       "Fridrich Cander and Latvian astronomy collection → UL Museum"
     ],
-    "answer_en": "Additional pairs: Bibliotheca Rigensis → UL library; Rhododendron nursery \"Babīte\" → UL Botanical Garden"
+    "answer_en": "Additional pairs: Bibliotheca Rigensis → UL library; Rhododendron nursery \"Babīte\" → UL Botanical Garden",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P06",
@@ -2920,7 +3021,7 @@
       "1991 → Apstiprināta LU Satversme un atjaunota simbolika un atribūtika",
       "2019 → Atzīmēta LU simtgade"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Visi četri pāri",
     "difficulty": "Vidēja",
     "time": 50,
@@ -2934,7 +3035,9 @@
       "1991 → The UL Constitution was approved and its symbols and attributes were restored",
       "2019 → UL celebrated its centenary"
     ],
-    "answer_en": "All four pairs"
+    "answer_en": "All four pairs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P07",
@@ -2949,7 +3052,7 @@
       "Acāliju kolekcija → LU Botāniskais dārzs",
       "Dabas māja → LU Akadēmiskais centrs"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Visi četri pāri",
     "difficulty": "Vidēja",
     "time": 50,
@@ -2958,12 +3061,14 @@
     "image_url": null,
     "notes": "Izmantotas stabilas LU vietu un struktūrvienību saiknes.",
     "options_en": [
-      "Student Cell → UL Museum",
+      "Student Prison → UL Museum",
       "Misiņš Library → UL Library",
       "Azalea Collection → UL Botanical Garden",
       "UL House of Nature → UL Academic Centre"
     ],
-    "answer_en": "All four pairs"
+    "answer_en": "All four pairs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P08",
@@ -2978,7 +3083,7 @@
       "Enno Ence → LU attīstības prorektors",
       "Ilze Kūka → LU kanclers"
     ],
-    "correct": "Visi pāri",
+    "correct": "VISI PĀRI",
     "answer": "Visi četri pāri",
     "difficulty": "Vidēja",
     "time": 50,
@@ -2992,7 +3097,9 @@
       "Enno Ence → Vice-Rector for Development",
       "Ilze Kūka → Chancellor of UL"
     ],
-    "answer_en": "All four pairs"
+    "answer_en": "All four pairs",
+    "explanation_lv": "",
+    "explanation_en": ""
   },
   {
     "id": "P05",
@@ -3007,7 +3114,7 @@
       "Dabas māja",
       "Palmu māja"
     ],
-    "correct": "Mainīgs",
+    "correct": "MAINĪGS",
     "answer": "Pareizā atbilde atkarīga no izvēlētā puzles attēla.",
     "difficulty": "Vidēja",
     "time": 70,
@@ -3018,9 +3125,11 @@
     "options_en": [
       "Main building of UL",
       "The Great Hall",
-      "House of nature",
-      "Palm house"
+      "House of Nature",
+      "Palm House"
     ],
-    "answer_en": "The correct answer depends on the selected puzzle picture."
+    "answer_en": "The correct answer depends on the selected puzzle picture.",
+    "explanation_lv": "",
+    "explanation_en": ""
   }
 ]

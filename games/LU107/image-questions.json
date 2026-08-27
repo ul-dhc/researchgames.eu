@@ -17,8 +17,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/ncmx2b5q7u",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/lu-muzejs.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL Museum",
       "UL Library",
@@ -47,12 +48,13 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/bgd8whs8us",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/lu_muzejs2.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL Museum",
       "UL Library",
-      "UL Science Department",
+      "UL Research Department",
       "UL Main Building"
     ],
     "answer_en": "UL Museum",
@@ -77,8 +79,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/3jt2ea3rt3",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/dabas-maja.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL House of Nature",
       "UL Library",
@@ -107,8 +110,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/df26y2s6c",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/zinatnu-maja.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL House of Science",
       "UL House of Nature",
@@ -137,8 +141,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/m2rf9gzx9r",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/karceris.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "Student Detention Cell, 19 Raiņa Boulevard",
       "Lecture Room at 4a Visvalža Street",
@@ -167,8 +172,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/vygt5xv3w9",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/palmu-maja.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "Palm House",
       "UL House of Nature",
@@ -197,8 +203,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/g5tx2deyhc",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/visvalza.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL Faculty of Humanities, 4a Visvalža Street",
       "UL House of Nature",
@@ -227,8 +234,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/vazmfe348w",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/garderobe.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "19 Raiņa Boulevard",
       "UL Museum",
@@ -236,7 +244,7 @@
       "Faculty of Humanities, 4a Visvalža Street"
     ],
     "answer_en": "19 Raiņa Boulevard",
-    "explanation_lv": "Raiņa bulvārī 19 atrodas LU galvenā ēka – vecākā augstskolu ēka Latvijā.",
+    "explanation_lv": "Raiņa bulvārī 19 atrodas LU galvenā ēka — vecākā augstskolu ēka Latvijā.",
     "explanation_en": "The UL Main Building at 19 Raiņa Boulevard is the oldest higher-education building in Latvia."
   },
   {
@@ -257,8 +265,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/a5s6smbtt",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/zinatnu-maja1.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL House of Science",
       "UL Recreation and Conference Centre ‘Ratnieki’",
@@ -287,8 +296,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/m5u8cnxbv",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/botaniskais.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "UL Botanical Garden",
       "UL Recreation and Conference Centre ‘Ratnieki’",
@@ -317,8 +327,9 @@
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/dh3pgd9jcu",
-    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
+    "verification_required": false,
     "image_url": "./assets/places/liela-aula.jpeg",
+    "notes": "Attēls un avots pievienots LU attēlu izlasei.",
     "options_en": [
       "Great Hall",
       "UL Recreation and Conference Centre ‘Ratnieki’",
