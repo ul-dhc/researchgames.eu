@@ -373,7 +373,7 @@
       group.classList.toggle('pinned-related', pinnedTerms.has(termIndex));
       group.classList.toggle('active-related', activeTerms.has(termIndex));
     });
-    section.classList.toggle('has-open-card', indexes.size > 0);
+    section.classList.toggle('has-open-card', activeIndex !== null);
   }
 
   function populateCard(target, index) {
@@ -624,6 +624,10 @@
 
   document.addEventListener('click', event => {
     if (!card.contains(event.target) && event.target.tagName.toLowerCase() !== 'circle') closeCard();
+  });
+  svg.addEventListener('click', event => {
+    if (wasDragged || event.target.closest?.('.idea-node,.term-group,.idea-label')) return;
+    closeCard();
   });
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeCard(); });
 
