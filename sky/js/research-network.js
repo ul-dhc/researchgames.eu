@@ -183,25 +183,9 @@
     drawLine(terms[a].x, terms[a].y, terms[b].x, terms[b].y, 'term-bridge', { termA: a, termB: b });
   });
 
-  const applyIndependentDrift = (element, index, phaseOffset = 0) => {
-    const angle = (index * 137.508 + phaseOffset) * Math.PI / 180;
-    const reach = 4.2 + index % 6 * .72;
-    const duration = 24 + index % 9 * 1.9;
-    element.classList.add('drifting-node');
-    element.style.setProperty('--drift-x1', `${Math.cos(angle) * reach}px`);
-    element.style.setProperty('--drift-y1', `${Math.sin(angle) * reach * .72}px`);
-    element.style.setProperty('--drift-x2', `${Math.cos(angle + 2.18) * reach * .82}px`);
-    element.style.setProperty('--drift-y2', `${Math.sin(angle + 2.18) * reach}px`);
-    element.style.setProperty('--drift-x3', `${Math.cos(angle + 4.31) * reach * .64}px`);
-    element.style.setProperty('--drift-y3', `${Math.sin(angle + 4.31) * reach * .78}px`);
-    element.style.setProperty('--drift-duration', `${duration}s`);
-    element.style.setProperty('--drift-delay', `${-((index * 3.73 + phaseOffset) % duration)}s`);
-  };
-
   terms.forEach((term, index) => {
     const group = document.createElementNS(NS, 'g');
     group.classList.add('term-group');
-    applyIndependentDrift(group, index, 47);
     group.dataset.term = index;
     const color = term.discipline === 'shared' ? '#b9b3d4' : disciplines[term.discipline].color;
     const circle = document.createElementNS(NS, 'circle');
@@ -230,7 +214,6 @@
     const discipline = disciplines[idea.discipline];
     const group = document.createElementNS(NS, 'g');
     group.classList.add('idea-group');
-    applyIndependentDrift(group, index, 113);
     const circle = document.createElementNS(NS, 'circle');
     circle.classList.add('idea-node');
     if (idea.status === 'Playable now') circle.classList.add('game-playable');
@@ -242,7 +225,7 @@
     circle.style.setProperty('--breath-delay', `${-(index % 13) * .61}s`);
     circle.dataset.index = index; circle.setAttribute('tabindex', '0'); circle.setAttribute('role', 'button');
     circle.setAttribute('aria-label', `${idea.name}, ${discipline.label}, ${idea.status || idea.displayMechanic || idea.mechanic}`);
-    const open = event => { event.stopPropagation(); showPoint(index, circle); };
+    const open = event => { event.stopPropagation(); if (!wasDragged) showPoint(index, circle); };
     circle.addEventListener('click', open);
     circle.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(event); }
@@ -279,6 +262,50 @@
   });
   let selectedPointIndex = null;
   let lastPhysicsFrame = 0;
+
+  function clearNetworkPreview() {
+    section.classList.remove('has-network-hover');
+    svg.querySelectorAll('.hover-connected,.hover-focus,.hover-neighbour,.hover-related').forEach(element =>
+      element.classList.remove('hover-connected','hover-focus','hover-neighbour','hover-related')
+    );
+  }
+
+  function previewProject(index) {
+    if (dragging) return;
+    clearNetworkPreview();
+    section.classList.add('has-network-hover');
+    points[index].element.classList.add('hover-focus');
+    points[index].termIndexes.forEach(termIndex => terms[termIndex].group.classList.add('hover-related'));
+    svg.querySelectorAll('line').forEach(line => {
+      const connected = +line.dataset.idea === index || +line.dataset.a === index || +line.dataset.b === index;
+      if (!connected) return;
+      line.classList.add('hover-connected');
+      if (+line.dataset.a === index) points[+line.dataset.b].element.classList.add('hover-neighbour');
+      if (+line.dataset.b === index) points[+line.dataset.a].element.classList.add('hover-neighbour');
+    });
+  }
+
+  function previewTerm(index) {
+    if (dragging) return;
+    clearNetworkPreview();
+    section.classList.add('has-network-hover');
+    terms[index].group.classList.add('hover-related');
+    svg.querySelectorAll('line').forEach(line => {
+      const connected = +line.dataset.term === index || +line.dataset.termA === index || +line.dataset.termB === index;
+      if (!connected) return;
+      line.classList.add('hover-connected');
+      if (line.dataset.idea !== undefined) points[+line.dataset.idea].element.classList.add('hover-neighbour');
+    });
+  }
+
+  points.forEach((point, index) => {
+    point.group.addEventListener('pointerenter', () => previewProject(index));
+    point.group.addEventListener('pointerleave', clearNetworkPreview);
+  });
+  terms.forEach((term, index) => {
+    term.group.addEventListener('pointerenter', () => previewTerm(index));
+    term.group.addEventListener('pointerleave', clearNetworkPreview);
+  });
 
   const updateGraph = () => {
     points.forEach(point => {
@@ -681,6 +708,7 @@
     cameraVX = 0; cameraVY = 0;
     dragStart = { x: event.clientX, y: event.clientY, panX, panY, nodeX: draggedNode?.x, nodeY: draggedNode?.y };
     lastDragSample = { x:event.clientX, y:event.clientY, time:event.timeStamp };
+    if (draggedNode) clearNetworkPreview();
     section.classList.add(draggedNode ? 'is-dragging-node' : 'is-dragging');
   });
   svg.addEventListener('pointermove', event => {
@@ -731,6 +759,9 @@
     event.stopPropagation();
     scale = 1; panX = 0; panY = 0; cameraVX = 0; cameraVY = 0;
     updateCamera();
+    [...points, ...terms].forEach(node => { node.x = node.homeX; node.y = node.homeY; });
+    updateGraph();
+    clearNetworkPreview();
     clearPinnedCards();
     closeCard();
   });
