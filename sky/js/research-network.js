@@ -183,9 +183,25 @@
     drawLine(terms[a].x, terms[a].y, terms[b].x, terms[b].y, 'term-bridge', { termA: a, termB: b });
   });
 
+  const applyIndependentDrift = (element, index, phaseOffset = 0) => {
+    const angle = (index * 137.508 + phaseOffset) * Math.PI / 180;
+    const reach = 4.2 + index % 6 * .72;
+    const duration = 24 + index % 9 * 1.9;
+    element.classList.add('drifting-node');
+    element.style.setProperty('--drift-x1', `${Math.cos(angle) * reach}px`);
+    element.style.setProperty('--drift-y1', `${Math.sin(angle) * reach * .72}px`);
+    element.style.setProperty('--drift-x2', `${Math.cos(angle + 2.18) * reach * .82}px`);
+    element.style.setProperty('--drift-y2', `${Math.sin(angle + 2.18) * reach}px`);
+    element.style.setProperty('--drift-x3', `${Math.cos(angle + 4.31) * reach * .64}px`);
+    element.style.setProperty('--drift-y3', `${Math.sin(angle + 4.31) * reach * .78}px`);
+    element.style.setProperty('--drift-duration', `${duration}s`);
+    element.style.setProperty('--drift-delay', `${-((index * 3.73 + phaseOffset) % duration)}s`);
+  };
+
   terms.forEach((term, index) => {
     const group = document.createElementNS(NS, 'g');
     group.classList.add('term-group');
+    applyIndependentDrift(group, index, 47);
     group.dataset.term = index;
     const color = term.discipline === 'shared' ? '#b9b3d4' : disciplines[term.discipline].color;
     const circle = document.createElementNS(NS, 'circle');
@@ -212,6 +228,9 @@
   points.forEach((point, index) => {
     const idea = point.idea;
     const discipline = disciplines[idea.discipline];
+    const group = document.createElementNS(NS, 'g');
+    group.classList.add('idea-group');
+    applyIndependentDrift(group, index, 113);
     const circle = document.createElementNS(NS, 'circle');
     circle.classList.add('idea-node');
     if (idea.status === 'Playable now') circle.classList.add('game-playable');
@@ -244,7 +263,9 @@
     });
     point.label = label;
     point.element = circle;
-    dots.append(circle, label);
+    point.group = group;
+    group.append(circle, label);
+    dots.append(group);
   });
 
   points.forEach(point => Object.assign(point, { x:point.x * 10, y:point.y * 7, homeX:point.x * 10, homeY:point.y * 7, pinned:false }));
