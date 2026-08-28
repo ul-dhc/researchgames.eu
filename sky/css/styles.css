@@ -108,7 +108,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 [data-theme="light"] .callout-inner{background:#e8e4f0;color:#151622}
 [data-theme="light"] .network-label{background:#fffffff2;color:#151622;border-color:#8c57c2;box-shadow:0 12px 40px #41365324}
 [data-theme="light"] #research-network line{stroke:#5d5c76;opacity:.3}
-[data-theme="light"] footer{border-top-color:#d5d2dc;color:#636879}
+[data-theme="light"] footer{border-top-color:#d5d2dc;color:#636879}[data-theme="light"] .footer-logo img{filter:grayscale(1) brightness(0);opacity:.9}
 @media(max-width:760px){.theme-toggle{margin-left:auto;width:62px;height:36px}.theme-knob{width:26px;height:26px}[data-theme="light"] .theme-knob{transform:translateX(28px)}[data-theme="light"] .site-header nav{background:#f8f7f4f7;border-color:#d2cfda;box-shadow:0 18px 40px #2821391f}}
 
 .card-front{display:flex;flex-direction:column;justify-content:center;gap:7px;font-weight:500;line-height:1.05}
