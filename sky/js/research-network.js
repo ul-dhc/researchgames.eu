@@ -37,7 +37,7 @@
       description: 'Match Livonian and Latvian place names, reveal their locations on the map, and explore how language, landscape and cultural memory connect.',
       displayMechanic: 'Matching and mapping',
       status: 'Playable now',
-      url: 'https://ul-dhc.github.io/libiesu-vietvardu-spele'
+      url: 'https://dhc.lu.lv/libiesu-vietvardu-spele'
     });
   }
   const dnaIdea = ideas.find(idea => idea.name === 'Protein Fold: Lab');
