@@ -47,6 +47,10 @@
 
 /* Refined institutional collection */
 .collection-page a,.collection-page button{text-decoration:none}
+.collection-header .theme-knob{transform:translateX(30px)}
+[data-theme="light"] .collection-header .theme-knob{transform:none}
+.collection-game .status.live[href]{cursor:pointer;transition:transform .24s,background .24s,box-shadow .24s,color .24s}
+.collection-game .status.live[href]:hover,.collection-game .status.live[href]:focus-visible{transform:translateY(-2px);background:#197151;color:#c7ffe3;box-shadow:0 0 20px rgba(69,211,153,.2);outline:none}
 .collection-university-logo{position:relative;isolation:isolate;display:block;width:min(100%,600px);padding:22px 0;transition:transform .5s cubic-bezier(.22,1.35,.36,1),filter .5s}
 .collection-university-logo:before{content:"";position:absolute;z-index:-1;inset:5% -5%;border-radius:50%;background:radial-gradient(ellipse,rgba(180,131,255,.32),rgba(124,76,226,.14) 38%,transparent 72%);filter:blur(30px);opacity:0;transform:scale(.82);transition:opacity .65s ease,transform .65s ease}
 .collection-university-logo img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 0 transparent);transition:filter .55s ease}
@@ -122,6 +126,7 @@
 
 @media(max-width:1080px){.collection-university-logo{width:min(100%,560px)}.research-portal,.engagement-heading,.engagement-feature{grid-template-columns:1fr;gap:30px}.engagement-feature__visual{min-height:0}}
 @media(max-width:760px){.collection-university-logo{width:min(100%,480px);padding-block:14px}.collection-summary{gap:24px}.collection-summary strong{font-size:37px}.collection-summary small{font-size:14px}.collection-credits{margin-top:30px}.collection-game__visual .collection-game__play{padding:12px 15px}.collection-game--riddles .collection-game__visual{padding:34px 10px 14px}.collection-game--riddles .collection-game__visual img{width:98%;height:95%}.collection-engagement{padding:42px 20px;border-radius:15px}.engagement-heading{margin-bottom:36px}.engagement-heading h2{font-size:42px}.engagement-heading>p{font-size:16px}.engagement-feature__visual{min-height:0}.engagement-feature__content{padding:30px 22px}.engagement-feature__content h3{font-size:39px}.engagement-feature__facts{display:grid;gap:8px}.engagement-feature__facts span{padding:0;border:0}}
+@media(max-width:760px){.collection-header .theme-knob{transform:translateX(28px)}[data-theme="light"] .collection-header .theme-knob{transform:none}}
 
 /* Hero after removing the optional game selector */
 .collection-hero{grid-template-columns:minmax(0,1fr);min-height:auto}
