@@ -1,60 +1,71 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
-<script data-goatcounter="https://researchgames.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-  <head>
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ResearchGames.eu. Turning research into games</title>
-    <meta name="description" content="ResearchGames.eu turns academic research, scholarly materials and real research practices into engaging digital games.">
+  <title>ResearchGames.eu – Turning research into games</title>
+  <meta name="description" content="ResearchGames turns publications, datasets and discoveries into playable digital experiences.">
   <meta name="theme-color" content="#050812">
   <meta property="og:site_name" content="ResearchGames.eu">
-    <meta property="og:title" content="ResearchGames.eu. Turning research into games">
-    <meta property="og:description" content="Publications, data and discoveries become playable experiences.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://researchgames.eu/">
-    <meta property="og:image" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
-    <meta property="og:image:secure_url" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="ResearchGames.eu">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ResearchGames.eu. Turning research into games">
-    <meta name="twitter:description" content="Publications, data and discoveries become playable experiences.">
-    <meta name="twitter:image" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
-    <meta name="twitter:image:alt" content="ResearchGames.eu">
+  <meta property="og:title" content="ResearchGames.eu – Turning research into games">
+  <meta property="og:description" content="ResearchGames turns publications, datasets and discoveries into playable digital experiences.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://researchgames.eu/">
+  <meta property="og:image" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
+  <meta property="og:image:secure_url" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ResearchGames.eu – Turning research into games">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ResearchGames.eu – Turning research into games">
+  <meta name="twitter:description" content="ResearchGames turns publications, datasets and discoveries into playable digital experiences.">
+  <meta name="twitter:image" content="https://researchgames.eu/assets/og-image-brand-20260723.png">
+  <meta name="twitter:image:alt" content="ResearchGames.eu – Turning research into games">
   <link rel="canonical" href="https://researchgames.eu/">
   <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml" sizes="any">
-  <link rel="icon" href="/assets/favicon/android-chrome-192x192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <link rel="stylesheet" href="css/full-landing.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/full-landing.css?v=20260828-launch1">
+  <link rel="stylesheet" href="css/styles.css?v=20260828-memory-original">
+  <link rel="stylesheet" href="css/public-launch.css?v=20260829-footer-center3">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('researchgames-theme')||'dark'}catch(e){}</script>
-  <script src="js/main.js" defer></script>
-  <script src="js/memory-game.js" defer></script>
+  <script data-goatcounter="https://researchgames.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script src="https://unpkg.com/lucide@1.34.0" defer></script>
+  <script src="js/main.js?v=20260828-lucide1" defer></script>
+  <script src="js/memory-game.js?v=20260828-lucide1" defer></script>
+  <script src="js/research-cube.js?v=20260828-sky1" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand" aria-label="ResearchGames.eu">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#top" aria-label="ResearchGames.eu home">
       <span class="logo-lockup" aria-hidden="true"><span class="logo-icon logo-icon-brand"></span><span class="logo-type">Research<strong>Games</strong><small>.eu</small></span></span>
+    </a>
+    <nav id="site-nav" aria-label="Main navigation">
+      <a href="#games">Games</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="false"><span class="theme-sun" aria-hidden="true"><i data-lucide="sun"></i></span><span class="theme-knob" aria-hidden="true"></span><span class="theme-moon" aria-hidden="true"><i data-lucide="moon"></i></span></button>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><i data-lucide="menu" aria-hidden="true"></i><span class="sr-only">Open menu</span></button>
     </div>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="false"><span class="theme-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2.25M12 19.75V22M4.93 4.93l1.59 1.59M17.48 17.48l1.59 1.59M2 12h2.25M19.75 12H22M4.93 19.07l1.59-1.59M17.48 6.52l1.59-1.59"/></svg></span><span class="theme-knob" aria-hidden="true"></span><span class="theme-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.1 15.1A8.5 8.5 0 0 1 8.9 3.9 8.5 8.5 0 1 0 20.1 15.1Z"/></svg></span></button>
   </header>
 
-  <main>
-    <section class="placeholder-hero">
-      <div class="hero-copy">
-        <h1>Turning <br>research<br>into <em>games.</em></h1>
-        <p class="intro">Publications, data and discoveries become playable experiences.</p>
-        <p class="coming">A new platform for curious minds and innovative science communication is coming soon.</p>
+  <main id="main">
+    <section class="launch-hero" id="top">
+      <div class="launch-hero__copy">
+        <p class="eyebrow">ResearchGames.eu</p>
+        <h1>Turning<br>research<br>into <em>games.</em></h1>
+        <p class="launch-hero__intro">Publications, data and discoveries become playable experiences.</p>
+        <a class="launch-hero__cta" href="#games">Explore the games <i data-lucide="arrow-down" aria-hidden="true"></i></a>
       </div>
 
       <section class="memory-shell" aria-label="Play a quick matching game">
         <div class="game-topline">
-          <p class="game-kicker"><span class="game-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.5 8h9a5 5 0 0 1 4.7 6.7l-1.1 3.1a2.4 2.4 0 0 1-4.1.7L14.7 17H9.3L8 18.5a2.4 2.4 0 0 1-4.1-.7l-1.1-3.1A5 5 0 0 1 7.5 8Z"/><path d="M7 11v4M5 13h4M16.5 12h.01M18.5 14h.01"/></svg></span>Play a quick game</p>
+          <p class="game-kicker"><span class="game-symbol" aria-hidden="true"><i data-lucide="gamepad-2"></i></span>Play a quick game</p>
           <div class="game-stats" aria-label="Game statistics">
             <div><span>Moves</span><strong id="moves">0</strong></div><div><span>Pairs</span><strong id="pairs">0 / 8</strong></div><div><span>Time</span><strong id="timer">00:00</strong></div>
           </div>
@@ -64,23 +75,122 @@
         <div class="game-complete" id="game-complete" hidden>
           <div class="particle-field" aria-hidden="true"></div><span class="logo-icon logo-icon-large" aria-hidden="true"></span>
           <h3><strong class="inline-brand">Research<span>Games</span>.eu</strong><br>makes research <span>playable.</span></h3>
-          <button class="button secondary" id="restart-game" type="button">Play again <span>↻</span></button>
+          <button class="button secondary" id="restart-game" type="button">Play again <i data-lucide="rotate-ccw" aria-hidden="true"></i></button>
         </div>
         <div class="skip-game-row"><button class="text-button" id="skip-game" type="button">Skip game</button></div>
-        <p class="game-note" id="game-note">Match all pairs to reveal the message</p><div class="sr-only" id="game-status" aria-live="polite"></div>
+        <p class="game-note" id="game-note">Match all pairs to reveal the message</p>
+        <div class="sr-only" id="game-status" aria-live="polite"></div>
       </section>
     </section>
 
-    <section class="institution" aria-label="Institutional credit">
-      <div class="ul-mark"><a href="https://www.lu.lv/en" target="_blank" rel="noopener noreferrer"><img src="assets/university-of-latvia-logo.png" alt="University of Latvia"></a></div>
+    <section class="manifesto" aria-label="Every game begins with real research">
+      <div class="manifesto-inner">
+        <div class="research-cube-scene" id="research-cube-scene">
+          <canvas class="research-cube" id="research-cube" width="560" height="560" role="img" tabindex="0" aria-label="Interactive three-dimensional ResearchGames network cube. Drag to turn it."></canvas>
+        </div>
+        <div class="manifesto-copy">
+          <h2>Every game begins with <em>real research.</em></h2>
+          <p>ResearchGames.eu turns the journey of research – its exploration, data, discoveries and conclusions – into playable experiences, while keeping each game connected to the research it grew from.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="launch-section launch-games" id="games" aria-labelledby="games-title">
+      <header class="launch-heading">
+        <p class="eyebrow">Playable now</p>
+        <h2 id="games-title">Research made playable</h2>
+          <p>The games are freely accessible, and we are exploring reusable approaches for turning research into playable formats.</p>
+      </header>
+
+      <div class="exhibits">
+        <article class="exhibit livonian" id="livonian-preview">
+          <img class="exhibit-image" src="/assets/games/livonian-place-names.png?v=20260828-sky" alt="The dark interactive map of Latvia showing Livonian place names and green location markers">
+          <div class="image-shade"></div>
+          <div class="livonian-light-glints" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="exhibit-content">
+            <div class="labels"><span class="status live">Play now</span><span>Based on language data</span></div>
+            <h3>Livonian Place Names</h3>
+            <p class="description">Match place names in Livonian and Latvian and explore the place-name heritage of the Livonians, Latvia’s Indigenous people.</p>
+            <ul class="facts">
+              <li><span class="fact-icon" aria-hidden="true"><i data-lucide="database"></i></span><span>Based on the <a class="research-link" href="https://www.livonian.lv/wp-content/uploads/2024/01/VV_Katalogs.pdf" target="_blank" rel="noopener">Catalogue of Livonian Place Names</a>.</span></li>
+              <li><span class="fact-icon" aria-hidden="true"><i data-lucide="landmark"></i></span><span>Made with the Livonian Institute of the University of Latvia.</span></li>
+            </ul>
+            <div class="game-collections" aria-label="Collections"><p>Collections</p><span class="tag-thematic">Livonian language</span><span class="tag-thematic">Cultural heritage</span><span class="tag-thematic">Place names</span><span class="tag-thematic">Maps &amp; geography</span><span class="tag-thematic">Humanities</span><span class="tag-horizontal">Dataset</span><span class="tag-horizontal">Matching pairs</span><a class="tag-institutional" href="/collections/university-of-latvia/">University of Latvia <i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+            <div class="languages"><p>Languages available</p><span>LV</span><span>EN</span></div>
+            <a class="button secondary" href="/games/libiesu-vietvardi/">Play the game <i data-lucide="external-link" aria-hidden="true"></i></a>
+          </div>
+        </article>
+
+        <article class="exhibit riddles" id="riddle-preview">
+          <img class="exhibit-image" src="/assets/games/latvian-riddle-grid.png?v=20260828-grid" alt="Latvian folk-riddle letter grid with a highlighted answer">
+          <div class="image-shade"></div>
+          <div class="exhibit-content">
+            <div class="labels"><span class="status live">Play now</span><span>Based on folklore data</span></div>
+            <h3>Latvian Riddle Grid</h3>
+            <p class="description">Solve Latvian folk riddles, find their answers in a letter grid and optionally help researchers enrich the folklore dataset.</p>
+            <ul class="facts">
+              <li><span class="fact-icon" aria-hidden="true"><i data-lucide="database"></i></span><span>Based on Latvian folklore records from <a class="research-link" href="https://garamantas.lv/" target="_blank" rel="noopener">Garamantas.lv</a>.</span></li>
+              <li><span class="fact-icon" aria-hidden="true"><i data-lucide="landmark"></i></span><span>Made with the Institute of Literature, Folklore and Art, University of Latvia.</span></li>
+            </ul>
+            <div class="game-collections" aria-label="Collections"><p>Collections</p><span class="tag-thematic">Folklore</span><span class="tag-thematic">Language</span><span class="tag-thematic">Humanities</span><span class="tag-horizontal">Dataset</span><span class="tag-horizontal">Letter grid</span><span class="tag-horizontal">Citizen science</span><a class="tag-institutional" href="/collections/university-of-latvia/">University of Latvia <i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+            <div class="languages"><p>Languages available</p><span>LV</span></div>
+            <a class="button secondary" href="/games/miklu-rezgis/">Play the game <i data-lucide="external-link" aria-hidden="true"></i></a>
+          </div>
+        </article>
+
+        <article class="exhibit dna featured" id="dna-preview">
+          <img class="exhibit-image" src="/assets/games/dna-gatekeeper.png?v=20260829-game-screen4" alt="DNA Gatekeeper game screen showing the cut, pass and reveal cycle">
+          <div class="dna-bubbles dna-bubbles-card" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="image-shade"></div>
+          <div class="exhibit-content">
+            <div class="labels"><span class="status development">In development</span><span>Based on published research</span></div>
+            <h3>DNA Gatekeeper</h3>
+            <p class="description">Explore how proteins manage tangled DNA and what happens when the process is disrupted.</p>
+            <ul class="facts">
+              <li><span class="fact-icon" aria-hidden="true"><i data-lucide="file-text"></i></span><span>Based on <a class="research-link" href="https://doi.org/10.1038/nsmb.1892" target="_blank" rel="noopener">Wohlkonig et al., <em>Nature Structural &amp; Molecular Biology</em> (2010)</a>.</span></li>
+            </ul>
+            <div class="game-collections" aria-label="Collections"><p>Collections</p><span class="tag-thematic">Molecular life</span><span class="tag-thematic">DNA &amp; bacteria</span><span class="tag-thematic">Molecular biology</span><span class="tag-thematic">Natural sciences</span><span class="tag-horizontal">Research paper</span><span class="tag-horizontal">Problem-solving</span></div>
+            <div class="languages"><p>Languages planned</p><span>EN</span><span>LV</span><span>FR</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="launch-section launch-about" id="about" aria-labelledby="about-title">
       <div>
-        <p><a href="https://dhc.lu.lv/" target="_blank" rel="noopener noreferrer">UL Digital Humanities Center</a></p>
-        <a class="institution-email" href="mailto:dhc@lu.lv" aria-label="Email UL Digital Humanities Center at dhc@lu.lv">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.75 5.75h16.5v12.5H3.75zM4.5 6.5l7.5 6 7.5-6"/></svg>
-          <span>dhc@lu.lv</span>
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">Research you can play</h2>
+      </div>
+      <div class="launch-about__copy">
+        <p class="launch-about__origin">ResearchGames.eu is an experimental initiative with roots in the University of Latvia Digital Humanities Center, exploring how publications, datasets and discoveries can become playable digital experiences.</p>
+        <p>ResearchGames.eu explores a simple idea: what happens when research is not only presented through papers and datasets, but made playable?</p>
+        <p>We create browser-based games inspired by real publications, datasets and research practices. Each game connects back to the research behind it, giving players another way to encounter scientific and scholarly work.</p>
+        <div class="launch-about__process" aria-labelledby="process-title">
+          <h3 id="process-title"><i data-lucide="route" aria-hidden="true"></i>From research to game</h3>
+          <div class="process-line" aria-label="Research becomes a playable experience through interpretation">
+            <span>Research</span><i data-lucide="arrow-right" aria-hidden="true"></i><span>Interpretation</span><i data-lucide="arrow-right" aria-hidden="true"></i><span>Playable experience</span>
+          </div>
+          <p class="launch-process__note">Each game remains connected to the research behind it.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="launch-contact-divider" aria-hidden="true"></div>
+    <section class="launch-contact" id="contact" aria-labelledby="contact-title">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Contact us for collaboration, ideas or suggestions</h2>
+        <a class="launch-contact__email" href="mailto:dhc@lu.lv?subject=ResearchGames.eu">
+          <span class="launch-contact__icon" aria-hidden="true"><i data-lucide="mail"></i></span>
+          <span class="launch-contact__address"><small>Email ResearchGames</small><strong>dhc@lu.lv</strong></span>
+          <i class="launch-contact__arrow" data-lucide="arrow-up-right" aria-hidden="true"></i>
         </a>
       </div>
     </section>
   </main>
+
+  <footer class="launch-footer">
+    <p>© 2026 ResearchGames.eu</p>
+  </footer>
 </body>
 </html>
