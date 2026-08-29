@@ -107,7 +107,8 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-founders{margin-top:clamp(34px,3.5vw,48px)}
 .launch-about__copy .launch-founders p{margin:0;line-height:1.55}
 .launch-about__copy .launch-founders .launch-founders__label{margin-bottom:13px;color:#bc77ed;font-size:13px;font-weight:650;letter-spacing:.17em;line-height:1.2;text-transform:uppercase}
-.launch-founders__line{white-space:normal}
+.launch-founders__line{display:flex;flex-wrap:wrap;column-gap:7px}
+.launch-founder{white-space:nowrap}
 .launch-founders strong{color:#eeeaf6;font-weight:600}
 .launch-founders span{color:#969cab;font-weight:400}
 .launch-about__process{margin-top:clamp(38px,4vw,54px)}
