@@ -148,9 +148,11 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 [data-theme="light"] .launch-hero__cta{color:#5a3fa9}
 [data-theme="light"] .game-card{border-color:#d1cedb;background:linear-gradient(145deg,#fff,#efedf3);box-shadow:0 15px 45px rgba(44,35,61,.06)}
 [data-theme="light"] .game-card__content>p{color:#535967}[data-theme="light"] .game-card__content .game-card__based{color:#676d7b}[data-theme="light"] .game-card__based a{color:#5c429d}
-[data-theme="light"] .launch-games .game-collections .tag-thematic{border-color:#806bb7!important;background:#eee9fa!important;color:#514181!important}
-[data-theme="light"] .launch-games .game-collections .tag-horizontal{border-color:#4d8b79!important;background:#e3f2ed!important;color:#285f51!important}
-[data-theme="light"] .launch-games .game-collections .tag-institutional{border-color:#6280b9!important;background:#e6edf9!important;color:#365c91!important}
+[data-theme="light"] .launch-games .fact-icon{border-color:#58617a;background:#0a1020b8;color:#a990f0}
+[data-theme="light"] .launch-games .livonian .fact-icon{border-color:#3c7569;color:#67d4aa}
+[data-theme="light"] .launch-games .game-collections .tag-thematic{border-color:#745db4!important;background:rgba(62,45,112,.62)!important;color:#d6cbff!important}
+[data-theme="light"] .launch-games .game-collections .tag-horizontal{border-color:#34836e!important;background:rgba(19,91,72,.6)!important;color:#9aecd5!important}
+[data-theme="light"] .launch-games .game-collections .tag-institutional{border-color:#4778cc!important;background:rgba(32,72,148,.58)!important;color:#afd0ff!important}
 [data-theme="light"] .game-card__play{border-color:#8875bd;background:rgba(226,219,242,.56);color:#251a3b}
 [data-theme="light"] .launch-about__copy p{color:#454b58}
 [data-theme="light"] .launch-about__copy .launch-about__origin{color:#30283f}
