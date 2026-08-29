@@ -76,7 +76,7 @@ footer .logo-type{font-size:20px}
 .theme-toggle:hover svg{transform:scale(1.08)}
 .theme-knob{position:absolute!important;z-index:0!important;left:4px;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#a954e9,#3c82ff);box-shadow:0 2px 12px #5e43e866;transition:transform .42s cubic-bezier(.22,1.4,.36,1)}
 [data-theme="light"] .theme-knob{transform:translateX(30px)}
-.theme-sun{color:#f2aa45}.theme-moon{color:#c8c3ef}
+.theme-sun{color:#fff}.theme-moon{color:#c8c3ef}
 body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manifesto,.callout-inner,footer{transition:background-color .35s,color .35s,border-color .35s}
 .button.secondary{color:#f5f4f1}
 .button.primary{color:#ffffff}
