@@ -3,6 +3,7 @@ html{scroll-padding-top:88px}
 .lucide{display:inline-block;width:1em;height:1em;flex:0 0 auto;stroke-width:1.8}
 body{background:radial-gradient(circle at 18% 9%,rgba(76,45,196,.16),transparent 25%),var(--night)}
 body{display:block!important;min-height:100vh}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .eyebrow,.game-kicker{font-size:13px}
 .site-header{height:84px;max-width:none;padding:0 var(--launch-pad);background:rgba(5,8,18,.78);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(18px)}
@@ -92,6 +93,7 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .game-card__play span{transition:transform .22s}.game-card__play:hover span{transform:translateX(4px)}
 .game-card--development{border-style:dashed}.game-card--development:hover{border-color:#765ead}
 .launch-about{display:grid;grid-template-columns:minmax(0,.8fr) minmax(440px,1.2fr);gap:clamp(60px,9vw,150px);border-top:1px solid var(--line)}
+.launch-about>*{min-width:0}
 .launch-about .eyebrow{margin:0 0 18px}
 .launch-about__university{position:relative;isolation:isolate;display:block;width:min(100%,340px);margin-top:44px;padding:18px 0;transition:transform .5s cubic-bezier(.22,1.35,.36,1),filter .5s}
 .launch-about__university:before{content:"";position:absolute;z-index:-1;inset:5% -5%;border-radius:50%;background:radial-gradient(ellipse,rgba(180,131,255,.32),rgba(124,76,226,.14) 38%,transparent 72%);filter:blur(30px);opacity:0;transform:scale(.82);transition:opacity .65s ease,transform .65s ease}
@@ -169,6 +171,7 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 @media(max-width:760px){.manifesto{padding-top:18px}.manifesto-inner{gap:20px}.research-cube-scene{min-height:185px}}
 @media(max-width:760px){.site-header .theme-knob{transform:translateX(28px)}[data-theme="light"] .site-header .theme-knob{transform:none}}
 @media(max-width:560px){.eyebrow,.game-kicker,.launch-about__copy .launch-founders .launch-founders__label{font-size:12px}}
+@media(max-width:560px){.launch-about__copy .launch-founders__line{row-gap:5px;font-size:16px}.launch-founder{max-width:100%}}
 @media(max-width:560px){.site-header{height:74px}.brand .logo-type{font-size:18px}.launch-hero{padding:112px 20px 70px}.launch-hero h1{font-size:clamp(55px,17vw,74px)}.launch-hero__intro{font-size:17px}.launch-section{padding:78px 20px}.launch-heading h2,.launch-about h2{font-size:43px}.launch-contact h2{font-size:28px}.launch-games .exhibit{min-height:760px}.launch-games .exhibit-content{max-width:100%;padding:24px 20px}.launch-games .exhibit-image{opacity:.52}.launch-games .riddles .exhibit-image{padding:14px}.game-card__content{padding:26px 22px}.game-card__content h3{font-size:38px}.game-card--compact .game-card__visual,.game-card--development .game-card__visual{aspect-ratio:16/9}.game-card__status{left:13px;top:13px}.launch-contact{margin-bottom:64px;padding:0 20px}.launch-footer{padding:32px 20px}.memory-shell .game-topline{align-items:flex-start;flex-direction:column}.memory-shell .game-stats{width:100%;justify-content:stretch}.memory-shell .game-stats>div{flex:1}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.game-card,.game-card__visual img,.game-card__play,.launch-contact>a,.launch-hero__cta{transition:none}}
 @media(prefers-reduced-motion:reduce){.process-line span,.process-line>svg{transition:none}.process-line span:hover,.process-line span:hover+svg{transform:none}}
