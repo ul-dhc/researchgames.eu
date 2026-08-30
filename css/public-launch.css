@@ -203,21 +203,23 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-games .exhibit-content,.launch-games .dna:last-child .exhibit-content{grid-row:2;max-width:none;min-height:430px;height:auto;padding:24px 22px 22px;background:linear-gradient(155deg,rgba(12,17,32,.98),rgba(7,11,20,.99))}
 .launch-games .exhibit h3{margin:18px 0 10px;font-size:clamp(29px,2.15vw,36px);line-height:1;letter-spacing:-.045em}
 .launch-games .exhibit h3{min-height:72px}
-.launch-games .exhibit .description{min-height:66px;margin:0;color:#c7cbd5;font-size:14px;line-height:1.55}
-.launch-games .facts{min-height:94px;margin:14px 0 13px;font-size:12px}
-.launch-games .facts li{gap:9px;margin:9px 0}
-.launch-games .facts li>span:last-child{font-size:12px;line-height:1.45}
-.launch-games .fact-icon{flex-basis:26px;width:26px;height:26px;border-radius:7px}
-.launch-games .fact-icon svg{width:15px;height:15px}
+.launch-games .labels{font-size:13px;line-height:1.4}
+.launch-games .status{font-size:10px}
+.launch-games .exhibit .description{min-height:78px;margin:0;color:#c7cbd5;font-size:16px;line-height:1.6}
+.launch-games .facts{min-height:112px;margin:16px 0 15px;font-size:14px}
+.launch-games .facts li{gap:10px;margin:10px 0}
+.launch-games .facts li>span:last-child{font-size:14px;line-height:1.5}
+.launch-games .fact-icon{flex-basis:30px;width:30px;height:30px;border-radius:8px}
+.launch-games .fact-icon svg{width:16px;height:16px}
 .launch-games .game-collections{margin:0 0 8px}
-.launch-games .game-collections p{margin-bottom:6px}
-.launch-games .game-collections span,.launch-games .game-collections a,.launch-games .game-collections button{min-height:24px;margin:0 4px 4px 0;padding:4px 8px;font-size:9px}
-.launch-games .game-collections .spotlight-more{border:0;background:transparent;color:#9ca3b4;padding-inline:3px;font:inherit;font-size:9px;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+.launch-games .game-collections p{margin-bottom:7px;font-size:13px}
+.launch-games .game-collections span,.launch-games .game-collections a,.launch-games .game-collections button{min-height:30px;margin:0 5px 5px 0;padding:5px 10px;font-size:12px}
+.launch-games .game-collections .spotlight-more{border:0;background:transparent;color:#9ca3b4;padding-inline:3px;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
 .launch-games .game-collections .spotlight-more:hover,.launch-games .game-collections .spotlight-more:focus-visible{color:#d3c5ff;text-decoration-color:#8569dd;outline:none}
 .launch-games .languages{margin-top:auto}
-.launch-games .languages p{margin:8px 0 6px}
-.launch-games .languages span{padding:6px 9px;font-size:11px}
-.launch-games .exhibit .button{align-self:stretch;justify-content:space-between;width:100%;min-height:44px;margin-top:13px;padding:10px 14px}
+.launch-games .languages p{margin:10px 0 7px;font-size:13px}
+.launch-games .languages span{padding:7px 10px;font-size:12px}
+.launch-games .exhibit .button{align-self:stretch;justify-content:space-between;width:100%;min-height:46px;margin-top:13px;padding:11px 14px;font-size:14px}
 .launch-games .riddles .exhibit-image{object-fit:cover;padding:0;background:#071026;transform:scale(1.015);filter:brightness(.56) contrast(.9) saturate(.68)}
 .launch-games .riddles:hover .exhibit-image{transform:scale(1.03);filter:brightness(.64) contrast(.94) saturate(.76)}
 .launch-games .riddles .image-shade{background:radial-gradient(circle at 72% 42%,rgba(46,68,130,.05),rgba(5,9,20,.34) 76%),linear-gradient(0deg,rgba(5,8,16,.48),transparent 68%)}
