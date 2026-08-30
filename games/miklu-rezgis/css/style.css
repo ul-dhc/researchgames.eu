@@ -236,7 +236,7 @@ html[data-theme="light"] .lock-overlay{background:rgba(240,241,248,.85);}
 
 .status-line{font-size:13.5px;color:var(--ink-muted);margin-bottom:.5rem;min-height:20px;}
 .status-line:empty{display:none;}
-.status-line.win{color:var(--accent);font-weight:700;}
+.status-line.win{color:var(--accent);font-weight:400;}
 .status-line.lose{color:var(--red);}
 .instruction-line{font-size:12px;color:var(--ink-dim);margin-bottom:.75rem;}
 
