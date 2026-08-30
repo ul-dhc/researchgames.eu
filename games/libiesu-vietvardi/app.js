@@ -162,6 +162,9 @@
   document.querySelectorAll("[data-about-link]").forEach(link => {
     link.href = `about.html${IS_EN ? "#en" : ""}`;
   });
+  document.querySelectorAll("[data-livonian-footer-link]").forEach(link => {
+    link.href = IS_EN ? "https://www.livonian.lv/en/home/" : "https://www.livonian.lv/lv/sakums/";
+  });
 
   function installLanguageSwitches() {
     document.querySelectorAll(".theme-switch").forEach(themeSwitch => {

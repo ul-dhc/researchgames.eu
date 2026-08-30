@@ -183,7 +183,7 @@
     <span aria-hidden="true">•</span>
     <a href="https://researchgames.eu/" target="_blank" rel="noopener noreferrer">ResearchGames.eu ↗</a>
     <span aria-hidden="true">•</span>
-    <a href="https://www.livonian.lv/" target="_blank" rel="noopener noreferrer" data-lv="LU Lībiešu institūts ↗" data-en="University of Latvia Livonian Institute ↗">LU Lībiešu institūts ↗</a>
+    <a data-livonian-footer-link href="https://www.livonian.lv/lv/sakums/" target="_blank" rel="noopener noreferrer" data-lv="LU Lībiešu institūts ↗" data-en="University of Latvia Livonian Institute ↗">LU Lībiešu institūts ↗</a>
   </nav>
 </footer>
 <script>
@@ -204,6 +204,9 @@
     });
     const suffix = en ? "#en" : "";
     document.querySelectorAll("#game-back,#brand-back").forEach(link => { link.href = "index.html" + suffix; });
+    document.querySelectorAll("[data-livonian-footer-link]").forEach(link => {
+      link.href = en ? "https://www.livonian.lv/en/home/" : "https://www.livonian.lv/lv/sakums/";
+    });
   }
   document.querySelectorAll(".lang-option").forEach(button => button.addEventListener("click", () => {
     if (button.dataset.lang === "en") location.hash = "en";
