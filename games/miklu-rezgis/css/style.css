@@ -566,6 +566,7 @@ body.about-open .site-footer{order:2;flex:0 0 auto;margin-top:0;}
 .about-card .about-card-label,.about-inline-resource .about-inline-label{color:var(--accent);}
 .about-card p:last-child{margin-bottom:0;}
 .about-card a{color:#58dcbb;text-decoration:none;font-weight:700;}
+.about-creators a{font-weight:400;}
 .about-card a:hover{color:var(--accent);text-decoration:none;}
 .about-inline-resource{margin-top:22px;padding-top:18px;border-top:1px solid rgba(130,163,210,.14);}
 .about-inline-resource .about-inline-label{margin-bottom:5px;color:#8193aa;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
