@@ -3,11 +3,12 @@ const themeButton=document.querySelector('#theme-toggle');
 const menuButton=document.querySelector('.menu-toggle');
 const nav=document.querySelector('#site-nav');
 const header=document.querySelector('#site-header');
+const isLatvian=root.lang.toLowerCase().startsWith('lv');
 
 function syncTheme(){
   const light=root.dataset.theme==='light';
   themeButton?.setAttribute('aria-pressed',String(light));
-  themeButton?.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');
+  themeButton?.setAttribute('aria-label',isLatvian?(light?'Ieslēgt tumšo režīmu':'Ieslēgt gaišo režīmu'):(light?'Switch to dark theme':'Switch to light theme'));
 }
 
 themeButton?.addEventListener('click',()=>{
@@ -19,7 +20,7 @@ themeButton?.addEventListener('click',()=>{
 menuButton?.addEventListener('click',()=>{
   const open=nav.classList.toggle('open');
   menuButton.setAttribute('aria-expanded',String(open));
-  menuButton.querySelector('.sr-only').textContent=open?'Close menu':'Open menu';
+  menuButton.querySelector('.sr-only').textContent=isLatvian?(open?'Aizvērt izvēlni':'Atvērt izvēlni'):(open?'Close menu':'Open menu');
 });
 
 nav?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
@@ -42,7 +43,7 @@ function fitSpotlightTags(group){
   button.hidden=false;
   let hiddenCount=0;
   while(tags.some(tag=>!tag.hidden)){
-    button.textContent=`+${hiddenCount} more`;
+    button.textContent=isLatvian?`+vēl ${hiddenCount}`:`+${hiddenCount} more`;
     const visible=[...tags.filter(tag=>!tag.hidden),button];
     const visibleRows=[...new Set(visible.map(item=>item.offsetTop))];
     if(hiddenCount>0&&visibleRows.length<=2)break;
@@ -51,7 +52,7 @@ function fitSpotlightTags(group){
     lastVisible.hidden=true;
     hiddenCount+=1;
   }
-  button.textContent=`+${hiddenCount} more`;
+  button.textContent=isLatvian?`+vēl ${hiddenCount}`:`+${hiddenCount} more`;
 }
 
 spotlightGroups.forEach(group=>{
@@ -64,7 +65,7 @@ spotlightGroups.forEach(group=>{
     }else{
       [...group.children].forEach(item=>{if(item!==button&&item.tagName!=='P')item.hidden=false});
       button.hidden=false;
-      button.textContent='Show less';
+      button.textContent=isLatvian?'Rādīt mazāk':'Show less';
     }
   });
 });
@@ -80,7 +81,8 @@ const dnaCanvas=document.querySelector('.dna-liquid-canvas');
 if(dnaCanvas){
   const ctx=dnaCanvas.getContext('2d');
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let dnaWidth=0,dnaHeight=0,dnaFrame,bubbles=[];
+  let dnaWidth=0,dnaHeight=0,dnaFrame=null,dnaVisible=false,dnaLastPaint=0,bubbles=[];
+  const dnaFrameInterval=1000/30;
   const seeded=index=>{const value=Math.sin(index*9283.31)*43758.54;return value-Math.floor(value)};
 
   function sizeDnaCanvas(){
@@ -116,15 +118,37 @@ if(dnaCanvas){
   }
 
   function renderDna(now=5200){
+    if(!reduceMotion&&(!dnaVisible||document.hidden)){dnaFrame=null;return}
     if(!dnaWidth||!dnaHeight)sizeDnaCanvas();
-    const time=now/1000;
-    ctx.clearRect(0,0,dnaWidth,dnaHeight);drawCaustics(time);drawBubbles(time);
+    if(reduceMotion||now-dnaLastPaint>=dnaFrameInterval){
+      const time=now/1000;
+      dnaLastPaint=now;
+      ctx.clearRect(0,0,dnaWidth,dnaHeight);drawCaustics(time);drawBubbles(time);
+    }
     if(!reduceMotion)dnaFrame=requestAnimationFrame(renderDna);
   }
 
+  function startDnaAnimation(){
+    if(reduceMotion||!dnaVisible||document.hidden||dnaFrame!=null)return;
+    dnaLastPaint=0;
+    dnaFrame=requestAnimationFrame(renderDna);
+  }
+
+  function stopDnaAnimation(){
+    if(dnaFrame!=null)cancelAnimationFrame(dnaFrame);
+    dnaFrame=null;
+  }
+
   new ResizeObserver(()=>{sizeDnaCanvas();if(reduceMotion)renderDna()}).observe(dnaCanvas);
-  renderDna();
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!reduceMotion){cancelAnimationFrame(dnaFrame);dnaFrame=requestAnimationFrame(renderDna)}});
+  if(reduceMotion)renderDna();
+  else{
+    const dnaObserver=new IntersectionObserver(entries=>{
+      dnaVisible=entries[0]?.isIntersecting??false;
+      if(dnaVisible)startDnaAnimation();else stopDnaAnimation();
+    },{rootMargin:'120px 0px',threshold:0});
+    dnaObserver.observe(dnaCanvas);
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)stopDnaAnimation();else startDnaAnimation()});
+  }
 }
 
 addEventListener('scroll',()=>header?.classList.toggle('scrolled',scrollY>18),{passive:true});

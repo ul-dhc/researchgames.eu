@@ -10,7 +10,7 @@
     { key: 'patterns', label: 'Pattern Hunt', icon: 'scan-search' }
   ];
   const isLatvian = document.documentElement.lang.toLowerCase().startsWith('lv');
-  const lvLabels = { detective:'Detektīvs', puzzle:'Mīkla', simulation:'Simulācija', classification:'Klasificēšana', reconstruction:'Rekonstruēšana', mapping:'Kartēšana', strategy:'Stratēģija', patterns:'Modeļu meklēšana' };
+  const lvLabels = { detective:'Detektīvs', puzzle:'Mīklas', simulation:'Simulācija', classification:'Klasificēšana', reconstruction:'Rekonstruēšana', mapping:'Kartēšana', strategy:'Stratēģija', patterns:'Modeļu meklēšana' };
   if (isLatvian) concepts.forEach(item => { item.label = lvLabels[item.key]; });
   const pairColors = {
     detective: '#B45AA3',

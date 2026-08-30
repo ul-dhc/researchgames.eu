@@ -83,6 +83,8 @@ if (researchCube && researchCubeScene) {
   let cubeLastY = 0;
   let cubeDragging = false;
   let cubeLastFrame = performance.now();
+  let cubeFrame = null;
+  let cubeVisible = false;
   const cubeMotionAllowed = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cubeContext = researchCube.getContext('2d');
   const cubeVertices = [
@@ -175,16 +177,43 @@ if (researchCube && researchCubeScene) {
   };
 
   const animateCube = time => {
+    if (!cubeVisible || document.visibilityState !== 'visible') {
+      cubeFrame = null;
+      return;
+    }
     const elapsed = Math.min(40, time - cubeLastFrame);
     cubeLastFrame = time;
-    if (!cubeDragging && cubeMotionAllowed && document.visibilityState === 'visible') {
+    if (!cubeDragging && cubeMotionAllowed) {
       cubeX += elapsed * (.0034 + Math.sin(time * .00027) * .0011);
       cubeY += elapsed * (.0062 + Math.cos(time * .00031) * .0014);
       cubeZ += elapsed * (.0023 + Math.sin(time * .00019) * .0008);
       renderCube();
     }
-    requestAnimationFrame(animateCube);
+    cubeFrame = requestAnimationFrame(animateCube);
   };
+
+  const startCubeAnimation = () => {
+    if (!cubeMotionAllowed || !cubeVisible || document.visibilityState !== 'visible' || cubeFrame != null) return;
+    cubeLastFrame = performance.now();
+    cubeFrame = requestAnimationFrame(animateCube);
+  };
+
+  const stopCubeAnimation = () => {
+    if (cubeFrame != null) cancelAnimationFrame(cubeFrame);
+    cubeFrame = null;
+  };
+
+  const cubeObserver = new IntersectionObserver(entries => {
+    cubeVisible = entries[0]?.isIntersecting ?? false;
+    if (cubeVisible) startCubeAnimation();
+    else stopCubeAnimation();
+  }, { rootMargin: '120px 0px', threshold: 0 });
+  cubeObserver.observe(researchCubeScene);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') startCubeAnimation();
+    else stopCubeAnimation();
+  });
 
   researchCube.addEventListener('pointerdown', event => {
     researchCube.classList.remove('keyboard-focus');
@@ -236,5 +265,4 @@ if (researchCube && researchCubeScene) {
   researchCube.addEventListener('blur', () => researchCube.classList.remove('keyboard-focus'));
 
   renderCube();
-  requestAnimationFrame(animateCube);
 }
