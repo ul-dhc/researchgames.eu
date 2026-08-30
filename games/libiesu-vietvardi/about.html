@@ -16,12 +16,12 @@
     .about-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-weight:750;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
     .about-title{font-size:clamp(40px,6vw,70px);line-height:1.03;letter-spacing:-.04em;margin:18px 0 22px;max-width:760px}
     .about-lead{font-size:clamp(18px,2.2vw,24px);line-height:1.5;color:var(--ink-muted);max-width:720px}
-    .about-credit{margin-top:36px;padding:24px 26px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--panel);display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:15px;font-weight:700;color:var(--green)}
+    .about-credit{margin-top:36px;padding:24px 26px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--panel);display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:15px;font-weight:700;color:var(--ink)}
     .about-credit svg{flex:0 0 auto}
-    .about-credit a{color:var(--violet);font-size:15px;font-weight:700;text-decoration:none;transition:color .2s ease}
+    .about-credit a{color:var(--ink);font-size:15px;font-weight:700;text-decoration:none;transition:color .2s ease}
     .about-credit a:hover{color:var(--green);text-decoration:underline;text-underline-offset:3px}
     .about-copy{margin-top:30px;display:grid;gap:18px;color:var(--ink-muted);font-size:16px;line-height:1.72;max-width:850px}
-    .about-copy a,.about-contact a{color:var(--violet);font-weight:650;text-underline-offset:3px}.about-copy a:hover,.about-contact a:hover{color:var(--green)}
+    .about-copy a{color:var(--violet);font-weight:inherit;text-underline-offset:3px}.about-contact a{color:var(--violet);font-weight:650;text-underline-offset:3px}.about-copy a:hover,.about-contact a:hover{color:var(--green)}
     .partner-logos{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);align-items:center;gap:clamp(36px,7vw,84px);padding:clamp(32px,5vw,54px);border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--panel)}
     .partner-logo-link{display:flex;align-items:center;justify-content:center;min-width:0;transition:transform .2s ease}
     .partner-logo-link:hover{transform:translateY(-3px)}
@@ -91,13 +91,13 @@
       <p>Vietvārdi glabā valodas, kultūras un Latvijas vēstures liecības. Spēle ļauj ieraudzīt, kā pazīstamas Latvijas vietas sauc lībiešu valodā, un parāda lībiešu valodas klātbūtni Latvijas kultūrtelpā.</p>
       <p>Spēlē izmantots <a href="https://www.livonian.lv/wp-content/uploads/2024/01/VV_Katalogs.pdf" target="_blank" rel="noopener">Lībiešu vietvārdu katalogs</a>, ko sagatavojis LU Lībiešu institūts.</p>
       <p>Spēli izstrādāja <a href="https://dhc.lu.lv" target="_blank" rel="noopener">Latvijas Universitātes Digitālo humanitāro zinātņu centrs</a> sadarbībā ar <a href="https://www.livonian.lv" target="_blank" rel="noopener">LU Lībiešu institūtu</a> projekta <a href="https://www.hzf.lu.lv/petnieciba/projekti/open/" target="_blank" rel="noopener">ȬPEN</a> ietvaros (Nr. ZDA-LIP 2025/2). Projekts veicina zināšanu pieejamību un sabiedrības iesaisti zināšanu radīšanā.</p>
-      <p>Spēle ir iekļauta <a href="https://researchgames.eu/" target="_blank" rel="noopener"><strong>ResearchGames.eu</strong></a> spēļu kolekcijā un ir atvērtā koda projekts, kas pieejams <strong>GitHub</strong>.</p>
+      <p>Spēle ir iekļauta <a href="https://researchgames.eu/" target="_blank" rel="noopener">ResearchGames.eu</a> spēļu kolekcijā un ir atvērtā koda projekts, kas pieejams GitHub.</p>
     </div>
     <div class="about-copy" data-copy-lang="en" hidden>
       <p>Place names preserve traces of language, culture and Latvia’s history. The game shows how familiar places in Latvia are named in Livonian and makes the presence of Livonian visible in Latvia’s cultural landscape.</p>
       <p>The game uses the <a href="https://www.livonian.lv/wp-content/uploads/2024/01/VV_Katalogs.pdf" target="_blank" rel="noopener">Catalogue of Livonian Place Names</a>, prepared by the University of Latvia Livonian Institute.</p>
       <p>The game was developed by the <a href="https://dhc.lu.lv" target="_blank" rel="noopener">University of Latvia Digital Humanities Centre</a> in collaboration with the <a href="https://www.livonian.lv" target="_blank" rel="noopener">University of Latvia Livonian Institute</a> as part of the <a href="https://www.hzf.lu.lv/petnieciba/projekti/open/" target="_blank" rel="noopener">ȬPEN</a> project (No. ZDA-LIP 2025/2). The project promotes access to knowledge and public participation in knowledge creation.</p>
-      <p>The game is included in the <a href="https://researchgames.eu/" target="_blank" rel="noopener"><strong>ResearchGames.eu</strong></a> game collection and is an open-source project available on <strong>GitHub</strong>.</p>
+      <p>The game is included in the <a href="https://researchgames.eu/" target="_blank" rel="noopener">ResearchGames.eu</a> game collection and is an open-source project available on GitHub.</p>
     </div>
     <div class="about-credit">
       <svg width="19" height="19" aria-hidden="true"><use href="vendor/lucide-icons.svg#i-mail"/></svg>
@@ -114,7 +114,7 @@
     <p class="how-intro" data-lv="Spēlē ir piecas kārtas – no latviešu valodai līdzīgākiem līdz grūtāk atpazīstamiem vietvārdiem lībiešu valodā. Katrā kārtā jāsavieno vietvārdi divās kolonnās." data-en="The game has five rounds, progressing from Livonian place names that resemble Latvian to names that are harder to recognise. In each round, match place names in two columns.">Spēlē ir piecas kārtas – no latviešu valodai līdzīgākiem līdz grūtāk atpazīstamiem vietvārdiem lībiešu valodā. Katrā kārtā jāsavieno vietvārdi divās kolonnās.</p>
     <div class="how-grid">
       <article class="how-step"><strong data-lv="1. Izvēlies" data-en="1. Choose">1. Izvēlies</strong><p data-lv="Atzīmē vienu vietvārdu lībiešu valodā kreisajā kolonnā." data-en="Select one Livonian place name in the left column.">Atzīmē vienu vietvārdu lībiešu valodā kreisajā kolonnā.</p></article>
-      <article class="how-step"><strong data-lv="2. Savieno" data-en="2. Match">2. Savieno</strong><p data-lv="Atzīmē tam atbilstošo nosaukumu latviešu valodā un pārbaudi pāri." data-en="Select the corresponding Latvian name and check the pair.">Atzīmē tam atbilstošo nosaukumu latviešu valodā un pārbaudi pāri.</p></article>
+      <article class="how-step"><strong data-lv="2. Savieno" data-en="2. Match">2. Savieno</strong><p data-lv="Atzīmē tam atbilstošo nosaukumu latviešu valodā, un spēle pāri pārbaudīs automātiski." data-en="Select the corresponding Latvian name, and the game will check the pair automatically.">Atzīmē tam atbilstošo nosaukumu latviešu valodā, un spēle pāri pārbaudīs automātiski.</p></article>
       <article class="how-step"><strong data-lv="3. Atklāj" data-en="3. Reveal">3. Atklāj</strong><p data-lv="Pareizi savienotā vieta iedegas kartē, un spēle turpinās ar nākamo pāri." data-en="A correctly matched place lights up on the map, and the game continues with the next pair.">Pareizi savienotā vieta iedegas kartē, un spēle turpinās ar nākamo pāri.</p></article>
     </div>
     <div class="score-box">
@@ -204,6 +204,9 @@
     });
     const suffix = en ? "#en" : "";
     document.querySelectorAll("#game-back,#brand-back").forEach(link => { link.href = "index.html" + suffix; });
+    document.querySelector(".about-more").href = en
+      ? "https://fennougria.ee/en/peoples/baltic-finnic-peoples/livonians/"
+      : "https://livones.net";
     document.querySelectorAll("[data-livonian-footer-link]").forEach(link => {
       link.href = en ? "https://www.livonian.lv/en/home/" : "https://www.livonian.lv/lv/sakums/";
     });
