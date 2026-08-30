@@ -429,6 +429,14 @@ body:has(#screen-start:not(.hidden)) .persistent-footer{
 }
 @media(min-width:981px){
   .screen.screen-start{ height:auto; min-height:calc(100dvh - 122px); }
+  .start-right{
+    height:clamp(560px, calc(100dvh - 180px), 640px);
+    align-self:center;
+  }
+  html[lang="en"] .hero-title{
+    font-size:clamp(32px, 3.25vw, 42px);
+    line-height:1.2;
+  }
   .screen.screen-game{ height:calc(100dvh - 42px); min-height:calc(100dvh - 42px); }
   .screen.screen-round,.screen.screen-final{ min-height:calc(100dvh - 42px); }
 }
