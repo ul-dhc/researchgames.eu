@@ -8,6 +8,9 @@
   const IS_EN = LANG === "en";
   const LS_BEST = "liv-game-best-score";
   const LS_THEME = "liv-game-theme";
+  const LS_TEXT_SIZE = "liv-game-text-size";
+  const savedTextSize = localStorage.getItem(LS_TEXT_SIZE) === "large" ? "large" : "normal";
+  document.documentElement.dataset.textSize = savedTextSize;
 
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZJv4C-LK3cMy-ejINa4Di-Orr37jfLYed2pxw8CnZOneu8H72wJ3okuyd72Xu07FzAg/exec";
 
@@ -187,16 +190,49 @@
           else location.href = location.href.split("#")[0];
         });
       });
+      const textSizeSwitcher = document.createElement("div");
+      textSizeSwitcher.className = "text-size-switch";
+      textSizeSwitcher.setAttribute("role", "group");
+      textSizeSwitcher.setAttribute("aria-label", IS_EN ? "Text size" : "Teksta izmērs");
+      textSizeSwitcher.innerHTML = `
+        <button type="button" class="text-size-option" data-size="normal" aria-label="${IS_EN ? "Standard text size" : "Standarta teksta izmērs"}">A</button>
+        <span aria-hidden="true"></span>
+        <button type="button" class="text-size-option text-size-option-large" data-size="large" aria-label="${IS_EN ? "Larger text" : "Lielāks teksts"}">A+</button>`;
+      const updateTextSizeControls = () => {
+        const current = document.documentElement.dataset.textSize === "large" ? "large" : "normal";
+        document.querySelectorAll(".text-size-option").forEach(button => {
+          const active = button.dataset.size === current;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+      };
+      textSizeSwitcher.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", () => {
+          const next = button.dataset.size === "large" ? "large" : "normal";
+          document.documentElement.dataset.textSize = next;
+          localStorage.setItem(LS_TEXT_SIZE, next);
+          updateTextSizeControls();
+          requestAnimationFrame(() => {
+            if (constellationMap) {
+              constellationMap.invalidateSize();
+              constellationMap.fitBounds(OVERVIEW_BOUNDS);
+            }
+            [gameMap, roundMap, finalMap].forEach(map => map && map.invalidateSize());
+          });
+        });
+      });
       const parent = themeSwitch.parentElement;
       if (parent.classList.contains("game-header-controls")) {
         parent.insertBefore(aboutLink, themeSwitch);
         parent.insertBefore(switcher, themeSwitch);
+        parent.insertBefore(textSizeSwitcher, themeSwitch);
       } else {
         const settings = document.createElement("div");
         settings.className = "header-settings";
         parent.insertBefore(settings, themeSwitch);
-        settings.append(aboutLink, switcher, themeSwitch);
+        settings.append(aboutLink, switcher, textSizeSwitcher, themeSwitch);
       }
+      updateTextSizeControls();
     });
   }
   installLanguageSwitches();
