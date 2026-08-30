@@ -150,7 +150,7 @@
 .collection-footer p{margin:0!important;justify-self:center;color:#8d95a6;font-size:13px}
 
 /* The collection reuses the landing-page cards without a separate visual variant. */
-.collection-exhibits{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.collection-exhibits{grid-template-columns:minmax(0,1fr)!important}
 
 /* Every collection section begins on the same content line. */
 .collection-hero,.collection-games,.collection-engagement,.research-portal{width:100%;box-sizing:border-box}
