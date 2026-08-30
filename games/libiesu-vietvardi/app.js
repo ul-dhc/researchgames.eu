@@ -691,7 +691,6 @@
     pts.forEach((p, pointIndex) => {
       const arrivalClass = !isRound ? " final-dot-arrival" : "";
       const dot = L.circleMarker([p.lat, p.lon], { radius: 6, className: `geo-dot lit summary-item summary-id-${p.id}${arrivalClass}`, weight: 1.6, keyboard: false, bubblingMouseEvents: false })
-        .bindTooltip(tooltipHtml(p), { className: "place-tooltip", direction: "top", offset: [0, -8], opacity: 1 })
         .addTo(dotLayer);
       keepMarkerHoverOnly(dot);
       dot.on("mouseover", () => focusSummaryItem(p.id, true));
