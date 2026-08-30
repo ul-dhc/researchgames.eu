@@ -83,8 +83,7 @@
     "Katrā kārtā redzēsi divas vārdu kolonnas –": "In each round you will see two columns of words —",
     "un": "and",
     "valodā.": ".",
-    "Uzklikšķini uz viena vārda katrā kolonnā, lai izveidotu pāri, tad klikšķini uz": "Click one word in each column to form a pair, then click",
-    "Pārbaudīt": "Check",
+    "Uzklikšķini uz viena vārda katrā kolonnā. Spēle pāri pārbaudīs automātiski.": "Click one word in each column. The game checks the pair automatically.",
     ".": ".",
     "Ja pāris pareizs, vietvārds iemirdzas.": "If the pair is correct, the place name lights up.",
     "Kārtas sākas ar līdzīgākajiem vārdu pāriem un kļūst arvien izaicinošākas.": "The rounds begin with the most similar pairs and become increasingly challenging.",
@@ -785,7 +784,6 @@
   const listLv = $("#list-lv");
   const matchRows = $("#match-rows");
   const connectorSvg = $("#connector-svg");
-  const btnCheck = $("#btn-check");
   const toastCard = $("#toast-card");
   const toastIcon = $("#toast-icon");
   const toastTitle = $("#toast-title");
@@ -855,18 +853,13 @@
       chipEl.classList.remove(cls);
       state[key] = null;
       updateConnector();
-      updateCheckBtn();
       return;
     }
     if (state[key]) state[key].el.classList.remove(cls);
     chipEl.classList.add(cls);
     state[key] = { id: pair.id, el: chipEl, pair };
     updateConnector();
-    updateCheckBtn();
-  }
-
-  function updateCheckBtn() {
-    btnCheck.disabled = !(state.selLiv && state.selLv);
+    if (state.selLiv && state.selLv) attemptMatch();
   }
 
   function toast(kind, title) {
@@ -887,8 +880,6 @@
     el.textContent = amount > 0 ? `+${amount}` : `−${Math.abs(amount)}`;
     el.classList.add(amount > 0 ? "good" : "bad");
   }
-
-  btnCheck.addEventListener("click", attemptMatch);
 
   function attemptMatch() {
     if (!state.selLiv || !state.selLv || state.busy) return;
@@ -919,7 +910,6 @@
       state.selLv = null;
       state.busy = false;
       redrawAllConnectors();
-      updateCheckBtn();
 
       if (currentRoundPairs.every(p => state.matchedIds.has(p.id))) {
         setTimeout(onRoundComplete, 1300);
@@ -938,7 +928,6 @@
         state.selLv = null;
         state.busy = false;
         clearConnector();
-        updateCheckBtn();
       }, 480);
     }
   }
@@ -963,7 +952,6 @@
     state.busy = false;
     currentRoundPairs = pairsForRound(n);
     renderTray();
-    updateCheckBtn();
     updateTopStats();
     showScreen("game");
     resumeActiveTimer();
