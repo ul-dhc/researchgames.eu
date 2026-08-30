@@ -26,7 +26,9 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-hero:before{content:"";position:absolute;z-index:-1;left:-280px;top:170px;width:540px;height:540px;border-radius:50%;background:#4526df;filter:blur(150px);opacity:.16}
 .launch-hero__copy .eyebrow{margin:0 0 22px}
 .launch-hero h1{max-width:700px;margin:0;font:500 clamp(62px,6vw,100px)/.86 var(--sans);letter-spacing:-.07em}
-.launch-hero h1 em{display:inline-block;padding-right:.025em;font-style:normal;background:linear-gradient(110deg,#bd43ef,#574cff 78%);background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.launch-hero h1 em{display:inline-block;padding-right:.025em;font-style:normal}
+.launch-hero h1 .gradient-word span{color:#8d46f3;-webkit-text-fill-color:currentColor}
+.launch-hero h1 .gradient-word span:nth-child(1){color:#bd43ef}.launch-hero h1 .gradient-word span:nth-child(2){color:#a943f0}.launch-hero h1 .gradient-word span:nth-child(3){color:#9145f2}.launch-hero h1 .gradient-word span:nth-child(4){color:#7948f5}.launch-hero h1 .gradient-word span:nth-child(5){color:#654af8}.launch-hero h1 .gradient-word span:nth-child(6){color:#574cff}
 .launch-hero__intro{max-width:570px;margin:28px 0 0;color:var(--muted);font-size:clamp(18px,1.45vw,23px);line-height:1.5}
 .launch-hero__cta{display:inline-flex;align-items:center;gap:16px;width:fit-content;margin-top:43px;padding:10px 13px;border:1px solid transparent;border-radius:8px;color:#d8cdfd;font-size:15px;font-weight:600;text-decoration:none;transition:color .22s,background .22s,border-color .22s,box-shadow .22s,transform .22s}
 .launch-hero__cta svg{transition:transform .22s}
