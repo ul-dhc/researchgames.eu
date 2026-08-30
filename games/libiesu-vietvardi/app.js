@@ -15,7 +15,7 @@
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZJv4C-LK3cMy-ejINa4Di-Orr37jfLYed2pxw8CnZOneu8H72wJ3okuyd72Xu07FzAg/exec";
 
   const POINTS_CORRECT = 10;
-  const WRONG_PENALTY = 4;
+  const WRONG_PENALTY = 2;
   const TIME_TARGET_SECONDS = 330;
   const TIME_BONUS_PER_SECOND = 1.5;
   const TIME_BONUS_MAX = 180;
