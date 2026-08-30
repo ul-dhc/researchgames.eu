@@ -22,6 +22,12 @@
       this.title = root.dataset.title || 'Image puzzle';
       this.completeLabel = root.dataset.completeLabel || 'Image complete';
       this.alt = root.dataset.alt || '';
+      this.isLatvian = (root.dataset.locale || document.documentElement.lang).toLowerCase().startsWith('lv');
+      this.labels = this.isLatvian ? {
+        board:'Novieto katru gabaliņu tam atbilstošajā tukšajā vietā.',tray:'Trūkstošie puzles gabaliņi',controls:'Puzles vadīklas',restart:'Sākt puzli no jauna',shuffle:'Sajaukt jaunā izkārtojumā',hint:'Parādīt norādi',skip:'Izlaist puzli',loading:'Ielādē',unavailable:'Nav pieejams',empty:'Tukša puzles vieta',placed:'Puzles gabaliņš, kas jau ievietots',piece:'Puzles gabaliņš',pieceHelp:'Izvēlies un tad norādi tam atbilstošo tukšo vietu.',toPlace:'jāievieto',complete:'Pabeigts',choose:'Izvēlies vietu',select:'Izvēlies gabaliņu',tryAnother:'Izmēģini citu vietu',highlighted:'Pareizā vieta ir izcelta'
+      } : {
+        board:'Place each piece in its matching empty space.',tray:'Missing puzzle pieces',controls:'Puzzle controls',restart:'Restart puzzle',shuffle:'Shuffle for a new arrangement',hint:'Show a hint',skip:'Skip the puzzle',loading:'Loading',unavailable:'Unavailable',empty:'Empty puzzle position',placed:'Puzzle piece, already placed',piece:'Puzzle piece',pieceHelp:'Select, then choose its matching empty position.',toPlace:'to place',complete:'Complete',choose:'Choose a space',select:'Select a piece',tryAnother:'Try another space',highlighted:'Target highlighted'
+      };
       this.selected = null;
       this.initialMissing = [];
       this.pairCueTimer = null;
@@ -34,19 +40,19 @@
       this.root.classList.add('is-loading');
       this.root.innerHTML = `
         <div class="image-puzzle__shell">
-          <div class="image-puzzle__board" role="grid" aria-label="${this.escape(this.title)}. Place each piece in its matching empty space."></div>
-          <div class="image-puzzle__tray" role="group" aria-label="Missing puzzle pieces"></div>
+          <div class="image-puzzle__board" role="grid" aria-label="${this.escape(this.title)}. ${this.labels.board}"></div>
+          <div class="image-puzzle__tray" role="group" aria-label="${this.labels.tray}"></div>
           <p class="image-puzzle__completion">${this.escape(this.completeLabel)}</p>
         </div>
-        <div class="image-puzzle__controls" aria-label="Puzzle controls">
-          ${this.control('restart', 'Restart puzzle')}
-          ${this.control('shuffle', 'Shuffle for a new arrangement')}
-          ${this.control('hint', 'Show a hint')}
-          <button class="image-puzzle__skip" type="button" data-action="skip" aria-label="Skip the puzzle" title="Skip the puzzle">
+        <div class="image-puzzle__controls" aria-label="${this.labels.controls}">
+          ${this.control('restart', this.labels.restart)}
+          ${this.control('shuffle', this.labels.shuffle)}
+          ${this.control('hint', this.labels.hint)}
+          <button class="image-puzzle__skip" type="button" data-action="skip" aria-label="${this.labels.skip}" title="${this.labels.skip}">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
           </button>
         </div>
-        <span class="image-puzzle__status" role="status" aria-live="polite">Loading</span>`;
+        <span class="image-puzzle__status" role="status" aria-live="polite">${this.labels.loading}</span>`;
       this.board = this.root.querySelector('.image-puzzle__board');
       this.tray = this.root.querySelector('.image-puzzle__tray');
       this.status = this.root.querySelector('.image-puzzle__status');
@@ -65,7 +71,7 @@
       image.onerror = () => {
         this.root.classList.remove('is-loading');
         this.root.classList.add('is-error');
-        this.status.textContent = 'Unavailable';
+        this.status.textContent = this.labels.unavailable;
       };
       image.src = this.image;
     }
@@ -86,7 +92,7 @@
         slot.setAttribute('role', 'gridcell');
         if (this.missing.includes(index)) {
           slot.classList.add('is-empty');
-          slot.setAttribute('aria-label', `Empty puzzle position ${index + 1}`);
+          slot.setAttribute('aria-label', `${this.labels.empty} ${index + 1}`);
           slot.addEventListener('click', () => this.placeSelected(index));
           slot.addEventListener('dragover', event => {
             event.preventDefault();
@@ -100,14 +106,14 @@
           });
         } else {
           slot.disabled = true;
-          slot.setAttribute('aria-label', `Puzzle piece ${index + 1}, already placed`);
+          slot.setAttribute('aria-label', `${this.labels.placed} ${index + 1}`);
           this.paint(slot, index);
         }
         boardFragment.append(slot);
       }
       this.board.replaceChildren(boardFragment);
       this.renderTray(this.shuffleArray([...this.missing]));
-      this.status.textContent = `${this.missing.length} to place`;
+      this.status.textContent = `${this.missing.length} ${this.labels.toPlace}`;
     }
 
     renderTray(indices) {
@@ -118,7 +124,7 @@
         piece.className = 'image-puzzle__piece';
         piece.dataset.index = index;
         piece.draggable = false;
-        piece.setAttribute('aria-label', `Puzzle piece ${index + 1}. Select, then choose its matching empty position.`);
+        piece.setAttribute('aria-label', `${this.labels.piece} ${index + 1}. ${this.labels.pieceHelp}`);
         piece.setAttribute('aria-pressed', 'false');
         this.paint(piece, index);
         piece.addEventListener('click', () => {
@@ -230,7 +236,7 @@
       this.missing = [];
       this.selected = null;
       this.tray.replaceChildren();
-      this.status.textContent = 'Complete';
+      this.status.textContent = this.labels.complete;
       this.root.classList.add('is-complete');
     }
 
@@ -239,14 +245,14 @@
       this.tray.querySelectorAll('.image-puzzle__piece').forEach(piece => {
         piece.setAttribute('aria-pressed', String(Number(piece.dataset.index) === this.selected));
       });
-      if (this.selected !== null) this.status.textContent = 'Choose a space';
-      else this.status.textContent = `${this.missing.length} to place`;
+      if (this.selected !== null) this.status.textContent = this.labels.choose;
+      else this.status.textContent = `${this.missing.length} ${this.labels.toPlace}`;
     }
 
     placeSelected(slotIndex) {
       if (this.selected === null) {
         this.flashWrong(slotIndex);
-        this.status.textContent = 'Select a piece';
+        this.status.textContent = this.labels.select;
         return;
       }
       this.place(this.selected, slotIndex);
@@ -255,7 +261,7 @@
     place(pieceIndex, slotIndex) {
       if (!Number.isInteger(pieceIndex) || pieceIndex !== slotIndex || !this.missing.includes(slotIndex)) {
         this.flashWrong(slotIndex);
-        this.status.textContent = 'Try another space';
+        this.status.textContent = this.labels.tryAnother;
         return;
       }
       const slot = this.board.querySelector(`[data-index="${slotIndex}"]`);
@@ -269,7 +275,7 @@
       this.tray.querySelector(`[data-index="${pieceIndex}"]`)?.remove();
       this.missing = this.missing.filter(index => index !== slotIndex);
       this.selected = null;
-      this.status.textContent = this.missing.length ? `${this.missing.length} to place` : 'Complete';
+      this.status.textContent = this.missing.length ? `${this.missing.length} ${this.labels.toPlace}` : this.labels.complete;
       if (!this.missing.length) this.root.classList.add('is-complete');
     }
 
@@ -281,10 +287,10 @@
       slot.classList.remove('is-hinted');
       void slot.offsetWidth;
       slot.classList.add('is-hinted');
-      this.status.textContent = 'Target highlighted';
+      this.status.textContent = this.labels.highlighted;
       window.setTimeout(() => {
         slot.classList.remove('is-hinted');
-        if (this.missing.includes(pieceIndex)) this.status.textContent = `${this.missing.length} to place`;
+        if (this.missing.includes(pieceIndex)) this.status.textContent = `${this.missing.length} ${this.labels.toPlace}`;
       }, 1250);
     }
 
