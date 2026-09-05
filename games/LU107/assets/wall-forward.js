@@ -8,6 +8,16 @@ const DHC_PROJECT_URLS = {
 };
 const WALL_LABEL = /^(Apsveikumu siena|Birthday wall)$/i;
 
+function applyRequestedLanguage() {
+  const language = new URLSearchParams(window.location.search).get('lang');
+  if (language !== 'lv' && language !== 'en') return;
+  try {
+    localStorage.setItem('lu107-language', language);
+  } catch {}
+}
+
+applyRequestedLanguage();
+
 function getCurrentLanguage(control) {
   if (/Birthday wall/i.test(control?.textContent || '')) return 'en';
   try {
