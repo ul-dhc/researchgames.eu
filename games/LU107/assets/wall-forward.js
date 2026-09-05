@@ -38,13 +38,36 @@ function openDhcProject(control) {
   window.location.assign(url);
 }
 
+function ensureProjectBackLink() {
+  const logo = document.querySelector('.luHeader');
+  const header = logo?.closest('header');
+  if (!logo || !header) return null;
+  let link = header.querySelector('.projectBackLink');
+  if (link) return link;
+  link = document.createElement('a');
+  link.className = 'projectBackLink';
+  link.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg><span></span>';
+  logo.insertAdjacentElement('afterend', link);
+  return link;
+}
+
 function labelProjectLink() {
   const link = document.querySelector('.luHeader');
   if (!link) return;
   const isEnglish = getCurrentLanguage() === 'en';
-  link.setAttribute('href', DHC_PROJECT_URLS[isEnglish ? 'en' : 'lv']);
-  link.setAttribute('aria-label', isEnglish ? 'Back to the UL107 website' : 'Atpakaļ uz LU107 mājaslapu');
-  link.setAttribute('title', isEnglish ? 'Back to the UL107 website' : 'Atpakaļ uz LU107 mājaslapu');
+  const url = DHC_PROJECT_URLS[isEnglish ? 'en' : 'lv'];
+  const label = isEnglish ? 'Back to the LU-107 website' : 'Atpakaļ uz LU-107 vietni';
+  const backLink = ensureProjectBackLink();
+  link.setAttribute('href', url);
+  link.setAttribute('aria-label', label);
+  link.setAttribute('title', label);
+  if (backLink) {
+    backLink.href = url;
+    backLink.setAttribute('aria-label', label);
+    backLink.setAttribute('title', label);
+    const text = backLink.querySelector('span');
+    if (text) text.textContent = isEnglish ? 'LU-107 website' : 'LU-107 vietne';
+  }
 }
 
 function forwardLegacyWallHash() {
@@ -57,7 +80,7 @@ document.addEventListener('click', event => {
   const control = event.target.closest('a, button');
   if (!control) return;
 
-  if (control.matches('.luHeader')) {
+  if (control.matches('.luHeader, .projectBackLink')) {
     event.preventDefault();
     event.stopImmediatePropagation();
     openDhcProject(control);
@@ -78,7 +101,15 @@ window.addEventListener('load', labelProjectLink);
 document.addEventListener('click', event => {
   if (event.target.closest('.tools button[aria-label*="English"], .tools button[aria-label*="valodu"]')) {
     setTimeout(labelProjectLink, 0);
+    setTimeout(labelProjectLink, 120);
   }
 });
+const projectLinkObserver = new MutationObserver(() => {
+  if (document.querySelector('.luHeader') && !document.querySelector('.projectBackLink')) {
+    labelProjectLink();
+  }
+});
+projectLinkObserver.observe(document.documentElement, { childList: true, subtree: true });
 labelProjectLink();
+setTimeout(labelProjectLink, 250);
 forwardLegacyWallHash();
