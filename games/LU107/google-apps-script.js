@@ -31,8 +31,8 @@ const GAME_RUN_HEADERS = [
   'Tituls',
   '1. LU vēsture',
   '2. LU mūsdienās',
-  '3. Kultūra un sports LU',
-  '4. Atpazīsti vietu',
+  '3. Studentu dzīve LU',
+  '4. Kultūra un sports LU',
   '5. Fināla izaicinājums',
   'Bonusa punkti',
   'Spēles versija'
