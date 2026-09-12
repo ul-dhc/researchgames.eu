@@ -68,9 +68,10 @@ function labelProjectLink() {
   const url = DHC_PROJECT_URLS[isEnglish ? 'en' : 'lv'];
   const label = isEnglish ? 'Back to the LU-107 website' : 'Atpakaļ uz LU-107 vietni';
   const backLink = ensureProjectBackLink();
-  link.setAttribute('href', url);
-  link.setAttribute('aria-label', label);
-  link.setAttribute('title', label);
+  const homeLabel = isEnglish ? 'Go to the game start' : 'Doties uz spēles sākumu';
+  link.setAttribute('href', './');
+  link.setAttribute('aria-label', homeLabel);
+  link.setAttribute('title', homeLabel);
   if (backLink) {
     backLink.href = url;
     backLink.setAttribute('aria-label', label);
@@ -90,7 +91,14 @@ document.addEventListener('click', event => {
   const control = event.target.closest('a, button');
   if (!control) return;
 
-  if (control.matches('.luHeader, .projectBackLink')) {
+  if (control.matches('.luHeader')) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.assign('./');
+    return;
+  }
+
+  if (control.matches('.projectBackLink')) {
     event.preventDefault();
     event.stopImmediatePropagation();
     openDhcProject(control);
