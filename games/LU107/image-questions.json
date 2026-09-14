@@ -102,7 +102,7 @@
     "options": [
       "LU Zinātņu māja",
       "LU Dabas māja",
-      "HZF Visvalža 4a",
+      "HZF Visvalža ielā 4a",
       "LU Botāniskais dārzs"
     ],
     "correct": "A",
@@ -131,13 +131,13 @@
     "question_lv": "Kas redzams attēlā?",
     "question_en": "What is shown in the image?",
     "options": [
-      "Studentu karceris Raiņa 19",
+      "Studentu karceris Raiņa bulvārī 19",
       "Auditorija Visvalža ielā 4a",
-      "Atpūtas telpa Kalpaka ielā 4",
+      "Atpūtas telpa Kalpaka bulvārī 4",
       "ESZF dekanāts"
     ],
     "correct": "A",
-    "answer": "Studentu karceris Raiņa 19",
+    "answer": "Studentu karceris Raiņa bulvārī 19",
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/m2rf9gzx9r",
@@ -224,13 +224,13 @@
     "question_lv": "Kas redzams attēlā?",
     "question_en": "What is shown in the image?",
     "options": [
-      "Raiņa 19",
+      "LU galvenā ēka Raiņa bulvārī 19",
       "LU muzejs",
       "LU bibliotēka",
-      "HZF, Visvalža 4a"
+      "LU Humanitāro zinātņu fakultāte Visvalža ielā 4a"
     ],
     "correct": "A",
-    "answer": "Raiņa 19",
+    "answer": "LU galvenā ēka Raiņa bulvārī 19",
     "difficulty": "Vidēja",
     "time": 25,
     "source": "https://failiem.lv/LatvijasUniversitate/f/vazmfe348w",
