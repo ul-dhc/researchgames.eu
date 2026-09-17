@@ -1,6 +1,6 @@
 import { i as reactFactory, t as reactDomFactory } from './framework-CXnKph_e.js';
 import App from './page-endash.js?v=duration1';
-import './wall-forward.js?v=logo-home1';
+import './wall-forward.js?v=external-tabs1';
 
 const React = reactFactory();
 const ReactDOM = reactDomFactory();

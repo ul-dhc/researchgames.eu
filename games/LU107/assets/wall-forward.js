@@ -32,20 +32,23 @@ function getDhcWishWallUrl(control) {
 
 function openDhcWishWall(control) {
   const url = getDhcWishWallUrl(control);
-  if (window.top && window.top !== window) {
-    window.top.location.assign(url);
-    return;
-  }
-  window.location.assign(url);
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function openDhcProject(control) {
   const url = DHC_PROJECT_URLS[getCurrentLanguage(control)];
-  if (window.top && window.top !== window) {
-    window.top.location.assign(url);
-    return;
-  }
-  window.location.assign(url);
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function prepareExternalLinks(root = document) {
+  root.querySelectorAll('a[href]').forEach(link => {
+    try {
+      const url = new URL(link.getAttribute('href'), window.location.href);
+      if (!/^https?:$/.test(url.protocol) || url.origin === window.location.origin) return;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    } catch {}
+  });
 }
 
 function ensureProjectBackLink() {
@@ -126,8 +129,11 @@ const projectLinkObserver = new MutationObserver(() => {
   if (document.querySelector('.luHeader') && !document.querySelector('.projectBackLink')) {
     labelProjectLink();
   }
+  prepareExternalLinks();
 });
 projectLinkObserver.observe(document.documentElement, { childList: true, subtree: true });
 labelProjectLink();
+prepareExternalLinks();
 setTimeout(labelProjectLink, 250);
+setTimeout(prepareExternalLinks, 250);
 forwardLegacyWallHash();
