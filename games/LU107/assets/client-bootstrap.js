@@ -1,5 +1,5 @@
 import { i as reactFactory, t as reactDomFactory } from './framework-CXnKph_e.js';
-import App from './page-endash.js?v=language-hash2';
+import App from './page-endash.js?v=mobile-layout1';
 import './wall-forward.js?v=logo-home1';
 
 const React = reactFactory();
