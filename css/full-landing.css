@@ -140,6 +140,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 @media(max-width:760px){.game-kicker{font-size:11px;gap:8px}.game-symbol{width:34px;height:34px}.game-symbol svg{width:21px;height:21px}}
 @media(max-width:760px){.memory-card .card-front{font-size:12px;gap:7px;padding:6px 3px}.memory-card .game-type-icon{width:28px;height:28px}}
 @media(max-width:420px){.memory-card .card-front{font-size:11px}.memory-card .game-type-icon{width:25px;height:25px}}
+.card-label{display:block;min-width:0;max-width:100%;text-align:center}
+@media(max-width:760px){.card-label-split{display:flex;align-items:center;flex-direction:column;line-height:1.02}.card-label-split>span{display:block;max-width:100%}}
 
 /* Card-grid to idea reveal */
 .memory-grid{position:relative;isolation:isolate}
