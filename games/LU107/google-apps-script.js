@@ -3,6 +3,8 @@ const SPREADSHEET_ID =
 
 const FEEDBACK_SHEET_NAME = 'Feedback';
 const GAME_RUNS_SHEET_NAME = 'GameRuns';
+const SESSIONS_SHEET_NAME = 'Sessions';
+const QUESTION_EVENTS_SHEET_NAME = 'QuestionEvents';
 const QUESTIONS_SHEET_NAME = 'LV–ENG salīdzinājums';
 
 const FEEDBACK_HEADERS = [
@@ -35,6 +37,50 @@ const GAME_RUN_HEADERS = [
   '4. Kultūra un sports LU',
   '5. Fināla izaicinājums',
   'Bonusa punkti',
+  'Spēles versija'
+];
+
+const SESSION_HEADERS = [
+  'Spēles reizes ID',
+  'Sesijas ID',
+  'Sākšanas laiks',
+  'Pēdējais atjauninājums',
+  'Pabeigšanas laiks',
+  'Statuss',
+  'Pēdējā pabeigtā kārta',
+  'Valoda',
+  'Kopējie punkti',
+  'Pareizo atbilžu procenti',
+  'Ilgums milisekundēs',
+  'Tituls',
+  '1. LU vēsture',
+  '2. LU mūsdienās',
+  '3. Studentu dzīve LU',
+  '4. Kultūra un sports LU',
+  '5. Fināla izaicinājums',
+  'Bonusa punkti',
+  'Spēles versija'
+];
+
+const QUESTION_EVENT_HEADERS = [
+  'Laiks',
+  'Notikuma ID',
+  'Spēles reizes ID',
+  'Sesijas ID',
+  'Valoda',
+  'Jautājuma ID',
+  'Jautājuma numurs',
+  'Kārtas numurs',
+  'Kārta',
+  'Mehānika',
+  'Pareizi',
+  'Iegūtie punkti',
+  'Atbildes laiks milisekundēs',
+  'Izvēlētā atbilde',
+  'Pareizā atbilde',
+  'Atvērto fragmentu skaits',
+  'Pareizi savienoto pāru skaits',
+  'Pāru kopskaits',
   'Spēles versija'
 ];
 
@@ -214,7 +260,20 @@ function doPost(e) {
 
     const data = parseRequest(e);
 
+    if (data.eventType === 'game_start') {
+      return saveSessionEvent(data, 'started');
+    }
+
+    if (data.eventType === 'game_progress') {
+      return saveSessionEvent(data, 'in_progress');
+    }
+
+    if (data.eventType === 'question_answered') {
+      return saveQuestionEvent(data);
+    }
+
     if (data.eventType === 'game_complete') {
+      saveSessionEvent(data, 'completed');
       return saveGameRun(data);
     }
 
@@ -305,6 +364,167 @@ function saveGameRun(data) {
   });
 }
 
+function saveSessionEvent(data, status) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+  const sheet = getSessionsSheet();
+  const runId = normalizeText(data.runId) || Utilities.getUuid();
+  const rowNumber = findRowByExactValue(sheet, 1, runId);
+  const existing = rowNumber
+    ? sheet.getRange(rowNumber, 1, 1, SESSION_HEADERS.length).getValues()[0]
+    : new Array(SESSION_HEADERS.length).fill('');
+  const now = new Date();
+  const roundScores = Array.isArray(data.roundScores) ? data.roundScores : [];
+  const startedAt = existing[2] || dateOrFallback(data.startedAt, now);
+  const completedAt = status === 'completed'
+    ? dateOrFallback(data.completedAt, now)
+    : existing[4];
+  const effectiveStatus = sessionStatusRank(existing[5]) > sessionStatusRank(status)
+    ? existing[5]
+    : status;
+
+  if (rowNumber && effectiveStatus !== status) {
+    return jsonResponse({
+      ok: true,
+      ignoredOlderEvent: true,
+      sheet: SESSIONS_SHEET_NAME,
+      runId: runId,
+      status: effectiveStatus
+    });
+  }
+
+  const row = [
+    runId,
+    normalizeText(data.sessionId) || existing[1],
+    startedAt,
+    now,
+    completedAt,
+    effectiveStatus,
+    numberOrExisting(data.lastCompletedRound, existing[6]),
+    normalizeLanguage(data.language) || existing[7],
+    numberOrExisting(data.score, existing[8]),
+    numberOrExisting(data.percentage, existing[9]),
+    numberOrExisting(data.durationMs, existing[10]),
+    normalizeText(data.title) || existing[11],
+    numberOrExisting(roundScores[0], existing[12]),
+    numberOrExisting(roundScores[1], existing[13]),
+    numberOrExisting(roundScores[2], existing[14]),
+    numberOrExisting(roundScores[3], existing[15]),
+    numberOrExisting(roundScores[4], existing[16]),
+    numberOrExisting(data.bonusPoints, existing[17]),
+    normalizeText(data.gameVersion) || existing[18]
+  ];
+
+  if (rowNumber) {
+    sheet.getRange(rowNumber, 1, 1, row.length).setValues([row]);
+  } else {
+    sheet.appendRow(row);
+  }
+
+  SpreadsheetApp.flush();
+  return jsonResponse({
+    ok: true,
+    sheet: SESSIONS_SHEET_NAME,
+    runId: runId,
+    status: effectiveStatus
+  });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function saveQuestionEvent(data) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+  const sheet = getQuestionEventsSheet();
+  const eventId = normalizeText(data.eventId);
+
+  if (eventId && findRowByExactValue(sheet, 2, eventId)) {
+    return jsonResponse({
+      ok: true,
+      duplicate: true,
+      sheet: QUESTION_EVENTS_SHEET_NAME,
+      eventId: eventId
+    });
+  }
+
+  sheet.appendRow([
+    new Date(),
+    eventId || Utilities.getUuid(),
+    normalizeText(data.runId),
+    normalizeText(data.sessionId),
+    normalizeLanguage(data.language),
+    normalizeText(data.questionId),
+    valueOrEmpty(data.questionIndex),
+    valueOrEmpty(data.roundIndex),
+    normalizeText(data.roundName),
+    normalizeText(data.mechanic),
+    toBoolean(data.correct) ? 'Jā' : 'Nē',
+    valueOrZero(data.points),
+    valueOrZero(data.responseTimeMs),
+    normalizeText(data.selectedAnswer),
+    normalizeText(data.correctAnswer),
+    valueOrEmpty(data.revealedFragments),
+    valueOrEmpty(data.correctPairs),
+    valueOrEmpty(data.totalPairs),
+    normalizeText(data.gameVersion)
+  ]);
+
+  SpreadsheetApp.flush();
+  return jsonResponse({
+    ok: true,
+    sheet: QUESTION_EVENTS_SHEET_NAME,
+    eventId: eventId
+  });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function sessionStatusRank(status) {
+  return {
+    started: 1,
+    in_progress: 2,
+    completed: 3
+  }[normalizeText(status)] || 0;
+}
+
+function findRowByExactValue(sheet, column, value) {
+  if (!value || sheet.getLastRow() < 2) {
+    return 0;
+  }
+
+  const match = sheet
+    .getRange(2, column, sheet.getLastRow() - 1, 1)
+    .createTextFinder(value)
+    .matchEntireCell(true)
+    .findNext();
+
+  return match ? match.getRow() : 0;
+}
+
+function dateOrFallback(value, fallback) {
+  if (value === null || value === undefined || value === '') {
+    return fallback;
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? fallback : date;
+}
+
+function numberOrExisting(value, existing) {
+  if (value === null || value === undefined || value === '') {
+    return existing === null || existing === undefined ? '' : existing;
+  }
+
+  const number = Number(value);
+  return Number.isFinite(number) ? number : existing;
+}
+
 function gameRunExists(sheet, runId) {
   if (sheet.getLastRow() < 2) {
     return false;
@@ -347,6 +567,20 @@ function getGameRunsSheet() {
   return getOrCreateSheet(
     GAME_RUNS_SHEET_NAME,
     GAME_RUN_HEADERS
+  );
+}
+
+function getSessionsSheet() {
+  return getOrCreateSheet(
+    SESSIONS_SHEET_NAME,
+    SESSION_HEADERS
+  );
+}
+
+function getQuestionEventsSheet() {
+  return getOrCreateSheet(
+    QUESTION_EVENTS_SHEET_NAME,
+    QUESTION_EVENT_HEADERS
   );
 }
 
