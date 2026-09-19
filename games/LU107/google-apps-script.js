@@ -59,7 +59,8 @@ const SESSION_HEADERS = [
   '4. Kultūra un sports LU',
   '5. Fināla izaicinājums',
   'Bonusa punkti',
-  'Spēles versija'
+  'Spēles versija',
+  'Ierīces veids'
 ];
 
 const QUESTION_EVENT_HEADERS = [
@@ -217,7 +218,7 @@ function getStatsResponse(parameters) {
     return normalizeText(row[5]) === 'completed';
   });
   const questionLabels = getQuestionLabels();
-  const feedbackSummary = getFeedbackStats(cutoff);
+  const feedbackSummary = getFeedbackStats(cutoff, sessions);
 
   return jsonResponse({
     ok: true,
@@ -233,6 +234,7 @@ function getStatsResponse(parameters) {
     funnel: buildStatsFunnel(sessions),
     rounds: buildRoundStats(sessions),
     languages: buildLanguageStats(sessions),
+    devices: buildDeviceStats(sessions),
     mechanics: buildMechanicStats(events),
     questions: buildQuestionStats(events, questionLabels)
   });
@@ -286,7 +288,17 @@ function buildStatsOverview(sessions, completed, feedbackSummary) {
     averageAccuracy: roundedAverage(completed, 9),
     averageDurationMs: roundedAverage(completed, 10),
     averageRating: feedbackSummary.averageRating,
-    ratingCount: feedbackSummary.ratingCount
+    ratingCount: feedbackSummary.ratingCount,
+    wishCount: feedbackSummary.wishCount,
+    suggestionCount: feedbackSummary.suggestionCount,
+    wishSessionRate: percentage(
+      feedbackSummary.wishSessions,
+      countUniqueSessionIds(sessions)
+    ),
+    suggestionSessionRate: percentage(
+      feedbackSummary.suggestionSessions,
+      countUniqueSessionIds(sessions)
+    )
   };
 }
 
@@ -394,6 +406,25 @@ function buildLanguageStats(sessions) {
       language: language,
       count: counts[language],
       rate: percentage(counts[language], sessions.length)
+    };
+  });
+}
+
+function buildDeviceStats(sessions) {
+  const counts = { phone: 0, tablet: 0, desktop: 0 };
+  sessions.forEach(function (row) {
+    const device = normalizeText(row[19]).toLowerCase();
+    if (counts[device] !== undefined) {
+      counts[device] += 1;
+    }
+  });
+
+  const knownTotal = counts.phone + counts.tablet + counts.desktop;
+  return Object.keys(counts).map(function (device) {
+    return {
+      device: device,
+      count: counts[device],
+      rate: percentage(counts[device], knownTotal)
     };
   });
 }
@@ -507,23 +538,65 @@ function getQuestionLabels() {
   return labels;
 }
 
-function getFeedbackStats(cutoff) {
+function getFeedbackStats(cutoff, sessions) {
   const rows = readStatsRows(FEEDBACK_SHEET_NAME);
-  const ratings = rows
-    .filter(function (row) {
-      return isDateInStatsPeriod(row[0], cutoff);
-    })
+  const validSessionIds = {};
+  sessions.forEach(function (row) {
+    const sessionId = normalizeText(row[1]);
+    if (sessionId) {
+      validSessionIds[sessionId] = true;
+    }
+  });
+  const filteredRows = rows.filter(function (row) {
+    return isDateInStatsPeriod(row[0], cutoff);
+  });
+  const ratings = filteredRows
     .map(function (row) {
       return numericValue(row[3]);
     })
     .filter(function (value) {
       return value !== null && value >= 1 && value <= 5;
     });
+  const wishSessions = {};
+  const suggestionSessions = {};
+  let wishCount = 0;
+  let suggestionCount = 0;
+
+  filteredRows.forEach(function (row) {
+    const sessionId = normalizeText(row[1]);
+    if (normalizeText(row[5])) {
+      wishCount += 1;
+      if (sessionId && validSessionIds[sessionId]) {
+        wishSessions[sessionId] = true;
+      }
+    }
+    if (normalizeText(row[4])) {
+      suggestionCount += 1;
+      if (sessionId && validSessionIds[sessionId]) {
+        suggestionSessions[sessionId] = true;
+      }
+    }
+  });
 
   return {
     averageRating: averageNumbers(ratings),
-    ratingCount: ratings.length
+    ratingCount: ratings.length,
+    wishCount: wishCount,
+    suggestionCount: suggestionCount,
+    wishSessions: Object.keys(wishSessions).length,
+    suggestionSessions: Object.keys(suggestionSessions).length
   };
+}
+
+function countUniqueSessionIds(sessions) {
+  const ids = {};
+  sessions.forEach(function (row) {
+    const sessionId = normalizeText(row[1]);
+    if (sessionId) {
+      ids[sessionId] = true;
+    }
+  });
+  return Object.keys(ids).length;
 }
 
 function roundedAverage(rows, column) {
@@ -779,7 +852,8 @@ function saveSessionEvent(data, status) {
     numberOrExisting(roundScores[3], existing[15]),
     numberOrExisting(roundScores[4], existing[16]),
     numberOrExisting(data.bonusPoints, existing[17]),
-    normalizeText(data.gameVersion) || existing[18]
+    normalizeText(data.gameVersion) || existing[18],
+    normalizeText(data.deviceType) || existing[19]
   ];
 
   if (rowNumber) {

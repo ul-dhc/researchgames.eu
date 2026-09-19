@@ -6,14 +6,13 @@
     <title>LU 107 spēles analītika</title>
     <meta name="description" content="LU 107. jubilejas spēles anonīmo datu analītika">
     <link rel="icon" href="../favicon.svg">
-    <link rel="preload" as="image" href="../assets/lu-lv-cropped.png">
     <link rel="stylesheet" href="./styles.css?v=1">
   </head>
   <body>
     <header class="topbar">
       <a class="brand" href="../" aria-label="LU 107 spēles sākums">
-        <img id="lu-logo" src="../assets/lu-lv-cropped.png" alt="Latvijas Universitāte">
-        <span></span>
+        <span class="game-name" data-i18n="gameName">LU 107. jubilejas spēle</span>
+        <span class="brand-divider"></span>
         <strong data-i18n="analytics">Spēles analītika</strong>
       </a>
       <nav aria-label="Dashboarda rīki">
@@ -53,6 +52,16 @@
 
       <div id="dashboard" hidden>
         <section id="kpis" class="kpi-grid" aria-label="Galvenie rādītāji"></section>
+
+        <section class="panel contribution-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker" data-i18n="contributionKicker">Līdzdalība</p>
+              <h2 data-i18n="contributionTitle">Novēlējumi un jautājumu ieteikumi</h2>
+            </div>
+          </div>
+          <div id="contributions" class="contribution-grid"></div>
+        </section>
 
         <section class="dashboard-grid dashboard-grid-main">
           <article class="panel timeline-panel">
@@ -99,6 +108,16 @@
               </div>
             </div>
             <div id="languages" class="language-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="devicesKicker">Ierīces</p>
+                <h2 data-i18n="devices">Kur spēle tiek spēlēta?</h2>
+              </div>
+            </div>
+            <div id="devices" class="device-chart"></div>
           </article>
 
           <article class="panel">
