@@ -472,12 +472,14 @@ function buildQuestionStats(events, labels) {
         correct: 0,
         responseTimeTotal: 0,
         responseTimeCount: 0,
-        pointsTotal: 0
+        pointsTotal: 0,
+        roundCounts: {}
       };
     }
 
     const item = questions[id];
     const responseTime = numericValue(row[12]);
+    const eventRound = normalizeText(row[8]);
     item.answers += 1;
     item.pointsTotal += Number(row[11]) || 0;
     if (normalizeText(row[10]).toLowerCase() === 'jā') {
@@ -487,17 +489,23 @@ function buildQuestionStats(events, labels) {
       item.responseTimeTotal += responseTime;
       item.responseTimeCount += 1;
     }
+    if (eventRound) {
+      item.roundCounts[eventRound] = (item.roundCounts[eventRound] || 0) + 1;
+    }
   });
 
   return Object.keys(questions)
     .map(function (id) {
       const item = questions[id];
       const label = labels[id] || {};
+      const eventRound = Object.keys(item.roundCounts).sort(function (a, b) {
+        return item.roundCounts[b] - item.roundCounts[a];
+      })[0] || '';
       return {
         id: id,
         questionLv: label.lv || id,
         questionEn: label.en || label.lv || id,
-        round: label.round || '',
+        round: eventRound || label.round || '',
         mechanic: label.mechanic || '',
         answers: item.answers,
         correct: item.correct,

@@ -3,18 +3,19 @@ const ROUND_COLORS = ['#017592', '#41b449', '#65348c', '#8a2432', '#204592'];
 
 const copy = {
   lv: {
-    analytics: 'Spēles analītika', gameName: 'LU 107. jubilejas spēle', goGame: 'Doties uz spēli', allTime: 'Viss periods', last30: 'Pēdējās 30 dienas', last7: 'Pēdējās 7 dienas', download: 'Lejupielādēt CSV', eyebrow: 'LU 107. jubilejas spēle', title: 'Anonīmo spēles datu pārskats', pageTitle: 'LU 107 spēles analītika', loading: 'Ielādē datus…', activityKicker: 'Aktivitāte', timeline: 'Spēles sesijas laikā', sessions: 'Sesijas', completed: 'Pabeigtas', journeyKicker: 'Spēles ceļš', funnel: 'Spēles pabeigšana', resultsKicker: 'Rezultāti', rounds: 'Vidējie punkti pa kārtām', audienceKicker: 'Auditorija', languages: 'Spēles valodas', devicesKicker: 'Ierīces', devices: 'Kur spēle tiek spēlēta?', phone: 'Telefons', tablet: 'Planšete', desktop: 'Dators', mechanicsKicker: 'Pieredze', mechanics: 'Rezultāti pēc mehānikas', contributionKicker: 'Līdzdalība', contributionTitle: 'Novēlējumi un jautājumu ieteikumi', wishes: 'Novēlējumu skaits', suggestions: 'Jautājumu ieteikumu skaits', wishSessionRate: 'Sesijas ar novēlējumu', suggestionSessionRate: 'Sesijas ar jautājuma ieteikumu', questionsKicker: 'Jautājumu banka', questions: 'Jautājumu grūtības analīze', questionsHint: 'Vispirms redzami jautājumi ar zemāko pareizo atbilžu īpatsvaru.', searchLabel: 'Meklēt jautājumu', searchPlaceholder: 'Meklēt jautājumu', question: 'Jautājums', round: 'Kārta', answers: 'Atbildes', correctRate: 'Pareizi', avgTime: 'Vidējais laiks', noQuestions: 'Šajā periodā vēl nav jautājumu datu.', privacy: 'Dashboardā redzami tikai apkopoti anonīmi dati.', updated: 'Atjaunots', noData: 'Vēl nav datu', started: 'Sākta', completedStage: 'Pabeigta', roundShort: 'kārta', players: 'sesijas', ofSessions: 'no sesijām', rating: 'Vērtējums', averageScore: 'Vidējais rezultāts', averageTime: 'Vidējais laiks', completion: 'Pabeigtas', totalSessions: 'Sesijas', completedGamesNote: 'tikai pabeigtajās spēlēs', correct: 'pareizi', ratings: 'vērtējumi', minutes: 'min', seconds: 's', loadErrorTitle: 'Neizdevās ielādēt analītikas datus', loadError: 'Pārbaudi, vai Google Apps Script ir pārpublicēts ar jauno statistikas API versiju.', retry: 'Mēģināt vēlreiz', languageShare: 'sesiju', noMechanics: 'Šajā periodā vēl nav mehāniku datu.', themeLabel: 'Mainīt krāsu režīmu'
+    analytics: 'Spēles analītika', gameName: 'LU 107. jubilejas spēle', goGame: 'Doties uz spēli', allTime: 'Viss periods', last30: 'Pēdējās 30 dienas', last7: 'Pēdējās 7 dienas', download: 'Lejupielādēt CSV', eyebrow: 'LU 107. jubilejas spēle', title: 'Anonīmo spēles datu pārskats', pageTitle: 'LU 107 spēles analītika', loading: 'Ielādē datus…', activityKicker: 'Aktivitāte', timeline: 'Spēles sesijas laikā', sessions: 'Sesijas', completed: 'Pabeigtas', journeyKicker: 'Spēles ceļš', funnel: 'Spēles pabeigšana', resultsKicker: 'Rezultāti', rounds: 'Vidējie punkti pa kārtām', audienceKicker: 'Auditorija', languages: 'Spēles valodas', devicesKicker: 'Ierīces', devices: 'Kur spēle tiek spēlēta?', phone: 'Telefons', tablet: 'Planšete', desktop: 'Dators', mechanicsKicker: 'Pieredze', mechanics: 'Rezultāti pēc mehānikas', contributionKicker: 'Līdzdalība', contributionTitle: 'Novēlējumi un jautājumu ieteikumi', wishes: 'Novēlējumu skaits', suggestions: 'Jautājumu ieteikumu skaits', wishSessionRate: 'Sesijas ar novēlējumu', suggestionSessionRate: 'Sesijas ar jautājuma ieteikumu', difficultyKicker: 'Salīdzinājums', difficultyTitle: 'Kārtu sarežģītība', difficultyHint: 'Kārtas sakārtotas no sarežģītākās uz vieglāko pēc pareizo atbilžu īpatsvara.', hardestRound: 'Sarežģītākā kārta', questionsKicker: 'Jautājumu banka', questions: 'Jautājumu grūtības analīze', questionsHint: 'Kārto jautājumus, nospiežot uz tabulas kolonnu virsrakstiem.', searchLabel: 'Meklēt jautājumu', searchPlaceholder: 'Meklēt jautājumu', question: 'Jautājums', round: 'Kārta', answers: 'Atbildes', correctRate: 'Pareizi', incorrect: 'Nepareizi', avgTime: 'Vidējais laiks', noQuestions: 'Šajā periodā vēl nav jautājumu datu.', privacy: 'Dashboardā redzami tikai apkopoti anonīmi dati.', updated: 'Atjaunots', noData: 'Vēl nav datu', started: 'Sākta', completedStage: 'Pabeigta', roundShort: 'kārta', players: 'sesijas', ofSessions: 'no sesijām', rating: 'Vērtējums', averageScore: 'Vidējais rezultāts', averageTime: 'Vidējais laiks', completion: 'Pabeigtas', totalSessions: 'Sesijas', completedGamesNote: 'tikai pabeigtajās spēlēs', correct: 'pareizi', ratings: 'vērtējumi', minutes: 'min', seconds: 's', loadErrorTitle: 'Neizdevās ielādēt analītikas datus', loadError: 'Pārbaudi, vai Google Apps Script ir pārpublicēts ar jauno statistikas API versiju.', retry: 'Mēģināt vēlreiz', languageShare: 'sesiju', noMechanics: 'Šajā periodā vēl nav mehāniku datu.', themeLabel: 'Mainīt krāsu režīmu'
   },
   en: {
-    analytics: 'Game analytics', gameName: 'UL 107th anniversary game', goGame: 'Go to game', allTime: 'All time', last30: 'Last 30 days', last7: 'Last 7 days', download: 'Download CSV', eyebrow: 'UL 107th anniversary game', title: 'Anonymous game data overview', pageTitle: 'UL 107 game analytics', loading: 'Loading data…', activityKicker: 'Activity', timeline: 'Game sessions over time', sessions: 'Sessions', completed: 'Completed', journeyKicker: 'Player journey', funnel: 'Game completion', resultsKicker: 'Results', rounds: 'Average points by round', audienceKicker: 'Audience', languages: 'Game languages', devicesKicker: 'Devices', devices: 'Where is the game played?', phone: 'Phone', tablet: 'Tablet', desktop: 'Computer', mechanicsKicker: 'Experience', mechanics: 'Results by mechanic', contributionKicker: 'Participation', contributionTitle: 'Birthday messages and question suggestions', wishes: 'Birthday messages', suggestions: 'Question suggestions', wishSessionRate: 'Sessions with a message', suggestionSessionRate: 'Sessions with a question suggestion', questionsKicker: 'Question bank', questions: 'Question difficulty analysis', questionsHint: 'Questions with the lowest correct answer rate are shown first.', searchLabel: 'Search questions', searchPlaceholder: 'Search questions', question: 'Question', round: 'Round', answers: 'Answers', correctRate: 'Correct', avgTime: 'Average time', noQuestions: 'There is no question data for this period yet.', privacy: 'Only aggregated anonymous data is shown in this dashboard.', updated: 'Updated', noData: 'No data yet', started: 'Started', completedStage: 'Completed', roundShort: 'round', players: 'sessions', ofSessions: 'of sessions', rating: 'Rating', averageScore: 'Average score', averageTime: 'Average time', completion: 'Completed', totalSessions: 'Sessions', completedGamesNote: 'completed games only', correct: 'correct', ratings: 'ratings', minutes: 'min', seconds: 's', loadErrorTitle: 'Analytics data could not be loaded', loadError: 'Check whether Google Apps Script has been redeployed with the new statistics API version.', retry: 'Try again', languageShare: 'sessions', noMechanics: 'There is no mechanic data for this period yet.', themeLabel: 'Change colour mode'
+    analytics: 'Game analytics', gameName: 'UL 107th anniversary game', goGame: 'Go to game', allTime: 'All time', last30: 'Last 30 days', last7: 'Last 7 days', download: 'Download CSV', eyebrow: 'UL 107th anniversary game', title: 'Anonymous game data overview', pageTitle: 'UL 107 game analytics', loading: 'Loading data…', activityKicker: 'Activity', timeline: 'Game sessions over time', sessions: 'Sessions', completed: 'Completed', journeyKicker: 'Player journey', funnel: 'Game completion', resultsKicker: 'Results', rounds: 'Average points by round', audienceKicker: 'Audience', languages: 'Game languages', devicesKicker: 'Devices', devices: 'Where is the game played?', phone: 'Phone', tablet: 'Tablet', desktop: 'Computer', mechanicsKicker: 'Experience', mechanics: 'Results by mechanic', contributionKicker: 'Participation', contributionTitle: 'Birthday messages and question suggestions', wishes: 'Birthday messages', suggestions: 'Question suggestions', wishSessionRate: 'Sessions with a message', suggestionSessionRate: 'Sessions with a question suggestion', difficultyKicker: 'Comparison', difficultyTitle: 'Round difficulty', difficultyHint: 'Rounds are ordered from hardest to easiest by correct answer rate.', hardestRound: 'Hardest round', questionsKicker: 'Question bank', questions: 'Question difficulty analysis', questionsHint: 'Sort questions by selecting a table column heading.', searchLabel: 'Search questions', searchPlaceholder: 'Search questions', question: 'Question', round: 'Round', answers: 'Answers', correctRate: 'Correct', incorrect: 'Incorrect', avgTime: 'Average time', noQuestions: 'There is no question data for this period yet.', privacy: 'Only aggregated anonymous data is shown in this dashboard.', updated: 'Updated', noData: 'No data yet', started: 'Started', completedStage: 'Completed', roundShort: 'round', players: 'sessions', ofSessions: 'of sessions', rating: 'Rating', averageScore: 'Average score', averageTime: 'Average time', completion: 'Completed', totalSessions: 'Sessions', completedGamesNote: 'completed games only', correct: 'correct', ratings: 'ratings', minutes: 'min', seconds: 's', loadErrorTitle: 'Analytics data could not be loaded', loadError: 'Check whether Google Apps Script has been redeployed with the new statistics API version.', retry: 'Try again', languageShare: 'sessions', noMechanics: 'There is no mechanic data for this period yet.', themeLabel: 'Change colour mode'
   }
 };
 
 let language = localStorage.getItem('lu107-stats-language') || 'lv';
 let currentData = null;
+let questionSort = { key: 'correctRate', direction: 'asc' };
 
 const elements = {
-  dashboard: document.querySelector('#dashboard'), status: document.querySelector('#status'), updated: document.querySelector('#updated'), period: document.querySelector('#period'), kpis: document.querySelector('#kpis'), contributions: document.querySelector('#contributions'), timeline: document.querySelector('#timeline'), funnel: document.querySelector('#funnel'), rounds: document.querySelector('#rounds'), languages: document.querySelector('#languages'), devices: document.querySelector('#devices'), mechanics: document.querySelector('#mechanics'), questionTable: document.querySelector('#question-table'), questionEmpty: document.querySelector('#question-empty'), questionSearch: document.querySelector('#question-search'), download: document.querySelector('#download'), theme: document.querySelector('#theme-toggle')
+  dashboard: document.querySelector('#dashboard'), status: document.querySelector('#status'), updated: document.querySelector('#updated'), period: document.querySelector('#period'), kpis: document.querySelector('#kpis'), contributions: document.querySelector('#contributions'), timeline: document.querySelector('#timeline'), funnel: document.querySelector('#funnel'), rounds: document.querySelector('#rounds'), languages: document.querySelector('#languages'), devices: document.querySelector('#devices'), mechanics: document.querySelector('#mechanics'), roundDifficulty: document.querySelector('#round-difficulty'), questionTable: document.querySelector('#question-table'), questionEmpty: document.querySelector('#question-empty'), questionSearch: document.querySelector('#question-search'), download: document.querySelector('#download'), theme: document.querySelector('#theme-toggle')
 };
 
 function t(key) { return copy[language][key] || key; }
@@ -71,6 +72,7 @@ function render(data) {
   renderLanguages(data.languages);
   renderDevices(data.devices || []);
   renderMechanics(data.mechanics);
+  renderRoundDifficulty(data.questions);
   renderQuestions(data.questions);
   window.lucide?.createIcons({ attrs: { 'stroke-width': 1.8 } });
 }
@@ -160,11 +162,52 @@ function renderMechanics(items) {
   elements.mechanics.innerHTML = items.slice(0, 7).map(item => `<div class="mechanic-row"><span title="${escapeHtml(item.mechanic)}">${escapeHtml(item.mechanic)}</span><div class="bar-track"><div class="bar-fill" style="width:${item.correctRate}%"></div></div><strong>${percent(item.correctRate)}</strong></div>`).join('');
 }
 
+function renderRoundDifficulty(items) {
+  const validRounds = new Set(['LU vēsture', 'LU mūsdienās', 'Studentu dzīve LU', 'Kultūra un sports LU', 'Fināla izaicinājums']);
+  const groups = new Map();
+  items.forEach(item => {
+    const name = item.round || '';
+    if (!validRounds.has(name)) return;
+    const group = groups.get(name) || { name, answers: 0, correct: 0, responseTimeTotal: 0 };
+    const answers = Number(item.answers || 0);
+    group.answers += answers;
+    group.correct += Number(item.correct || 0);
+    group.responseTimeTotal += Number(item.averageResponseTimeMs || 0) * answers;
+    groups.set(name, group);
+  });
+  const rounds = [...groups.values()].filter(item => item.answers > 0).map(item => ({
+    ...item,
+    correctRate: item.correct / item.answers * 100,
+    averageResponseTimeMs: item.responseTimeTotal / item.answers
+  })).sort((a, b) => a.correctRate - b.correctRate || b.averageResponseTimeMs - a.averageResponseTimeMs);
+  if (!rounds.length) { elements.roundDifficulty.innerHTML = `<p class="empty-message">${escapeHtml(t('noQuestions'))}</p>`; return; }
+  elements.roundDifficulty.innerHTML = rounds.map((item, index) => `<article class="difficulty-row${index === 0 ? ' is-hardest' : ''}"><span class="difficulty-rank">${index + 1}</span><div class="difficulty-copy"><div><strong>${escapeHtml(translatedRoundName(item.name))}</strong>${index === 0 ? `<span class="difficulty-badge">${escapeHtml(t('hardestRound'))}</span>` : ''}</div><div class="difficulty-track"><span style="width:${Math.max(2, item.correctRate)}%"></span></div></div><div class="difficulty-metric"><strong>${percent(item.correctRate)}</strong><span>${escapeHtml(t('correctRate'))}</span></div><div class="difficulty-metric"><strong>${duration(item.averageResponseTimeMs)}</strong><span>${escapeHtml(t('avgTime'))}</span></div><div class="difficulty-metric"><strong>${number(item.answers)}</strong><span>${escapeHtml(t('answers'))}</span></div></article>`).join('');
+}
+
 function renderQuestions(items) {
   const query = elements.questionSearch.value.trim().toLocaleLowerCase(language === 'lv' ? 'lv-LV' : 'en-GB');
-  const filtered = items.filter(item => `${item.questionLv} ${item.questionEn} ${item.round}`.toLocaleLowerCase(language === 'lv' ? 'lv-LV' : 'en-GB').includes(query));
-  elements.questionTable.innerHTML = filtered.map(item => { const question = language === 'lv' ? item.questionLv : item.questionEn; return `<tr><td class="question-cell">${escapeHtml(question)}</td><td><span class="round-pill">${escapeHtml(translatedRoundName(item.round) || '–')}</span></td><td>${number(item.answers)}</td><td class="rate-cell"><div><strong class="${item.correctRate < 50 ? 'rate-low' : ''}">${percent(item.correctRate)}</strong><span>${number(item.correct)} / ${number(item.answers)}</span></div><div class="bar-track"><div class="bar-fill" style="width:${item.correctRate}%"></div></div></td><td>${duration(item.averageResponseTimeMs)}</td></tr>`; }).join('');
+  const filtered = items
+    .filter(item => `${item.questionLv} ${item.questionEn} ${item.round}`.toLocaleLowerCase(language === 'lv' ? 'lv-LV' : 'en-GB').includes(query))
+    .sort((a, b) => {
+      const value = item => questionSort.key === 'incorrect' ? Number(item.answers || 0) - Number(item.correct || 0) : Number(item[questionSort.key] || 0);
+      const difference = value(a) - value(b);
+      return (questionSort.direction === 'asc' ? difference : -difference) || String(a.id).localeCompare(String(b.id));
+    });
+  elements.questionTable.innerHTML = filtered.map(item => { const question = language === 'lv' ? item.questionLv : item.questionEn; const incorrect = Number(item.answers || 0) - Number(item.correct || 0); return `<tr><td class="question-cell">${escapeHtml(question)}</td><td><span class="round-pill">${escapeHtml(translatedRoundName(item.round) || '–')}</span></td><td>${number(item.answers)}</td><td class="rate-cell"><div><strong class="${item.correctRate < 50 ? 'rate-low' : ''}">${percent(item.correctRate)}</strong><span>${number(item.correct)} / ${number(item.answers)}</span></div><div class="bar-track"><div class="bar-fill" style="width:${item.correctRate}%"></div></div></td><td>${number(incorrect)}</td><td>${duration(item.averageResponseTimeMs)}</td></tr>`; }).join('');
   elements.questionEmpty.hidden = filtered.length > 0;
+  updateQuestionSortHeaders();
+}
+
+function updateQuestionSortHeaders() {
+  document.querySelectorAll('[data-sort]').forEach(button => {
+    const active = button.dataset.sort === questionSort.key;
+    const direction = active ? questionSort.direction : null;
+    button.closest('th').setAttribute('aria-sort', active ? (direction === 'asc' ? 'ascending' : 'descending') : 'none');
+    button.querySelector('svg')?.remove();
+    button.querySelector('i')?.remove();
+    button.insertAdjacentHTML('beforeend', `<i data-lucide="${active ? (direction === 'asc' ? 'arrow-up' : 'arrow-down') : 'chevrons-up-down'}" aria-hidden="true"></i>`);
+  });
+  window.lucide?.createIcons({ attrs: { 'stroke-width': 1.8 } });
 }
 
 function downloadCsv() {
@@ -189,6 +232,13 @@ function setTheme(dark) {
 document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => { language = button.dataset.language; localStorage.setItem('lu107-stats-language', language); translatePage(); }));
 elements.period.addEventListener('change', loadData);
 elements.questionSearch.addEventListener('input', () => currentData && renderQuestions(currentData.questions));
+document.querySelectorAll('[data-sort]').forEach(button => button.addEventListener('click', () => {
+  const key = button.dataset.sort;
+  questionSort = questionSort.key === key
+    ? { key, direction: questionSort.direction === 'asc' ? 'desc' : 'asc' }
+    : { key, direction: key === 'correctRate' ? 'asc' : 'desc' };
+  if (currentData) renderQuestions(currentData.questions);
+}));
 elements.download.addEventListener('click', downloadCsv);
 elements.theme.addEventListener('click', () => setTheme(!document.documentElement.classList.contains('dark')));
 

@@ -131,6 +131,17 @@
           </article>
         </section>
 
+        <section class="panel round-difficulty-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker" data-i18n="difficultyKicker">Salīdzinājums</p>
+              <h2 data-i18n="difficultyTitle">Kārtu sarežģītība</h2>
+              <p data-i18n="difficultyHint">Kārtas sakārtotas no sarežģītākās uz vieglāko pēc pareizo atbilžu īpatsvara.</p>
+            </div>
+          </div>
+          <div id="round-difficulty" class="round-difficulty"></div>
+        </section>
+
         <section class="panel questions-panel">
           <div class="panel-heading question-heading">
             <div>
@@ -150,9 +161,10 @@
                 <tr>
                   <th data-i18n="question">Jautājums</th>
                   <th data-i18n="round">Kārta</th>
-                  <th data-i18n="answers">Atbildes</th>
-                  <th data-i18n="correctRate">Pareizi</th>
-                  <th data-i18n="avgTime">Vidējais laiks</th>
+                  <th class="sortable-column" aria-sort="none"><button type="button" data-sort="answers"><span data-i18n="answers">Atbildes</span><i data-lucide="chevrons-up-down" aria-hidden="true"></i></button></th>
+                  <th class="sortable-column" aria-sort="ascending"><button type="button" data-sort="correctRate"><span data-i18n="correctRate">Pareizi</span><i data-lucide="arrow-up" aria-hidden="true"></i></button></th>
+                  <th class="sortable-column" aria-sort="none"><button type="button" data-sort="incorrect"><span data-i18n="incorrect">Nepareizi</span><i data-lucide="chevrons-up-down" aria-hidden="true"></i></button></th>
+                  <th class="sortable-column" aria-sort="none"><button type="button" data-sort="averageResponseTimeMs"><span data-i18n="avgTime">Vidējais laiks</span><i data-lucide="chevrons-up-down" aria-hidden="true"></i></button></th>
                 </tr>
               </thead>
               <tbody id="question-table"></tbody>
@@ -169,6 +181,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@1.34.0"></script>
-    <script src="./app.js?v=3"></script>
+    <script src="./app.js?v=5"></script>
   </body>
 </html>
