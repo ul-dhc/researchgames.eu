@@ -94,6 +94,10 @@ function doGet(e) {
       return getQuestionsResponse();
     }
 
+    if (resource === 'stats') {
+      return getStatsResponse(e && e.parameter);
+    }
+
     const sheet = getFeedbackSheet();
     const rows = sheet.getDataRange().getDisplayValues();
 
@@ -194,6 +198,371 @@ function getQuestionsResponse() {
     invalidIds: invalidIds,
     questions: questions
   });
+}
+
+function getStatsResponse(parameters) {
+  const period = normalizeStatsPeriod(
+    parameters && parameters.period
+  );
+  const cutoff = statsCutoff(period);
+  const sessions = readStatsRows(SESSIONS_SHEET_NAME)
+    .filter(function (row) {
+      return isDateInStatsPeriod(row[2], cutoff);
+    });
+  const events = readStatsRows(QUESTION_EVENTS_SHEET_NAME)
+    .filter(function (row) {
+      return isDateInStatsPeriod(row[0], cutoff);
+    });
+  const completed = sessions.filter(function (row) {
+    return normalizeText(row[5]) === 'completed';
+  });
+  const questionLabels = getQuestionLabels();
+  const feedbackSummary = getFeedbackStats(cutoff);
+
+  return jsonResponse({
+    ok: true,
+    service: 'LU 107 statistics',
+    generatedAt: new Date().toISOString(),
+    period: period,
+    overview: buildStatsOverview(
+      sessions,
+      completed,
+      feedbackSummary
+    ),
+    timeline: buildStatsTimeline(sessions),
+    funnel: buildStatsFunnel(sessions),
+    rounds: buildRoundStats(sessions),
+    languages: buildLanguageStats(sessions),
+    mechanics: buildMechanicStats(events),
+    questions: buildQuestionStats(events, questionLabels)
+  });
+}
+
+function readStatsRows(sheetName) {
+  const sheet = getSpreadsheet().getSheetByName(sheetName);
+  if (!sheet || sheet.getLastRow() < 2) {
+    return [];
+  }
+
+  return sheet
+    .getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn())
+    .getValues();
+}
+
+function normalizeStatsPeriod(value) {
+  const period = normalizeText(value).toLowerCase();
+  return ['7d', '30d', 'all'].indexOf(period) !== -1
+    ? period
+    : 'all';
+}
+
+function statsCutoff(period) {
+  if (period === 'all') {
+    return null;
+  }
+
+  const days = period === '7d' ? 7 : 30;
+  const cutoff = new Date();
+  cutoff.setHours(0, 0, 0, 0);
+  cutoff.setDate(cutoff.getDate() - days + 1);
+  return cutoff;
+}
+
+function isDateInStatsPeriod(value, cutoff) {
+  if (!cutoff) {
+    return true;
+  }
+
+  const date = value instanceof Date ? value : new Date(value);
+  return !Number.isNaN(date.getTime()) && date >= cutoff;
+}
+
+function buildStatsOverview(sessions, completed, feedbackSummary) {
+  return {
+    sessions: sessions.length,
+    completed: completed.length,
+    completionRate: percentage(completed.length, sessions.length),
+    averageScore: roundedAverage(completed, 8),
+    averageAccuracy: roundedAverage(completed, 9),
+    averageDurationMs: roundedAverage(completed, 10),
+    averageRating: feedbackSummary.averageRating,
+    ratingCount: feedbackSummary.ratingCount
+  };
+}
+
+function buildStatsTimeline(sessions) {
+  const days = {};
+
+  sessions.forEach(function (row) {
+    const date = row[2] instanceof Date ? row[2] : new Date(row[2]);
+    if (Number.isNaN(date.getTime())) {
+      return;
+    }
+
+    const key = Utilities.formatDate(
+      date,
+      Session.getScriptTimeZone() || 'Europe/Riga',
+      'yyyy-MM-dd'
+    );
+
+    if (!days[key]) {
+      days[key] = { date: key, sessions: 0, completed: 0 };
+    }
+
+    days[key].sessions += 1;
+    if (normalizeText(row[5]) === 'completed') {
+      days[key].completed += 1;
+    }
+  });
+
+  return Object.keys(days)
+    .sort()
+    .map(function (key) {
+      return days[key];
+    });
+}
+
+function buildStatsFunnel(sessions) {
+  const counts = [sessions.length, 0, 0, 0, 0, 0, 0];
+
+  sessions.forEach(function (row) {
+    const completedRound = Number(row[6]) || 0;
+    for (let round = 1; round <= 5; round += 1) {
+      if (completedRound >= round) {
+        counts[round] += 1;
+      }
+    }
+    if (normalizeText(row[5]) === 'completed') {
+      counts[6] += 1;
+    }
+  });
+
+  return counts.map(function (count, index) {
+    return {
+      stage: index === 0
+        ? 'started'
+        : index === 6
+          ? 'completed'
+          : 'round_' + index,
+      count: count,
+      rate: percentage(count, sessions.length)
+    };
+  });
+}
+
+function buildRoundStats(sessions) {
+  const names = [
+    'LU vēsture',
+    'LU mūsdienās',
+    'Studentu dzīve LU',
+    'Kultūra un sports LU',
+    'Fināla izaicinājums'
+  ];
+
+  return names.map(function (name, index) {
+    const values = sessions
+      .filter(function (row) {
+        return Number(row[6]) >= index + 1;
+      })
+      .map(function (row) {
+        return numericValue(row[12 + index]);
+      })
+      .filter(function (value) {
+        return value !== null;
+      });
+
+    return {
+      round: index + 1,
+      name: name,
+      averageScore: averageNumbers(values),
+      sessions: values.length
+    };
+  });
+}
+
+function buildLanguageStats(sessions) {
+  const counts = { LV: 0, EN: 0 };
+  sessions.forEach(function (row) {
+    const language = normalizeLanguage(row[7]);
+    if (language === 'LV' || language === 'EN') {
+      counts[language] += 1;
+    }
+  });
+
+  return Object.keys(counts).map(function (language) {
+    return {
+      language: language,
+      count: counts[language],
+      rate: percentage(counts[language], sessions.length)
+    };
+  });
+}
+
+function buildMechanicStats(events) {
+  const mechanics = {};
+  events.forEach(function (row) {
+    const mechanic = normalizeText(row[9]) || 'Nav norādīta';
+    if (!mechanics[mechanic]) {
+      mechanics[mechanic] = { mechanic: mechanic, answers: 0, correct: 0 };
+    }
+    mechanics[mechanic].answers += 1;
+    if (normalizeText(row[10]).toLowerCase() === 'jā') {
+      mechanics[mechanic].correct += 1;
+    }
+  });
+
+  return Object.keys(mechanics)
+    .map(function (key) {
+      const item = mechanics[key];
+      item.correctRate = percentage(item.correct, item.answers);
+      return item;
+    })
+    .sort(function (a, b) {
+      return b.answers - a.answers;
+    });
+}
+
+function buildQuestionStats(events, labels) {
+  const questions = {};
+  events.forEach(function (row) {
+    const id = normalizeText(row[5]);
+    if (!id) {
+      return;
+    }
+
+    if (!questions[id]) {
+      questions[id] = {
+        id: id,
+        answers: 0,
+        correct: 0,
+        responseTimeTotal: 0,
+        responseTimeCount: 0,
+        pointsTotal: 0
+      };
+    }
+
+    const item = questions[id];
+    const responseTime = numericValue(row[12]);
+    item.answers += 1;
+    item.pointsTotal += Number(row[11]) || 0;
+    if (normalizeText(row[10]).toLowerCase() === 'jā') {
+      item.correct += 1;
+    }
+    if (responseTime !== null && responseTime > 0) {
+      item.responseTimeTotal += responseTime;
+      item.responseTimeCount += 1;
+    }
+  });
+
+  return Object.keys(questions)
+    .map(function (id) {
+      const item = questions[id];
+      const label = labels[id] || {};
+      return {
+        id: id,
+        questionLv: label.lv || id,
+        questionEn: label.en || label.lv || id,
+        round: label.round || '',
+        mechanic: label.mechanic || '',
+        answers: item.answers,
+        correct: item.correct,
+        correctRate: percentage(item.correct, item.answers),
+        averageResponseTimeMs: item.responseTimeCount
+          ? Math.round(item.responseTimeTotal / item.responseTimeCount)
+          : 0,
+        averagePoints: item.answers
+          ? roundNumber(item.pointsTotal / item.answers, 1)
+          : 0
+      };
+    })
+    .sort(function (a, b) {
+      return a.correctRate - b.correctRate || b.answers - a.answers;
+    });
+}
+
+function getQuestionLabels() {
+  const sheet = getSpreadsheet().getSheetByName(QUESTIONS_SHEET_NAME);
+  if (!sheet) {
+    return {};
+  }
+
+  const rows = sheet.getDataRange().getDisplayValues();
+  const labels = {};
+  rows.forEach(function (row) {
+    const language = normalizeLanguage(row[0]);
+    const id = normalizeText(row[1]);
+    if (!id || (language !== 'LV' && language !== 'ENG')) {
+      return;
+    }
+
+    if (!labels[id]) {
+      labels[id] = {};
+    }
+    labels[id][language === 'LV' ? 'lv' : 'en'] = normalizeText(row[5]);
+    if (language === 'LV') {
+      labels[id].round = normalizeText(row[2]);
+      labels[id].mechanic = normalizeText(row[4]);
+    }
+  });
+  return labels;
+}
+
+function getFeedbackStats(cutoff) {
+  const rows = readStatsRows(FEEDBACK_SHEET_NAME);
+  const ratings = rows
+    .filter(function (row) {
+      return isDateInStatsPeriod(row[0], cutoff);
+    })
+    .map(function (row) {
+      return numericValue(row[3]);
+    })
+    .filter(function (value) {
+      return value !== null && value >= 1 && value <= 5;
+    });
+
+  return {
+    averageRating: averageNumbers(ratings),
+    ratingCount: ratings.length
+  };
+}
+
+function roundedAverage(rows, column) {
+  return averageNumbers(
+    rows
+      .map(function (row) {
+        return numericValue(row[column]);
+      })
+      .filter(function (value) {
+        return value !== null;
+      })
+  );
+}
+
+function averageNumbers(values) {
+  if (!values.length) {
+    return 0;
+  }
+  const total = values.reduce(function (sum, value) {
+    return sum + value;
+  }, 0);
+  return roundNumber(total / values.length, 1);
+}
+
+function percentage(value, total) {
+  return total ? roundNumber(value / total * 100, 1) : 0;
+}
+
+function numericValue(value) {
+  if (value === '' || value === null || value === undefined) {
+    return null;
+  }
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function roundNumber(value, decimals) {
+  const factor = Math.pow(10, decimals || 0);
+  return Math.round(value * factor) / factor;
 }
 
 function buildQuestion(id, pair) {
@@ -365,10 +734,6 @@ function saveGameRun(data) {
 }
 
 function saveSessionEvent(data, status) {
-  const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
-
-  try {
   const sheet = getSessionsSheet();
   const runId = normalizeText(data.runId) || Utilities.getUuid();
   const rowNumber = findRowByExactValue(sheet, 1, runId);
@@ -430,16 +795,9 @@ function saveSessionEvent(data, status) {
     runId: runId,
     status: effectiveStatus
   });
-  } finally {
-    lock.releaseLock();
-  }
 }
 
 function saveQuestionEvent(data) {
-  const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
-
-  try {
   const sheet = getQuestionEventsSheet();
   const eventId = normalizeText(data.eventId);
 
@@ -480,9 +838,6 @@ function saveQuestionEvent(data) {
     sheet: QUESTION_EVENTS_SHEET_NAME,
     eventId: eventId
   });
-  } finally {
-    lock.releaseLock();
-  }
 }
 
 function sessionStatusRank(status) {
@@ -607,11 +962,11 @@ function ensureHeaders(sheet, headers) {
   );
 
   const currentHeaders = headerRange.getDisplayValues()[0];
-  const headersAreEmpty = currentHeaders.every(function (value) {
-    return normalizeText(value) === '';
+  const headersMatch = currentHeaders.every(function (value, index) {
+    return normalizeText(value) === normalizeText(headers[index]);
   });
 
-  if (sheet.getLastRow() === 0 || headersAreEmpty) {
+  if (!headersMatch) {
     headerRange.setValues([headers]);
   }
 }

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="lv">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LU 107 spēles analītika</title>
+    <meta name="description" content="LU 107. jubilejas spēles anonīmo datu analītika">
+    <link rel="icon" href="../favicon.svg">
+    <link rel="preload" as="image" href="../assets/lu-lv-cropped.png">
+    <link rel="stylesheet" href="./styles.css?v=1">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="LU 107 spēles sākums">
+        <img id="lu-logo" src="../assets/lu-lv-cropped.png" alt="Latvijas Universitāte">
+        <span></span>
+        <strong data-i18n="analytics">Spēles analītika</strong>
+      </a>
+      <nav aria-label="Dashboarda rīki">
+        <a class="button button-quiet" href="../" data-i18n="goGame">Doties uz spēli</a>
+        <div class="language-switch" aria-label="Valoda">
+          <button class="active" type="button" data-language="lv">LV</button>
+          <button type="button" data-language="en">EN</button>
+        </div>
+        <button id="theme-toggle" class="icon-button" type="button" aria-label="Mainīt krāsu režīmu">
+          <i data-lucide="moon" aria-hidden="true"></i>
+        </button>
+        <select id="period" aria-label="Periods">
+          <option value="all" data-i18n="allTime">Viss periods</option>
+          <option value="30d" data-i18n="last30">Pēdējās 30 dienas</option>
+          <option value="7d" data-i18n="last7">Pēdējās 7 dienas</option>
+        </select>
+        <button id="download" class="button button-primary" type="button">
+          <i data-lucide="download" aria-hidden="true"></i>
+          <span data-i18n="download">Lejupielādēt CSV</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow" data-i18n="eyebrow">LU 107. jubilejas spēle</p>
+          <h1 data-i18n="title">Anonīmo spēles datu pārskats</h1>
+        </div>
+        <p id="updated" class="updated" aria-live="polite"></p>
+      </div>
+
+      <div id="status" class="status" aria-live="polite">
+        <span class="loader" aria-hidden="true"></span>
+        <span data-i18n="loading">Ielādē datus…</span>
+      </div>
+
+      <div id="dashboard" hidden>
+        <section id="kpis" class="kpi-grid" aria-label="Galvenie rādītāji"></section>
+
+        <section class="dashboard-grid dashboard-grid-main">
+          <article class="panel timeline-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="activityKicker">Aktivitāte</p>
+                <h2 data-i18n="timeline">Spēles sesijas laikā</h2>
+              </div>
+              <div class="legend">
+                <span><i class="legend-dot sessions-dot"></i><span data-i18n="sessions">Sesijas</span></span>
+                <span><i class="legend-dot completed-dot"></i><span data-i18n="completed">Pabeigtas</span></span>
+              </div>
+            </div>
+            <div id="timeline" class="chart"></div>
+          </article>
+
+          <article class="panel funnel-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="journeyKicker">Spēles ceļš</p>
+                <h2 data-i18n="funnel">Spēles pabeigšana</h2>
+              </div>
+            </div>
+            <div id="funnel" class="funnel"></div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid dashboard-grid-secondary">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="resultsKicker">Rezultāti</p>
+                <h2 data-i18n="rounds">Vidējie punkti pa kārtām</h2>
+              </div>
+            </div>
+            <div id="rounds" class="round-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="audienceKicker">Auditorija</p>
+                <h2 data-i18n="languages">Spēles valodas</h2>
+              </div>
+            </div>
+            <div id="languages" class="language-chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker" data-i18n="mechanicsKicker">Pieredze</p>
+                <h2 data-i18n="mechanics">Rezultāti pēc mehānikas</h2>
+              </div>
+            </div>
+            <div id="mechanics" class="mechanics"></div>
+          </article>
+        </section>
+
+        <section class="panel questions-panel">
+          <div class="panel-heading question-heading">
+            <div>
+              <p class="panel-kicker" data-i18n="questionsKicker">Jautājumu banka</p>
+              <h2 data-i18n="questions">Jautājumu grūtības analīze</h2>
+              <p data-i18n="questionsHint">Vispirms redzami jautājumi ar zemāko pareizo atbilžu īpatsvaru.</p>
+            </div>
+            <label class="search-field">
+              <i data-lucide="search" aria-hidden="true"></i>
+              <span class="sr-only" data-i18n="searchLabel">Meklēt jautājumu</span>
+              <input id="question-search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Meklēt jautājumu">
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="question">Jautājums</th>
+                  <th data-i18n="round">Kārta</th>
+                  <th data-i18n="answers">Atbildes</th>
+                  <th data-i18n="correctRate">Pareizi</th>
+                  <th data-i18n="avgTime">Vidējais laiks</th>
+                </tr>
+              </thead>
+              <tbody id="question-table"></tbody>
+            </table>
+          </div>
+          <p id="question-empty" class="empty-message" hidden data-i18n="noQuestions">Šajā periodā vēl nav jautājumu datu.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p data-i18n="privacy">Dashboardā redzami tikai apkopoti anonīmi dati.</p>
+      <a href="https://researchgames.eu/lv/" target="_blank" rel="noopener">ResearchGames.eu</a>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@1.34.0"></script>
+    <script src="./app.js?v=1"></script>
+  </body>
+</html>
