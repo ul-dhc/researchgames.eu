@@ -6,6 +6,9 @@ const GAME_RUNS_SHEET_NAME = 'GameRuns';
 const SESSIONS_SHEET_NAME = 'Sessions';
 const QUESTION_EVENTS_SHEET_NAME = 'QuestionEvents';
 const QUESTIONS_SHEET_NAME = 'LV–ENG salīdzinājums';
+const WISH_REMINDER_EMAIL = 'dhc@lu.lv';
+const WISH_REMINDER_END = '2026-10-02T00:00:00+03:00';
+const WISH_REMINDER_HANDLER = 'sendPendingWishReminders';
 
 const FEEDBACK_HEADERS = [
   'Laiks',
@@ -20,7 +23,8 @@ const FEEDBACK_HEADERS = [
   'Piekrišana publicēšanai',
   'Statuss',
   'Avots',
-  'Spēles versija'
+  'Spēles versija',
+  'Atgādinājums nosūtīts'
 ];
 
 const GAME_RUN_HEADERS = [
@@ -760,6 +764,161 @@ function saveFeedback(data) {
     row: sheet.getLastRow(),
     source: source
   });
+}
+
+function sendPendingWishReminders() {
+  const now = new Date();
+  const reminderEnd = new Date(WISH_REMINDER_END);
+
+  if (now >= reminderEnd) {
+    removeWishReminderTriggers();
+    return;
+  }
+
+  const lock = LockService.getScriptLock();
+  let lockAcquired = false;
+
+  try {
+    lock.waitLock(10000);
+    lockAcquired = true;
+
+    const sheet = getOrCreateSheet(
+      FEEDBACK_SHEET_NAME,
+      FEEDBACK_HEADERS
+    );
+    if (sheet.getLastRow() < 2) {
+      return;
+    }
+
+    const rows = sheet
+      .getRange(2, 1, sheet.getLastRow() - 1, FEEDBACK_HEADERS.length)
+      .getValues();
+    const minimumAge = 60 * 60 * 1000;
+    const pending = [];
+
+    rows.forEach(function (row, index) {
+      const submittedAt = row[0] instanceof Date
+        ? row[0]
+        : new Date(row[0]);
+      const wish = normalizeText(row[5]);
+      const status = normalizeText(row[10]).toLowerCase();
+      const reminderSentAt = row[13];
+
+      if (
+        wish &&
+        status === 'saņemts' &&
+        !reminderSentAt &&
+        !Number.isNaN(submittedAt.getTime()) &&
+        now.getTime() - submittedAt.getTime() >= minimumAge
+      ) {
+        pending.push({
+          rowNumber: index + 2,
+          submittedAt: submittedAt,
+          language: normalizeLanguage(row[2]),
+          wish: wish
+        });
+      }
+    });
+
+    if (!pending.length) {
+      return;
+    }
+
+    if (MailApp.getRemainingDailyQuota() < 1) {
+      throw new Error('Nav pieejama e-pasta saņēmēju dienas kvota.');
+    }
+
+    const spreadsheetUrl =
+      'https://docs.google.com/spreadsheets/d/' +
+      SPREADSHEET_ID +
+      '/edit#gid=' +
+      sheet.getSheetId();
+    const pendingLabel = pending.length === 1
+      ? '1 neapstrādāts novēlējums'
+      : pending.length + ' neapstrādāti novēlējumi';
+    const subject = 'LU107: ' + pendingLabel;
+    const plainItems = pending.map(function (item, index) {
+      return (
+        (index + 1) +
+        '. [' +
+        item.language +
+        '] ' +
+        item.wish
+      );
+    });
+    const htmlItems = pending.map(function (item) {
+      return (
+        '<li><strong>' +
+        escapeHtmlForEmail(item.language) +
+        '</strong>: ' +
+        escapeHtmlForEmail(item.wish) +
+        '</li>'
+      );
+    });
+
+    MailApp.sendEmail({
+      to: WISH_REMINDER_EMAIL,
+      subject: subject,
+      body:
+        'Vismaz vienu stundu statusā “Saņemts” ' +
+        (pending.length === 1 ? 'ir palicis ' : 'ir palikuši ') +
+        pendingLabel +
+        '.\n\n' +
+        plainItems.join('\n\n') +
+        '\n\nAtvērt Google Sheets: ' +
+        spreadsheetUrl,
+      htmlBody:
+        '<p>Vismaz vienu stundu statusā <strong>Saņemts</strong> ' +
+        (pending.length === 1 ? 'ir palicis ' : 'ir palikuši ') +
+        escapeHtmlForEmail(pendingLabel) +
+        '.</p><ol>' +
+        htmlItems.join('') +
+        '</ol><p><a href="' +
+        spreadsheetUrl +
+        '">Atvērt Google Sheets</a></p>',
+      name: 'LU107 novēlējumu siena'
+    });
+
+    pending.forEach(function (item) {
+      sheet.getRange(item.rowNumber, 14).setValue(now);
+    });
+    SpreadsheetApp.flush();
+  } finally {
+    if (lockAcquired) {
+      lock.releaseLock();
+    }
+  }
+}
+
+function installWishReminderTrigger() {
+  removeWishReminderTriggers();
+
+  if (new Date() >= new Date(WISH_REMINDER_END)) {
+    throw new Error('LU107 novēlējumu atgādinājumu periods ir beidzies.');
+  }
+
+  ScriptApp
+    .newTrigger(WISH_REMINDER_HANDLER)
+    .timeBased()
+    .everyHours(1)
+    .create();
+}
+
+function removeWishReminderTriggers() {
+  ScriptApp.getProjectTriggers().forEach(function (trigger) {
+    if (trigger.getHandlerFunction() === WISH_REMINDER_HANDLER) {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+}
+
+function escapeHtmlForEmail(value) {
+  return normalizeText(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function saveGameRun(data) {
