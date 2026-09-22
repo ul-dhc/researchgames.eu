@@ -209,9 +209,12 @@ function getStatsResponse(parameters) {
   const period = normalizeStatsPeriod(
     parameters && parameters.period
   );
+  const forceRefresh = normalizeText(
+    parameters && parameters.force
+  ) === '1';
   const cache = CacheService.getScriptCache();
   const cacheKey = 'lu107-stats-v2-' + period;
-  const cached = cache.get(cacheKey);
+  const cached = forceRefresh ? null : cache.get(cacheKey);
   if (cached) {
     return jsonResponse(JSON.parse(cached));
   }

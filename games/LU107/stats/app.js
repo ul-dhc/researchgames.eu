@@ -53,10 +53,10 @@ function translatePage() {
   if (currentData) render(currentData);
 }
 
-async function loadData() {
+async function loadData(forceRefresh = false) {
   if (dataRequestInFlight) return;
   dataRequestInFlight = true;
-  const cached = readCachedStats(elements.period.value);
+  const cached = forceRefresh ? null : readCachedStats(elements.period.value);
   if (cached) {
     currentData = cached;
     elements.status.hidden = true;
@@ -69,7 +69,8 @@ async function loadData() {
     elements.status.innerHTML = `<span class="loader" aria-hidden="true"></span><span>${escapeHtml(t('loading'))}</span>`;
   }
   try {
-    const response = await fetch(`${API_URL}?resource=stats&period=${encodeURIComponent(elements.period.value)}`, { cache: 'no-store' });
+    const forceParameter = forceRefresh ? '&force=1' : '';
+    const response = await fetch(`${API_URL}?resource=stats&period=${encodeURIComponent(elements.period.value)}${forceParameter}`, { cache: 'no-store' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     if (!data.ok || !data.overview) throw new Error(data.error || 'Invalid response');
@@ -83,7 +84,7 @@ async function loadData() {
     if (cached) return;
     elements.status.className = 'status error';
     elements.status.innerHTML = `<strong>${escapeHtml(t('loadErrorTitle'))}</strong><p>${escapeHtml(t('loadError'))}</p><button class="button button-primary" type="button" id="retry">${escapeHtml(t('retry'))}</button>`;
-    document.querySelector('#retry')?.addEventListener('click', loadData);
+    document.querySelector('#retry')?.addEventListener('click', () => loadData(true));
   } finally {
     dataRequestInFlight = false;
   }
@@ -293,7 +294,7 @@ function setTheme(dark) {
 }
 
 document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => { language = button.dataset.language; localStorage.setItem('lu107-stats-language', language); translatePage(); }));
-elements.period.addEventListener('change', loadData);
+elements.period.addEventListener('change', () => loadData());
 elements.questionSearch.addEventListener('input', () => currentData && renderQuestions(currentData.questions));
 document.querySelectorAll('[data-sort]').forEach(button => button.addEventListener('click', () => {
   const key = button.dataset.sort;
@@ -307,7 +308,8 @@ elements.theme.addEventListener('click', () => setTheme(!document.documentElemen
 
 setTheme((localStorage.getItem('lu107-stats-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark');
 translatePage();
-loadData();
+const navigationEntry = performance.getEntriesByType('navigation')[0];
+loadData(navigationEntry?.type === 'reload');
 window.setInterval(loadData, AUTO_REFRESH_INTERVAL);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') loadData();
