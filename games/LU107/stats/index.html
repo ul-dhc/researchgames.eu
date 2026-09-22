@@ -6,7 +6,7 @@
     <title>LU 107 spēles analītika</title>
     <meta name="description" content="LU 107. jubilejas spēles anonīmo datu analītika">
     <link rel="icon" href="../favicon.svg">
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=4">
   </head>
   <body>
     <header class="topbar">
@@ -136,6 +136,17 @@
           </article>
         </section>
 
+        <section class="panel title-distribution-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker" data-i18n="distributionKicker">Pabeigto spēļu rezultāti</p>
+              <h2 data-i18n="titleDistribution">Spēlētāju titulu piramīda</h2>
+              <p data-i18n="titleDistributionHint">Katrs līmenis parāda, cik spēlētāju pabeiguši spēli attiecīgajā punktu diapazonā.</p>
+            </div>
+          </div>
+          <div id="title-distribution" class="title-pyramid"></div>
+        </section>
+
         <section class="panel round-difficulty-panel">
           <div class="panel-heading">
             <div>
@@ -186,6 +197,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@1.34.0"></script>
-    <script src="./app.js?v=7"></script>
+    <script src="./app.js?v=8"></script>
   </body>
 </html>

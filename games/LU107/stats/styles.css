@@ -167,6 +167,17 @@ h2 { margin: 0; font-size: 25px; }
 .device-row strong { text-align: right; }
 .device-row .bar-fill { background: linear-gradient(90deg, var(--blue), var(--teal)); }
 
+.title-distribution-panel { overflow: hidden; }
+.title-pyramid { max-width: 940px; margin: 8px auto 2px; display: grid; gap: 8px; }
+.pyramid-level { display: flex; justify-content: center; }
+.pyramid-tier { width: var(--tier-width); min-height: 76px; padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px; color: var(--ink); border: 1px solid color-mix(in srgb, var(--tier-color) 54%, var(--line)); border-radius: 12px; background: linear-gradient(100deg, color-mix(in srgb, var(--tier-color) 16%, var(--surface)), color-mix(in srgb, var(--tier-color) 5%, var(--surface))); box-shadow: inset 4px 0 0 var(--tier-color); transition: transform .18s ease, box-shadow .18s ease; }
+.pyramid-tier:hover { transform: translateY(-2px); box-shadow: inset 4px 0 0 var(--tier-color), 0 10px 24px color-mix(in srgb, var(--tier-color) 12%, transparent); }
+.pyramid-copy, .pyramid-result { display: grid; gap: 4px; }
+.pyramid-copy strong { font: 700 19px/1.1 Georgia, serif; }
+.pyramid-copy span, .pyramid-result span { color: var(--muted); font-size: 12px; }
+.pyramid-result { flex: 0 0 auto; text-align: right; }
+.pyramid-result strong { color: var(--tier-color); font: 700 25px/1 Georgia, serif; }
+
 .round-difficulty-panel { margin-top: 0; }
 .round-difficulty { display: grid; gap: 9px; }
 .difficulty-row { min-height: 82px; padding: 13px 15px; display: grid; grid-template-columns: 38px minmax(240px, 1fr) repeat(3, minmax(88px, auto)); align-items: center; gap: 17px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); }
@@ -244,6 +255,7 @@ footer a { font-weight: 750; text-underline-offset: 3px; }
   .question-cell { min-width: 260px; }
   .difficulty-row { grid-template-columns: 34px minmax(180px, 1fr) repeat(3, minmax(80px, auto)); min-width: 720px; }
   .round-difficulty { overflow-x: auto; }
+  .pyramid-tier { width: 100%; }
   footer { width: calc(100% - 24px); flex-direction: column; }
 }
 

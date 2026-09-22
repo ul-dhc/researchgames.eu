@@ -210,7 +210,7 @@ function getStatsResponse(parameters) {
     parameters && parameters.period
   );
   const cache = CacheService.getScriptCache();
-  const cacheKey = 'lu107-stats-v1-' + period;
+  const cacheKey = 'lu107-stats-v2-' + period;
   const cached = cache.get(cacheKey);
   if (cached) {
     return jsonResponse(JSON.parse(cached));
@@ -249,6 +249,7 @@ function getStatsResponse(parameters) {
     timeline: buildStatsTimeline(sessions),
     funnel: buildStatsFunnel(sessions),
     rounds: buildRoundStats(sessions),
+    titleDistribution: buildTitleDistribution(completed),
     languages: buildLanguageStats(sessions),
     devices: buildDeviceStats(sessions),
     mechanics: buildMechanicStats(events),
@@ -320,6 +321,40 @@ function buildStatsOverview(sessions, completed, feedbackSummary) {
       countUniqueSessionIds(sessions)
     )
   };
+}
+
+function buildTitleDistribution(completed) {
+  const levels = [
+    { key: 'encyclopedia', min: 170, max: 250 },
+    { key: 'expert', min: 140, max: 169 },
+    { key: 'knower', min: 110, max: 139 },
+    { key: 'explorer', min: 80, max: 109 },
+    { key: 'newcomer', min: 0, max: 79 }
+  ];
+
+  completed.forEach(function (row) {
+    const score = Number(row[8]);
+    if (!Number.isFinite(score)) {
+      return;
+    }
+    const level = levels.find(function (item) {
+      return score >= item.min && score <= item.max;
+    });
+    if (level) {
+      level.count = (level.count || 0) + 1;
+    }
+  });
+
+  return levels.map(function (level) {
+    const count = level.count || 0;
+    return {
+      key: level.key,
+      min: level.min,
+      max: level.max,
+      count: count,
+      rate: percentage(count, completed.length)
+    };
+  });
 }
 
 function buildStatsTimeline(sessions) {

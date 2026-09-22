@@ -11,15 +11,24 @@ const copy = {
   }
 };
 
+const distributionCopy = {
+  lv: {
+    distributionKicker: 'Pabeigto spēļu rezultāti', titleDistribution: 'Spēlētāju titulu piramīda', titleDistributionHint: 'Katrs līmenis parāda, cik spēlētāju pabeiguši spēli attiecīgajā punktu diapazonā.', titleEncyclopedia: 'LU enciklopēdija', titleExpert: 'LU eksperts', titleKnower: 'LU zinātājs', titleExplorer: 'LU atklājējs', titleNewcomer: 'LU jaunatklājējs', completedPlayers: 'spēlētāji', points: 'punkti', noCompletedGames: 'Izvēlētajā periodā vēl nav pabeigtu spēļu.'
+  },
+  en: {
+    distributionKicker: 'Completed game results', titleDistribution: 'Player title pyramid', titleDistributionHint: 'Each level shows how many players completed the game within the corresponding score range.', titleEncyclopedia: 'UL Living Encyclopaedia', titleExpert: 'UL Expert', titleKnower: 'University Insider', titleExplorer: 'UL Explorer', titleNewcomer: 'UL Newcomer', completedPlayers: 'players', points: 'points', noCompletedGames: 'There are no completed games in the selected period yet.'
+  }
+};
+
 let language = localStorage.getItem('lu107-stats-language') || 'lv';
 let currentData = null;
 let questionSort = { key: 'correctRate', direction: 'asc' };
 
 const elements = {
-  dashboard: document.querySelector('#dashboard'), status: document.querySelector('#status'), updated: document.querySelector('#updated'), period: document.querySelector('#period'), kpis: document.querySelector('#kpis'), contributions: document.querySelector('#contributions'), timeline: document.querySelector('#timeline'), funnel: document.querySelector('#funnel'), rounds: document.querySelector('#rounds'), languages: document.querySelector('#languages'), devices: document.querySelector('#devices'), mechanics: document.querySelector('#mechanics'), roundDifficulty: document.querySelector('#round-difficulty'), questionTable: document.querySelector('#question-table'), questionEmpty: document.querySelector('#question-empty'), questionSearch: document.querySelector('#question-search'), download: document.querySelector('#download'), theme: document.querySelector('#theme-toggle')
+  dashboard: document.querySelector('#dashboard'), status: document.querySelector('#status'), updated: document.querySelector('#updated'), period: document.querySelector('#period'), kpis: document.querySelector('#kpis'), contributions: document.querySelector('#contributions'), timeline: document.querySelector('#timeline'), funnel: document.querySelector('#funnel'), rounds: document.querySelector('#rounds'), languages: document.querySelector('#languages'), devices: document.querySelector('#devices'), mechanics: document.querySelector('#mechanics'), titleDistribution: document.querySelector('#title-distribution'), roundDifficulty: document.querySelector('#round-difficulty'), questionTable: document.querySelector('#question-table'), questionEmpty: document.querySelector('#question-empty'), questionSearch: document.querySelector('#question-search'), download: document.querySelector('#download'), theme: document.querySelector('#theme-toggle')
 };
 
-function t(key) { return copy[language][key] || key; }
+function t(key) { return copy[language][key] || distributionCopy[language][key] || key; }
 function escapeHtml(value) { return String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]); }
 function number(value, maximumFractionDigits = 0) { return new Intl.NumberFormat(language === 'lv' ? 'lv-LV' : 'en-GB', { maximumFractionDigits }).format(Number(value) || 0); }
 function percent(value) { return `${number(value, 1)}%`; }
@@ -104,6 +113,7 @@ function render(data) {
   renderLanguages(data.languages);
   renderDevices(data.devices || []);
   renderMechanics(data.mechanics);
+  renderTitleDistribution(data.titleDistribution || []);
   renderRoundDifficulty(data.questions);
   renderQuestions(data.questions);
   window.lucide?.createIcons({ attrs: { 'stroke-width': 1.8 } });
@@ -192,6 +202,21 @@ function renderDevices(items) {
 function renderMechanics(items) {
   if (!items.length) { elements.mechanics.innerHTML = `<p class="empty-message">${escapeHtml(t('noMechanics'))}</p>`; return; }
   elements.mechanics.innerHTML = items.slice(0, 7).map(item => `<div class="mechanic-row"><span title="${escapeHtml(item.mechanic)}">${escapeHtml(item.mechanic)}</span><div class="bar-track"><div class="bar-fill" style="width:${item.correctRate}%"></div></div><strong>${percent(item.correctRate)}</strong></div>`).join('');
+}
+
+function renderTitleDistribution(items) {
+  const total = items.reduce((sum, item) => sum + Number(item.count || 0), 0);
+  if (!total) {
+    elements.titleDistribution.innerHTML = `<p class="empty-message">${escapeHtml(t('noCompletedGames'))}</p>`;
+    return;
+  }
+  const titleKeys = { encyclopedia: 'titleEncyclopedia', expert: 'titleExpert', knower: 'titleKnower', explorer: 'titleExplorer', newcomer: 'titleNewcomer' };
+  const maxCount = Math.max(1, ...items.map(item => Number(item.count || 0)));
+  elements.titleDistribution.innerHTML = items.map((item, index) => {
+    const count = Number(item.count || 0);
+    const width = count ? 32 + count / maxCount * 68 : 24;
+    return `<article class="pyramid-level" style="--tier-width:${width}%;--tier-color:${ROUND_COLORS[index] || 'var(--blue)'}"><div class="pyramid-tier"><div class="pyramid-copy"><strong>${escapeHtml(t(titleKeys[item.key] || item.key))}</strong><span>${number(item.min)}–${number(item.max)} ${escapeHtml(t('points'))}</span></div><div class="pyramid-result"><strong>${number(count)}</strong><span>${escapeHtml(t('completedPlayers'))} · ${percent(item.rate)}</span></div></div></article>`;
+  }).join('');
 }
 
 function renderRoundDifficulty(items) {
