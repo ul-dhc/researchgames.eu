@@ -258,3 +258,13 @@ footer a { font-weight: 750; text-underline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+.all-games-stats { display:flex; align-items:center; gap:14px; padding:18px 22px; margin-bottom:28px; border:1px solid var(--blue); border-radius:14px; background:var(--surface-soft); color:var(--ink); text-decoration:none; transition:background .2s ease,box-shadow .2s ease; }
+.all-games-stats>svg { width:24px; height:24px; flex-shrink:0; color:var(--blue); }
+.all-games-stats>svg:last-child { margin-left:auto; }
+.all-games-stats strong { display:block; font-size:16px; }
+.all-games-stats span span { display:block; margin-top:5px; font-size:13px; line-height:1.5; color:var(--muted); }
+.all-games-stats:hover { background:var(--surface); box-shadow:var(--shadow); }
+.all-games-stats:focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+@media(max-width:600px) { .all-games-stats { padding:16px; gap:12px; } .all-games-stats strong { font-size:15px; } }
+@media(prefers-reduced-motion:reduce) { .all-games-stats { transition:none; } }
