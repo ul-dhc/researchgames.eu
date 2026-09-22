@@ -9,7 +9,7 @@ function doGet(e) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-function researchGamesSummary_(period) {
+function researchGamesUncachedSummary_(period) {
   const periods = { all: 0, '30d': 30, '7d': 7 };
   let summary;
   try {

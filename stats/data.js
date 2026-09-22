@@ -40,3 +40,18 @@ export async function fetchSummary(source, period, signal, fetcher = fetch) {
     }
   }
 }
+
+// Store only validated aggregates, separately for each endpoint and period.
+export function readSummaryCache(storage, source, period, now = Date.now()) {
+  try {
+    const saved = JSON.parse(storage.getItem(`rg-summary-v1:${source}:${period}`));
+    if (!saved || !Number.isFinite(saved.savedAt) || saved.savedAt > now || now - saved.savedAt > 7 * 86400000) return null;
+    return {data: normalizeSummary({...saved.data, ok:true}), savedAt:saved.savedAt, cached:true};
+  } catch { return null; }
+}
+export function writeSummaryCache(storage, source, period, data, now = Date.now()) {
+  try {
+    const safe = normalizeSummary({...data, ok:true});
+    storage.setItem(`rg-summary-v1:${source}:${period}`, JSON.stringify({savedAt:now,data:safe}));
+  } catch { /* Storage can be disabled or full; live data still works. */ }
+}

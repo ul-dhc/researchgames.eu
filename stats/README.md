@@ -27,7 +27,7 @@ The source dashboards retain their existing period and completion definitions. I
 
 ## Apps Script changes deployed 2026-09-22
 
-The files in `apps-script/` contain the exact small additions, not standalone complete projects. Replace the existing dashboard `doGet` and add the `researchGamesSummary_` helper. Keep the existing calculation functions. The helper deliberately selects aggregate fields and does not return comments, answers or individual sessions.
+The files in `apps-script/` contain the exact small additions, not standalone complete projects. Replace the existing dashboard `doGet` and add the `researchGamesUncachedSummary_` helper and `SummaryCache.gs`. Keep the existing calculation functions. The helper deliberately selects aggregate fields and does not return comments, answers or individual sessions.
 
 - Livonian dashboard: `Code.gs`, deployment updated to version 23; access changed from Only myself to Anyone, as requested.
 - Riddle Grid: `mīklu-dashboard.gs` in the `mīklu dati` project, deployment updated to version 24; access was already Anyone. Its existing `Code.gs` and separate game ingestion deployment were not changed.
@@ -49,3 +49,9 @@ git diff --check
 Open `http://127.0.0.1:8765/stats/`. No build step is needed.
 
 The shared interactive timeline draws one colored, patterned line per game on a continuous daily axis. Missing calendar days are zero for available sources; unavailable sources have no line. Pointer/touch selection and keyboard arrows show exact daily values. The existing period selector controls the chart. No new backend or chart library is needed.
+
+## Cached summaries (2026-09-22)
+
+The browser stores validated aggregates per endpoint and period for at most seven days. On each visit or period change it displays the matching saved snapshot immediately, labels it as saved, shows the retrieval and source generation timestamps, and refreshes in the background. Failed updates preserve the labeled snapshot. Unavailable or corrupt storage falls back to live loading; a period never borrows another period's values.
+
+The shared `SummaryCache.gs` wrapper caches successful public summaries per period for 300 seconds in Apps Script. Existing calculations are renamed `researchGamesUncachedSummary_`. Errors are not cached. Deployed to Livonian version 24 (`UntitledSummaryCache.gs`) and Riddle Grid version 25 (`SummaryCache.gs`); access and ingestion deployments are unchanged. LU107 retains its existing endpoint. A first visit can still wait for Google; Refresh can return server data up to five minutes old.

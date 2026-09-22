@@ -41,3 +41,19 @@ test('does not retry a cancelled period request',async()=>{
  }));
  assert.equal(calls,1);
 });
+
+test('cache separates periods and sources and rejects damaged or expired entries', async () => {
+ const {readSummaryCache,writeSummaryCache}=await import('../data.js');
+ const entries=new Map();
+ const storage={getItem:key=>entries.get(key),setItem:(key,value)=>entries.set(key,value)};
+ writeSummaryCache(storage,'a','7d',normalizeSummary(sample()),1000);
+ assert.equal(readSummaryCache(storage,'a','7d',2000).data.overview.sessions,3);
+ assert.equal(readSummaryCache(storage,'a','all',2000),null);
+ assert.equal(readSummaryCache(storage,'b','7d',2000),null);
+ assert.equal(readSummaryCache(storage,'a','7d',8*86400000),null);
+ assert.equal(readSummaryCache(storage,'a','7d',500),null);
+ storage.setItem('rg-summary-v1:a:7d','{broken');
+ assert.equal(readSummaryCache(storage,'a','7d',2000),null);
+ assert.equal(readSummaryCache(undefined,'a','7d'),null);
+ assert.doesNotThrow(()=>writeSummaryCache(undefined,'a','7d',sample()));
+});
