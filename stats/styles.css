@@ -24,3 +24,9 @@ button,select,.open,nav>a,footer>a{transition:background-color .2s ease,border-c
   nav>a:hover,footer>a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
 }
 @media(prefers-reduced-motion:reduce){.coverage,.metric,.game,button,select,.open,nav>a,footer>a{transition:none}.open:hover{transform:none}}
+
+#theme{width:42px;height:42px;padding:10px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+#theme svg{width:20px;height:20px;stroke-width:1.8}
+#theme .theme-moon{display:none}
+:root[data-theme=light] #theme .theme-sun{display:none}
+:root[data-theme=light] #theme .theme-moon{display:block}
