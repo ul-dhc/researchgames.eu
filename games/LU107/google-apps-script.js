@@ -209,22 +209,34 @@ function getStatsResponse(parameters) {
   const period = normalizeStatsPeriod(
     parameters && parameters.period
   );
+  const cache = CacheService.getScriptCache();
+  const cacheKey = 'lu107-stats-v1-' + period;
+  const cached = cache.get(cacheKey);
+  if (cached) {
+    return jsonResponse(JSON.parse(cached));
+  }
+
   const cutoff = statsCutoff(period);
-  const sessions = readStatsRows(SESSIONS_SHEET_NAME)
+  const spreadsheet = getSpreadsheet();
+  const sessions = readStatsRows(SESSIONS_SHEET_NAME, spreadsheet)
     .filter(function (row) {
       return isDateInStatsPeriod(row[2], cutoff);
     });
-  const events = readStatsRows(QUESTION_EVENTS_SHEET_NAME)
+  const events = readStatsRows(QUESTION_EVENTS_SHEET_NAME, spreadsheet)
     .filter(function (row) {
       return isDateInStatsPeriod(row[0], cutoff);
     });
   const completed = sessions.filter(function (row) {
     return normalizeText(row[5]) === 'completed';
   });
-  const questionLabels = getQuestionLabels();
-  const feedbackSummary = getFeedbackStats(cutoff, sessions);
+  const questionLabels = getQuestionLabels(spreadsheet);
+  const feedbackSummary = getFeedbackStats(
+    cutoff,
+    sessions,
+    spreadsheet
+  );
 
-  return jsonResponse({
+  const response = {
     ok: true,
     service: 'LU 107 statistics',
     generatedAt: new Date().toISOString(),
@@ -241,11 +253,15 @@ function getStatsResponse(parameters) {
     devices: buildDeviceStats(sessions),
     mechanics: buildMechanicStats(events),
     questions: buildQuestionStats(events, questionLabels)
-  });
+  };
+
+  cache.put(cacheKey, JSON.stringify(response), 300);
+  return jsonResponse(response);
 }
 
-function readStatsRows(sheetName) {
-  const sheet = getSpreadsheet().getSheetByName(sheetName);
+function readStatsRows(sheetName, spreadsheet) {
+  const source = spreadsheet || getSpreadsheet();
+  const sheet = source.getSheetByName(sheetName);
   if (!sheet || sheet.getLastRow() < 2) {
     return [];
   }
@@ -523,8 +539,9 @@ function buildQuestionStats(events, labels) {
     });
 }
 
-function getQuestionLabels() {
-  const sheet = getSpreadsheet().getSheetByName(QUESTIONS_SHEET_NAME);
+function getQuestionLabels(spreadsheet) {
+  const source = spreadsheet || getSpreadsheet();
+  const sheet = source.getSheetByName(QUESTIONS_SHEET_NAME);
   if (!sheet) {
     return {};
   }
@@ -550,8 +567,8 @@ function getQuestionLabels() {
   return labels;
 }
 
-function getFeedbackStats(cutoff, sessions) {
-  const rows = readStatsRows(FEEDBACK_SHEET_NAME);
+function getFeedbackStats(cutoff, sessions, spreadsheet) {
+  const rows = readStatsRows(FEEDBACK_SHEET_NAME, spreadsheet);
   const validSessionIds = {};
   sessions.forEach(function (row) {
     const sessionId = normalizeText(row[1]);

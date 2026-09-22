@@ -1,5 +1,6 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbyGbE2KbIAsfQvGqaG0QMusF0jeGptC9AYbH6iZv4-T9bS4OztKznyfwcNQrBVdr18F2w/exec';
 const ROUND_COLORS = ['#017592', '#41b449', '#65348c', '#8a2432', '#204592'];
+const STATS_CACHE_MAX_AGE = 24 * 60 * 60 * 1000;
 
 const copy = {
   lv: {
@@ -41,25 +42,55 @@ function translatePage() {
 }
 
 async function loadData() {
-  elements.dashboard.hidden = true;
-  elements.status.hidden = false;
-  elements.status.className = 'status';
-  elements.status.innerHTML = `<span class="loader" aria-hidden="true"></span><span>${escapeHtml(t('loading'))}</span>`;
+  const cached = readCachedStats(elements.period.value);
+  if (cached) {
+    currentData = cached;
+    elements.status.hidden = true;
+    elements.dashboard.hidden = false;
+    render(cached);
+  } else {
+    elements.dashboard.hidden = true;
+    elements.status.hidden = false;
+    elements.status.className = 'status';
+    elements.status.innerHTML = `<span class="loader" aria-hidden="true"></span><span>${escapeHtml(t('loading'))}</span>`;
+  }
   try {
     const response = await fetch(`${API_URL}?resource=stats&period=${encodeURIComponent(elements.period.value)}`, { cache: 'no-store' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     if (!data.ok || !data.overview) throw new Error(data.error || 'Invalid response');
     currentData = data;
+    writeCachedStats(elements.period.value, data);
     elements.status.hidden = true;
     elements.dashboard.hidden = false;
     render(data);
   } catch (error) {
     console.error(error);
+    if (cached) return;
     elements.status.className = 'status error';
     elements.status.innerHTML = `<strong>${escapeHtml(t('loadErrorTitle'))}</strong><p>${escapeHtml(t('loadError'))}</p><button class="button button-primary" type="button" id="retry">${escapeHtml(t('retry'))}</button>`;
     document.querySelector('#retry')?.addEventListener('click', loadData);
   }
+}
+
+function statsCacheKey(period) {
+  return `lu107-stats-cache-v1-${period}`;
+}
+
+function readCachedStats(period) {
+  try {
+    const cached = JSON.parse(localStorage.getItem(statsCacheKey(period)) || 'null');
+    if (!cached || !cached.savedAt || !cached.data || Date.now() - cached.savedAt > STATS_CACHE_MAX_AGE) return null;
+    return cached.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedStats(period, data) {
+  try {
+    localStorage.setItem(statsCacheKey(period), JSON.stringify({ savedAt: Date.now(), data }));
+  } catch {}
 }
 
 function render(data) {
