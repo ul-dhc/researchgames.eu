@@ -1,6 +1,7 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbyGbE2KbIAsfQvGqaG0QMusF0jeGptC9AYbH6iZv4-T9bS4OztKznyfwcNQrBVdr18F2w/exec';
 const ROUND_COLORS = ['#017592', '#41b449', '#65348c', '#8a2432', '#204592'];
 const STATS_CACHE_MAX_AGE = 24 * 60 * 60 * 1000;
+const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000;
 
 const copy = {
   lv: {
@@ -23,6 +24,7 @@ const distributionCopy = {
 let language = localStorage.getItem('lu107-stats-language') || 'lv';
 let currentData = null;
 let questionSort = { key: 'correctRate', direction: 'asc' };
+let dataRequestInFlight = false;
 
 const elements = {
   dashboard: document.querySelector('#dashboard'), status: document.querySelector('#status'), updated: document.querySelector('#updated'), period: document.querySelector('#period'), kpis: document.querySelector('#kpis'), contributions: document.querySelector('#contributions'), timeline: document.querySelector('#timeline'), funnel: document.querySelector('#funnel'), rounds: document.querySelector('#rounds'), languages: document.querySelector('#languages'), devices: document.querySelector('#devices'), mechanics: document.querySelector('#mechanics'), titleDistribution: document.querySelector('#title-distribution'), roundDifficulty: document.querySelector('#round-difficulty'), questionTable: document.querySelector('#question-table'), questionEmpty: document.querySelector('#question-empty'), questionSearch: document.querySelector('#question-search'), download: document.querySelector('#download'), theme: document.querySelector('#theme-toggle')
@@ -52,6 +54,8 @@ function translatePage() {
 }
 
 async function loadData() {
+  if (dataRequestInFlight) return;
+  dataRequestInFlight = true;
   const cached = readCachedStats(elements.period.value);
   if (cached) {
     currentData = cached;
@@ -80,6 +84,8 @@ async function loadData() {
     elements.status.className = 'status error';
     elements.status.innerHTML = `<strong>${escapeHtml(t('loadErrorTitle'))}</strong><p>${escapeHtml(t('loadError'))}</p><button class="button button-primary" type="button" id="retry">${escapeHtml(t('retry'))}</button>`;
     document.querySelector('#retry')?.addEventListener('click', loadData);
+  } finally {
+    dataRequestInFlight = false;
   }
 }
 
@@ -302,3 +308,7 @@ elements.theme.addEventListener('click', () => setTheme(!document.documentElemen
 setTheme((localStorage.getItem('lu107-stats-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark');
 translatePage();
 loadData();
+window.setInterval(loadData, AUTO_REFRESH_INTERVAL);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') loadData();
+});
