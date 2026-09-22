@@ -41,9 +41,11 @@ If access is restricted later, protect both the dashboard and its data endpoints
 
 ```sh
 python3 -m http.server 8765 --bind 127.0.0.1
-node --test stats/tests/data.test.mjs
+node --test stats/tests/*.test.mjs
 node --check stats/app.js
 git diff --check
 ```
 
 Open `http://127.0.0.1:8765/stats/`. No build step is needed.
+
+The shared interactive timeline draws one colored, patterned line per game on a continuous daily axis. Missing calendar days are zero for available sources; unavailable sources have no line. Pointer/touch selection and keyboard arrows show exact daily values. The existing period selector controls the chart. No new backend or chart library is needed.

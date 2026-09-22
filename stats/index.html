@@ -7,9 +7,9 @@
   <meta name="description" content="ResearchGames spēļu statistikas kopējais pārskats.">
   <meta name="robots" content="noindex">
   <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css?v=20260922-1">
+  <link rel="stylesheet" href="./styles.css?v=20260922-2">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('researchgames-theme')||'dark'}catch(e){}</script>
-  <script type="module" src="./app.js?v=20260922-1"></script>
+  <script type="module" src="./app.js?v=20260922-2"></script>
 </head>
 <body>
   <a class="skip" href="#main" data-text="skip">Pāriet uz saturu</a>
@@ -25,7 +25,7 @@
     <div class="heading"><div><p class="eyebrow">ResearchGames</p><h1 data-text="title">Spēļu analītika</h1><p class="intro" data-text="intro">Kopējais pārskats un katras spēles dati vienuviet.</p></div><div class="controls"><label for="period" data-text="period">Periods</label><select id="period"><option value="all" data-text="all">Viss periods</option><option value="30d" data-text="month">Pēdējās 30 dienas</option><option value="7d" data-text="week">Pēdējās 7 dienas</option></select><button id="refresh" type="button" data-text="refresh">Atjaunot</button></div></div>
     <p id="coverage" class="coverage" role="status"></p>
     <section id="totals" class="totals" aria-label="Kopsavilkums"></section>
-    <section class="panel"><div class="section-heading"><div><p class="eyebrow" data-text="activity">Aktivitāte</p><h2 data-text="timeline">Reģistrētās sesijas pa dienām</h2></div><p class="subtle" data-text="activeDays">Attēlotas dienas ar aktivitāti pievienotajos datos.</p></div><div id="timeline"></div></section>
+    <section class="panel"><div class="section-heading"><div><p class="eyebrow" data-text="activity">Aktivitāte</p><h2 data-text="timeline">Reģistrētās sesijas pa dienām</h2></div><p class="subtle" data-text="activeDays">Katra līnija ir viena spēle. Sesiju skaits pa dienām.</p></div><div id="timeline"></div></section>
     <section class="games-section"><div class="section-heading"><div><p class="eyebrow" data-text="details">Detalizētie dati</p><h2 data-text="games">Spēļu pārskati</h2></div><p class="subtle" data-text="existing">Atver katras spēles esošo dashboard.</p></div><div id="games" class="games"></div></section>
     <aside class="method"><h2 data-text="method">Kā lasīt šo pārskatu</h2><p data-text="methodText">Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.</p></aside>
     <noscript>Lai ielādētu statistiku, ieslēdz JavaScript. <a href="/games/LU107/stats/">LU107</a> · <a href="/games/miklu-rezgis/stats/">Mīklu režģis</a> · <a href="/games/libiesu-vietvardi/stats/">Lībiešu vietvārdi</a></noscript>
