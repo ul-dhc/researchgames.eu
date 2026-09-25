@@ -546,7 +546,9 @@ body:has(#screen-start:not(.hidden)) .persistent-footer{
   display:flex; gap:14px;
   padding-right:4px;
   position:relative;
+  scrollbar-width:none;
 }
+.match-rows::-webkit-scrollbar{ display:none; }
 .match-col{ flex:1; min-width:0; display:flex; flex-direction:column; gap:9px; }
 .connector-svg{ position:absolute; top:0; left:0; pointer-events:none; z-index:2; overflow:visible; }
 .connector-path{ fill:none; stroke:url(#panelLineGrad); stroke-width:2; stroke-linecap:round; stroke-dasharray:2 6; opacity:.9; }
