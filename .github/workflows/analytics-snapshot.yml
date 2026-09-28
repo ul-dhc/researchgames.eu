@@ -1,0 +1,48 @@
+name: Update analytics snapshot
+on:
+  schedule:
+    - cron: '2-57/5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['stats/**', '.github/workflows/analytics-snapshot.yml']
+permissions:
+  contents: write
+concurrency:
+  group: analytics-snapshot
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test snapshot handling
+        run: node --test stats/tests/*.test.mjs
+      - name: Read last published snapshot
+        run: |
+          if git ls-remote --exit-code --heads origin analytics-data; then
+            git fetch --depth=1 origin analytics-data:refs/remotes/origin/analytics-data
+            git show origin/analytics-data:stats.json > stats/snapshot.json
+          fi
+      - name: Collect all games and periods
+        run: node stats/scripts/update-snapshot.mjs
+      - name: Publish data branch
+        run: |
+          cp stats/snapshot.json "$RUNNER_TEMP/stats.json"
+          git restore stats/snapshot.json
+          if git show-ref --verify --quiet refs/remotes/origin/analytics-data; then
+            git switch --force-create analytics-data origin/analytics-data
+          else
+            git switch --orphan analytics-data
+          fi
+          cp "$RUNNER_TEMP/stats.json" stats.json
+          git add stats.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update public analytics snapshot'
+          git push origin HEAD:analytics-data

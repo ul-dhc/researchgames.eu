@@ -31,7 +31,7 @@ export async function fetchSummary(source, period, signal, fetcher = fetch) {
       const url = new URL(source);
       url.searchParams.set('resource', 'stats');
       url.searchParams.set('period', period);
-      url.searchParams.set('t', `${Date.now()}-${attempt}`);
+      if (attempt) url.searchParams.set('t', `${Date.now()}-${attempt}`);
       const response = await fetcher(url, { signal, cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return normalizeSummary(await response.json());

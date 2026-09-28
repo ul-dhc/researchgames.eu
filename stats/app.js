@@ -1,12 +1,13 @@
 import { buildTimelineSeries, renderTimeline } from './timeline.js?v=20260922-2';
 import { SOURCES } from './config.js?v=20260922-1';
-import { fetchSummary, combineSummaries, readSummaryCache, writeSummaryCache } from './data.js?v=20260922-5';
+import { combineSummaries } from './data.js?v=20260922-5';
+import { normalizeSnapshot, snapshotState } from './snapshot.js?v=20260928-1';
 const copy = {
  lv: {
-  refreshing:'Atjauno fonā…',cached:'Saglabātie dati',cacheFailed:'Atjaunošana neizdevās – redzami saglabātie dati',received:'Dati saņemti',cacheNotice:'Redzami arī iepriekš saglabātie dati; to laiks norādīts pie katras spēles.',skip:'Pāriet uz saturu',home:'Uz sākumlapu',lightTheme:'Pārslēgt uz gaišo režīmu',darkTheme:'Pārslēgt uz tumšo režīmu',title:'Spēļu analītika',intro:'Kopējais pārskats un katras spēles dati vienuviet.',period:'Periods',all:'Viss periods',month:'Pēdējās 30 dienas',week:'Pēdējās 7 dienas',refresh:'Atjaunot',activity:'Aktivitāte',timeline:'Reģistrētās sesijas pa dienām',activeDays:'Katra līnija ir viena spēle. Sesiju skaits pa dienām.',details:'Detalizētie dati',games:'Spēļu pārskati',existing:'Atver katras spēles esošo dashboard.',method:'Kā lasīt šo pārskatu',methodText:'Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.',footer:'Apkopoti spēlēšanas dati. Detalizētie pārskati saglabā savu pašreizējo piekļuvi.',sessions:'Reģistrētās sesijas',completed:'Pabeigtās spēles',connected:'Spēles ar datiem',totalNote:'Pieejamo spēļu summa',coverageNote:'Šajā pārskatā iekļautās spēles',loading:'Ielādē datus…',partial:'Daļējs pārskats',complete:'Visu spēļu pārskats',coverage:'Dati pieejami {n} no {total} spēlēm. Kopsummās: {names}.',none:'Pašlaik kopsavilkuma dati nav pieejami. Spēļu detalizētos pārskatus var atvērt zemāk.',open:'Atvērt spēles dashboard',live:'Dati pieejami',pending:'Dati vēl nav pieslēgti',error:'Datus neizdevās ielādēt',pendingNote:'Šīs spēles dati vēl nav iekļauti kopsummās. Tie apskatāmi esošajā dashboardā.',errorNote:'Šīs spēles dati nav iekļauti pašreizējā pārskatā. Mēģini atjaunot datus vai atver spēles dashboard.',completion:'Pabeigšanas īpatsvars',duration:'Vidējais ilgums',rating:'Vērtējums',updated:'Dati atjaunoti',empty:'Izvēlētajā periodā pievienotajās spēlēs nav reģistrētu sesiju.',noTimeline:'Aktivitātes grafiks būs redzams, kad būs pieejami dati.',durationNote:'Vidējais ilgums aprēķināts pabeigtajām spēlēm.',lu:'LU 107. jubilejas spēle',luDescription:'Jautājumi, kārtas un Latvijas Universitātes atklāšana.',riddle:'Mīklu režģis',riddleDescription:'Mīklas, minējumi un valodas izzināšana.',liv:'Lībiešu vietvārdi',livDescription:'Vietvārdi, kartes un lībiešu kultūrtelpa.',luNote:'Sesija tiek reģistrēta, sākot spēli.',riddleNote:'Sesija tiek reģistrēta pēc pirmās pabeigtās vai izlaistās mīklas.',livNote:'Spēlēšanas sesijas un pabeigtās kārtas.',included:'Iekļauts',outOf:'no'
+  refreshing:'Atjauno fonā…',cached:'Saglabātie dati',cacheFailed:'Dati gaida atjaunošanu',received:'Dati saņemti',cacheNotice:'Redzami arī iepriekš saglabātie dati; to laiks norādīts pie katras spēles.',skip:'Pāriet uz saturu',home:'Uz sākumlapu',lightTheme:'Pārslēgt uz gaišo režīmu',darkTheme:'Pārslēgt uz tumšo režīmu',title:'Spēļu analītika',intro:'Kopējais pārskats un katras spēles dati vienuviet.',period:'Periods',all:'Viss periods',month:'Pēdējās 30 dienas',week:'Pēdējās 7 dienas',refresh:'Atjaunot',activity:'Aktivitāte',timeline:'Reģistrētās sesijas pa dienām',activeDays:'Katra līnija ir viena spēle. Sesiju skaits pa dienām.',details:'Detalizētie dati',games:'Spēļu pārskati',existing:'Atver katras spēles esošo dashboard.',method:'Kā lasīt šo pārskatu',methodText:'Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.',footer:'Apkopoti spēlēšanas dati. Detalizētie pārskati saglabā savu pašreizējo piekļuvi.',sessions:'Reģistrētās sesijas',completed:'Pabeigtās spēles',connected:'Spēles ar datiem',totalNote:'Pieejamo spēļu summa',coverageNote:'Šajā pārskatā iekļautās spēles',loading:'Ielādē datus…',partial:'Daļējs pārskats',complete:'Visu spēļu pārskats',coverage:'Dati pieejami {n} no {total} spēlēm. Kopsummās: {names}.',none:'Pašlaik kopsavilkuma dati nav pieejami. Spēļu detalizētos pārskatus var atvērt zemāk.',open:'Atvērt spēles dashboard',live:'Dati pieejami',pending:'Dati vēl nav pieslēgti',error:'Datus neizdevās ielādēt',pendingNote:'Šīs spēles dati vēl nav iekļauti kopsummās. Tie apskatāmi esošajā dashboardā.',errorNote:'Šīs spēles dati nav iekļauti pašreizējā pārskatā. Mēģini atjaunot datus vai atver spēles dashboard.',completion:'Pabeigšanas īpatsvars',duration:'Vidējais ilgums',rating:'Vērtējums',updated:'Dati atjaunoti',empty:'Izvēlētajā periodā pievienotajās spēlēs nav reģistrētu sesiju.',noTimeline:'Aktivitātes grafiks būs redzams, kad būs pieejami dati.',durationNote:'Vidējais ilgums aprēķināts pabeigtajām spēlēm.',lu:'LU 107. jubilejas spēle',luDescription:'Jautājumi, kārtas un Latvijas Universitātes atklāšana.',riddle:'Mīklu režģis',riddleDescription:'Mīklas, minējumi un valodas izzināšana.',liv:'Lībiešu vietvārdi',livDescription:'Vietvārdi, kartes un lībiešu kultūrtelpa.',luNote:'Sesija tiek reģistrēta, sākot spēli.',riddleNote:'Sesija tiek reģistrēta pēc pirmās pabeigtās vai izlaistās mīklas.',livNote:'Spēlēšanas sesijas un pabeigtās kārtas.',included:'Iekļauts',outOf:'no'
  },
  en: {
-  refreshing:'Updating in background…',cached:'Saved data',cacheFailed:'Update failed – showing saved data',received:'Data received',cacheNotice:'Previously saved data is also shown; its time is listed for each game.',skip:'Skip to content',home:'Back to home',lightTheme:'Switch to light theme',darkTheme:'Switch to dark theme',title:'Game analytics',intro:'An overview of activity and individual game insights in one place.',period:'Period',all:'All time',month:'Last 30 days',week:'Last 7 days',refresh:'Refresh',activity:'Activity',timeline:'Recorded sessions by day',activeDays:'One line per game. Recorded sessions per day.',details:'Explore the data',games:'Game dashboards',existing:'Open each game’s existing dashboard.',method:'How to read this overview',methodText:'Totals include only games with available data. Sessions are not unique players. Games record session starts and completion differently, so completion rates are shown separately for each game. Dates and periods follow each game’s existing reporting rules. Scores are not added or averaged across games.',footer:'Aggregated gameplay data. Detailed dashboards retain their existing access settings.',sessions:'Recorded sessions',completed:'Completed games',connected:'Games with data',totalNote:'Sum across available games',coverageNote:'Games included in this overview',loading:'Loading data…',partial:'Partial overview',complete:'All games overview',coverage:'Data available for {n} of {total} games. Totals include: {names}.',none:'Summary data is currently unavailable. You can open the individual game dashboards below.',open:'Open game dashboard',live:'Data available',pending:'Data not yet connected',error:'Could not load data',pendingNote:'This game is not yet included in the totals. Its data is available in the existing dashboard.',errorNote:'This game is not included in the current overview. Refresh the data or open the game dashboard.',completion:'Completion rate',duration:'Average duration',rating:'Rating',updated:'Data updated',empty:'No recorded sessions in the connected games for this period.',noTimeline:'Activity will appear when data is available.',durationNote:'Average duration is calculated for completed games.',lu:'UL 107th anniversary game',luDescription:'Questions, rounds and discoveries at the University of Latvia.',riddle:'Riddle Grid',riddleDescription:'Riddles, guesses and language exploration.',liv:'Livonian place names',livDescription:'Place names, maps and Livonian cultural heritage.',luNote:'A session is recorded when the game starts.',riddleNote:'A session is recorded after the first completed or skipped riddle.',livNote:'Gameplay sessions and completed rounds.',included:'Included',outOf:'of'
+  refreshing:'Updating in background…',cached:'Saved data',cacheFailed:'Awaiting data update',received:'Data received',cacheNotice:'Previously saved data is also shown; its time is listed for each game.',skip:'Skip to content',home:'Back to home',lightTheme:'Switch to light theme',darkTheme:'Switch to dark theme',title:'Game analytics',intro:'An overview of activity and individual game insights in one place.',period:'Period',all:'All time',month:'Last 30 days',week:'Last 7 days',refresh:'Refresh',activity:'Activity',timeline:'Recorded sessions by day',activeDays:'One line per game. Recorded sessions per day.',details:'Explore the data',games:'Game dashboards',existing:'Open each game’s existing dashboard.',method:'How to read this overview',methodText:'Totals include only games with available data. Sessions are not unique players. Games record session starts and completion differently, so completion rates are shown separately for each game. Dates and periods follow each game’s existing reporting rules. Scores are not added or averaged across games.',footer:'Aggregated gameplay data. Detailed dashboards retain their existing access settings.',sessions:'Recorded sessions',completed:'Completed games',connected:'Games with data',totalNote:'Sum across available games',coverageNote:'Games included in this overview',loading:'Loading data…',partial:'Partial overview',complete:'All games overview',coverage:'Data available for {n} of {total} games. Totals include: {names}.',none:'Summary data is currently unavailable. You can open the individual game dashboards below.',open:'Open game dashboard',live:'Data available',pending:'Data not yet connected',error:'Could not load data',pendingNote:'This game is not yet included in the totals. Its data is available in the existing dashboard.',errorNote:'This game is not included in the current overview. Refresh the data or open the game dashboard.',completion:'Completion rate',duration:'Average duration',rating:'Rating',updated:'Data updated',empty:'No recorded sessions in the connected games for this period.',noTimeline:'Activity will appear when data is available.',durationNote:'Average duration is calculated for completed games.',lu:'UL 107th anniversary game',luDescription:'Questions, rounds and discoveries at the University of Latvia.',riddle:'Riddle Grid',riddleDescription:'Riddles, guesses and language exploration.',liv:'Livonian place names',livDescription:'Place names, maps and Livonian cultural heritage.',luNote:'A session is recorded when the game starts.',riddleNote:'A session is recorded after the first completed or skipped riddle.',livNote:'Gameplay sessions and completed rounds.',included:'Included',outOf:'of'
  }
 };
 const games = [
@@ -56,36 +57,43 @@ function render() {
   return `<article class="game"><span class="badge ${data ? 'live' : ''}">${t(status)}</span><h3>${t(g.name)}</h3><p class="game-description">${t(g.description)}</p>${o ? `<dl>${metrics.map(([label,value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl><p class="note">${t(g.note)} ${t('durationNote')}${o.ratingCount && o.averageRating !== null ? ` ${t('rating')}: ${number(o.averageRating,1)} / 5 (${number(o.ratingCount)}).` : ''}</p>${entry.cached ? `<p class="updated">${t('received')}: ${escape(new Intl.DateTimeFormat(language === 'lv' ? 'lv-LV' : 'en-GB',{dateStyle:'short',timeStyle:'short'}).format(new Date(entry.savedAt)))}</p>` : ''}${data.generatedAt ? `<p class="updated">${t('updated')}: ${escape(new Intl.DateTimeFormat(language === 'lv' ? 'lv-LV' : 'en-GB',{dateStyle:'short',timeStyle:'short'}).format(new Date(data.generatedAt)))}</p>` : ''}` : `<p class="note">${t(status === 'loading' ? 'loading' : status === 'error' ? 'errorNote' : 'pendingNote')}</p>`}<a class="open" href="${g.url}" aria-label="${escape(t('open')+' – '+t(g.name))}">${t('open')}</a></article>`;
  }).join('');
 }
+let snapshot;
+const snapshotKey = 'rg-overview-snapshot-v1';
+const snapshotUrl = 'https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/stats.json';
+try { snapshot = normalizeSnapshot(JSON.parse(localStorage.getItem(snapshotKey)), games.map(g=>g.id)); } catch {}
+function applySnapshot() {
+ state = snapshot ? snapshotState(snapshot, $('period').value) : new Map();
+ if (!loading) games.forEach(g=>{if (!state.has(g.id)) state.set(g.id,{error:true});});
+ render();
+}
+async function readSnapshot(url, signal) {
+ const response = await fetch(url,{signal,cache:'no-store'});
+ if (!response.ok) throw new Error(`Snapshot HTTP ${response.status}`);
+ return normalizeSnapshot(await response.json(),games.map(g=>g.id));
+}
 async function load() {
  controller?.abort();
  const current = new AbortController(); controller = current;
- const period = $('period').value;
- let storage; try { storage = localStorage; } catch {}
- state = new Map(games.map(g => [g.id, readSummaryCache(storage, SOURCES[g.id], period)]).filter(([,entry]) => entry));
- loading = true; render();
- await Promise.all(games.map(async g => {
-  const request = new AbortController();
-  const cancel = () => request.abort();
-  current.signal.addEventListener('abort',cancel,{once:true});
-  const timeout = setTimeout(cancel,90000);
+ loading = true; applySnapshot();
+ const timeout=setTimeout(()=>current.abort(),5000);
+ try {
+  snapshot = await readSnapshot(snapshotUrl,current.signal);
+  try {localStorage.setItem(snapshotKey,JSON.stringify(snapshot));} catch {}
+ } catch {
+  // Bootstrap/offline fallback, never wait for the three Apps Script servers.
   try {
-   const data = await fetchSummary(SOURCES[g.id],period,request.signal);
-   if (current === controller) {
-    writeSummaryCache(storage, SOURCES[g.id], period, data);
-    state.set(g.id,{data});
-   }
-  } catch (error) {
-   if (current === controller) console.warn('Summary unavailable:',g.id,error.message);
-   if (current === controller) state.set(g.id,{...state.get(g.id),error:true});
-  } finally {
-   clearTimeout(timeout);current.signal.removeEventListener('abort',cancel);
-   if (current === controller) render();
-  }
- }));
- if (current === controller) {loading=false;render();}
+   const backup = await readSnapshot('./snapshot.json',AbortSignal.timeout(3000));
+   if (!snapshot || Date.parse(backup.generatedAt)>Date.parse(snapshot.generatedAt)) snapshot=backup;
+   try {localStorage.setItem(snapshotKey,JSON.stringify(snapshot));} catch {}
+  } catch {}
+ } finally {
+  clearTimeout(timeout);
+  if (controller===current) { loading=false;applySnapshot(); }
+ }
 }
-$('period').addEventListener('change',load);
+$('period').addEventListener('change',applySnapshot);
 $('refresh').addEventListener('click',load);
+setInterval(()=>{if (!document.hidden && !loading) load();},5*60000);
 document.querySelectorAll('[data-lang]').forEach(el => el.addEventListener('click',()=>{
  language=el.dataset.lang;
  const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);render();
