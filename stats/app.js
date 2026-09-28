@@ -1,7 +1,7 @@
 import { buildTimelineSeries, renderTimeline } from './timeline.js?v=20260922-2';
 import { SOURCES } from './config.js?v=20260922-1';
-import { combineSummaries } from './data.js?v=20260922-5';
-import { normalizeSnapshot, snapshotState } from './snapshot.js?v=20260928-1';
+import { combineSummaries, fetchSummary } from './data.js?v=20260922-5';
+import { normalizeSnapshot, snapshotState, mergeSnapshots, refreshStaleSources } from './snapshot.js?v=20260928-2';
 const copy = {
  lv: {
   refreshing:'Atjauno fonā…',cached:'Saglabātie dati',cacheFailed:'Dati gaida atjaunošanu',received:'Dati saņemti',cacheNotice:'Redzami arī iepriekš saglabātie dati; to laiks norādīts pie katras spēles.',skip:'Pāriet uz saturu',home:'Uz sākumlapu',lightTheme:'Pārslēgt uz gaišo režīmu',darkTheme:'Pārslēgt uz tumšo režīmu',title:'Spēļu analītika',intro:'Kopējais pārskats un katras spēles dati vienuviet.',period:'Periods',all:'Viss periods',month:'Pēdējās 30 dienas',week:'Pēdējās 7 dienas',refresh:'Atjaunot',activity:'Aktivitāte',timeline:'Reģistrētās sesijas pa dienām',activeDays:'Katra līnija ir viena spēle. Sesiju skaits pa dienām.',details:'Detalizētie dati',games:'Spēļu pārskati',existing:'Atver katras spēles esošo dashboard.',method:'Kā lasīt šo pārskatu',methodText:'Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.',footer:'Apkopoti spēlēšanas dati. Detalizētie pārskati saglabā savu pašreizējo piekļuvi.',sessions:'Reģistrētās sesijas',completed:'Pabeigtās spēles',connected:'Spēles ar datiem',totalNote:'Pieejamo spēļu summa',coverageNote:'Šajā pārskatā iekļautās spēles',loading:'Ielādē datus…',partial:'Daļējs pārskats',complete:'Visu spēļu pārskats',coverage:'Dati pieejami {n} no {total} spēlēm. Kopsummās: {names}.',none:'Pašlaik kopsavilkuma dati nav pieejami. Spēļu detalizētos pārskatus var atvērt zemāk.',open:'Atvērt spēles dashboard',live:'Dati pieejami',pending:'Dati vēl nav pieslēgti',error:'Datus neizdevās ielādēt',pendingNote:'Šīs spēles dati vēl nav iekļauti kopsummās. Tie apskatāmi esošajā dashboardā.',errorNote:'Šīs spēles dati nav iekļauti pašreizējā pārskatā. Mēģini atjaunot datus vai atver spēles dashboard.',completion:'Pabeigšanas īpatsvars',duration:'Vidējais ilgums',rating:'Vērtējums',updated:'Dati atjaunoti',empty:'Izvēlētajā periodā pievienotajās spēlēs nav reģistrētu sesiju.',noTimeline:'Aktivitātes grafiks būs redzams, kad būs pieejami dati.',durationNote:'Vidējais ilgums aprēķināts pabeigtajām spēlēm.',lu:'LU 107. jubilejas spēle',luDescription:'Jautājumi, kārtas un Latvijas Universitātes atklāšana.',riddle:'Mīklu režģis',riddleDescription:'Mīklas, minējumi un valodas izzināšana.',liv:'Lībiešu vietvārdi',livDescription:'Vietvārdi, kartes un lībiešu kultūrtelpa.',luNote:'Sesija tiek reģistrēta, sākot spēli.',riddleNote:'Sesija tiek reģistrēta pēc pirmās pabeigtās vai izlaistās mīklas.',livNote:'Spēlēšanas sesijas un pabeigtās kārtas.',included:'Iekļauts',outOf:'no'
@@ -75,23 +75,36 @@ async function load() {
  controller?.abort();
  const current = new AbortController(); controller = current;
  loading = true; applySnapshot();
- const timeout=setTimeout(()=>current.abort(),5000);
+
  try {
-  snapshot = await readSnapshot(snapshotUrl,current.signal);
+  snapshot = mergeSnapshots(snapshot,await readSnapshot(snapshotUrl,AbortSignal.any([current.signal,AbortSignal.timeout(5000)])));
   try {localStorage.setItem(snapshotKey,JSON.stringify(snapshot));} catch {}
  } catch {
   // Bootstrap/offline fallback, never wait for the three Apps Script servers.
   try {
    const backup = await readSnapshot('./snapshot.json',AbortSignal.timeout(3000));
-   if (!snapshot || Date.parse(backup.generatedAt)>Date.parse(snapshot.generatedAt)) snapshot=backup;
+   snapshot = mergeSnapshots(snapshot,backup);
    try {localStorage.setItem(snapshotKey,JSON.stringify(snapshot));} catch {}
   } catch {}
  } finally {
-  clearTimeout(timeout);
-  if (controller===current) { loading=false;applySnapshot(); }
+  if (controller===current) {
+   applySnapshot();
+   const recoveryTimeout=setTimeout(()=>current.abort(),45000);
+   try {
+    await refreshStaleSources(snapshot,$('period').value,SOURCES,fetchSummary,current.signal,incoming=>{
+     if (controller!==current) return;
+     snapshot=mergeSnapshots(snapshot,incoming);
+     try {localStorage.setItem(snapshotKey,JSON.stringify(snapshot));} catch {}
+     applySnapshot();
+    });
+   } finally {
+    clearTimeout(recoveryTimeout);
+    if (controller===current) {loading=false;applySnapshot();}
+   }
+  }
  }
 }
-$('period').addEventListener('change',applySnapshot);
+$('period').addEventListener('change',load);
 $('refresh').addEventListener('click',load);
 setInterval(()=>{if (!document.hidden && !loading) load();},5*60000);
 document.querySelectorAll('[data-lang]').forEach(el => el.addEventListener('click',()=>{

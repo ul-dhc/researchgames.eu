@@ -1,6 +1,6 @@
 # ResearchGames overview
 
-Static LV/EN overview at `/stats/`, linked from both homepage footers. It reads one precomputed public JSON file containing all three games and all three periods. The browser never waits for Apps Script requests. Period changes use the already loaded file.
+Static LV/EN overview at `/stats/`, linked from both homepage footers. It reads one precomputed public JSON file containing all three games and all three periods. The browser immediately displays the already loaded snapshot. If sources are older than 15 minutes, missing, or failed, it refreshes only those sources for the selected period in the background.
 
 ## Data contract
 
@@ -60,7 +60,7 @@ GitHub schedules can be delayed, so five minutes is a target, not a delivery gua
 
 Each source and period keeps its own retrieval timestamp. If collection fails, its previous data remains and is marked as awaiting an update. Missing sources are excluded, not counted as zero. Only validated aggregate fields are published; individual sessions, answers, and comments are excluded.
 
-The browser shows its saved snapshot immediately and checks the public file in the background. Data older than 15 minutes or retained after a failed collection is labeled. While the tab is visible, the browser checks the file every five minutes. Refresh reads the latest published file; it does not trigger Google collection. If the public file is unavailable, `stats/snapshot.json` supplies a fallback when it is newer than the browser snapshot. Both files use the same validated format.
+The browser shows its saved snapshot immediately and checks the public file in the background. Data older than 15 minutes or retained after a failed collection is labeled. While the tab is visible, the browser checks the file every five minutes. Refresh reads the latest published file and refreshes stale sources in the background if needed. If the public file is unavailable, `stats/snapshot.json` supplies a fallback for entries newer than the browser snapshot. Source generation timestamps are compared per game and period; an older network or fallback response never overwrites a newer entry. The collector applies the same protection. Retrieval time alone does not make old data fresh. Both files use the same validated format.
 
 To regenerate the tracked fallback locally:
 
@@ -69,3 +69,7 @@ node stats/scripts/update-snapshot.mjs
 ```
 
 The shared `SummaryCache.gs` wrapper still caches successful public summaries per period for 300 seconds in Apps Script. Deployed to Livonian version 24 and Riddle Grid version 25; LU107 retains its existing endpoint. This snapshot change does not modify game ingestion or Apps Script deployments.
+
+## LU107 dashboard recovery
+
+The separate LU107 dashboard keeps its period-specific saved data on reload, retries one transient API failure, and retains the newer source timestamp. Switching periods cancels the previous request, preventing late responses from appearing under the wrong filter. Failed background refreshes keep the dashboard visible with a notice. Reload no longer sends `force=1` to bypass the source cache.
