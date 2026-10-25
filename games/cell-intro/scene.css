@@ -674,7 +674,6 @@ nav{transition:opacity .7s ease}
 #role-match[data-complete=true] .role-connection{display:flex;position:absolute;right:-90px;top:48px;width:88px;align-items:center;flex-direction:column;gap:5px;color:#c5dfd7}
 .role-connection span{font-size:14px;line-height:1.25;text-align:center}
 .role-connection svg{width:25px;height:25px;flex:none}
-#role-sequence-note{font-size:14px;line-height:1.5;max-width:650px;color:#e0d4d9;margin:18px 0}
 #role-replay{margin-top:4px}
 @media(max-width:650px){
  #scene[data-phase=roles]{padding-top:208px;padding-bottom:100px}
@@ -715,3 +714,8 @@ nav{transition:opacity .7s ease}
 #scene[data-phase=roles][data-role-complete=true] #caption{font-size:44px;color:#e0f0d8;text-shadow:0 0 28px #d6efb12e;padding-left:0}
 #role-recap{font-size:16px;line-height:1.5;max-width:1000px;margin:18px 0 12px;color:#f1e8de}
 @media(max-width:650px){#scene[data-phase=roles][data-role-complete=true] #caption{font-size:38px;padding-left:0}#role-recap{font-size:15px;line-height:1.5}}
+
+/* Compact information actions retain their accessible structure names. */
+#role-match .role-info{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:12px;margin:0 auto;border:0;border-radius:50%;text-decoration:none;color:#e1d7dc;background:transparent}
+#role-match .role-info svg{width:20px;height:20px}
+#role-match .role-info:hover{color:#fff;background:#ffffff12}

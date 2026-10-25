@@ -123,16 +123,17 @@ function renderNuclear(){
  $('nuclear-world').style.transform=`scale(${zoom})`;
  $('chromatin-drift').style.transform='none';
 }
+const dnaDefinition='DNA (deoxyribonucleic acid) is a molecule that stores genetic instructions, including instructions for making proteins.';
 const nucleusParts={
  envelope:{name:'Nuclear envelope.',text:'The layered boundary is the nuclear envelope. Its two membranes surround the nucleus.',point:[.24,.20],label:[.15,.15],halo:[.24,.20,.11,.045]},
  pores:{name:'Nuclear pores.',text:'Nuclear pores are regulated passages through the envelope. They help control which molecules enter and leave the nucleus.',point:[.96,.48],label:[.94,.24],halo:[.96,.48,.045,.06]},
  nucleolus:{name:'Nucleolus.',text:'The darker region is the nucleolus. It helps assemble ribosome parts. Ribosomes help the cell make proteins.',point:[.70,.34],label:[.66,.47],halo:[.70,.34,.14,.17]},
- dna:{name:'DNA + proteins.',text:'These folded threads contain long DNA molecules packed with proteins. Together, they are called chromatin. DNA stores genetic information.',point:[.40,.67],label:[.20,.73],halo:[.40,.67,.17,.14]},
+ dna:{name:'DNA + proteins.',text:dnaDefinition+' These folded threads contain long DNA molecules packed with proteins. Together, they are called chromatin.',point:[.40,.67],label:[.20,.73],halo:[.40,.67,.17,.14]},
  nucleoplasm:{name:'Nucleoplasm.',text:'Nucleoplasm is the fluid-like material inside the nucleus. This fluid environment surrounds chromatin (DNA with proteins) and the nucleolus.',point:[.81,.63],label:[.81,.86],halo:[.81,.63,.08,.09]}
 };
 const cellParts={
  vacuole:{name:'Vacuole',text:'This large, fluid-filled compartment stores water and other substances. Water inside it helps keep the plant cell firm.'},
- nucleus:{name:'Nucleus',text:'The nucleus holds most of this cell’s DNA, which stores genetic information.'},
+ nucleus:{name:'Nucleus',text:'The nucleus holds most of this cell’s DNA – the molecule that stores its genetic instructions.'},
  wall:{name:'Cell wall',text:'The firm outer wall supports and protects the plant cell. Neighbouring cells share a closely joined boundary.'},
  membrane:{name:'Cell membrane',text:'This thin boundary lies just inside the wall. It helps control which substances enter and leave the cell.'}
 };
@@ -257,21 +258,24 @@ const learningGuide={
  protein:'Drag an amino acid to the ribosome or select a building block and then the ribosome. After the chain forms, fold and release it, then bring sucrose to the enzyme.'
 };
 const learningFacts={
- 'enzyme-protein':{name:'Enzyme protein',text:'Our enzyme is a protein that helps split sucrose into two smaller sugars. It stays unchanged by this reaction and can be used again.'},
+ 'enzyme-protein':{name:'Enzyme protein',text:'An enzyme is a protein that helps a chemical reaction happen. Our enzyme in this example splits sucrose into glucose and fructose, two smaller sugars. It is not used up by the reaction and can be used again.'},
  glucose:{name:'Glucose',text:'Glucose is one of the two smaller sugars released when sucrose splits. The cell can break it down to release energy or use it to build materials it needs.'},
  fructose:{name:'Fructose',text:'Fructose is the other smaller sugar released when sucrose splits. The cell can use it in reactions that release energy or make materials it needs.'},
  sucrose:{name:'Sucrose',text:'Sucrose is a sugar made from two linked smaller sugars: glucose and fructose. Our enzyme helps split it into those two sugars.'},
  'protein-chain':{name:'Growing protein chain',text:'A protein begins as a chain of amino acids. The ribosome joins them in the order given by messenger RNA. Parts of the chain can start folding as it grows.'},
  'amino-acids':{name:'Amino acids',text:'Amino acids are small building blocks used to make proteins. Plant cells make amino acids from other molecules. Breaking down old proteins also releases amino acids that can be used again. Available amino acids in the cytoplasm can be brought to a ribosome, which joins them following messenger RNA instructions.'},
- 'messenger-rna':{name:'Messenger RNA',text:'Messenger RNA is a kind of RNA molecule carrying a copy of this gene’s instructions from the nucleus to a ribosome. RNA stands for ribonucleic acid. Other kinds of RNA have other jobs.'},
+ 'messenger-rna':{name:'Messenger RNA',text:'Messenger RNA, or mRNA, carries a temporary copy of a gene’s instructions from DNA to a ribosome, which uses them to build a protein. RNA stands for ribonucleic acid. Other kinds of RNA have other jobs. The DNA stays in the nucleus.'},
  cytoplasm:{name:'Cytoplasm',text:'Cytoplasm is the part of this cell outside the nucleus but inside the cell membrane. Many cell activities happen here.'},
  ribosome:{name:'Ribosome',text:'This ribosome in the cytoplasm uses the messenger RNA instructions to join small building blocks, called amino acids, into a separate protein chain.'},
  gene:{name:'Gene',text:'A gene is a DNA section containing instructions for a functional product – something the cell uses. This example holds instructions for a protein. Other genes have other products.'},
- message:{name:'Messenger RNA',text:'RNA stands for ribonucleic acid, a type of molecule. Messenger RNA, or mRNA, is one form of RNA that carries a temporary copy of instructions from DNA. Other forms of RNA have other jobs. The DNA stays in the nucleus.'},
+
  export:{name:'Nuclear pore',text:'A nuclear pore is a regulated passage through the nuclear envelope. Prepared messenger RNA can pass through it into the cytoplasm.'},
- protein:{name:'An enzyme’s job',text:'Invertase is an enzyme that splits sucrose into glucose and fructose. Plant cells can use these smaller sugars. This is a representative plant-cell example, not an identified gene from this onion. The building blocks shown stand for a much longer protein chain; helper molecules used in real protein synthesis are omitted.'},
- 'dna-focus':{name:'DNA',text:'DNA has two strands twisted into a double helix. Inside the nucleus DNA is packed with proteins; this material is called chromatin.'}
+
+ 'dna-focus':{name:'DNA',text:dnaDefinition+' Its two strands twist into a double helix. In this cell, most DNA is inside the nucleus, packed with proteins.'}
 };
+// Reuse the same definitions wherever these structures can be explored.
+learningFacts.message=learningFacts['messenger-rna'];
+learningFacts.protein=learningFacts['enzyme-protein'];
 function renderChromatinEnvironment(g,progress){
  const holder=$('chromatin-environment'),image=$('chromatin-environment-image');holder.hidden=progress<=0&&!['dna-focus','gene','message','export'].includes(phase);holder.style.opacity=String(phase==='dna-focus'?1:Math.min(1,progress*1.8));
  const panel=$('nucleus-model'),pr=panel.getBoundingClientRect?.()||{left:0,top:0},sr=scene.getBoundingClientRect?.()||{left:0,top:0},start=chromatinStart||{x:g.x/g.mw,y:g.y/g.mh,w:g.w/g.mw};
@@ -459,7 +463,7 @@ function renderRoleMatch(){
   paired.hidden=!matched;paired.textContent=matched?part.job:'';job.hidden=complete||matched;job.disabled=matched||!roleSelected;job.dataset.matched=String(matched);job.dataset.wrong=String(roleWrong===key);job.style.order=String(roleOrder.indexOf(key));
  }
  $('role-recap').hidden=!complete;$('role-recap').textContent=roleLearningRecap;
- $('role-jobs').hidden=complete;$('role-replay').hidden=!complete;$('role-sequence-note').hidden=!complete;
+ $('role-jobs').hidden=complete;$('role-replay').hidden=!complete;
 }
 function selectRole(key){
  if(phase!=='roles'||roleMatched.includes(key))return;roleSelected=key;roleWrong='';$('role-feedback').textContent=roleParts[key].name+' selected. Choose its job.';renderRoleMatch();
@@ -468,7 +472,7 @@ function matchRole(key,keyboard=false){
  if(phase!=='roles'||!roleSelected||roleMatched.includes(key))return;
  if(key!==roleSelected){roleWrong=key;$('role-feedback').textContent='Try a different job. '+roleParts[roleSelected].hint;renderRoleMatch();return;}
  const name=roleParts[key].name;roleMatched.push(key);roleSelected='';roleWrong='';$('role-feedback').textContent=name+' matched. '+roleMatched.length+' of 4 pairs connected.';renderRoleMatch();
- if(roleMatched.length===4){$('role-feedback').textContent='All four matched. Each part has its own job.';refreshNarrator(false);$('role-replay').focus({preventScroll:true});}
+ if(roleMatched.length===4){$('role-feedback').textContent='All four matched.';refreshNarrator(false);$('role-replay').focus({preventScroll:true});}
  else if(keyboard)$('role-select-'+Object.keys(roleParts).find(k=>!roleMatched.includes(k))).focus({preventScroll:true});
 }
 for(const [key,part] of Object.entries(roleParts)){
