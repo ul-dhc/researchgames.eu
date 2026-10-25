@@ -33,7 +33,7 @@ const captions={
  protein:['A protein with a job.','Proteins do useful jobs. In this example, we’ll build an enzyme that helps split a sugar called sucrose. Amino acids are the building blocks; they are already in the cytoplasm.'],
 };
 let phase='idle',approach=0,cellEntry=1600,paused=false,still=reduced.matches,soundOn=readAudioPreference().soundOn,last=0,revealTime=0,revealed=true,raf=0,audioState='ready',audioAttempt=0,hasBegun=false,narrationSpeed=1,transitioning=false,transitionTime=0,phaseHold=0,phaseElapsed=0,settingsWasPaused=false,settingsReturning=false,navigationHold=false,musicFinished=false,skinFocus=null,skinMatch=null,nuclearMatch=null,outgoingMotion=null,transitionStatic=false,incomingDecoded=true,visualLoadToken=0,nuclearTime=0,titleTime=0,modelReady=false,modelEntryStatic=false,modelSelected=false,liftStart=null,selectedPart='',infoKey='',infoTrigger=null,guideOpen=false,guideSeen=false,activityStarted=false,activityStep=0,activityPlaced=0,activityChoice='',activityCommitted=false,activityFeedback='',activityOrder=[],bridgeClock=0,learningClock=0,geneSelected=false,copyAt=-1,rnaMade=false,rnaSelected=false,rnaTravelAt=-1,rnaArrived=false,rnaExported=false,rnaTravelStage='',rnaDrag=null,rnaDragPosition=null,rnaStageStart=null,rnaTransportHint='',rnaDragEnded=0,learningGeometry=null,proteinCount=0,proteinCompletionReached=false,chromatinStart=null,controlsAwake=1200,copyExplained=false,proteinStage='purpose',aminoSelected=0,aminoUsed=[],proteinFoldAt=-1,sugarAt=-1,proteinFocusAt=-1,proteinEntryTop=null,proteinGrowAt=-1,proteinAddAt=-1,proteinGrowReadyAt=-1,proteinFoldReadyAt=-1,proteinReactionReadyAt=-1,rnaDeliveryExplained=false,rnaArrivalAt=-1,exploreInvited=false,exploreReadClock=0;
-const physicalSources={idle:'assets/elodea-leaf-opening.png',teaser:'assets/elodea-leaf-opening.png',world:'assets/forest-mushroom.jpg',people:'assets/frog-on-hand.png',flowers:'assets/garden-flowers.jpg',onion:'assets/onion-bulbs.jpg',scales:'assets/onion-yellow-cutaway.png',skin:'assets/onion-yellow-cutaway.png'};
+const physicalSources={idle:'assets/elodea-leaf-opening.webp',teaser:'assets/elodea-leaf-opening.webp',world:'assets/forest-mushroom.jpg',people:'assets/frog-on-hand.png',flowers:'assets/garden-flowers.jpg',onion:'assets/onion-bulbs.jpg',scales:'assets/onion-yellow-cutaway.png',skin:'assets/onion-yellow-cutaway.png'};
 const photoPhases=['idle','world','people','flowers','onion'];
 const learningPhases=['dna-focus','gene','message','export','protein'];
 const nuclearPhases=['inside','nucleolus','model','explore','assemble',...learningPhases];
@@ -579,8 +579,8 @@ reduced.addEventListener('change',e=>{still=e.matches;updateMotion();});
 document.addEventListener('visibilitychange',()=>{last=0;if(document.hidden){navigationHold=false;scene.dataset.hold='false';if(phase!=='idle')setPaused(true);stopAudio('paused');}});
 new ResizeObserver(()=>{geometry();renderModel();}).observe(scene);
 function loaded(){begin.disabled=false;$('skip-introduction').disabled=false;buttonContent(begin,'Begin exploration','arrow-right',true);geometry();}
-cell.addEventListener('load',loaded,{once:true});cell.addEventListener('load',geometry);cell.addEventListener('error',()=>{$('detail-visual').textContent='The cell image could not load. Please reload.';begin.textContent='Image unavailable';});
-if(cell.complete&&cell.naturalWidth)loaded();
+physical.addEventListener('load',loaded,{once:true});cell.addEventListener('load',geometry);physical.addEventListener('error',()=>{begin.textContent='Reload to load the opening image';});
+if(physical.complete&&physical.naturalWidth)loaded();
 
 
 function cancelShotTransition(){
@@ -643,8 +643,14 @@ buttonContent($('start-over'),'Start over','rotate-ccw');
 buttonContent(previousScene,'Previous scene','chevron-left');buttonContent(nextScene,'Next scene','chevron-right');
 updateSpeed();
 
-const preloadedImages=[];
-for(const src of new Set([...Object.values(physicalSources),'assets/onion-field.png','assets/onion-cell-clean.png','assets/teaser-human-epithelium.jpg','assets/onion-nuclear-interior.jpg','assets/illustrated-nucleus-cutaway.png'])){const image=new Image();image.src=src;if(typeof image.decode==='function')image.decode().catch(()=>{});preloadedImages.push(image);}
+const preloadedImages=[];let preloadQueued=false;
+function scheduleLaterImages(){
+ if(preloadQueued)return;preloadQueued=true;
+ const warm=()=>{for(const src of new Set([...Object.values(physicalSources),'assets/onion-field.png','assets/onion-cell-clean.png','assets/teaser-human-epithelium.jpg','assets/onion-nuclear-interior.jpg','assets/illustrated-nucleus-cutaway.png'])){if(src===physicalSources.idle)continue;const image=new Image();image.fetchPriority='low';image.decoding='async';image.src=src;if(typeof image.decode==='function')image.decode().catch(()=>{});preloadedImages.push(image);}};
+ if(typeof requestIdleCallback==='function')requestIdleCallback(warm,{timeout:1500});else requestAnimationFrame(warm);
+}
+physical.addEventListener('load',scheduleLaterImages,{once:true});
+if(physical.complete&&physical.naturalWidth)scheduleLaterImages();
 setPhase('idle');updateMotion();syncSound();geometry();if(!raf)raf=requestAnimationFrame(tick);
 
 
