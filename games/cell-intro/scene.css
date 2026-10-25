@@ -39,8 +39,6 @@ dialog{color:#fff;background:#252027;border:1px solid #8b7c89;border-radius:16px
 
 #scene[data-phase=idle] #specimen-view{height:100%}
 #scene[data-phase=idle] #physical{object-position:center 40%;mask-image:linear-gradient(#000 60%,transparent)}
-#scene[data-phase=idle] .physical-camera{animation:title-drift 24s ease-in-out infinite alternate}
-@keyframes title-drift{from{transform:scale(1.01)}to{transform:scale(1.045) translateY(-3px)}}
 @media(prefers-reduced-motion:reduce){#scene[data-phase=idle] .physical-camera{animation:none}}
 
 #scene[data-phase=skin] #specimen-view{inset:auto;transform-origin:0 0;aspect-ratio:auto}
@@ -78,15 +76,6 @@ dialog{color:#fff;background:#252027;border:1px solid #8b7c89;border-radius:16px
 
 /* One clock in scene.js owns all camera transforms, including the title. */
 #scene[data-phase=idle] .physical-camera{animation:none!important}
-#title-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-#scene:not([data-phase=idle])>.physical-camera #title-atmosphere{display:none}
-#title-atmosphere span{position:absolute;width:4px;height:4px;border-radius:50%;background:#eee9d3;opacity:.10;filter:blur(.7px);pointer-events:none}
-#title-atmosphere span:nth-child(1){left:18%;top:22%;width:3px;height:3px}
-#title-atmosphere span:nth-child(2){left:36%;top:36%;width:5px;height:5px;opacity:.07;filter:blur(1px)}
-#title-atmosphere span:nth-child(3){left:58%;top:16%;width:3px;height:3px;opacity:.11}
-#title-atmosphere span:nth-child(4){left:72%;top:42%;width:4px;height:4px;opacity:.08}
-#title-atmosphere span:nth-child(5){left:84%;top:27%;width:2px;height:2px}
-#title-atmosphere span:nth-child(6){left:45%;top:48%;width:3px;height:3px;opacity:.07}
 .nuclear-camera{position:absolute;inset:0;opacity:0;overflow:hidden;pointer-events:none}
 #nuclear-world{position:absolute;inset:-2%;transform-origin:55% 40%}
 #nuclear-world img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 43%;display:block}
@@ -94,7 +83,7 @@ dialog{color:#fff;background:#252027;border:1px solid #8b7c89;border-radius:16px
 #scene[data-view=nuclear] .nuclear-camera{opacity:1}
 #scene[data-view=nuclear] .camera{opacity:0}
 @media(max-width:650px){#nuclear-world img{object-position:62% 40%}}
-@media(prefers-reduced-motion:reduce){#title-atmosphere{display:none!important}}
+@media(prefers-reduced-motion:reduce){}
 @media(max-width:650px) and (max-height:720px){#scene[data-phase=people] #physical{object-position:50% 65%}}
 
 /* Begin keeps the exact title layer and its running camera; only the purple view dissolves in. */
@@ -102,7 +91,6 @@ dialog{color:#fff;background:#252027;border:1px solid #8b7c89;border-radius:16px
 #scene[data-phase=teaser] #physical{object-position:center 40%;mask-image:linear-gradient(#000 60%,transparent);filter:none}
 #teaser-purple{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;pointer-events:none;filter:brightness(.94) saturate(.78)}
 #scene:not([data-phase=teaser]) #teaser-purple{display:none}
-#scene[data-phase=teaser]>.physical-camera #title-atmosphere{display:block}
 @media(max-width:650px){#teaser-purple{object-position:57% center}}
 
 /* Give the supplied portrait room: contain the photograph and keep the complete frog and hand. */
@@ -579,11 +567,9 @@ nav{transition:opacity .7s ease}
 }
 @media(prefers-reduced-motion:reduce){#exploration-next .primary:not([hidden]){animation:none}}
 
-/* Opening ambience shares the playback clock. */
-#opening-life{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:2;opacity:1}
+/* The continuous opening camera shares the pause-aware playback clock. */
+#scene:is([data-phase=idle],[data-phase=teaser]) .physical-camera{will-change:transform;transform:translate3d(2.222974664%,0.362144837%,0) scale(1.081863287)}
 
-#scene:not(:is([data-phase=idle],[data-phase=teaser])) #opening-life{display:none}
-#title-atmosphere{display:none!important}
 #scene:is([data-phase=idle],[data-phase=teaser]) #physical{filter:brightness(.94) contrast(1.02) saturate(.86)}
 
 /* The channel receives the message; illustration of accommodation, not a literal structure. */
@@ -626,7 +612,6 @@ nav{transition:opacity .7s ease}
 
 
 
-#opening-life circle{filter:blur(.35px);pointer-events:none}
 
 #opening-brand{position:absolute;z-index:4;top:23px;right:clamp(25px,4.5vw,70px);width:220px;height:auto;pointer-events:none}
 #scene:not([data-phase=idle]) #opening-brand{display:none}
@@ -719,3 +704,10 @@ nav{transition:opacity .7s ease}
 #role-match .role-info{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:12px;margin:0 auto;border:0;border-radius:50%;text-decoration:none;color:#e1d7dc;background:transparent}
 #role-match .role-info svg{width:20px;height:20px}
 #role-match .role-info:hover{color:#fff;background:#ffffff12}
+
+#music-track{display:block;width:100%;min-height:44px;margin:7px 0 16px;padding:8px 10px;border:1px solid #d9c8d27a;border-radius:10px;background:#382f38;color:#fff;font:inherit}
+#settings{max-height:calc(100svh - 110px);overflow:auto}
+#music-about{border-top:1px solid #d9c8d244;padding-top:12px;font-size:13px;line-height:1.5}
+#music-about summary{cursor:pointer;min-height:32px;color:#f1e8df}
+#music-about p{margin:9px 0;color:#e6dce2}
+#music-about a{color:#c2e0da;text-underline-offset:3px}
