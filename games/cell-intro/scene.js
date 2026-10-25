@@ -176,6 +176,11 @@ function openGuide(){
 function liftSpring(p){if(p<=0)return 0;if(p>=1)return 1;let value=1-Math.exp(-9*p)*(Math.cos(7*p)+9/7*Math.sin(7*p));if(p>.85)value+=(1-value)*ease((p-.85)/.15);return value;}
 const ease=p=>{const q=Math.min(1,Math.max(0,p));return q*q*(3-2*q);};
 function renderModel(){
+ if(phase==='protein'){$('protein-workbar').hidden=false;$('protein-work-cue').hidden=false;}
+ // Measure the story so the model follows its real height, including changing process copy.
+ const story=$('story');
+ const storyEnd=story.offsetTop+story.offsetHeight+(phase==='protein'?16:28);
+ if(Number.isFinite(storyEnd)&&scene.dataset.storyEnd!==String(storyEnd)){scene.dataset.storyEnd=String(storyEnd);scene.style.setProperty('--story-end',`${storyEnd}px`);}
  renderRoleMatch();
  const visible=['model','explore','assemble',...learningPhases].includes(phase),inspecting=['explore','assemble',...learningPhases].includes(phase),panel=$('nucleus-model');panel.hidden=!visible;panel.inert=!visible;$('guide-toggle').hidden=!visible&&phase!=='roles';
  const blend=!visible?0:phase!=='model'||modelEntryStatic||still?1:ease((phaseElapsed-300)/3600),lift=!inspecting?0:modelEntryStatic||still||phase==='assemble'||learningPhases.includes(phase)?1:liftSpring(phaseElapsed/1800);
@@ -183,17 +188,18 @@ function renderModel(){
  const camera=document.querySelector?.('.nuclear-camera');if(camera)camera.style.filter=visible?`blur(${3*blend}px) brightness(${1-.28*blend}) saturate(${1-.12*blend})`:'none';
  if(visible&&(modelEntryStatic||still||phaseElapsed>=(phase==='model'?3600:1800)))modelReady=true;
  scene.dataset.modelVisible=String(visible);scene.dataset.modelBlend=String(blend);scene.dataset.modelReady=String(visible&&modelReady);scene.dataset.nucleusLift=String(lift);scene.dataset.nucleusSelected=String(modelSelected);scene.dataset.envelopeActive=String(selectedPart==='envelope');scene.dataset.activePart=selectedPart;$('envelope-outline').style.display=phase==='explore'?'':'none';
- const entryFocus=proteinFocusProgress(),entryPortrait=scene.clientWidth<650,viewportHeight=typeof innerHeight==='number'?innerHeight:scene.clientHeight;if(phase==='protein'){panel.style.transition='none';panel.style.height=`${entryPortrait?350+50*entryFocus:Math.min(viewportHeight*.44,400)+(330-Math.min(viewportHeight*.44,400))*entryFocus}px`;panel.style.top=entryPortrait?'auto':`${(viewportHeight<=700?260:255)+(280-(viewportHeight<=700?260:255))*entryFocus}px`;}else{panel.style.height='';panel.style.top='';panel.style.transition='';}
+ const entryFocus=proteinFocusProgress(),entryPortrait=scene.clientWidth<650,viewportHeight=typeof innerHeight==='number'?innerHeight:scene.clientHeight;if(phase==='protein'){panel.style.transition='none';panel.style.height=`${entryPortrait?350+50*entryFocus:Math.max(300,Math.min(580,viewportHeight-(Number.isFinite(storyEnd)?storyEnd:255)-155))-25*entryFocus}px`;panel.style.top=entryPortrait?'auto':`${(Number.isFinite(storyEnd)?storyEnd:255)+8*entryFocus}px`;}else{panel.style.height='';panel.style.top='';panel.style.transition='';}
  const mw=panel.clientWidth,mh=panel.clientHeight,portrait=scene.clientWidth<650,ratio=1.25;
  const cw=Math.min(mw*(portrait?.98:.68),mh*(portrait?.62:.96)*1100/600),ch=cw*600/1100,cx=0,cy=portrait?0:(mh-ch)/2;
  const cellModel=$('cell-game-model');cellModel.style.width=`${cw}px`;cellModel.style.height=`${ch}px`;cellModel.style.left=`${cx}px`;cellModel.style.top=`${cy}px`;cellModel.style.opacity=String(1-.68*lift);cellModel.style.transform=`scale(${1-.45*lift})`;
  const ox=cx+cw*220/1100,oy=cy+ch*322/600,ow=cw*.13,oh=ow/ratio;
- const nw=Math.min(mw*(portrait?.98:.43),mh*ratio*.98),nh=nw/ratio,nx=(mw*(portrait?1:.75)-nw)/2,ny=(mh-nh)/2;
+ const nw=Math.min(mw*(portrait?.98:phase==='assemble'?.75:.43),mh*ratio*.98),nh=nw/ratio,nx=(mw*(portrait||phase==='assemble'?1:.75)-nw)/2,ny=(mh-nh)/2;
  const sx=liftStart?mw*liftStart.x-ow/2:ox-ow/2,sy=liftStart?mh*liftStart.y-oh/2:oy-oh/2;
  let w=ow+(nw-ow)*lift,h=oh+(nh-oh)*lift,x=sx+(nx-sx)*lift,y=sy+(ny-sy)*lift;
  if(['dna-focus','gene','message'].includes(phase)){const zoom=1+.08*(phase==='dna-focus'&&!modelEntryStatic&&!still?ease(learningClock/1600):1);x-=w*.4*(zoom-1);y-=h*.67*(zoom-1);w*=zoom;h*=zoom;}
  if(['export','protein'].includes(phase)&&portrait){const p=phase==='protein'||modelEntryStatic||still?1:ease(learningClock/1600);x-=mw*.40*p;}
  if(portrait){w=Math.min(w,mw*.99);h=w/ratio;if(!['export','protein'].includes(phase))x=Math.max(0,Math.min(mw-w,x));y=Math.max(0,Math.min(mh-h,y));}
+ if(phase==='explore'&&!portrait)x=Math.max(166,Math.min(mw-w-165,x));
  const object=$('nucleus-object');object.style.left=`${x}px`;object.style.top=`${y}px`;object.style.width=`${w}px`;object.style.height=`${h}px`;
  const cyto=$('cytoplasm-intro');cyto.hidden=phase!=='model';cyto.style.left=`${cw*.24}px`;cyto.style.top=`${cy+ch*.10}px`;cyto.setAttribute('aria-pressed',String(infoKey==='cytoplasm'));$('cell-game-model').dataset.cytoplasmActive=String(infoKey==='cytoplasm');
  const pick=$('select-model-nucleus');pick.hidden=phase!=='model';pick.disabled=!modelReady;pick.setAttribute('aria-pressed',String(modelSelected));
@@ -559,7 +565,8 @@ function readAudioPreference(){
 function saveAudioPreference(){try{localStorage.setItem('cell-intro-audio',JSON.stringify({soundOn,volume:masterVolume,track:currentTrack}));}catch{}}
 function canPlayAudio(){return soundOn&&hasBegun&&!musicFinished&&!document.hidden&&($('settings').open||((!paused||navigationHold)&&phase!=='idle'));}
 function syncSound(){
- sound.textContent=soundOn?'Sound on':'Sound off';sound.setAttribute('aria-pressed',String(soundOn));
+ syncTrackChoices();
+ const soundLabel=soundOn?'Sound on':'Sound off';buttonContent(sound,soundLabel,soundOn?'volume-2':'volume-x');sound.setAttribute('aria-label',soundLabel);sound.setAttribute('title',soundOn?'Mute sound':'Turn sound on');sound.setAttribute('aria-pressed',String(soundOn));
  const states={off:'Off',ready:'',loading:'Loading audio…',playing:masterVolume===0?'Playing · volume at zero':$('settings').open?'Playing · sound preview':'Playing',paused:'Paused',finished:'Music finished',error:'Audio unavailable · toggle Sound on to retry'};
  $('audio-state').textContent=states[audioState]??audioState;$('audio-state').hidden=!$('audio-state').textContent;
 }
@@ -635,7 +642,10 @@ for(const [id,key] of [['vacuole-label','vacuole'],['vacuole-shape','vacuole'],[
 previousScene.addEventListener('click',()=>navigateScene(-1));nextScene.addEventListener('click',()=>navigateScene(1));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('review-navigation').open){event.preventDefault();$('review-navigation').open=false;$('review-toggle').focus({preventScroll:true});return;}if(event.key==='Escape'&&guideOpen){event.preventDefault();closeGuide();return;}if(event.key==='Escape'&&infoKey){event.preventDefault();closeObjectInfo();return;}if(event.target?.closest?.('#object-info,#interaction-guide,#model-activity,#dna-learning,#role-match'))return;if(event.altKey||event.ctrlKey||event.metaKey||$('settings').open||event.target?.matches?.('input,select,textarea,[contenteditable=true]'))return;if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();navigateScene(event.key==='ArrowLeft'?-1:1);}});
 pause.addEventListener('click',()=>{if(pause.disabled)return;if(phase==='assemble'&&navigationHold){navigationHold=false;scene.dataset.hold='false';setPaused(true);}else setPaused(!paused);});sound.addEventListener('click',toggleSound);
-$('music-track').addEventListener('change',async()=>{currentTrack=$('music-track').value;saveAudioPreference();await musicMixer.select(currentTrack==='sci-fi'?1:0);if(canPlayAudio()&&!musicMixer.running)playAudio();});
+function syncTrackChoices(){for(const key of ['tech-soft','sci-fi'])$('track-'+key).checked=$('music-track').value===key;}
+async function chooseMusicTrack(key){currentTrack=key;$('music-track').value=key;syncTrackChoices();saveAudioPreference();await musicMixer.select(currentTrack==='sci-fi'?1:0);if(canPlayAudio()&&!musicMixer.running)playAudio();}
+$('music-track').addEventListener('change',()=>chooseMusicTrack($('music-track').value));
+for(const key of ['tech-soft','sci-fi'])$('track-'+key).addEventListener('change',()=>{if($('track-'+key).checked)return chooseMusicTrack(key);});
 $('volume').addEventListener('input',()=>{masterVolume=Number($('volume').value)/100;musicMixer.setMaster(masterVolume);saveAudioPreference();if($('settings').open&&canPlayAudio()&&!musicMixer.running)playAudio();else syncSound();});
 reduced.addEventListener('change',e=>{still=e.matches;updateMotion();});
 document.addEventListener('visibilitychange',()=>{last=0;if(document.hidden){navigationHold=false;scene.dataset.hold='false';if(phase!=='idle')setPaused(true);stopAudio('paused');}});
@@ -729,7 +739,20 @@ for(let i=1;i<=3;i++){
 $('ribosome-target').addEventListener('dragover',event=>{if(phase==='protein'&&proteinStage==='build'&&aminoSelected){event.preventDefault();if(event.dataTransfer)event.dataTransfer.dropEffect='move';}});
 $('ribosome-target').addEventListener('drop',event=>{event.preventDefault();joinAminoAcid();});
 $('sugar-substrate').addEventListener('click',useEnzyme);
-for(const [i,key] of sceneOrder.entries()){const option=document.createElement('option');option.value=key;option.textContent=`${i+1} · ${captions[key][0]||'Back in the cell'}`;$('review-scene').append(option);}
+const sceneMenuItems=[];
+for(const [i,key] of sceneOrder.entries()){
+ const option=document.createElement('option');option.value=key;option.textContent=`${i+1} · ${captions[key][0]||'Back in the cell'}`;$('review-scene').append(option);
+ const item=document.createElement('button');item.type='button';item.className='scene-option';item.setAttribute('role','menuitem');item.tabIndex=i===0?0:-1;
+ const number=document.createElement('span');number.className='scene-option-number';number.textContent=String(i+1);const title=document.createElement('span');title.textContent=captions[key][0]||'Back in the cell';item.append(number,title);$('scene-menu').append(item);sceneMenuItems.push(item);
+ item.addEventListener('click',()=>{$('review-navigation').open=false;jumpToReviewScene(key);(key==='idle'?$('review-toggle'):pause).focus({preventScroll:true});});
+ item.addEventListener('keydown',event=>{const next=event.key==='ArrowDown'?(i+1)%sceneOrder.length:event.key==='ArrowUp'?(i+sceneOrder.length-1)%sceneOrder.length:event.key==='Home'?0:event.key==='End'?sceneOrder.length-1:-1;if(next<0)return;event.preventDefault();for(const [j,button] of sceneMenuItems.entries())button.tabIndex=j===next?0:-1;sceneMenuItems[next].focus({preventScroll:true});sceneMenuItems[next].scrollIntoView?.({block:'nearest'});});
+}
+$('review-navigation').addEventListener('toggle',()=>{
+ const open=$('review-navigation').open;$('review-toggle').setAttribute('aria-expanded',String(open));
+ if(open){const current=sceneOrder.indexOf(phase);for(const [i,item] of sceneMenuItems.entries()){item.tabIndex=i===current?0:-1;item.setAttribute('aria-current',i===current?'true':'false');}sceneMenuItems[current].focus({preventScroll:true});sceneMenuItems[current].scrollIntoView?.({block:'nearest'});}
+ else if(phase==='idle'&&($('scene-menu').contains?.(document.activeElement)||document.activeElement===document.body))$('review-toggle').focus({preventScroll:true});
+});
+$('review-navigation').addEventListener('focusout',event=>{if(event.relatedTarget&&!$('review-navigation').contains?.(event.relatedTarget))$('review-navigation').open=false;});
 function jumpToReviewScene(key){
  if(!sceneOrder.includes(key))return;if(key==='idle'){returnToBeginning();return;}
  start('model');if(key!=='model'){

@@ -1,0 +1,234 @@
+/* Responsive scene layouts and lightweight controls. Animation clocks stay in scene.js. */
+#scene{--gutter:clamp(24px,4.5vw,88px);--story-end:250px;--model-height:clamp(300px,calc(100svh - var(--story-end) - 155px),580px)}
+header,nav{left:var(--gutter);right:var(--gutter)}
+#scene #story,#scene:not([data-phase=idle]) #story{left:var(--gutter);right:var(--gutter);top:88px;bottom:auto;display:block;max-width:920px;min-height:0}
+#scene #caption,#scene:not([data-phase=idle]) #caption{position:relative;inset:auto;font-size:clamp(32px,3.1vw,54px);font-weight:400;line-height:1.12;letter-spacing:-.035em;margin:0 0 20px;text-wrap:balance;min-height:0}
+#scene #detail{max-width:53ch;font-size:clamp(20px,1.45vw,26px);line-height:1.48;min-height:0;text-wrap:pretty}
+#scene #story-actions:not(:has(>button:not([hidden]),>details:not([hidden]),#assembly-bridge-actions:not([hidden]))){display:none}
+#scene nav{opacity:1;position:absolute;bottom:max(22px,env(safe-area-inset-bottom));transition:none}
+nav button{background:#211e20b3;border-color:#ffffff65}
+.primary{min-height:48px;font-size:16px;padding:12px 23px;box-shadow:0 3px 16px #1c151b20}
+#guide-toggle{right:var(--gutter);background:#30292de6;border-color:#eee1cf80}
+#scene #interaction-guide,#scene #object-info{position:fixed;top:82px;right:var(--gutter);left:auto;width:320px;max-height:calc(100svh - 180px);overflow:auto;z-index:10}
+#scene #object-info p,#interaction-guide p{font-size:18px;line-height:1.5}
+#scene .shade{background:linear-gradient(0deg,#211e20ed,transparent 25%),linear-gradient(90deg,#211e2090,transparent 68%)}
+/* Opening and montage retain the shared full-bleed camera. */
+#scene[data-phase=idle] #story{top:auto;bottom:125px;max-width:760px}
+#scene[data-phase=idle] #caption{font-size:clamp(42px,4.4vw,68px)}
+#scene[data-phase=idle] #detail{font-size:clamp(20px,1.5vw,25px)}
+#scene[data-phase=teaser] #story{top:auto;bottom:125px}
+#scene:is([data-phase=idle],[data-phase=teaser]) .shade{background:linear-gradient(0deg,#211e20f2,#211e2066 38%,transparent 70%),linear-gradient(90deg,#211e2066,transparent 80%)}
+/* Documentary photos use a story column and a generous, safely framed image. */
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #story{top:clamp(135px,24svh,290px);right:59%;max-width:650px}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #detail{max-width:31ch}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #specimen-view{inset:70px 4% 100px 47%;width:auto;height:auto;aspect-ratio:auto;transform:none;border-radius:24px;overflow:hidden}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical{object-fit:cover;object-position:center;mask-image:none;filter:none}
+#scene[data-phase=people] #physical{object-position:50% 76%}
+#scene[data-phase=world] #physical{object-position:50% 58%}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical-backdrop{filter:blur(35px) brightness(.68) saturate(.7);opacity:.65}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .shade{background:linear-gradient(90deg,#211e20c4,transparent 60%),linear-gradient(0deg,#211e20b8,transparent 14%)}
+/* The microscope and cutaways keep their subject unobstructed, with a compact lower story. */
+#scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #story{top:auto;bottom:115px;max-width:840px}
+#scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #caption{font-size:clamp(32px,2.7vw,46px);margin-bottom:14px}
+#scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) .shade{background:linear-gradient(0deg,#211e20f2,#211e20a6 18%,transparent 53%)}
+/* Models share measured story clearance, rather than unrelated fixed offsets. */
+#scene[data-model-visible=true] #caption,#scene[data-phase=roles] #caption{font-size:clamp(32px,2.7vw,46px)}
+#scene[data-model-visible=true] #detail{font-size:clamp(20px,1.3vw,24px);max-width:68ch}
+#scene[data-model-visible=true] #nucleus-model{top:var(--story-end);width:min(1420px,calc(100% - 2 * var(--gutter)));height:var(--model-height);max-height:none}
+#scene[data-model-visible=true] .shade{background:linear-gradient(180deg,#211e20b3,transparent 40%,#211e2070)}
+#scene[data-learning=true] #story::before{display:none}
+#scene[data-learning=true] #story{max-width:1100px}
+#scene[data-learning=true] #dna-learning{bottom:100px;left:var(--gutter);right:var(--gutter);min-height:48px}
+#scene[data-learning=true] #learning-instruction{font-size:18px}
+#scene[data-learning=true] #learning-info{font-size:15px}
+#scene[data-learning=true] #dna-learning::before{display:none}
+#scene[data-phase=explore] #exploration-next{top:calc(var(--story-end) + var(--model-height) + 10px)}
+#scene[data-phase=explore] #exploration-secondary{bottom:100px;left:var(--gutter)}
+#scene[data-phase=assemble]:not([data-assembly-complete=true]) #nucleus-model{left:var(--gutter);transform:none;width:calc(100% - 2 * var(--gutter) - 440px)}
+#scene[data-phase=assemble] #model-activity{top:var(--story-end);right:var(--gutter);width:410px;max-height:calc(100svh - var(--story-end) - 90px);overflow:auto}
+#scene[data-phase=assemble] #story{max-width:1100px}
+#scene .activity-choice{font-size:12px}
+#scene .activity-framing{font-size:13px}
+#scene[data-phase=roles]{padding:var(--story-end) 0 115px;min-height:100svh}
+#scene[data-phase=roles] #story{max-width:1100px}
+#scene[data-phase=roles] #detail{font-size:22px}
+#role-match{max-width:1440px;margin:0 var(--gutter)}
+.role-illustration img{height:clamp(105px,14svh,175px)}
+.role-illustration{font-size:20px}
+#role-jobs{gap:12px}
+.role-job{min-height:60px;font-size:18px}
+#role-match[data-complete=true] #role-parts{gap:80px}
+#role-match[data-complete=true] .role-connection{right:-80px;width:78px;top:70px}
+#scene[data-phase=roles][data-role-complete=true] #caption{font-size:46px}
+@media(max-width:650px){
+ #scene{--gutter:24px;--model-height:350px;min-height:100svh}
+ #scene #caption,#scene:not([data-phase=idle]) #caption{font-size:30px;line-height:1.14;margin-bottom:14px}
+ #scene #detail,#scene[data-model-visible=true] #detail,#scene[data-phase=roles] #detail{font-size:18px;line-height:1.48;max-width:none}
+ #scene #story,#scene:not([data-phase=idle]) #story{max-width:none;min-height:0}
+ #scene nav,#scene[data-model-visible=true] nav,#scene[data-learning=true] nav{position:fixed;bottom:12px;left:12px;right:12px;z-index:9;gap:7px;padding:6px;border:1px solid #a58a9d55;border-radius:32px;background:#282329ed;backdrop-filter:blur(12px)}
+ #scene #interaction-guide,#scene #object-info{position:fixed;top:78px;left:16px;right:16px;width:auto;margin:0;max-height:calc(100svh - 165px);z-index:11}
+ #scene[data-phase=idle] #story{top:auto;bottom:105px}
+ #scene[data-phase=idle] #caption{font-size:38px}
+ #scene[data-phase=idle] #detail{font-size:19px}
+ #scene[data-phase=teaser] #story{top:auto;bottom:110px}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]){height:auto;min-height:100svh;padding:90px 0 110px;display:flex;flex-direction:column}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #story{position:relative;inset:auto;order:1;margin:0 24px;min-height:0}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .physical-camera{position:relative;inset:auto;order:2;margin:26px 20px 0;height:clamp(300px,50svh,480px);flex:none;border-radius:18px}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #specimen-view{inset:0;width:100%;height:100%;border-radius:18px}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical-backdrop{display:none}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .shade{background:linear-gradient(#211e201a,#211e2000)}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #story{top:auto;bottom:105px;max-width:none}
+ #scene[data-model-visible=true],#scene[data-learning=true],#scene[data-phase=explore],#scene[data-phase=assemble],#scene[data-phase=roles]{display:flex;flex-direction:column;padding:90px 0 110px;height:auto;min-height:100svh;overflow:clip}
+ #scene[data-model-visible=true] #story,#scene[data-phase=roles] #story{position:relative;inset:auto;order:1;margin:0 24px;display:block;min-height:0}
+ #scene[data-model-visible=true] #nucleus-model,#scene[data-phase=assemble]:not([data-assembly-complete=true]) #nucleus-model{position:relative;inset:auto;transform:none;align-self:center;order:2;margin:18px 0 14px;width:calc(100% - 24px);height:350px;flex:none}
+ #scene[data-phase=explore] #exploration-next{position:relative;inset:auto;transform:none;order:3;margin:0 24px 12px;min-height:48px}
+ #scene[data-phase=explore] #exploration-secondary{position:relative;inset:auto;order:4;margin:12px 24px}
+ #scene[data-phase=assemble] #model-activity{position:relative;inset:auto;order:3;margin:8px 24px;width:auto;max-height:none;overflow:visible}
+ #scene[data-learning=true] #dna-learning{position:relative;inset:auto;order:3;min-height:48px;margin:0 24px;gap:12px}
+ #scene[data-learning=true] #learning-instruction{font-size:17px}
+ #scene[data-learning=true] #learning-next{margin-left:auto}
+ #scene[data-phase=export] #detail{min-height:0}
+ #scene[data-phase=protein] #caption{min-height:2.28em}
+ #scene[data-phase=protein] #detail{min-height:156px}
+ #scene[data-phase=protein] #nucleus-model{height:400px}
+ #scene[data-phase=roles] #role-match{order:2;margin:24px 24px 0;max-width:none}
+ .role-illustration{font-size:16px}
+ .role-illustration img{height:90px}
+ .role-job{font-size:16px;min-height:54px;padding:12px}
+ #role-prompt{font-size:16px}
+ #role-feedback{font-size:15px}
+ #role-match[data-complete=true] #role-parts{gap:48px}
+ #role-match[data-complete=true] .role-connection{right:0;top:100%;width:100%}
+ #scene[data-phase=roles][data-role-complete=true] #caption{font-size:38px}
+}
+@media(min-width:651px) and (max-height:650px){
+ #scene{min-height:650px}
+ #scene[data-model-visible=true],#scene[data-learning=true],#scene[data-phase=roles]{min-height:780px}
+ #scene #caption{font-size:34px}
+ #scene #detail{font-size:20px}
+}
+@media(max-width:650px) and (max-height:650px){
+ #scene[data-phase=idle]{min-height:720px}
+ #scene[data-phase=idle] #story{bottom:110px}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]){min-height:760px}
+}
+/* Follow-up from the rendered phone and short-screen pass. */
+#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #story::before{display:block;inset:-28px auto -32px -40px;width:min(calc(100% + 80px),calc(68ch + 80px));font-size:clamp(20px,1.3vw,24px);background:radial-gradient(ellipse closest-side at 45% 45%,#211e2099 0%,#211e2066 54%,transparent 100%);filter:blur(20px);z-index:-1}
+#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{z-index:3;background:linear-gradient(180deg,#211e2080,transparent 38%,transparent 82%,#211e2099)}
+@media(max-width:650px){
+ #scene nav,#scene[data-model-visible=true] nav,#scene[data-learning=true] nav{position:absolute;bottom:16px}
+ #scene[data-phase=protein] nav,#scene[data-phase=assemble] nav,#scene[data-phase=roles] nav{position:absolute}
+ #scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{z-index:3;background:linear-gradient(180deg,#211e2070,transparent 38%,transparent 86%,#211e2099)}
+}
+@media(max-width:650px) and (max-height:650px){
+ #scene[data-phase=idle]{min-height:100svh}
+ #scene[data-phase=idle] #story{bottom:94px}
+ #scene[data-phase=idle] #caption{font-size:30px;margin-bottom:12px}
+ #scene[data-phase=idle] #detail{font-size:17px;line-height:1.4}
+ #scene[data-phase=idle] .actions{margin-top:14px;gap:8px}
+ #scene[data-phase=idle] .actions button{font-size:13px;padding:10px 14px}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]){min-height:100svh}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #story{bottom:95px}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #caption{font-size:28px}
+ #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=introduce],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #detail{font-size:17px}
+}
+/* Keep help in the viewport even when a flow layout or focus has scrolled. */
+#scene:is([data-model-visible=true],[data-phase=roles]) #object-info,#scene:is([data-model-visible=true],[data-phase=roles]) #interaction-guide{position:fixed;top:82px;right:var(--gutter);left:auto;width:320px;margin:0;max-height:calc(100svh - 180px);overflow:auto;z-index:11}
+#scene[data-phase=roles][data-role-complete=true]{padding-top:var(--story-end)}
+#scene[data-model-visible=true] .shade{background:linear-gradient(180deg,#211e20e0,transparent 40%,#211e2070)}
+@media(max-width:650px){
+ #scene:is([data-model-visible=true],[data-phase=roles]) #object-info,#scene:is([data-model-visible=true],[data-phase=roles]) #interaction-guide{top:78px;left:16px;right:16px;width:auto;max-height:calc(100svh - 165px)}
+ #scene[data-phase=roles][data-role-complete=true]{padding-top:90px}
+}
+@media(min-width:651px) and (max-height:650px){
+ #scene:not([data-model-visible=true]):not([data-phase=roles]){min-height:100svh}
+ #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #story{top:88px}
+ #scene[data-phase=people] #physical{object-position:50% 69%}
+}
+.molecule-info-label,#protein-label{min-height:44px}
+@media(max-width:650px){
+ /* Read and choose first; the completed model stays directly below the task. */
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #model-activity{order:2;margin-top:22px}
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #nucleus-model{order:3;height:280px;margin-top:16px}
+}
+#scene[data-controls-quiet=true] nav{opacity:1}
+@media(max-width:650px){
+ #scene:is([data-phase=scales],[data-phase=skin]) #story{top:clamp(330px,50svh,450px);bottom:auto}
+}
+@media(min-width:651px) and (max-height:650px){
+ #scene[data-phase=assemble] #model-activity{max-height:calc(max(100svh,780px) - var(--story-end) - 90px)}
+}
+#scene[data-phase=assemble]:not([data-assembly-complete=true]) #story-actions{display:none}
+
+/* Protein stage copy uses one reserved story footprint, so material geometry stays put. */
+#scene[data-phase=protein] #protein-copy-reserve{display:block;grid-area:1/1;visibility:hidden}
+#scene[data-phase=protein] #caption{min-height:1.12em}
+#scene[data-phase=protein] #protein-workbar{max-height:none;opacity:1;overflow:visible;transition:none}
+#scene[data-phase=protein] #protein-work-cue{min-height:2.7em}
+#scene[data-phase=protein] #protein-work-controls{min-height:48px;margin-top:10px}
+@media(max-width:650px){
+ #scene[data-phase=protein] #caption{min-height:2.28em}
+ #scene[data-phase=protein] #story::before{font-size:18px}
+}
+@media(max-width:374px){#scene[data-phase=protein] #protein-work-controls{min-height:108px}}
+
+@media(min-width:651px){
+ #scene[data-phase=protein] #story{top:80px}
+ #scene[data-phase=protein] #protein-work-cue{min-height:1.35em}
+}
+@media(max-width:650px){
+ /* Keep the placement surface immediately beside the task's next scroll position. */
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #model-activity{margin-bottom:0}
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #nucleus-model{height:190px;width:calc(100% - 48px);margin:0 24px 12px}
+}
+/* Settings and scene selection share one light, quiet control surface. */
+#settings,#review-navigation>.scene-picker{color:#443d40;background:#f4eddfed;border:1px solid #66594b26;border-radius:16px;box-shadow:0 10px 32px #20191e26;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#settings{right:var(--gutter);bottom:82px;width:304px;padding:16px 18px;max-height:calc(100svh - 112px);overflow:auto;scrollbar-width:thin;scrollbar-color:#a79c8e transparent}
+#settings::backdrop{background:transparent}
+#settings .settings-heading{gap:12px}
+#settings .settings-heading h2{font-size:22px;line-height:1.2;font-weight:500;letter-spacing:-.02em;margin:0}
+#settings .settings-heading .icon-button{color:#62575c;min-width:44px;min-height:44px;margin-right:-10px;padding:10px}
+#settings .setting{gap:7px;margin-top:12px;padding-top:0;border:0}
+#settings .setting label{font-size:14px;line-height:1.35;color:#443d40}
+#settings .setting output{font-variant-numeric:tabular-nums;color:#6b6264}
+#settings .range-row{font-size:11px;gap:8px;color:#776e71}
+#settings input[type=range]{accent-color:#557f73;min-height:44px;margin:0}
+#settings .quiet{font-size:14px;min-height:44px;padding:8px 14px;border-color:#75686c44;background:#ffffff25;color:#443d40}
+#settings .quiet[aria-pressed=true]{background:#dce8df88;border-color:#607e7155}
+#settings .quiet:hover{background:#ffffff80}
+#settings #sound{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;align-self:flex-start}
+#settings #sound>span{display:none}
+#settings #sound svg{width:20px;height:20px}
+#settings #sound:focus-visible{outline:2px solid #557f73;outline-offset:3px}
+#settings fieldset{padding:0;margin:4px 0 6px;border:0;min-width:0}
+#settings legend{font-size:14px;margin:0 0 5px;padding:0}
+#settings label.track-choice{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14px}
+#settings .track-choice:has(input:checked){background:#557f7317;color:#244c41}
+#settings .track-choice:hover{background:#ffffff66}
+#settings .track-choice input{width:18px;height:18px;flex:none;margin:0;accent-color:#416c60;cursor:pointer}
+#settings .track-choice:focus-within{outline:2px solid #557f73;outline-offset:-2px}
+#settings input:focus-visible{outline:2px solid #416c60;outline-offset:2px}
+#settings #audio-state{font-size:12px;line-height:1.35;color:#596a60;min-height:0}
+#settings #music-about{margin-top:5px;padding:0;border:0;font-size:12px;line-height:1.5;color:#62595d}
+#settings #music-about summary{min-height:44px;display:flex;align-items:center;cursor:pointer;gap:6px;color:#62595d;font-size:12px}
+#settings #music-about summary .lucide{width:14px;height:14px;flex:none}
+#settings #music-about[open] summary .lucide{transform:rotate(90deg)}
+#settings #music-about p{margin:8px 0;color:#62595d}
+#settings #music-about a{color:#285d50;text-underline-offset:3px}
+#settings button:focus-visible,#settings summary:focus-visible{outline:2px solid #416c60;outline-offset:2px}
+#review-navigation>.scene-picker{bottom:calc(100% + 10px);left:0;width:350px;max-width:calc(100vw - 48px);padding:6px;display:block}
+#scene-menu{max-height:min(420px,calc(100svh - 160px));overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a79c8e transparent}
+.scene-option{width:100%;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:8px;min-height:44px;padding:10px 12px;border:0;border-radius:9px;background:transparent;color:#443d40;font-size:14px;line-height:1.35;text-align:left}
+.scene-option-number{color:#83777d;font-size:12px;font-variant-numeric:tabular-nums}
+.scene-option[aria-current=true]{background:#557f7317;color:#244c41}
+.scene-option:hover{background:#ffffff80}
+.scene-option:focus-visible{outline:2px solid #557f73;outline-offset:-2px;background:#e2e9df}
+@media(max-width:650px){#settings{right:16px;bottom:82px;width:304px;max-width:calc(100vw - 32px)}#review-navigation>.scene-picker{bottom:calc(100% + 10px);max-width:calc(100vw - 48px)}}
+@media(max-height:500px){#settings{bottom:72px;max-height:calc(100svh - 92px)}#scene-menu{max-height:calc(100svh - 160px)}}
+#settings label.track-choice{justify-content:flex-start}
+@media(max-width:900px){
+ #review-navigation>.scene-picker{position:fixed;left:var(--gutter);right:auto;bottom:82px;width:min(350px,calc(100vw - 48px));max-width:calc(100vw - 48px)}
+}
+
+/* Camera overscan must not make the opening a focus-scroll container. */
+#scene[data-phase=idle]{overflow:clip}
