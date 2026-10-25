@@ -60,6 +60,7 @@ function wakeControls(){controlsAwake=1200;renderControlsVisibility();}
 for(const event of ['pointermove','pointerdown','keydown'])document.addEventListener(event,eventInfo=>{if(eventInfo.target?.closest?.('nav'))wakeControls();},{passive:true});
 function revealFull(){revealed=true;revealTime=Infinity;$('detail-visual').textContent=currentCopy()[1];syncControls();}
 function setPhase(key){
+ if(['model','explore','assemble','dna-focus','gene','message','export','protein','roles'].includes(key))warmRoleArtwork();
  const resumeProtein=key==='protein'&&phase==='roles'&&proteinStage==='done';
  proteinCompletionReached=key==='roles'||resumeProtein;
  if(key==='roles'&&!roleInitialized)resetRoleMatch();
@@ -438,10 +439,10 @@ function renderLearning(g){
 
 const roleLearningRecap='DNA instructions are copied into messenger RNA. A ribosome reads the message to build a protein. Our enzyme protein helps split sucrose into smaller sugars.';
 const roleParts={
- dna:{image:'assets/dna-organic.png',name:'DNA',job:'Stores genetic instructions',fact:'dna-focus',hint:'DNA keeps the genetic instructions.'},
- rna:{image:'assets/messenger-rna-teal.png',name:'Messenger RNA',job:'Carries a copy of instructions to a ribosome',fact:'messenger-rna',hint:'Messenger RNA carries a copy of instructions to a ribosome.'},
- ribosome:{image:'assets/ribosome-contrast.png',name:'Ribosome',job:'Joins amino acids to build a protein',fact:'ribosome',hint:'A ribosome joins amino acids, following the message.'},
- enzyme:{image:'assets/folded-enzyme.png',name:'Our enzyme protein',job:'Helps split sucrose into smaller sugars',fact:'enzyme-protein',hint:'Our enzyme protein helps split sucrose.'}
+ dna:{image:'assets/dna-organic-card.webp',name:'DNA',job:'Stores genetic instructions',fact:'dna-focus',hint:'DNA keeps the genetic instructions.'},
+ rna:{image:'assets/messenger-rna-teal-card.webp',name:'Messenger RNA',job:'Carries a copy of instructions to a ribosome',fact:'messenger-rna',hint:'Messenger RNA carries a copy of instructions to a ribosome.'},
+ ribosome:{image:'assets/ribosome-contrast-card.webp',name:'Ribosome',job:'Joins amino acids to build a protein',fact:'ribosome',hint:'A ribosome joins amino acids, following the message.'},
+ enzyme:{image:'assets/folded-enzyme-card.webp',name:'Our enzyme protein',job:'Helps split sucrose into smaller sugars',fact:'enzyme-protein',hint:'Our enzyme protein helps split sucrose.'}
 };
 function resetRoleMatch(){
  roleInitialized=true;roleSelected='';roleMatched=[];roleWrong='';roleOrder=Object.keys(roleParts);
@@ -701,6 +702,11 @@ buttonContent(previousScene,'Previous scene','chevron-left');buttonContent(nextS
 updateSpeed();
 
 const preloadedImages=[];let preloadQueued=false;
+let roleArtworkQueued=false;
+function warmRoleArtwork(){
+ if(roleArtworkQueued)return;roleArtworkQueued=true;
+ for(const part of Object.values(roleParts)){const image=new Image();image.decoding='async';image.fetchPriority='low';image.src=part.image;if(typeof image.decode==='function')image.decode().catch(()=>{});preloadedImages.push(image);}
+}
 function scheduleLaterImages(){
  if(preloadQueued)return;preloadQueued=true;
  const warm=()=>{for(const src of new Set([...Object.values(physicalSources),'assets/onion-field.png','assets/onion-cell-clean.png','assets/teaser-human-epithelium.jpg','assets/onion-nuclear-interior.jpg','assets/illustrated-nucleus-cutaway.png'])){if(src===physicalSources.idle)continue;const image=new Image();image.fetchPriority='low';image.decoding='async';image.src=src;if(typeof image.decode==='function')image.decode().catch(()=>{});preloadedImages.push(image);}};
