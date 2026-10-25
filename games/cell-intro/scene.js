@@ -7,7 +7,7 @@ const begin=$('begin'),pause=$('pause'),sound=$('sound'),ambient=$('ambient');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const centre={x:.265,y:.478},hit={x:.17,y:.36,w:.19,h:.23};
 const captions={
- idle:['A world inside a cell','Explore a cell and discover how its instructions help it work.'],
+ idle:['A world inside a cell','A short introduction to the world behind our molecular biology and microbiology games. Meet the cell, its key parts, and the instructions that help it work.'],
  teaser:['Life, at its smallest.','Every living organism is made of one or more cells.'],
  world:['The living world.','Most cells are too small to see with our eyes alone. A microscope lets us look closer.'],
  people:['You are made of cells, too.','Your body is made of cells. So is the frog resting on this hand.'],
