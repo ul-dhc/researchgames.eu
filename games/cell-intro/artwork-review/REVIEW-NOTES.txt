@@ -1,5 +1,6 @@
 THREE CELLS — SCIENTIFIC AND VISUAL REVIEW
-Selected artwork: refinement version 2, 26 October 2026.
+Selected artwork: approved refinement version 2, with transparent-background derivatives, 26 October 2026.
+Background alpha has been removed using image-editing mattes; the original approved colour pixels, canvas and anatomical detail are preserved. Original opaque files remain archived.
 
 Purpose
 These illustrations will introduce three explorable cells before the Switch Lab
@@ -8,21 +9,21 @@ but related palettes. These are AI-generated educational cutaways, not recorded
 microscope photographs. Equal display sizes represent separate magnifications.
 This package is for artwork review, not a completed three-route game.
 
-1. ONION BULB EPIDERMAL CELL — artwork/onion-epidermal.png
+1. ONION BULB EPIDERMAL CELL — artwork/onion-epidermal-transparent.png
 Warm ivory, taupe and lilac. The intended structures are a cell wall outside the
 membrane, a large central vacuole, thin peripheral cytoplasm and a peripheral
 nucleus. Onion bulb epidermis should not be filled with chloroplasts.
 The proposed direction is to use this same cell illustration consistently in
 both the cell-selection screen and the existing onion exploration.
 
-2. LIVING HUMAN CHEEK EPITHELIAL CELL — artwork/human-cheek-epithelial.png
+2. LIVING HUMAN CHEEK EPITHELIAL CELL — artwork/human-cheek-epithelial-transparent.png
 Muted peach and cream, with a lilac nucleus. Intended as a flattened, irregular
 animal-cell example, without a plant cell wall or large central plant vacuole.
 The nucleus and surrounding organelles are deliberately legible. Please assess
 whether this is a defensible representative living cheek epithelial cell; its
 internal detail is idealised rather than a claim about one observed specimen.
 
-3. ESCHERICHIA COLI — artwork/ecoli.png
+3. ESCHERICHIA COLI — artwork/ecoli-transparent.png
 Mineral sage and grey. Rod-shaped envelope, cytoplasm, ribosomes and nucleoid DNA.
 No nucleus, nuclear membrane, mitochondria or other membrane-bound organelles.
 The three flagella depict a schematic motile representative; their exact number
