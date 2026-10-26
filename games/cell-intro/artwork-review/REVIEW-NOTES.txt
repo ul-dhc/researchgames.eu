@@ -1,17 +1,18 @@
-CELL ARTWORK — CURRENT ADOPTED PLANT MODEL AND UPCOMING CELLS
+CELL ARTWORK — CURRENT ADOPTED DETAILED PLANT CELL AND UPCOMING CELLS
 Updated 27 October 2026. This standalone gallery is for artwork review.
 The playable expansion remains local; the public playable introduction is unchanged.
 
-1. ADOPTED PLANT MODEL — artwork/original-onion-model.png
-The established original onion cell model is the current Plant identity.
-This transparent preview is rendered directly from the existing SVG cell paths
-and gradients, with the original organic-nucleus-warm.png placed at the model’s
-original nucleus position. No new onion artwork or anatomy was generated.
-The local chooser and completion backdrop use this original model. The Plant
-journey retains its original microscope field, reconstructed cell reveal,
-SVG cell model, surrounding-cell context and original nucleus throughout.
-Earlier onion-epidermal and onion-epidermal-transparent files remain archived
-assets only; the v2 onion candidate is not the currently adopted Plant identity.
+1. ADOPTED DETAILED PLANT CELL — artwork/onion-cell-detailed-cutout.png
+A transparent cutout of the existing onion-cell-clean reconstruction used in
+“You found one cell”: purple nucleus on the left, large vacuole on the right.
+Image-editing extraction mattes remove neighbouring tissue. Registered mattes
+are applied to the original source RGB: its original colour pixels, dimensions,
+proportions and internal detail are retained. No anatomy was redesigned.
+This detailed cutout is adopted for the local chooser and completion background.
+The proven microscope reveal, original simplified SVG exploration model and
+original nucleus remain intact in their established learning contexts.
+Earlier v2 onion and source-derived SVG preview files remain archived assets,
+not the currently adopted chooser illustration.
 
 2. UPCOMING HUMAN CHEEK CELL — artwork/human-cheek-epithelial-transparent.png
 Newer approved artwork is unchanged. Muted peach and cream, with a lilac nucleus;
@@ -24,7 +25,7 @@ nucleoid DNA and schematic flagella. No nucleus or membrane-bound organelles.
 The journey remains Upcoming.
 
 TRANSPARENCY AND PROVENANCE
-Plant PNG/WebP files are source-derived renders of the established model.
+Plant PNG/WebP files derive from the existing detailed reconstruction.
 Human/E. coli transparent PNGs retain their approved original colour pixels;
 only background alpha was extracted. Their artwork files were not changed in
 this gallery update. Earlier masters and review candidates are preserved.
