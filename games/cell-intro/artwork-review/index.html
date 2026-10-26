@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three cells · ResearchGames artwork review</title><meta name="robots" content="noindex, nofollow"><style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#211f1e;color:#eee7de}
+*{box-sizing:border-box}body{margin:0;padding:28px 24px}main{max-width:1320px;margin:auto}
+h1{font:400 clamp(25px,4vw,38px)/1.2 Georgia,serif;margin:0 0 12px}p{color:#c5beb6;line-height:1.5;margin:8px 0 20px;max-width:78ch}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:24px 0}
+label{display:flex;align-items:center;gap:8px}select,button{background:#34302d;color:#eee7de;border:1px solid #73695f;border-radius:7px;padding:9px 12px;font:inherit}button{cursor:pointer}button[aria-pressed=true]{background:#e4d8c7;color:#272420}
+.stage{margin:0 auto;width:100%;transition:max-width .15s} .stage[data-layout=desktop]{max-width:1248px}.stage[data-layout=phone]{max-width:375px}.stage[data-layout=narrow]{max-width:320px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+figure{margin:0;background:#292623;border:1px solid #49413b;border-radius:12px;overflow:hidden;min-width:0}
+figure a{display:block;background:#282523}img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+figcaption{padding:14px 16px 17px}h2{font:400 21px Georgia,serif;margin:0 0 7px}figcaption p{font-size:14px;line-height:1.4;margin:0;color:#c7bfb7}
+.stage[data-layout=phone] .grid,.stage[data-layout=narrow] .grid{grid-template-columns:1fr;gap:12px}
+.stage[data-layout=phone] img,.stage[data-layout=narrow] img{max-height:200px}
+.stage[data-layout=phone] figcaption,.stage[data-layout=narrow] figcaption{padding:10px 12px}
+.stage[data-layout=phone] h2,.stage[data-layout=narrow] h2{font-size:19px}
+.readout{font-size:13px;color:#b5ada4;margin:12px 0}
+footer{margin-top:28px;border-top:1px solid #49413b;padding-top:18px;font-size:14px;color:#b5ada4}footer a{color:#e0d1bc}
+@media(max-width:680px){body{padding:20px 12px}.stage[data-layout=desktop] .grid{grid-template-columns:1fr}.controls{gap:9px}button{padding:8px 10px}figcaption{padding:11px 13px}.stage img{max-height:220px}}
+</style></head><body><main>
+<h1>Three cells · illustration review</h1>
+<p>Three refined cell illustrations for scientific and visual review. Each card displays an optimised preview of the supplied artwork. Select an image to inspect the full-resolution file.</p>
+<div class="controls" aria-label="Review controls">
+<button type="button" data-view="desktop" aria-pressed="true">Desktop · three choices</button><button type="button" data-view="phone" aria-pressed="false">Phone · 375 px</button><button type="button" data-view="narrow" aria-pressed="false">Narrow · 320 px</button></div>
+<div class="stage" data-layout="desktop"><div class="grid">
+<figure><a href="artwork/onion-epidermal.png"><img src="artwork/onion-epidermal.webp" alt="Elongated onion bulb epidermal cell with a large central vacuole and peripheral lilac nucleus" width="1536" height="1024"></a><figcaption><h2>Onion plant cell</h2><p>Warm ivory and lilac. A lighter wall edge around the large central vacuole.</p></figcaption></figure>
+<figure><a href="artwork/human-cheek-epithelial.png"><img src="artwork/human-cheek-epithelial.webp" alt="Flattened irregular human cheek epithelial cell in muted peach and cream, with nucleus and sparse surrounding ER" width="1536" height="1024"></a><figcaption><h2>Human cheek cell</h2><p>Muted peach and cream. Less crowded ER lets the nucleus read first.</p></figcaption></figure>
+<figure><a href="artwork/ecoli.png"><img src="artwork/ecoli.webp" alt="Sage grey rod-shaped E. coli showing unbounded nucleoid DNA, ribosomes and three thin flagella" width="1536" height="1024"></a><figcaption><h2><i>E. coli</i></h2><p>Mineral sage and grey. Quiet flagella support the open interior.</p></figcaption></figure>
+</div><div class="readout" aria-live="polite"></div></div>
+<footer>Separately magnified educational cutaways; equal card widths do not represent equal biological sizes. Colours are illustration conventions. Fine structures are enlarged for readability. This is a temporary artwork review. The playable introduction remains unchanged. <a href="REVIEW-NOTES.txt">Review notes</a>.</footer>
+</main><script>
+const stage=document.querySelector('.stage');
+function measure(){document.querySelector('.readout').textContent='Displayed image widths: '+[...document.querySelectorAll('img')].map(i=>Math.round(i.getBoundingClientRect().width)+' px').join(' / ');}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{stage.dataset.layout=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));requestAnimationFrame(measure);}));
+if(typeof ResizeObserver!=='undefined')new ResizeObserver(measure).observe(stage);measure();
+</script></body></html>

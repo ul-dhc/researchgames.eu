@@ -1,0 +1,57 @@
+THREE CELLS — SCIENTIFIC AND VISUAL REVIEW
+Selected artwork: refinement version 2, 26 October 2026.
+
+Purpose
+These illustrations will introduce three explorable cells before the Switch Lab
+molecular-biology game. They share a softly shaded drawing style, with distinct
+but related palettes. These are AI-generated educational cutaways, not recorded
+microscope photographs. Equal display sizes represent separate magnifications.
+This package is for artwork review, not a completed three-route game.
+
+1. ONION BULB EPIDERMAL CELL — artwork/onion-epidermal.png
+Warm ivory, taupe and lilac. The intended structures are a cell wall outside the
+membrane, a large central vacuole, thin peripheral cytoplasm and a peripheral
+nucleus. Onion bulb epidermis should not be filled with chloroplasts.
+The proposed direction is to use this same cell illustration consistently in
+both the cell-selection screen and the existing onion exploration.
+
+2. LIVING HUMAN CHEEK EPITHELIAL CELL — artwork/human-cheek-epithelial.png
+Muted peach and cream, with a lilac nucleus. Intended as a flattened, irregular
+animal-cell example, without a plant cell wall or large central plant vacuole.
+The nucleus and surrounding organelles are deliberately legible. Please assess
+whether this is a defensible representative living cheek epithelial cell; its
+internal detail is idealised rather than a claim about one observed specimen.
+
+3. ESCHERICHIA COLI — artwork/ecoli.png
+Mineral sage and grey. Rod-shaped envelope, cytoplasm, ribosomes and nucleoid DNA.
+No nucleus, nuclear membrane, mitochondria or other membrane-bound organelles.
+The three flagella depict a schematic motile representative; their exact number
+and placement are not intended as a universal characteristic of E. coli strains.
+
+QUESTIONS FOR REVIEW
+- Are the main structures and their spatial relationships credible?
+- Are any structures misleading, missing or unnecessarily prominent?
+- Is the human cheek-cell choice suitable for this learning purpose?
+- Does the E. coli envelope/nucleoid/flagellar depiction need correction?
+- Can a beginner distinguish the three silhouettes and identify the nucleus
+  where present, without mistaking the bacterial nucleoid for a nucleus?
+- Which corrections are necessary before these illustrations enter the game?
+
+Illustration conventions
+Colour, translucency and cutaways serve identification and readability. Fine
+features are enlarged. Shared structures should retain recognisable identities
+as players move between cells. Anatomical review is requested before final use.
+
+REFERENCE MATERIAL CONSULTED DURING DEVELOPMENT
+Onion epidermis — Rochester Institute of Technology Virtual Microscope:
+https://vml.cad.rit.edu/microscopes/onionepidermis.html
+Plant walls and vacuoles — The Cell, NCBI Bookshelf:
+https://www.ncbi.nlm.nih.gov/books/NBK9874/
+Cheek-cell microscopy — Ohio State University Lima:
+https://lima.osu.edu/biology-microscopy/organelles
+Cheek epithelium — University of Leeds Histology Guide:
+https://histology.leeds.ac.uk/home/oral/mouth/
+E. coli cell organisation — The Cell, NCBI Bookshelf:
+https://www.ncbi.nlm.nih.gov/books/NBK9841/
+Bacterial envelope and flagella — Essentials of Glycobiology, NCBI Bookshelf:
+https://www.ncbi.nlm.nih.gov/books/NBK453062/
