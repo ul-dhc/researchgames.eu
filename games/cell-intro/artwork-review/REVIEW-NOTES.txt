@@ -1,47 +1,44 @@
-THREE CELLS — SCIENTIFIC AND VISUAL REVIEW
-Selected artwork: approved refinement version 2, with transparent-background derivatives, 26 October 2026.
-Background alpha has been removed using image-editing mattes; the original approved colour pixels, canvas and anatomical detail are preserved. Original opaque files remain archived.
+CELL ARTWORK — CURRENT ADOPTED PLANT MODEL AND UPCOMING CELLS
+Updated 27 October 2026. This standalone gallery is for artwork review.
+The playable expansion remains local; the public playable introduction is unchanged.
 
-Purpose
-These illustrations will introduce three explorable cells before the Switch Lab
-molecular-biology game. They share a softly shaded drawing style, with distinct
-but related palettes. These are AI-generated educational cutaways, not recorded
-microscope photographs. Equal display sizes represent separate magnifications.
-This package is for artwork review, not a completed three-route game.
+1. ADOPTED PLANT MODEL — artwork/original-onion-model.png
+The established original onion cell model is the current Plant identity.
+This transparent preview is rendered directly from the existing SVG cell paths
+and gradients, with the original organic-nucleus-warm.png placed at the model’s
+original nucleus position. No new onion artwork or anatomy was generated.
+The local chooser and completion backdrop use this original model. The Plant
+journey retains its original microscope field, reconstructed cell reveal,
+SVG cell model, surrounding-cell context and original nucleus throughout.
+Earlier onion-epidermal and onion-epidermal-transparent files remain archived
+assets only; the v2 onion candidate is not the currently adopted Plant identity.
 
-1. ONION BULB EPIDERMAL CELL — artwork/onion-epidermal-transparent.png
-Warm ivory, taupe and lilac. The intended structures are a cell wall outside the
-membrane, a large central vacuole, thin peripheral cytoplasm and a peripheral
-nucleus. Onion bulb epidermis should not be filled with chloroplasts.
-The proposed direction is to use this same cell illustration consistently in
-both the cell-selection screen and the existing onion exploration.
+2. UPCOMING HUMAN CHEEK CELL — artwork/human-cheek-epithelial-transparent.png
+Newer approved artwork is unchanged. Muted peach and cream, with a lilac nucleus;
+a flattened animal-cell example without a plant wall or large central vacuole.
+Internal detail is idealised for learning. The journey remains Upcoming.
 
-2. LIVING HUMAN CHEEK EPITHELIAL CELL — artwork/human-cheek-epithelial-transparent.png
-Muted peach and cream, with a lilac nucleus. Intended as a flattened, irregular
-animal-cell example, without a plant cell wall or large central plant vacuole.
-The nucleus and surrounding organelles are deliberately legible. Please assess
-whether this is a defensible representative living cheek epithelial cell; its
-internal detail is idealised rather than a claim about one observed specimen.
+3. UPCOMING ESCHERICHIA COLI — artwork/ecoli-transparent.png
+Newer approved artwork is unchanged. Sage-grey rod with cytoplasm, ribosomes,
+nucleoid DNA and schematic flagella. No nucleus or membrane-bound organelles.
+The journey remains Upcoming.
 
-3. ESCHERICHIA COLI — artwork/ecoli-transparent.png
-Mineral sage and grey. Rod-shaped envelope, cytoplasm, ribosomes and nucleoid DNA.
-No nucleus, nuclear membrane, mitochondria or other membrane-bound organelles.
-The three flagella depict a schematic motile representative; their exact number
-and placement are not intended as a universal characteristic of E. coli strains.
+TRANSPARENCY AND PROVENANCE
+Plant PNG/WebP files are source-derived renders of the established model.
+Human/E. coli transparent PNGs retain their approved original colour pixels;
+only background alpha was extracted. Their artwork files were not changed in
+this gallery update. Earlier masters and review candidates are preserved.
 
-QUESTIONS FOR REVIEW
-- Are the main structures and their spatial relationships credible?
-- Are any structures misleading, missing or unnecessarily prominent?
-- Is the human cheek-cell choice suitable for this learning purpose?
-- Does the E. coli envelope/nucleoid/flagellar depiction need correction?
-- Can a beginner distinguish the three silhouettes and identify the nucleus
-  where present, without mistaking the bacterial nucleoid for a nucleus?
-- Which corrections are necessary before these illustrations enter the game?
+QUESTIONS FOR SCIENTIFIC REVIEW
+Are the structures and their spatial relationships credible and readable?
+Is the human cheek-cell representation suitable for this learning purpose?
+Does the E. coli envelope, nucleoid or flagellar depiction need correction?
+Can a beginner distinguish a nucleus from the bacterial nucleoid?
 
-Illustration conventions
-Colour, translucency and cutaways serve identification and readability. Fine
-features are enlarged. Shared structures should retain recognisable identities
-as players move between cells. Anatomical review is requested before final use.
+CONVENTIONS
+These are educational cutaways, not microscope photographs. Separate display
+magnifications are used; equal card widths do not indicate equal biological
+sizes. Colour, translucency and enlarged detail support readability.
 
 REFERENCE MATERIAL CONSULTED DURING DEVELOPMENT
 Onion epidermis — Rochester Institute of Technology Virtual Microscope:
