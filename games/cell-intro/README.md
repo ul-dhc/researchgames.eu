@@ -1,11 +1,11 @@
 # A world inside a cell
 
-An interactive introduction following an onion cell into its nucleus, then from DNA instructions to a working protein.
+A short interactive introduction to the cellular world behind molecular biology and microbiology games.
 
-Open `index.html` through a web server. No build or installation is required. The opening screen has a **Go to scene** menu for review. Scenes 17–24 contain the interactive cell, nucleus, DNA, messenger RNA, and protein activities. Sound starts after a user gesture; narration speed, music, and volume are available in Settings.
+Choose among a plant cell, a human cheek cell and an E. coli bacterium. The plant journey is available; the other two journeys are marked Upcoming. Follow the onion cell into its nucleus, then connect DNA instructions to messenger RNA and a working protein. The introduction ends with a matching activity.
 
-Public path: <https://researchgames.eu/games/cell-intro/>
+Open index.html through a web server. No build or installation is required. The opening screen includes a Go to scene menu. Settings provide narration speed, music selection and volume.
 
-This directory contains only the current cell introduction. It does not include earlier leaf-game prototypes or the subsequent game.
+Public path: https://researchgames.eu/games/cell-intro/
 
 See [CREDITS.md](CREDITS.md) for asset information.
