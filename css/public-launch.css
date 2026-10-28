@@ -194,7 +194,7 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 @media(max-width:360px){.site-header{padding-inline:10px}.site-header .brand .logo-type{font-size:15px}.site-header .logo-lockup{gap:5px}.site-header .logo-icon-brand{width:31px;height:31px;flex-basis:31px}.header-actions{gap:3px;margin-left:8px}.site-header .theme-toggle{width:54px;height:34px;padding-inline:6px}.site-header .theme-knob{width:24px;height:24px;transform:translateX(23px)}[data-theme="light"] .site-header .theme-knob{transform:none}.menu-toggle{width:40px;height:40px;padding:8px}}
 
 /* Compact homepage spotlight; the full metadata remains available in collections. */
-.launch-games .exhibits{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.launch-games .exhibits{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .launch-games .exhibit{--spotlight-media:clamp(190px,15vw,226px);display:grid;grid-template-rows:var(--spotlight-media) 1fr;min-height:0;border-radius:12px;background:linear-gradient(145deg,#0c1120,#070b14);transition:transform .3s,border-color .3s,box-shadow .3s}
 .launch-games .exhibit:hover{transform:translateY(-4px);border-color:#6851ad;box-shadow:0 24px 60px rgba(0,0,0,.28)}
 .launch-games .exhibit-image{position:relative;inset:auto;grid-row:1;width:100%;height:var(--spotlight-media);object-fit:cover;object-position:center;opacity:1;filter:saturate(.92);transition:transform .65s cubic-bezier(.2,.7,.3,1),filter .35s}
@@ -228,6 +228,7 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-games .dna:hover .exhibit-image{transform:scale(1.035);filter:blur(.25px) saturate(.88) brightness(.74) contrast(1.04)}
 .launch-games .dna .image-shade{z-index:1;background:linear-gradient(100deg,rgba(5,8,18,.2),rgba(17,21,51,.06) 55%,rgba(8,8,25,.14));backdrop-filter:none}
 .launch-games .dna .dna-liquid-canvas{position:absolute;inset:0 0 auto;z-index:2;width:100%;height:var(--spotlight-media);opacity:1;pointer-events:none;mix-blend-mode:screen}
+.launch-games .cell-intro .labels{flex-wrap:wrap}
 [data-theme="light"] .launch-games .exhibit{border-color:#c8c5d1;box-shadow:0 16px 40px rgba(39,32,62,.09)}
 @media(max-width:1180px){.launch-games .exhibits{grid-template-columns:repeat(2,minmax(0,1fr))}.launch-games .exhibit{--spotlight-media:clamp(210px,25vw,270px)}}
 @media(max-width:820px){.launch-games .exhibits{grid-template-columns:1fr;max-width:620px;margin-inline:auto}.launch-games .exhibit{--spotlight-media:clamp(190px,52vw,280px)}.launch-games .exhibit-content,.launch-games .dna:last-child .exhibit-content{min-height:0;padding:24px 20px}.launch-games .exhibit h3,.launch-games .exhibit .description,.launch-games .facts,.launch-games .game-collections{min-height:0}.launch-games .facts{height:auto}.launch-games .languages{margin-top:18px}.launch-games .exhibit-image{opacity:1}.launch-games .image-shade{background:linear-gradient(0deg,rgba(5,8,16,.72),transparent 48%)}.launch-games .riddles .exhibit-image{padding:0}}

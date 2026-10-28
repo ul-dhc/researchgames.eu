@@ -1,0 +1,91 @@
+/* Focused local journey refinements; original image files and task mechanics are retained. */
+#scene[data-phase=onion]{height:100svh;min-height:568px;display:block;padding:0;background:#d9d6ca}
+#scene[data-phase=onion] .physical-camera{position:absolute;inset:0;margin:0;width:100%;height:100%;border-radius:0}
+#scene[data-phase=onion] #specimen-view{inset:0;width:100%;height:100%;margin:0;border-radius:0;transform:none}
+#scene[data-phase=onion] #physical{object-fit:cover;object-position:50% 72%;mask-image:none;filter:none}
+#scene[data-phase=onion] #physical-backdrop{display:none}
+#scene[data-phase=onion] .shade{background:linear-gradient(0deg,#211e2070,transparent 24%)}
+#scene[data-phase=onion] #story{position:absolute;inset:15% 10% auto 36%;margin:0;max-width:620px;color:#332c35}
+#scene[data-phase=onion] :is(#caption,#detail){color:#332c35;text-shadow:none}
+#scene[data-phase=onion] #detail{max-width:30ch}
+#scene[data-phase=onion] header{color:#332c35;text-shadow:0 1px 3px #f3ecdf80}
+#skin-patch{display:none!important}
+#scene[data-phase=skin] #skin-cue{left:54%;top:33%;background:#f0e7d9eb;color:#443844;border-radius:6px;text-shadow:none}
+#scene[data-phase=skin] #skin-cue:after{height:18px;border-color:#f0e7d9}
+/* Reveal is one attached image handoff: pointer/press feedback plus the first visible frame. */
+#scene #choose-cell:hover>span{background:var(--action-hover);border-color:#f3ecdf;box-shadow:0 0 0 2px #f3ecdf80}
+#scene #choose-cell:active>span{background:var(--action-pressed);box-shadow:inset 0 2px 4px #142d30}
+#scene[data-cell-reveal=opening] #cell-outline{filter:drop-shadow(0 0 4px #d8eeee80)}
+#scene #cue,#scene #nucleus-action-contour{display:none!important}
+/* Recognition starts with an unsegmented image. Description choices are optional. */
+#guess-surface{position:absolute;top:0;left:0;z-index:2;transform-origin:0 0;clip-path:polygon(9% 34%,81% 10%,92% 12%,96% 20%,97% 54%,89% 61%,28% 72%,10% 72%,6% 62%);border:0;background:none;padding:0;cursor:crosshair}
+#scene[data-phase=invite] #nucleus,#scene[data-phase=invite] #nucleus:hover{min-width:44px;min-height:44px;border:0;background:none;box-shadow:none;outline:none;cursor:crosshair}
+#scene[data-phase=invite] #nucleus>span{display:none}
+#scene[data-phase=invite] #story{left:48%;right:var(--gutter);max-width:640px;bottom:105px}
+#guess-alternative{pointer-events:auto;margin-top:12px}
+#guess-alternative summary{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #f3ecdf66;border-radius:22px;background:#211e20b3;font-size:14px;cursor:pointer}
+#guess-alternative>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#guess-alternative .quiet{font-size:13px;padding:9px 12px}
+#guess-feedback{position:absolute;left:0;right:0;bottom:calc(100% + 12px);margin:0;padding:9px 12px;border:0;border-radius:5px;background:#ead9e0;color:#684251;box-shadow:none;text-shadow:none;font-size:15px;line-height:1.4;pointer-events:none}
+#guess-feedback[data-tone=correct]{background:#dce8d8;color:#315435;border-color:#779675}
+/* Process comments are quiet notes, never information labels or button-like pills. */
+:root{--note-paper:#e9dfc6;--note-ink:#55452d}
+#scene :is(#learning-feedback,#activity-feedback,#inspection-progress):not(:empty),#scene #role-selected-cue{background:var(--note-paper);color:var(--note-ink);border:0;border-radius:5px;padding:9px 12px;box-shadow:none;text-shadow:none;cursor:default;max-width:100%}
+#scene #role-selected-cue{min-height:72px;margin:12px 0 16px;position:sticky;top:8px}
+#scene #role-selected-cue p,#scene #role-feedback{color:var(--note-ink);text-shadow:none;box-shadow:none}
+#scene #role-feedback{min-height:0}
+#scene #role-selected-cue img{flex:none}
+#scene #learning-feedback:not(:empty){width:fit-content}
+#scene[data-phase=protein] #detail,#scene[data-phase=protein] #process-copy-reserve span{white-space:pre-line}
+#scene[data-phase=protein] #protein-work-cue{padding:0;border:0;border-radius:5px;min-height:calc(2.7em + 16px);text-shadow:none;box-shadow:none}
+#scene[data-phase=protein] #protein-work-cue>span{display:block;width:fit-content;max-width:100%;padding:8px 12px;border-radius:5px;box-shadow:none;text-shadow:none}
+#scene[data-phase=protein] #protein-work-cue[data-passive=true]>span{background:var(--note-paper);color:var(--note-ink);text-shadow:none;cursor:default}
+#scene[data-plant-complete=true] [data-status=plant]{color:var(--note-ink);background:var(--note-paper);padding:5px 9px;border-radius:4px;width:fit-content;box-shadow:none}
+/* Only the outer matching card owns selection/correct treatment. */
+#scene .role-card{border-radius:16px;border-width:1px;box-shadow:none}
+#scene .role-card[data-selected=true]{border-color:#168f91;background:#d8eeee12;box-shadow:none}
+#scene .role-illustration,#scene .role-illustration[aria-pressed=true]{border:0;border-radius:12px;background:transparent;box-shadow:none}
+#scene .role-illustration:focus-visible{outline:none;box-shadow:none}
+#scene .role-card:has(.role-illustration:focus-visible){outline:2px solid var(--paper);outline-offset:3px;box-shadow:0 0 0 5px var(--action)}
+@media(max-width:650px){
+ #scene[data-phase=onion] #story{inset:95px 24px auto;margin:0;max-width:none}
+ #scene[data-phase=onion] #physical{object-position:55% 100%}
+ #scene[data-phase=onion] #story:before{content:'';position:absolute;inset:-25px -24px -28px;z-index:-1;background:radial-gradient(ellipse,#f0ecdfd9,transparent 75%);pointer-events:none}
+ #scene[data-phase=invite]{min-height:max(100svh,760px)}
+ #scene[data-phase=invite] #story{left:24px;right:24px;bottom:95px;max-width:none}
+ #scene #role-selected-cue{min-height:88px}
+ #scene[data-phase=protein] #protein-work-cue{min-height:calc(4.05em + 16px)}
+}
+
+/* Reserve a stable status row, but tint only the modest text note itself. */
+#scene #role-selected-cue{background:none;padding:0;border:0;box-shadow:none}
+#scene #role-feedback{flex:0 1 auto;width:fit-content;max-width:42ch;padding:9px 12px;border:0;border-radius:5px;background:#e9dfc6eb;color:var(--note-ink);box-shadow:none;text-shadow:none;cursor:default}
+@media(max-width:650px){#scene #role-selected-cue{min-height:104px}#scene #role-feedback{max-width:100%}}
+
+/* Passive progress is warm text only, on stable unfilled rows. */
+:root{--progress-text:#ead798}
+#scene :is(#guess-feedback,#learning-feedback,#activity-feedback,#inspection-progress,#role-feedback,#protein-work-status),#scene #role-selected-cue,#scene #protein-work-cue[data-passive=true],#scene #protein-work-cue[data-passive=true]>span,#scene[data-plant-complete=true] [data-status=plant]{background:none;border:0;border-radius:0;box-shadow:none;text-shadow:none;color:var(--progress-text)}
+#scene #guess-feedback{width:fit-content;max-width:min(42ch,100%);right:auto;padding:0;font-size:15px;line-height:1.4}
+#scene #guess-feedback[data-tone=correct]{background:none;color:var(--progress-text);border:0}
+#scene :is(#learning-feedback,#activity-feedback,#inspection-progress):not(:empty),#scene #role-feedback{background:none;border:0;box-shadow:none;text-shadow:none;color:var(--progress-text);padding:0}
+#scene #role-selected-cue p{color:var(--progress-text)}
+#scene[data-phase=protein] #protein-work-cue[data-passive=true]>span{background:none;color:var(--progress-text);border:0;box-shadow:none;text-shadow:none}
+/* Discovery response is local to the nucleus, with no resting answer outline. */
+#scene[data-phase=invite] #nucleus:hover,#scene[data-phase=invite] #nucleus:active{background:#d8eeee26;box-shadow:inset 0 0 0 1.5px #7db6ad99}
+#scene[data-phase=approach][data-nucleus-reaction=true] #nucleus{opacity:1;transition:none;background:#d8eeee35;box-shadow:inset 0 0 0 2px #7db6ad;pointer-events:none;border:0;outline:none}
+#scene[data-phase=approach] #nucleus>span{display:none}
+/* Information controls use one screen-space metric; artwork alone changes scale. */
+#scene[data-phase] :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info,#rna-message>span){display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:inherit;font-size:13px;font-weight:400;line-height:18px;min-height:44px;min-width:0;padding:8px 10px;border-width:1px;border-style:solid;border-radius:8px;white-space:nowrap}
+#scene[data-phase] :is(.molecule-info-label,#ribosome-info-label,#protein-label,#model-nucleus-info){width:max-content;max-width:none}
+#scene[data-phase] #ribosome-info-label{transform:translateX(-50%)}
+
+/* Reserve the complete label stack on short desktop screens rather than clipping it. */
+@media(min-width:651px){#scene[data-phase=protein]{height:auto;min-height:max(100svh,calc(var(--story-end) + 500px))}#scene[data-phase=protein] nav{position:fixed}}
+@media(min-width:651px) and (max-width:1099px){#scene[data-phase=protein]{min-height:max(100svh,calc(var(--story-end) + 650px))}}
+/* Recognition feedback has a reserved slot after the instruction, over its local text fade. */
+#scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback{position:relative;inset:auto;margin:12px 0 0;min-height:64px;width:100%;max-width:42ch;padding:0}
+#scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback[hidden]{display:block!important;visibility:hidden}
+@media(max-width:650px){#scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback{min-height:76px}}
+/* Recognition uses only the continuous bottom vignette, never a local text card. */
+#scene:is([data-phase=invite],[data-phase=approach]) #story:before{display:none}
+#scene:is([data-phase=invite],[data-phase=approach]) .shade{background:linear-gradient(0deg,#211e20f2 0%,#211e20db 22%,#211e208c 42%,transparent 63%)}

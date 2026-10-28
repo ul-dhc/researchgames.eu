@@ -1,0 +1,94 @@
+/* Minimal integration layer. Existing scenes keep the approved 111 visual treatment. */
+#scene[data-phase=chooser]{height:auto;min-height:100svh;background:#282523;padding-bottom:115px}
+#scene[data-phase=chooser] :is(.physical-camera,.camera,.nuclear-camera,.shade,#chromatin-environment){display:none}
+#cell-branches{position:relative;z-index:3;margin:calc(var(--story-end) + 12px) var(--gutter) 0}
+#cell-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1600px;margin:auto}
+.cell-choice{border:1px solid transparent;border-radius:12px;background:transparent;padding:0;overflow:hidden;text-align:left;min-width:0;color:#f1e9dc;opacity:var(--choice-reveal,1);transform:translateY(calc(10px*(1 - var(--choice-reveal,1))))}
+button.cell-choice{cursor:pointer}.cell-choice:hover,.cell-choice:focus-visible{border-color:#e0d6c64d;background:#ffffff04;outline-offset:4px}
+.cell-choice img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.choice-copy{display:grid;padding:5px 18px 12px;gap:6px;line-height:1.35}.choice-copy strong{font-size:24px;font-weight:500}.choice-copy small{font-size:16px;font-weight:400;white-space:nowrap;display:inline-block}.choice-copy>span{font-size:15px;color:#d0c5b9}.choice-copy .choice-status{font-size:13px;min-height:18px;color:#c9e4d5}
+.cell-choice.is-upcoming{cursor:default}.cell-choice.is-upcoming:hover{background:transparent;border-color:transparent}.choice-copy .choice-status[id^=upcoming-]{display:inline-block;justify-self:start;min-height:0;margin-top:3px;padding:4px 11px;border:1px solid #c6baa77a;border-radius:14px;color:#eee1c9;font-size:14px;font-weight:600;letter-spacing:.015em;background:#3e3732}
+/* Same approved transparent onion illustration in the existing whole-cell and lift model. */
+
+#cell-boundary-key{display:none!important}#nucleus-object[data-embedded=true] #select-model-nucleus{min-width:44px;min-height:44px}#cytoplasm-intro{min-height:44px}
+#scene:is([data-view=field],[data-entry=true]) .camera:before{background:url('assets/onion-field.webp') center/cover}
+/* Approved exception: retain the cell behind Who does what? / Well done! */
+#scene[data-phase=roles]:before{background-image:url('assets/onion-cell-detailed-cutout-960.webp')}
+#scene #story #story-actions:has(#return-cells:not([hidden])){display:flex}
+#return-cells,#review-toggle{min-height:44px}#review-toggle{display:inline-flex;align-items:center}#review-navigation{z-index:12}
+#scene[data-intro-transition=true] #outgoing{display:block;z-index:2}#scene[data-intro-transition=true] #outgoing>.physical-camera{display:block}
+#scene[data-specimen-transition=true] #outgoing{display:block;z-index:2}.specimen-handoff{position:absolute;inset:0;background:#282523}.specimen-handoff img{display:block;object-fit:contain}
+@media(min-width:651px){#scene[data-phase=chooser] .cell-choice img{width:100%;height:auto;max-width:calc(clamp(180px,29svh,330px)*1.5);margin:auto}#scene[data-phase=chooser] nav{position:fixed;z-index:9}}
+@media(max-width:650px){
+ #scene[data-phase=chooser]{display:flex;flex-direction:column;padding:86px 0 105px}
+ #scene[data-phase=chooser] #story{position:relative;inset:auto;margin:0 20px;order:1}
+ #cell-branches{order:2;margin:20px 12px 0}#cell-choices{grid-template-columns:1fr;gap:10px}
+ .cell-choice{display:grid;grid-template-columns:43% minmax(0,1fr);align-items:center;min-height:120px;border-bottom:1px solid #d8cbb529;border-radius:0}.choice-copy{padding:12px 10px;gap:4px}.choice-copy strong{font-size:20px}.choice-copy small,.choice-copy>span{font-size:13px}.choice-copy .choice-status{font-size:12px}
+ #vacuole-label,#cytoplasm-intro{font-size:12px;padding:7px 10px}
+}
+@media(prefers-reduced-motion:reduce){.cell-choice{transform:none}#scene[data-intro-transition=true] #outgoing,#scene[data-specimen-transition=true] #outgoing{display:none}}
+#cell-choices .cell-choice{opacity:var(--choice-reveal,1)}
+/* Structure names reflect one active region; interaction never moves geometry. */
+#scene[data-phase=model] :is(#cytoplasm-intro,#vacuole-label)[data-cue-active=true],#scene[data-phase=model] #select-model-nucleus[data-cue-active=true]>span{background:#eadfeb;color:#4b3552;border-color:#a889aa}
+#scene[data-phase=model] #select-model-nucleus{border-color:transparent;background:transparent;box-shadow:none}
+#scene[data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:#a889aa;background:#a889aa0b;box-shadow:none}
+#scene[data-phase=explore] .part-label[data-preview-active=true]{background:var(--interaction-tint);color:var(--interaction-ink);border-color:var(--interaction-accent);box-shadow:none}
+#scene[data-phase=explore] .part-label[data-preview-active=false]{background:#eee5d8e8;color:#493c4b;border-color:#f5ece029;box-shadow:none}
+#scene[data-phase=explore] .part-hit{min-width:44px;min-height:44px}
+.part-hit:after,#active-part-link-point{display:none}
+#scene a{text-decoration:none}#scene a:hover{filter:brightness(1.14)}
+header #return-cells.journey-return{position:absolute;left:62px;top:-12px;min-height:44px;padding:8px 9px;border-color:transparent;border-radius:12px;font-size:12px;color:#e5ddd3;pointer-events:auto}
+header #return-cells.journey-return:hover{background:#ffffff12}
+/* Continue the microscopic world behind the choice, using the opening image. */
+#choice-environment{display:none;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:#142b25}
+#scene[data-phase=chooser] #choice-environment{display:block}
+#choice-environment img{position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;filter:blur(9px) brightness(.40) saturate(.95) hue-rotate(25deg);animation:choice-environment-drift 28s ease-in-out infinite alternate}
+#choice-environment:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#081b19a6,transparent 55%,#081b196b),linear-gradient(90deg,#091c214d,transparent 75%)}
+@keyframes choice-environment-drift{from{transform:scale(1.02) translate(-.6%,0)}to{transform:scale(1.09) translate(.8%,1%)}}
+#scene[data-paused=true] #choice-environment img{animation-play-state:paused}
+#scene[data-still=true] #choice-environment img{animation:none}
+@media(prefers-reduced-motion:reduce){#choice-environment img{animation:none}}
+/* Clear availability with light feedback, without presenting future routes as buttons. */
+.choice-copy .choice-status[id^=upcoming-]{font-size:15px;line-height:1.2;font-weight:650;color:#f4faf3;background:#264b43;border:0;padding:7px 13px;margin-top:5px;letter-spacing:.02em}
+.cell-choice img{transition:filter .22s ease,transform .35s ease}
+button.cell-choice:hover img,button.cell-choice:focus-visible img{filter:brightness(1.08);transform:scale(1.015)}
+button.cell-choice:hover,button.cell-choice:focus-visible{border-color:#b4e0cd99;background:#d5f0df08}
+button.cell-choice:active img{transform:scale(1.005);filter:brightness(1.12)}
+.cell-choice.is-upcoming:hover img,.cell-choice.is-upcoming:focus-visible img{filter:brightness(1.045)}
+.cell-choice.is-upcoming:hover .choice-status,.cell-choice.is-upcoming:focus-visible .choice-status,.cell-choice.is-upcoming:active .choice-status{background:#346354;color:#fff}
+.cell-choice.is-upcoming:focus-visible{outline:1px solid #c6e1d2;outline-offset:3px;border-color:transparent}
+@media(prefers-reduced-motion:reduce){.cell-choice img{transition:none}button.cell-choice:is(:hover,:focus-visible,:active) img{transform:none}}
+
+/* Restore extent-based selection on the original model, excluding the vacuole. */
+#cell-game-model[data-cytoplasm-active=true] svg>path:nth-of-type(2){fill:url(#cell-cytoplasm);stroke:#f4e8d7}
+#cell-cytoplasm-region{fill:#c4adc5;stroke:#705175;stroke-width:3;pointer-events:none}
+#cell-game-model[data-structure-preview=vacuole] #vacuole-shape{fill:#d2bfd5;stroke:#705175;stroke-width:3}
+
+/* Solid paper surfaces keep narration and imagery from bleeding through. */
+#scene #object-info,#scene #interaction-guide{background:#f0e7d9;opacity:1;backdrop-filter:none}
+
+/* Keep the phone's cell context within the illustration, clear of both text areas. */
+#cell-context-window{position:absolute;inset:0;pointer-events:none;z-index:-1;overflow:visible}
+#cell-context-origin{position:absolute;inset:0}
+@media(max-width:650px){
+ #scene:is([data-phase=export],[data-phase=protein]) #cell-context-window{left:calc((100% - 100vw)/2);right:auto;width:100vw;overflow:hidden;mask-image:linear-gradient(transparent,#000 23%,#000 77%,transparent);mask-composite:add}
+ #scene:is([data-phase=export],[data-phase=protein]) #cell-context-origin{left:calc((100vw - var(--context-panel-width))/2);right:auto;width:var(--context-panel-width)}
+}
+#scene[data-phase=model] #vacuole-label:is(:hover,[aria-pressed=true]){outline:none;box-shadow:none}
+#scene[data-phase=model] #vacuole-label:focus-visible{outline:2px solid var(--interaction-accent);outline-offset:3px}
+/* Molecular scenes need local text contrast, not a screen-wide opaque veil. */
+#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{background:none;z-index:1}
+#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #story::before{display:block;inset:-90px auto -28px calc(-1 * var(--gutter));width:100vw;background:linear-gradient(180deg,#211e20e8 0%,#211e20cc calc(100% - 50px),transparent 100%);filter:none;mask-image:none;opacity:1;z-index:-1}
+#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #dna-learning::before{display:none}
+#scene:is([data-phase=export],[data-phase=protein]) :is(#detail,#learning-instruction,#learning-feedback,#protein-work-cue){text-shadow:0 1px 4px #17131aaa}
+
+/* One paper-like surface for anatomy and molecule names; focus has one ring. */
+#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info,#rna-message>span,#pore-target>span,#select-gene>span,#select-model-nucleus>span,#nucleus>span){background:#f0e7d9eb;color:#443844;border:1px solid #b9a99a55;box-shadow:none;text-shadow:none;filter:none}
+#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info):is(:hover,[aria-pressed=true],[aria-expanded=true],[data-preview-active=true]),#scene :is(#rna-message,#pore-target,#select-gene,#select-model-nucleus,#nucleus):is(:hover,[aria-pressed=true],[aria-expanded=true])>span,
+#scene[data-learning-info=messenger-rna] #rna-message>span,#scene[data-learning-info=ribosome] #ribosome-info-label,#scene[data-learning-info=cytoplasm] #cytoplasm-location{background:#d8eeeef2;color:#154b4e;border-color:#168f917d;box-shadow:none;outline:none;filter:none}
+#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info):focus-visible{outline:2px solid #168f91;outline-offset:3px;box-shadow:none}
+#role-actions{gap:12px;margin-top:28px;align-items:center;flex-wrap:wrap}
+#role-actions #role-replay{margin:0}
+#role-actions #return-cells{order:0}
+#role-actions #role-replay{order:1}
+@media(max-width:650px){#role-actions{align-items:stretch;flex-direction:column}#role-actions button{width:100%}}
