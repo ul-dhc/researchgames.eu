@@ -981,3 +981,5 @@ function reserveSceneNarration(key){
 }
 
 $('preview-replay').addEventListener('click',returnToBeginning);
+
+updateIcons(document);
