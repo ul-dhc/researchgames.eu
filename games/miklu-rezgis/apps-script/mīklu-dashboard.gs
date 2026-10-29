@@ -12,6 +12,9 @@ const DASHBOARD_GAME_VERSIONS = [
 ];
 
 function doGet(e) {
+  if (e && e.parameter && e.parameter.resource === 'dashboard-snapshot') {
+    return researchGamesDashboardSnapshot_();
+  }
   if (e && e.parameter && e.parameter.resource === 'stats') {
     return researchGamesSummary_(e.parameter.period);
   }

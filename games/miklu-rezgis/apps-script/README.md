@@ -101,3 +101,13 @@ All interface icons use official Lucide SVG paths bundled inline in `Dashboard.h
 link, comment/rating badges and removable filters. Brand logos and chart marks
 retain their own artwork. Attribution is embedded in the HTML and included in
 `LUCIDE-LICENSE.txt`. Published as dashboard deployment version 30.
+
+## Static delivery — JSON migration
+
+The public `../stats/` URL now serves the dashboard directly from the website,
+without an Apps Script iframe. Its filters run locally against a periodically
+published aggregate snapshot. Version **31** of the existing dashboard deployment
+adds the collector endpoint; its live `mīklu-dashboard.gs` includes the contents of
+`SnapshotModel.gs` and `SnapshotExport.gs` appended in that order. Do not duplicate
+them as separate files when copying the concatenated source.
+See `../data/README.md` for publication, privacy, fallback and maintenance details.
