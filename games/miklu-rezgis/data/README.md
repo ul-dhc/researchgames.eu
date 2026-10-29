@@ -7,9 +7,14 @@ existing durable local queue and Apps Script receiver.
 
 ## Refresh and publication
 
-The existing `.github/workflows/analytics-snapshot.yml` workflow refreshes both
-files alongside the shared analytics overview on a five-minute target schedule,
-manual dispatch, and relevant main-branch changes. GitHub schedules can be delayed;
+The existing `.github/workflows/analytics-snapshot.yml` workflow refreshes analytics
+on a five-minute target schedule. Riddle content is checked only when 24 hours have
+elapsed since the last successful check, on relevant main-branch changes, or when
+manually dispatched with “Refresh riddle content now” enabled (the default).
+`riddles-refresh.json` on the data branch records successful checks separately from
+content timestamps, so unchanged content does not cause repeated Sheets requests.
+A failed check keeps the previous file and is retried on the next workflow run.
+GitHub schedules can be delayed;
 this is not a real-time delivery promise. Files are published on the existing
 `analytics-data` branch without rebuilding the website. Each page has a bundled
 last-valid copy; the dashboard also caches the newest model in the browser.

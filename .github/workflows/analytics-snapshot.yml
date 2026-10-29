@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '2-57/5 * * * *'
   workflow_dispatch:
+    inputs:
+      refresh_riddles:
+        description: 'Refresh riddle content now (otherwise checked once per 24 hours)'
+        type: boolean
+        default: true
   push:
     branches: [main]
     paths: ['stats/**', 'games/miklu-rezgis/**', '.github/workflows/analytics-snapshot.yml']
@@ -24,10 +29,11 @@ jobs:
         run: node --test stats/tests/*.test.mjs games/miklu-rezgis/tests/*.test.mjs
       - name: Read last published snapshot
         run: |
+          echo '{}' > games/miklu-rezgis/data/riddles-refresh.json
           if git ls-remote --exit-code --heads origin analytics-data; then
             git fetch --depth=1 origin analytics-data:refs/remotes/origin/analytics-data
             git show origin/analytics-data:stats.json > stats/snapshot.json
-            for name in riddles.json miklu-dashboard.json; do
+            for name in riddles.json miklu-dashboard.json riddles-refresh.json; do
               if git cat-file -e "origin/analytics-data:$name"; then
                 git show "origin/analytics-data:$name" > "games/miklu-rezgis/data/$name"
               fi
@@ -35,13 +41,17 @@ jobs:
           fi
       - name: Collect all games and periods
         run: node stats/scripts/update-snapshot.mjs
-      - name: Refresh riddle content and detailed dashboard
+      - name: Refresh detailed dashboard and due riddle content
+        env:
+          REFRESH_RIDDLES: ${{ github.event_name == 'push' || inputs.refresh_riddles == true }}
         run: node games/miklu-rezgis/scripts/update-data.mjs
       - name: Publish data branch
         run: |
           cp stats/snapshot.json "$RUNNER_TEMP/stats.json"
           cp games/miklu-rezgis/data/riddles.json "$RUNNER_TEMP/riddles.json"
           cp games/miklu-rezgis/data/miklu-dashboard.json "$RUNNER_TEMP/miklu-dashboard.json"
+          cp games/miklu-rezgis/data/riddles-refresh.json "$RUNNER_TEMP/riddles-refresh.json"
+          rm games/miklu-rezgis/data/riddles-refresh.json
           git restore stats/snapshot.json games/miklu-rezgis/data/riddles.json games/miklu-rezgis/data/miklu-dashboard.json
           if git show-ref --verify --quiet refs/remotes/origin/analytics-data; then
             git switch --force-create analytics-data origin/analytics-data
@@ -51,7 +61,8 @@ jobs:
           cp "$RUNNER_TEMP/stats.json" stats.json
           cp "$RUNNER_TEMP/riddles.json" riddles.json
           cp "$RUNNER_TEMP/miklu-dashboard.json" miklu-dashboard.json
-          git add stats.json riddles.json miklu-dashboard.json
+          cp "$RUNNER_TEMP/riddles-refresh.json" riddles-refresh.json
+          git add stats.json riddles.json miklu-dashboard.json riddles-refresh.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

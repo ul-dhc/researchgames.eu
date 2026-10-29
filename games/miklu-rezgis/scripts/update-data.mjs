@@ -32,18 +32,27 @@ export function riddlesFromCsv(csv,previous){
 }
 async function readJson(path){try{return JSON.parse(await readFile(path,'utf8'));}catch{return null;}}
 async function atomic(path,data){await mkdir(dirname(path),{recursive:true});await writeFile(path+'.tmp',JSON.stringify(data)+'\n');await rename(path+'.tmp',path);}
-export async function updateData(directory,request=fetch){
+export async function updateData(directory,request=fetch,{refreshRiddles=true,now=Date.now()}={}){
  let failed=0;
  for(const [name,url,transform] of [['riddles.json',CSV_URL,(text,old)=>riddlesFromCsv(text,old)],['miklu-dashboard.json',DASHBOARD_URL,text=>Model.validate(JSON.parse(text))]]){
   const path=directory+'/'+name,old=await readJson(path);
+  const checkPath=directory+'/riddles-refresh.json';
+  if(name==='riddles.json'&&!refreshRiddles&&old){
+   const check=await readJson(checkPath),checkedAt=Date.parse(check?.checkedAt);
+   if(Number.isFinite(checkedAt)&&checkedAt<=now&&now-checkedAt<86400000){
+    console.log('Riddle content checked within the last 24 hours; skipping Sheets request');continue;
+   }
+  }
   try{
    const response=await request(url,{signal:AbortSignal.timeout(90000)});if(!response.ok)throw new Error('HTTP '+response.status);
    const data=transform(await response.text(),old);
    if(old?.generatedAt&&Date.parse(data.generatedAt)<Date.parse(old.generatedAt))throw new Error('Source returned older data');
    if(name==='miklu-dashboard.json'&&old?.cohorts?.length&&!data.cohorts.length)throw new Error('Unexpected empty dashboard');
-   await atomic(path,data);console.log('Updated '+name);
+   await atomic(path,data);
+   if(name==='riddles.json')await atomic(checkPath,{checkedAt:new Date(now).toISOString()});
+   console.log('Updated '+name);
   }catch(error){failed++;console.warn('::warning::'+name+': '+error.message+'; last valid file retained');if(!old)throw error;}
  }
  return failed;
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await updateData(process.argv[2]||'games/miklu-rezgis/data');
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await updateData(process.argv[2]||'games/miklu-rezgis/data',fetch,{refreshRiddles:process.env.REFRESH_RIDDLES!=='false'});

@@ -64,3 +64,27 @@ test('dashboard saved data renders immediately and an older response cannot repl
  vm.runInContext(source,context);assert.equal((await vm.runInContext('DashboardSnapshot.load()',context)).generatedAt,current.generatedAt);
  resolve({ok:true,json:async()=>old});assert.equal((await vm.runInContext('DashboardSnapshot.refresh()',context)).generatedAt,current.generatedAt);
 });
+
+test('scheduled runs check riddle content once per 24 hours, while analytics always refreshes; manual force bypasses the interval',async()=>{
+ const dir=await mkdtemp(tmpdir()+'/riddle-frequency-'),now=Date.now(),calls=[];
+ const model=Model.build(sessions,evaluations,questions);
+ await writeFile(dir+'/riddles.json',JSON.stringify(riddlesFromCsv(csv)));
+ await writeFile(dir+'/riddles-refresh.json',JSON.stringify({checkedAt:new Date(now-1000).toISOString()}));
+ const request=async url=>{calls.push(url);return {ok:true,text:async()=>url.includes('output=csv')?csv:JSON.stringify(model)};};
+ await updateData(dir,request,{refreshRiddles:false,now});assert.equal(calls.length,1);assert.ok(calls[0].includes('dashboard-snapshot'));
+ calls.length=0;
+ await updateData(dir,request,{refreshRiddles:false,now:now+86400000});assert.equal(calls.length,2);
+ const checked=JSON.parse(await readFile(dir+'/riddles-refresh.json','utf8'));assert.equal(checked.checkedAt,new Date(now+86400000).toISOString());
+ calls.length=0;
+ await updateData(dir,request,{refreshRiddles:true,now:now+86400001});assert.equal(calls.length,2);
+});
+
+test('failed daily riddle check leaves the last successful check unchanged and retries next run',async()=>{
+ const dir=await mkdtemp(tmpdir()+'/riddle-retry-'),now=Date.now(),check={checkedAt:new Date(now-2*86400000).toISOString()},model=Model.build(sessions,evaluations,questions);
+ await writeFile(dir+'/riddles.json',JSON.stringify(riddlesFromCsv(csv)));
+ await writeFile(dir+'/riddles-refresh.json',JSON.stringify(check));
+ let attempts=0;
+ const request=async url=>{if(url.includes('output=csv')){attempts++;throw new Error('offline');}return {ok:true,text:async()=>JSON.stringify(model)};};
+ await updateData(dir,request,{refreshRiddles:false,now});await updateData(dir,request,{refreshRiddles:false,now:now+300000});
+ assert.equal(attempts,2);assert.deepEqual(JSON.parse(await readFile(dir+'/riddles-refresh.json','utf8')),check);
+});
