@@ -635,7 +635,7 @@ async function playAudio(){
 function reconcileAudio(){if(canPlayAudio())playAudio();else stopAudio(!hasBegun?'ready':musicFinished?'finished':'paused');}
 function toggleSound(){soundOn=!soundOn;if(soundOn&&musicMixer.loopFailed&&!proteinCompletionReached){musicMixer.reset();musicFinished=false;}saveAudioPreference();reconcileAudio();}
 function updateMotion(){if(still&&phase==='chooser')chooserInstant=true;branches.reduceMotion(still);scene.dataset.still=String(still);if(still){cancelShotTransition();cellEntry=1600;scene.dataset.entry='false';if(!revealed)revealFull();syncControls();}renderCellEntry();renderTeaser();renderPhysicalMotion();renderNuclear();renderModel();geometry();renderChooserReveal();}
-function setPaused(value){paused=value;branches.pause(value);wakeControls();if(!value){manualSceneHold=false;navigationHold=false;scene.dataset.hold='false';}scene.dataset.paused=String(paused);last=0;syncControls();reconcileAudio();$('status').textContent=paused?'Exploration paused.':'Exploration resumed.';}
+function setPaused(value){paused=value;manualSceneHold=false;navigationHold=false;scene.dataset.hold='false';branches.pause(value);wakeControls();scene.dataset.paused=String(paused);last=0;if(value)settlePreviewScene();syncControls();reconcileAudio();$('status').textContent=paused?'Exploration paused.':'Exploration resumed.';}
 function tick(now){
  const dt=last?Math.min(now-last,100):0;last=now;musicMixer.tick();const musicState=musicMixer.snapshot();scene.dataset.musicVoice=String(musicState.active);scene.dataset.musicOverlap=String(musicState.overlap);scene.dataset.musicLoops=String(musicState.loops);scene.dataset.musicGainA=String(musicState.gains[0]);scene.dataset.musicGainB=String(musicState.gains[1]);scene.dataset.musicGainC=String(musicState.gains[2]);scene.dataset.musicGainD=String(musicState.gains[3]);scene.dataset.musicTrack=musicState.track;scene.dataset.musicSwitching=String(musicState.switching);controlsAwake=Math.max(0,controlsAwake-dt);renderControlsVisibility();
  if(phase==='assemble'&&activityPlaced===3&&incomingDecoded&&(!paused||navigationHold)&&!infoKey&&!guideOpen){bridgeClock+=dt;renderActivity();}
@@ -652,26 +652,29 @@ function tick(now){
   if(phase==='approach'&&approach<8000){approach=Math.min(8000,approach+dt);geometry();if(approach===8000)syncControls();}
   if(!navigationHold&&!still&&revealed&&!infoKey&&!guideOpen&&!transitioning&&sequence[phase]){phaseHold+=dt;const cameraReady=phase!=='approach'||approach===8000;const entryReady=phase!=='establish'||cellEntry===1600;const skinReady=phase!=='skin'||phaseElapsed>=7700,montageReady=phase!=='teaser'||phaseElapsed>=montageTotal();if(cameraReady&&entryReady&&skinReady&&montageReady&&phaseHold>=(phase==='teaser'?0:phase==='model'?Math.max(6000,captions.model[1].length*25/narrationSpeed+2400/narrationSpeed):['world','people'].includes(phase)?openingHold(phase):readingDwell()))setPhase(sequence[phase]);}
  }
- if(manualSceneHold&&!paused&&revealed&&!transitioning&&incomingDecoded&&(phase!=='model'||modelReady)&&(phase!=='skin'||phaseElapsed>=7200)&&(phase!=='approach'||approach>=8000)&&(phase!=='dna-focus'||learningClock>=6800)){manualSceneHold=false;paused=true;scene.dataset.paused='true';syncControls();reconcileAudio();$('status').textContent='Scene ready. Exploration paused; Play resumes.';}
  raf=requestAnimationFrame(tick);
 }
 function start(startPhase){const destination=startPhase==='chooser'?'chooser':'teaser';wakeControls();hasBegun=true;musicFinished=false;navigationHold=false;cancelShotTransition();approach=0;cellEntry=1600;scene.dataset.entry='false';paused=false;scene.dataset.paused='false';last=0;musicMixer.reset();$('status').textContent='Exploration started.';setPhase(destination);if(destination==='model'){cancelShotTransition();modelEntryStatic=true;modelReady=true;revealFull();renderModel();}geometry();playAudio();if(!raf)raf=requestAnimationFrame(tick);}
+// Manual scene navigation preserves the user's playback preference.
 function navigateScene(direction){
- if(isBacterial()&&!['idle','teaser','world','people','chooser'].includes(phase)){const n=bacteria.number(phase,proteinStage)-1+direction;if(n<0){setPhase('chooser');return;}if(n<bacterialScenes.length)jumpBacterial(n,false);return;}
- if(branches.navigate(phase,direction))return;
  const target=sceneOrder[sceneOrder.indexOf(phase)+direction];
  if(!target||phase==='idle')return;
- if(target==='idle'){returnToBeginning();return;}
- holdScene(target,{animate:true});
+ holdScene(target);
 }
-function holdScene(target,{animate=false}={}){
+function settlePreviewScene(){
+ cancelShotTransition();
+ if(phase==='chooser')chooserInstant=true;
+ revealFull();renderChooserReveal();renderModel();
+}
+function holdScene(target){
  if(!sceneOrder.includes(target))return;
- if(['human','bacterial'].includes(target)){branches.open(target,{animate:false});return;}
-
- cancelShotTransition();navigationHold=true;manualSceneHold=animate&&!still;paused=!manualSceneHold;scene.dataset.paused=String(paused);last=0;
- approach=['approach','boundary','inside','nucleolus','model','explore','assemble',...learningPhases].includes(target)?8000:0;cellEntry=1600;scene.dataset.entry='false';
- setPhase(target);if(!manualSceneHold)revealFull();geometry();reconcileAudio();
- $('status').textContent=manualSceneHold?'Moving to the selected scene. It will pause for reading.':'Scene selected. Exploration paused; Play resumes.';
+ cancelShotTransition();navigationHold=false;manualSceneHold=false;
+ scene.dataset.hold='false';scene.dataset.paused=String(paused);last=0;
+ approach=0;cellEntry=1600;scene.dataset.entry='false';
+ setPhase(target);
+ if(paused||still)settlePreviewScene();
+ geometry();syncControls();reconcileAudio();wakeControls();
+ $('status').textContent=paused?'Scene selected. Exploration remains paused.':'Scene selected. Exploration continues.';
 }
 function guessNucleus(part){
  if(phase!=='invite')return;finishNarration();const note=$('guess-feedback');note.hidden=false;
@@ -689,7 +692,7 @@ $('guess-surface').addEventListener('click',event=>{
 });
 for(const button of document.querySelectorAll('[data-guess]'))button.addEventListener('click',()=>guessNucleus(button.dataset.guess));
 function selectNucleus(){if(phase==='invite'){finishNarration();resumeInteractiveMotion();const r=world.getBoundingClientRect(),sr=scene.getBoundingClientRect();approachFrame={x:r.left-sr.left,y:r.top-sr.top,w:r.width,h:r.height};approach=0;setPhase('approach');$('status').textContent=still?'Nucleus selected.':'Nucleus selected. Moving closer.';pause.focus({preventScroll:true});}}
-$('skip-introduction').addEventListener('click',()=>start('chooser'));begin.addEventListener('click',start);nucleus.addEventListener('click',()=>guessNucleus('nucleus'));chooseCell.addEventListener('click',()=>{if(phase==='field'){finishNarration();resumeInteractiveMotion();cellEntry=still||paused?1600:0;scene.dataset.entry=String(cellEntry<1600);setPhase('establish');$('status').textContent=cellEntry===1600?'Cell interior revealed.':'Cell selected. Revealing the reconstructed interior.';pause.focus({preventScroll:true});}});
+$('skip-introduction').addEventListener('click',()=>{const wasPaused=paused;start('chooser');if(wasPaused)setPaused(true);});begin.addEventListener('click',start);nucleus.addEventListener('click',()=>guessNucleus('nucleus'));chooseCell.addEventListener('click',()=>{if(phase==='field'){finishNarration();resumeInteractiveMotion();cellEntry=still||paused?1600:0;scene.dataset.entry=String(cellEntry<1600);setPhase('establish');$('status').textContent=cellEntry===1600?'Cell interior revealed.':'Cell selected. Revealing the reconstructed interior.';pause.focus({preventScroll:true});}});
 lookInside.addEventListener('click',()=>{if(phase!=='boundary')return;finishNarration();resumeInteractiveMotion();setPhase('inside');$('status').textContent='Nuclear cutaway opened. Chromatin is now visible.';pause.focus({preventScroll:true});});
 $('select-model-nucleus').addEventListener('click',()=>selectModelNucleus());
 $('model-nucleus-info').addEventListener('click',()=>openObjectInfo('nucleus',$('model-nucleus-info')));
