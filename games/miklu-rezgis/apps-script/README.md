@@ -93,3 +93,11 @@ to production gameplay analytics. The live dashboard loaded the new count.
 
 The question-list tests cover filters, date ordering, more than twelve questions,
 missing/empty data, HTML escaping, language labels and the aggregate-only overview.
+
+## Dashboard icons
+
+All interface icons use official Lucide SVG paths bundled inline in `Dashboard.html`
+(no external icon runtime). This includes KPI cards, theme switching, the game
+link, comment/rating badges and removable filters. Brand logos and chart marks
+retain their own artwork. Attribution is embedded in the HTML and included in
+`LUCIDE-LICENSE.txt`. Published as dashboard deployment version 30.
