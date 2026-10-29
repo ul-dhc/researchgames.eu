@@ -318,6 +318,9 @@
     .id { color: var(--muted); font-weight: 400; white-space: nowrap; }
     .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .list-card { padding: 18px; min-height: 210px; }
+    .player-questions-card { margin-bottom: 10px; }
+    .player-questions-card .list { max-height: 480px; overflow-y: auto; }
+    .player-questions-card .item-text { white-space: pre-wrap; overflow-wrap: anywhere; }
     .list { display: grid; gap: 9px; margin-top: 12px; }
     .item { padding: 12px; border-radius: 11px; background: color-mix(in srgb, var(--panel-2) 76%, transparent); border: 1px solid var(--border); }
     .item-meta { color: var(--muted); font-size: 11px; margin-bottom: 6px; }
@@ -501,6 +504,12 @@
       </div>
     </section>
 
+    <section class="card list-card player-questions-card" aria-labelledby="player-questions-title">
+      <h2 id="player-questions-title" class="card-title">Iesniegtie jautājumi par mīklām</h2>
+      <p class="card-subtitle">Visi jautājumi atbilstoši izvēlētajiem filtriem · jaunākie vispirms</p>
+      <div id="player-questions" class="list"></div>
+    </section>
+
     <section class="lists">
       <article class="card list-card"><h2 class="card-title">Jaunākie komentāri</h2><div id="comments" class="list"></div></article>
       <article class="card list-card"><h2 class="card-title">Iesniegtie līdzīgie mīklu varianti</h2><div id="variants" class="list"></div></article>
@@ -604,6 +613,8 @@
       'Pētījuma dalībnieku vērtējums': 'Research participant rating',
       'Vecuma grupas': 'Age groups',
       'Brīvprātīgi norādītās atbildes': 'Voluntarily provided responses',
+      'Iesniegtie jautājumi par mīklām': 'Submitted questions about riddles',
+      'Visi jautājumi atbilstoši izvēlētajiem filtriem · jaunākie vispirms': 'All questions matching the selected filters · newest first',
       'Jaunākie komentāri': 'Latest comments',
       'Iesniegtie līdzīgie mīklu varianti': 'Submitted similar riddle variants'
     };
@@ -703,6 +714,7 @@
       renderMetrics(data.metrics);
       if (chartsReady) renderCharts(data);
       renderRiddleTable();
+      renderList('player-questions', data.playerQuestions || [], renderPlayerQuestion);
       renderList('comments', data.comments, function(item) {
         return '<div class="comment-layout"><span class="comment-icon" aria-hidden="true">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
@@ -1150,6 +1162,15 @@
       }).join('') || '<tr><td colspan="9"><div class="empty">' +
         (currentLang === 'en' ? 'No data for the selected period.' : 'Nav datu izvēlētajam periodam.') +
         '</div></td></tr>';
+    }
+
+    function renderPlayerQuestion(item) {
+      const version = currentLang === 'en' ? labelEnglish[item.gameVersion] || item.version : item.version;
+      const participation = currentLang === 'en' ? labelEnglish[item.participationType] || item.participation : item.participation;
+      return '<div class="item-meta">' + esc(item.date) +
+        '<span class="badge">' + esc(version) + '</span>' +
+        '<span class="badge">' + esc(participation) + '</span></div>' +
+        '<div class="item-text">' + esc(item.text) + '</div>';
     }
 
     function renderList(id, rows, renderer) {

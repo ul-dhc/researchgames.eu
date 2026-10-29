@@ -42,18 +42,27 @@ Apps Script files; do not include the helper code twice.
 - `Code.gs`: existing receiver with `session_question` routing in `processRecord_`.
 - `PlayerQuestions.gs`: question validation/storage and aggregate counting.
 - `mīklu-dashboard.gs`: adds `metrics.playerQuestions`, using the selected sessions
-  and submission period, including the existing version/participation filters.
-- `Dashboard.html`: displays “Jautājumi pētniekiem” (EN: “Questions for researchers”)
-  below the riddle-response count.
+  and submission period, including the existing version/participation filters,
+  and returns `playerQuestions` with date, version, participation type and text.
+- `Dashboard.html`: displays the count and a separate “Iesniegtie jautājumi par
+  mīklām” section. All matching questions are shown newest first in a scrollable
+  list. The text is HTML-escaped, preserves line breaks and wraps long words;
+  session IDs are not included in the list. Both LV and EN labels are supported.
 
 Both existing deployments were updated to version **26** on 2026-10-29:
 
 - Receiver: deployment `AKfycbyAv7G_yZte1RBtUIa6zVdDqGPtBd6y9BOMnG2QOFrv3CAFB1SEOd6_PNx8SNTHv-Yi` (previously v3).
 - Dashboard: deployment `AKfycbwzomHmovON2lQiPP2xa40FRCDFXJ38ofD8YDKB63SBrQHBMB2HKaCBDM_bBmgXsLkD` (previously v25).
 
-URLs and access settings are unchanged. Free-text questions stay in the Google
-spreadsheet; the dashboard returns only a count. The public `/stats/` summary
-keeps its existing explicit whitelist and does not publish question text.
+The dashboard was updated to version **27** on 2026-10-29 after explicit approval
+to show submitted question text and metadata on the existing public dashboard.
+The receiver stays on v26 and does not require an update.
+Keep the existing `SummaryCache.gs` file when updating the project.
+
+URLs and access settings are unchanged. The connected research dashboard is public
+and displays submitted questions, like its existing comments and variants.
+The separate `/stats/` overview keeps its explicit aggregate whitelist; its backend
+also requests `includeQuestions: false` and does not retrieve question text.
 
 ## Verification
 
@@ -71,3 +80,6 @@ the same diagnostic question twice in one batch: the server returned `created`
 then `unchanged`; connector readback confirmed one row with the expected columns.
 The diagnostic row was cleared after verification. No test sessions were added
 to production gameplay analytics. The live dashboard loaded the new count.
+
+The question-list tests cover filters, date ordering, more than twelve questions,
+missing/empty data, HTML escaping, language labels and the aggregate-only overview.

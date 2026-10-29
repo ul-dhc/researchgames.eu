@@ -74,6 +74,8 @@ function getDashboardData(filters) {
   const filteredEvaluations = matchingEvaluations.filter(function(row) {
     return Boolean(sessionIds[text_(row.session_id)]);
   });
+  const playerQuestions = filters.includeQuestions === false
+    ? null : buildPlayerQuestions_(spreadsheet, filteredSessions, days);
 
   return {
     generatedAt: Utilities.formatDate(new Date(), DASHBOARD_TIME_ZONE, 'dd.MM.yyyy HH:mm:ss'),
@@ -91,7 +93,8 @@ function getDashboardData(filters) {
       participationTypes: distinct_(periodSessions, 'participation_type')
     },
     metrics: Object.assign(buildMetrics_(filteredSessions, filteredEvaluations), {
-      playerQuestions: countPlayerQuestions_(spreadsheet, filteredSessions, days)
+      playerQuestions: playerQuestions === null
+        ? countPlayerQuestions_(spreadsheet, filteredSessions, days) : playerQuestions.length
     }),
     timeline: buildTimeline_(filteredSessions),
     versions: buildBreakdown_(filteredSessions, 'game_version', versionLabel_),
@@ -105,6 +108,7 @@ function getDashboardData(filters) {
     difficulties: buildDifficulties_(filteredEvaluations),
     riddlePerformance: buildRiddlePerformance_(filteredEvaluations),
     comments: buildComments_(filteredSessions),
+    playerQuestions: playerQuestions || [],
     variants: buildVariants_(filteredEvaluations)
   };
 }
@@ -381,6 +385,30 @@ function buildComments_(rows) {
   });
 }
 
+function buildPlayerQuestions_(spreadsheet, sessions, days) {
+  if (!spreadsheet.getSheetByName(PLAYER_QUESTIONS_SHEET)) return [];
+  const sessionIds = indexSessionIds_(sessions);
+  const seen = {};
+  return filterByDays_(readSheet_(spreadsheet, PLAYER_QUESTIONS_SHEET), days, ['submitted_at'])
+    .filter(function(row) {
+      const id = text_(row.question_id);
+      if (!id || seen[id] || !sessionIds[text_(row.session_id)] || !text_(row.question_text)) return false;
+      seen[id] = true;
+      return true;
+    })
+    .sort(function(a, b) { return dateValue_(b, ['submitted_at']) - dateValue_(a, ['submitted_at']); })
+    .map(function(row) {
+      return {
+        date: formatDate_(parseDate_(row.submitted_at)),
+        gameVersion: text_(row.game_version),
+        version: versionLabel_(text_(row.game_version)),
+        participationType: text_(row.participation_type),
+        participation: participationLabel_(text_(row.participation_type)),
+        text: text_(row.question_text)
+      };
+    });
+}
+
 function buildVariants_(rows) {
   return rows.filter(function(row) {
     return text_(row.similar_variant_text);
@@ -516,7 +544,7 @@ function researchGamesUncachedSummary_(period) {
     if (!Object.prototype.hasOwnProperty.call(periods, period || 'all')) {
       throw new Error('Invalid period');
     }
-    const data = getDashboardData({days: periods[period || 'all']});
+    const data = getDashboardData({days: periods[period || 'all'], includeQuestions: false});
     const m = data.metrics;
     summary = {
       ok: true,

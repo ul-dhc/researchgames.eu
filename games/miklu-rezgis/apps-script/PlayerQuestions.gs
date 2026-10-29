@@ -41,8 +41,8 @@ function upsertPlayerQuestion_(record) {
   return { record_type: 'session_question', id: questionId, action: 'created' };
 }
 
-// The public dashboard receives only a count. Free-text questions stay in Google Sheets.
-// Apply the same selected sessions and the question submission period, without reading text.
+// Aggregate-only summaries count matching submissions without reading free text.
+// Apply the same selected sessions and the question submission period.
 function countPlayerQuestions_(spreadsheet, sessions, days) {
   const sheet = spreadsheet.getSheetByName(PLAYER_QUESTIONS_SHEET);
   if (!sheet || sheet.getLastRow() < 2) return 0;
