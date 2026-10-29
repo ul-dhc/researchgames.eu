@@ -269,6 +269,15 @@ html[data-theme="light"] .overlay{background:rgba(20,20,40,.4);}
 .overlay-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.6rem;max-width:380px;width:100%;text-align:center;box-shadow:var(--shadow);margin:auto;}
 .feedback-box{position:relative;max-width:580px;text-align:left;}
 .final-overlay-box{position:relative;}
+.player-question-form{margin:20px 0;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:left;}
+.player-question-title{display:block;color:var(--ink);font-size:16px;font-weight:800;line-height:1.4;}
+.player-question-prompt{margin:8px 0 12px;color:var(--ink-muted);font-size:13px;line-height:1.5;}
+.player-question-form .feedback-comment{display:block;min-height:76px;margin-bottom:9px;}
+.player-question-note{margin:0 0 12px;color:var(--ink-muted);font-size:12px;line-height:1.5;}
+.player-question-form .overlay-btn-secondary{width:auto;min-width:110px;margin:0;padding:10px 20px;}
+.player-question-form button:disabled{opacity:.55;cursor:default;}
+.player-question-confirm{margin:9px 0 0;color:var(--accent);font-size:12px;line-height:1.5;}
+.player-question-confirm:empty{display:none;}
 .feedback-box>.overlay-title,.feedback-box>.overlay-msg{text-align:center;}
 .feedback-close{
   position:absolute;right:14px;top:10px;width:36px;height:36px;border:0;background:transparent;

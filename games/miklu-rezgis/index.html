@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260811-grid-visibility-1">
+  <link rel="stylesheet" href="css/style.css?v=20261029-player-questions-1">
 </head>
 <body>
 
@@ -416,6 +416,14 @@
     <div class="overlay-divider"></div>
     <div id="fo-msg" class="overlay-msg"></div>
     <div id="research-thanks" class="research-thanks" hidden>Paldies, ka palīdzēji pētniekiem! 🤍</div>
+    <form id="player-question-form" class="player-question-form">
+      <label for="player-question" class="player-question-title">Ko Tu vēlētos uzzināt par mīklām?</label>
+      <p id="player-question-prompt" class="player-question-prompt">Vai, spēlējot spēli, Tev radās kādi jautājumi par mīklām? Ko Tu vēlētos par tām uzzināt?</p>
+      <textarea id="player-question" class="feedback-comment" maxlength="1000" rows="3" aria-describedby="player-question-prompt player-question-note"></textarea>
+      <p id="player-question-note" class="player-question-note">Atbildēt nav obligāti. Tavs jautājums palīdzēs pētniekiem saprast, ko par mīklām būtu vērts izskaidrot plašāk.</p>
+      <button id="player-question-submit" class="overlay-btn-secondary" type="submit" disabled>Nosūtīt</button>
+      <p id="player-question-confirm" class="player-question-confirm" role="status" aria-live="polite"></p>
+    </form>
     <button id="open-feedback-btn" class="overlay-btn-secondary">Novērtēt spēli</button>
     <div class="final-section-gap"></div>
     <div id="share-box"></div>
@@ -567,6 +575,6 @@
 </div>
 
 <script src="js/riddleDatasetIds.js?v=20260724-source-meta-2"></script>
-  <script src="js/app.js?v=20260811-grid-visibility-3"></script>
+  <script src="js/app.js?v=20261029-player-questions-1"></script>
 </body>
 </html>

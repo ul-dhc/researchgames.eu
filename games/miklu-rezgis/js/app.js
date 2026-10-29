@@ -181,6 +181,8 @@ const state = {
   sessionStartedAt: '',
   survey: { rating: '', ageGroup: '', comment: '' },
   feedbackSubmitted: false,
+  playerQuestionSubmitted: false,
+  playerQuestionDelivered: false,
   researchAnswers: {},
   riddleOutcome: '',
   currentAwardedPoints: 0,
@@ -241,6 +243,10 @@ function resetForNewGame() {
   state.sessionStartedAt = new Date().toISOString();
   state.survey = { rating: '', ageGroup: '', comment: '' };
   state.feedbackSubmitted = false;
+  state.playerQuestionSubmitted = false;
+  state.playerQuestionDelivered = false;
+  document.getElementById('player-question-form').reset();
+  updatePlayerQuestionForm();
   state.sessionFinishedAt = '';
   state.sessionStats = {
     completed: 0,
@@ -345,8 +351,10 @@ function queueAnalyticsRecord(record) {
     queue.push(record);
     localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(queue.slice(-250)));
     flushAnalyticsQueue();
+    return true;
   } catch (e) {
     console.warn('Neizdevās saglabāt analītikas ierakstu lokāli:', e);
+    return false;
   }
 }
 
@@ -377,6 +385,10 @@ function flushAnalyticsQueue() {
       if (!result || result.ok !== true) throw new Error(result?.error || 'Analytics request failed.');
       const latestQueue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
       localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(latestQueue.slice(batch.length)));
+      if (batch.some(record => record.record_type === 'session_question' && record.session_id === state.sessionId)) {
+        state.playerQuestionDelivered = true;
+        updatePlayerQuestionForm();
+      }
     })
     .catch(error => console.warn('Analītikas dati palika lokālajā rindā:', error))
     .finally(() => {
@@ -1216,6 +1228,43 @@ function showFeedbackOverlay() {
   document.getElementById('feedback-confirm').textContent = '';
 }
 
+function updatePlayerQuestionForm() {
+  const input = document.getElementById('player-question');
+  const button = document.getElementById('player-question-submit');
+  const confirmation = document.getElementById('player-question-confirm');
+  input.disabled = state.playerQuestionSubmitted;
+  button.disabled = state.playerQuestionSubmitted || !input.value.trim();
+  button.textContent = state.playerQuestionDelivered ? 'Nosūtīts ✓' : 'Nosūtīt';
+  confirmation.textContent = state.playerQuestionDelivered
+    ? 'Paldies! Tavs jautājums ir nosūtīts pētniekiem.'
+    : state.playerQuestionSubmitted
+      ? 'Jautājums saglabāts šajā ierīcē. Tas tiks nosūtīts, tiklīdz būs pieejams savienojums.'
+      : '';
+}
+
+function submitPlayerQuestion(event) {
+  event.preventDefault();
+  const question = document.getElementById('player-question').value.trim().slice(0, 1000);
+  if (!question || state.playerQuestionSubmitted || !state.sessionId) return;
+  const queued = queueAnalyticsRecord({
+    record_type: 'session_question',
+    question_id: `${state.sessionId}-question`,
+    session_id: state.sessionId,
+    submitted_at: new Date().toISOString(),
+    game_version: String(state.gameMode),
+    participation_type: state.gameMode === 'party' ? 'party' : state.participationMode,
+    question_text: question,
+    app_version: '2026-10-29-player-questions',
+    data_schema_version: '1'
+  });
+  if (!queued) {
+    document.getElementById('player-question-confirm').textContent = 'Neizdevās saglabāt jautājumu. Lūdzu, mēģini vēlreiz.';
+    return;
+  }
+  state.playerQuestionSubmitted = true;
+  updatePlayerQuestionForm();
+}
+
 function hideFeedbackOverlay() {
   document.getElementById('feedback-overlay').classList.remove('show');
 }
@@ -1527,6 +1576,7 @@ function startBonusRound() {
 
 function showFinalResults() {
   stopTimer();
+  updatePlayerQuestionForm();
   clearProgress();
   queueSessionUpdate('completed');
   document.getElementById('research-thanks').hidden =
@@ -1992,6 +2042,8 @@ function wireEvents() {
 
   document.getElementById('copy-btn').addEventListener('click', copyShare);
   document.getElementById('open-feedback-btn').addEventListener('click', showFeedbackOverlay);
+  document.getElementById('player-question-form').addEventListener('submit', submitPlayerQuestion);
+  document.getElementById('player-question').addEventListener('input', updatePlayerQuestionForm);
   document.getElementById('feedback-close-btn').addEventListener('click', hideFeedbackOverlay);
   document.getElementById('feedback-skip-btn').addEventListener('click', hideFeedbackOverlay);
   document.getElementById('feedback-submit-btn').addEventListener('click', submitGameFeedback);
