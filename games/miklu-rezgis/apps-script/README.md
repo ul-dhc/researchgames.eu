@@ -57,6 +57,10 @@ Both existing deployments were updated to version **26** on 2026-10-29:
 The dashboard was updated to version **27** on 2026-10-29 after explicit approval
 to show submitted question text and metadata on the existing public dashboard.
 The receiver stays on v26 and does not require an update.
+
+Dashboard version **28** (2026-10-29) shortens timeline date labels and rotates
+them 45 degrees, with label density adapted to chart width. Full dates remain in
+tooltips; labels include the year when the period spans more than one year.
 Keep the existing `SummaryCache.gs` file when updating the project.
 
 URLs and access settings are unchanged. The connected research dashboard is public

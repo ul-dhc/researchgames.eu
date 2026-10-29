@@ -873,9 +873,15 @@
     function drawTimeline(rows) {
       const node = $('timeline');
       if (!rows.length) return empty(node);
+      const multipleYears = new Set(rows.map(row => row.date.slice(0, 4))).size > 1;
+      const sessionsLabel = currentLang === 'en' ? 'Sessions' : 'Sesijas';
       const table = google.visualization.arrayToDataTable([
-        [currentLang === 'en' ? 'Date' : 'Datums', currentLang === 'en' ? 'Sessions' : 'Sesijas'],
-        ...rows.map(row => [row.date, Number(row.sessions)])
+        [currentLang === 'en' ? 'Date' : 'Datums', sessionsLabel, { type: 'string', role: 'tooltip' }],
+        ...rows.map(function(row) {
+          const [year, month, day] = row.date.split('-');
+          const label = day + '.' + month + '.' + (multipleYears ? year.slice(-2) : '');
+          return [label, Number(row.sessions), day + '.' + month + '.' + year + '\n' + sessionsLabel + ': ' + Number(row.sessions)];
+        })
       ]);
       const options = baseOptions();
       options.colors = [chartColors().green];
@@ -886,7 +892,14 @@
       options.curveType = 'function';
       options.focusTarget = 'category';
       options.selectionMode = 'single';
-      options.chartArea = { left: 54, top: 34, right: 22, bottom: 56, width: '84%', height: '72%' };
+      options.chartArea = { left: 44, top: 24, right: 30, bottom: 66 };
+      options.hAxis = Object.assign({}, options.hAxis, {
+        slantedText: true,
+        slantedTextAngle: 45,
+        maxAlternation: 1,
+        textStyle: { color: chartColors().muted, fontSize: 11 },
+        showTextEvery: Math.max(1, Math.ceil(rows.length / Math.max(2, Math.floor((node.clientWidth - 74) / 42))))
+      });
       options.crosshair = { color: chartColors().green, opacity: .28, trigger: 'focus' };
       const chart = new google.visualization.AreaChart(node);
       google.visualization.events.addListener(chart, 'onmouseover', function(event) {
