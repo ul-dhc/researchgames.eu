@@ -61,6 +61,12 @@ The receiver stays on v26 and does not require an update.
 Dashboard version **28** (2026-10-29) shortens timeline date labels and rotates
 them 45 degrees, with label density adapted to chart width. Full dates remain in
 tooltips; labels include the year when the period spans more than one year.
+
+Dashboard version **29** (2026-10-29) puts each donut percentage directly beside
+its category name, colour and count in the legend at every width. Ambiguous
+external leader lines are removed. Flat segment caps and exact arc lengths avoid
+overlapping or inflating tiny response categories. Clicking segments or legend
+entries still applies the corresponding filter.
 Keep the existing `SummaryCache.gs` file when updating the project.
 
 URLs and access settings are unchanged. The connected research dashboard is public

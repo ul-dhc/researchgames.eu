@@ -97,3 +97,28 @@ test('question renderer escapes markup, preserves line breaks, and translates ba
   assert.match(result,/\nOtrā rinda/);
   new vm.Script(html.match(/<script>\s*([\s\S]*?)<\/script>/)[1]);
 });
+
+test('donut percentages stay attached to named legend entries and tiny sectors retain their true proportions',()=>{
+  const extract=name=>html.match(new RegExp('    function '+name+'\\([^]*?^    \\}', 'm'))[0];
+  for (const width of [340,1000]) {
+    const node={clientWidth:width,innerHTML:'',querySelectorAll:()=>[]};
+    const ctx=vm.createContext({
+      currentLang:'lv',window:{innerWidth:width},$:()=>node,
+      selectedFilterValue:()=>'',
+      integer:value=>String(Math.round(value)),
+      decimal:value=>Number(value).toLocaleString('lv-LV',{maximumFractionDigits:1})
+    });
+    vm.runInContext(['esc','isMissingResponse','mixHex','gradientColours','drawDonut'].map(extract).join('\n'),ctx);
+    ctx.rows=[{key:'unknown',label:'Nav atbildes',value:537},{key:'no',label:'Nē',value:41},{key:'yes',label:'Jā',value:12},{key:'unsure',label:'Neatceros',value:3}];
+    vm.runInContext("drawDonut('heard',rows,'heardBefore')",ctx);
+    const legend=node.innerHTML.match(/<div class="donut-legend">([^]*)<\/div><\/div>/)[1];
+    assert.match(legend,/Nav atbildes[^]*?537 · 90,6%/);
+    assert.match(legend,/Nē[^]*?41 · 6,9%/);
+    assert.match(legend,/Jā[^]*?12 · 2%/);
+    assert.match(legend,/Neatceros[^]*?3 · 0,5%/);
+    const arcs=[...node.innerHTML.matchAll(/stroke-dasharray="([\d.]+) ([\d.]+)"/g)].map(match=>Number(match[1]));
+    assert.equal(arcs.length,4);
+    ctx.rows.forEach((row,i)=>assert.ok(Math.abs(arcs[i]-2*Math.PI*49*row.value/593)<0.001));
+    assert.equal(node.innerHTML.includes('donut-callout'),false);
+  }
+});

@@ -210,7 +210,7 @@
     .donut-viz {
       height: 100%;
       display: grid;
-      grid-template-columns: minmax(230px, 1.35fr) minmax(125px, .65fr);
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
       align-items: center;
       gap: 12px;
       padding: 3px 5px 2px;
@@ -218,8 +218,8 @@
       overflow: hidden;
     }
     .donut-ring {
-      width: min(100%, 370px);
-      height: min(100%, 280px);
+      width: min(100%, 220px);
+      height: min(100%, 210px);
       margin: auto;
       overflow: hidden;
     }
@@ -227,7 +227,7 @@
     .donut-segment {
       fill: none;
       stroke-width: 15;
-      stroke-linecap: round;
+      stroke-linecap: butt;
       cursor: pointer;
       transform-origin: center;
       transition: opacity .2s ease, filter .2s ease, stroke-width .2s ease;
@@ -239,24 +239,6 @@
       filter: brightness(1.16) drop-shadow(0 0 5px color-mix(in srgb, var(--purple) 42%, transparent));
     }
     .donut-segment.is-muted { opacity: .22; }
-    .donut-callout {
-      fill: none;
-      stroke: var(--muted);
-      stroke-width: 1;
-      opacity: .72;
-      pointer-events: none;
-      transition: opacity .2s ease, stroke .2s ease;
-    }
-    .donut-percent {
-      fill: var(--text);
-      font-size: 12px;
-      font-weight: 760;
-      pointer-events: none;
-      transition: opacity .2s ease, fill .2s ease;
-    }
-    .donut-callout.is-muted, .donut-percent.is-muted { opacity: .22; }
-    .donut-callout.is-selected { stroke: var(--purple-soft); opacity: 1; }
-    .donut-percent.is-selected { fill: var(--purple-soft); }
     .donut-total { fill: var(--text); font-size: 24px; font-weight: 800; text-anchor: middle; }
     .donut-caption { fill: var(--muted); font-size: 10px; font-weight: 650; text-anchor: middle; }
     .donut-legend { display: grid; align-content: center; gap: 11px; min-width: 0; }
@@ -282,11 +264,11 @@
       background: color-mix(in srgb, var(--purple) 8%, transparent);
     }
     .donut-legend-item.is-muted { opacity: .38; }
-    .donut-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
-    .donut-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; }
+    .donut-dot { flex: 0 0 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
+    .donut-name { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; font-size: 15px; }
     .donut-number { flex: 0 0 auto; color: var(--text); font-size: 15px; font-weight: 780; }
     .donut-viz.is-compact {
-      grid-template-columns: minmax(155px, .95fr) minmax(145px, 1.05fr);
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
       gap: 8px;
       padding-inline: 0;
     }
@@ -922,86 +904,27 @@
       }, 0);
       const selected = selectedFilterValue(filterName);
       const compact = window.innerWidth <= 700 || (node.clientWidth || 0) < 760;
-      const cx = compact ? 70 : 120;
+      const cx = 70;
       const cy = 70;
-      const radius = compact ? 49 : 45;
+      const radius = 49;
       const circumference = 2 * Math.PI * radius;
       let offset = 0;
-      const callouts = [];
       const segments = filtered.map(function(row, index) {
         const fraction = total ? Number(row.value) / total : 0;
         const percent = fraction * 100;
         const length = circumference * fraction;
-        const gap = filtered.length > 1 ? Math.min(3.6, length * .18) : 0;
-        const visible = Math.max(.8, length - gap);
         const stateClass = selected
           ? (String(selected) === String(row.key) ? ' is-selected' : ' is-muted')
           : '';
-        const middle = (offset + length / 2) / circumference * Math.PI * 2 - Math.PI / 2;
-        const cos = Math.cos(middle);
-        const sin = Math.sin(middle);
-        const right = cos >= 0;
-        const startX = cx + (radius + 9) * cos;
-        const startY = cy + (radius + 9) * sin;
-        const elbowX = cx + (radius + 20) * cos;
-        const elbowY = cy + (radius + 20) * sin;
-        const endX = right ? 188 : 52;
-        const label = (Math.round(percent * 10) / 10).toLocaleString(
-          currentLang === 'en' ? 'en-GB' : 'lv-LV',
-          { maximumFractionDigits: 1 }
-        ) + '%';
-        callouts.push({
-          index: index,
-          key: row.key,
-          stateClass: stateClass,
-          startX: startX,
-          startY: startY,
-          elbowX: elbowX,
-          elbowY: elbowY,
-          endX: endX,
-          right: right,
-          label: label
-        });
         const markup = '<circle class="donut-segment' + stateClass + '" data-key="' +
           esc(row.key) + '" cx="' + cx + '" cy="' + cy + '" r="' + radius + '" stroke="' +
-          colours[index] + '" stroke-dasharray="' + visible.toFixed(3) +
-          ' ' + (circumference - visible).toFixed(3) + '" stroke-dashoffset="' +
-          (-offset - gap / 2).toFixed(3) + '" style="--segment-delay:' +
+          colours[index] + '" stroke-dasharray="' + length.toFixed(3) +
+          ' ' + (circumference - length).toFixed(3) + '" stroke-dashoffset="' +
+          (-offset).toFixed(3) + '" style="--segment-delay:' +
           (index * .09).toFixed(2) + 's"><title>' + esc(row.label) + ': ' +
-          integer(row.value) + ' (' + integer(percent) + '%)</title></circle>';
+          integer(row.value) + ' (' + decimal(percent) + '%)</title></circle>';
         offset += length;
         return markup;
-      }).join('');
-      if (!compact) {
-        [false, true].forEach(function(rightSide) {
-          const side = callouts
-            .filter(function(item) { return item.right === rightSide; })
-            .sort(function(a, b) { return a.elbowY - b.elbowY; });
-          const minY = 17;
-          const maxY = 123;
-          const gapY = 15;
-          side.forEach(function(item, index) {
-            item.labelY = Math.max(item.elbowY, minY + index * gapY);
-          });
-          for (let index = side.length - 1; index >= 0; index -= 1) {
-            const latest = maxY - (side.length - 1 - index) * gapY;
-            side[index].labelY = Math.min(side[index].labelY, latest);
-          }
-          side.forEach(function(item) {
-            item.elbowY = item.labelY;
-          });
-        });
-      }
-      const calloutMarkup = compact ? '' : callouts.map(function(item) {
-        const textX = item.endX + (item.right ? 4 : -4);
-        const anchor = item.right ? 'start' : 'end';
-        return '<polyline class="donut-callout' + item.stateClass + '" data-key="' +
-          esc(item.key) + '" points="' + item.startX.toFixed(1) + ',' +
-          item.startY.toFixed(1) + ' ' + item.elbowX.toFixed(1) + ',' +
-          item.elbowY.toFixed(1) + ' ' + item.endX + ',' + item.elbowY.toFixed(1) +
-          '"/><text class="donut-percent' + item.stateClass + '" data-key="' +
-          esc(item.key) + '" x="' + textX + '" y="' + (item.elbowY + 3).toFixed(1) +
-          '" text-anchor="' + anchor + '">' + esc(item.label) + '</text>';
       }).join('');
       const legend = filtered.map(function(row, index) {
         const stateClass = selected
@@ -1016,15 +939,14 @@
           esc(row.key) + '"><span class="donut-dot" style="--dot:' +
           colours[index] + '"></span><span class="donut-name" title="' +
           esc(row.label) + '">' + esc(row.label) + '</span><span class="donut-number">' +
-          integer(row.value) + (compact ? ' · ' + esc(percentLabel) : '') + '</span></button>';
+          integer(row.value) + ' · ' + esc(percentLabel) + '</span></button>';
       }).join('');
 
       node.innerHTML = '<div class="donut-viz' + (compact ? ' is-compact' : '') +
-        '"><svg class="donut-ring" viewBox="' + (compact ? '0 0 140 140' : '0 0 240 140') +
-        '" role="img">' +
+        '"><svg class="donut-ring" viewBox="0 0 140 140" role="img">' +
         '<g transform="rotate(-90 ' + cx + ' ' + cy + ')"><circle class="donut-track" cx="' +
         cx + '" cy="' + cy + '" r="' + radius + '"/>' + segments + '</g>' +
-        calloutMarkup + '<text class="donut-total" x="' + cx + '" y="' + (cy - 1) +
+        '<text class="donut-total" x="' + cx + '" y="' + (cy - 1) +
         '">' + integer(total) + '</text><text class="donut-caption" x="' + cx +
         '" y="' + (cy + 14) + '">' +
         (currentLang === 'en' ? 'responses' : 'atbildes') +
