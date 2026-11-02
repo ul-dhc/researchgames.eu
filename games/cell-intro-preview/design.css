@@ -233,13 +233,13 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 /* Camera overscan must not make the opening a focus-scroll container. */
 #scene[data-phase=idle]{overflow:clip}
 
-/* A wider scene uses a looser source crop, retaining the forest around the cap. */
+/* The living-world photograph keeps a broad plant-and-forest context. */
 @media(min-width:651px){#scene[data-phase=world] #story{right:70%}}
-#scene[data-phase=world] #specimen-view{inset:auto 2% auto 32%;top:50%;height:auto;aspect-ratio:1.95;transform:translateY(-50%)}
+#scene[data-phase=world] #specimen-view{inset:auto 2% auto 32%;top:50%;height:auto;aspect-ratio:1.65;transform:translateY(-50%)}
 #scene[data-phase=world] #physical{object-fit:cover;object-position:50% 50%;filter:brightness(.98) contrast(1.02) saturate(.9)}
 #scene[data-phase=world] .shade{background:linear-gradient(90deg,#211e20b3,transparent 45%)}
 @media(max-width:650px){
- #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.95}
+ #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.65}
  #scene[data-phase=world] #specimen-view{inset:0;width:100%;height:100%;transform:none}
  #scene[data-phase=world] .shade{background:none}
 }

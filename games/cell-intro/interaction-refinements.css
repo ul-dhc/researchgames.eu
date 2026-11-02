@@ -61,7 +61,18 @@
 #scene[data-organism=plant][data-phase=model] #model-nucleus-info[data-cue-active=true]:not([aria-expanded=true]){--label-paper:var(--info-paper-lit);--label-edge:var(--info-edge-lit)}
 
 /* A16 copies only the selected section, preserving the original DNA artwork. */
-#scene #dna-copy-signal{position:absolute;inset:0;pointer-events:none;z-index:3;mask-image:url('assets/dna-organic.webp');mask-size:contain;mask-position:center;mask-repeat:no-repeat;clip-path:inset(16% 36% 20% 40%);background:linear-gradient(90deg,transparent calc(var(--copy-front,40%) - 4%),#fff6d6b3 var(--copy-front,40%),transparent calc(var(--copy-front,40%) + 4%));opacity:0}
+#scene #dna-copy-signal{position:absolute;inset:0;pointer-events:none;z-index:3;mask-image:url('assets/dna-organic.webp');mask-size:contain;mask-position:center;mask-repeat:no-repeat;clip-path:inset(16% 10% 20% 10%);background:linear-gradient(90deg,transparent calc(var(--copy-front,10%) - 4%),#fff6d6b3 var(--copy-front,10%),transparent calc(var(--copy-front,10%) + 4%));opacity:0}
 
 #scene #learning-work-cue[data-instruction-surface=light]{--progress-text:var(--instruction-on-light)}
 @media(max-width:650px){#scene[data-organism=plant][data-phase=export] #nucleus-model{margin-bottom:62px}}
+
+#navigation-feedback{font-size:15px;line-height:1.4;color:var(--instruction-on-dark);max-width:42ch;margin:12px 0 0}
+#review-context{font-size:12px;line-height:1.4;color:#e0d4bc;margin:0 0 10px}
+#amino-pool button[data-next=true]{outline:2px solid #8bc5bd;outline-offset:3px}
+
+#scene[data-organism=plant]:is([data-phase=gene],[data-phase=message]) #select-gene{left:10%;width:80%}
+
+#amino-pool button[data-next=false]{opacity:.45!important}
+
+#scene .amino-acid{touch-action:none;user-select:none}
+#amino-drag-ghost{position:fixed;z-index:1000;pointer-events:none;display:block;width:28px;height:28px;border-radius:46% 54% 41% 59%;box-shadow:inset -2px -3px 4px #5f485a66,0 2px 3px #241b2d55}

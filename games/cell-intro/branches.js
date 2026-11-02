@@ -1,5 +1,5 @@
-import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-mushroom-wide5';
-import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-mushroom-wide5';
+import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-cell-review6';
+import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-cell-review6';
 /* Local checkpoint: cell choice, visual continuity and initial inspection only. */
 export function createCellBranches(api){
  const {scene,$}=api,host=$('cell-branches');
@@ -16,7 +16,7 @@ export function createCellBranches(api){
  'b-cytoplasm':cellFacts.cytoplasm,
  'p-cytoplasm':cellFacts.cytoplasm,
  'h-mitochondria':{name:'Mitochondria',text:'Mitochondria are small structures that help the cell release usable energy from nutrients. Their inner membranes are folded.'},
- 'b-envelope':{name:'Cell envelope',text:'E. coli has an inner membrane and an outer membrane, with a thin supporting wall between them. Together these layers form the cell envelope, which protects the cell and helps control what enters and leaves.'},
+ 'b-envelope':{name:'Cell envelope',text:'E. coli has an inner membrane and an outer membrane, with a thin supporting wall between them. Together these layers form the cell envelope, which protects the cell and helps control what enters and leaves. They are not separately resolved in the simplified illustration.'},
  'b-nucleoid':{name:'Nucleoid DNA',text:`E. coli has no nucleus. ${DNA_INSTRUCTIONS} Its DNA lies in an area called the nucleoid, with no membrane around it.`},
  'b-ribosomes':cellFacts.ribosomes
  };
@@ -68,7 +68,7 @@ export function createCellBranches(api){
   if(!changed&&host.dataset.rendered===phase){renderProgress();syncActive();return;}
   host.dataset.rendered=phase;loadCards();$('cell-choices').hidden=phase!=='chooser';$('cell-inspection').hidden=phase==='chooser';
   if(phase==='chooser'){
-   for(const [key,set]of Object.entries(visited))host.querySelector(`[data-status="${key}"]`).textContent=key==='human'?'Upcoming':completions[key]?'Visit complete':snapshots[key]?'Visit in progress':'Playable now';
+   for(const [key,set]of Object.entries(visited))host.querySelector(`[data-status="${key}"]`).textContent=key==='human'?'Upcoming':completions[key]?'Visit complete':snapshots[key]?(snapshots[key].reviewMode?'Review visit':'Visit in progress'):'Playable now';
    return;
   }
   image.srcset=srcset(phase);image.sizes='(max-width:650px) 100vw, 70vw';image.src=art(phase,1536);image.alt=cells[phase].title+' scientific cutaway';
@@ -82,7 +82,8 @@ export function createCellBranches(api){
  }
  return {facts,open,render,warmCards:loadCards,isCustom:key=>custom.includes(key),isInspection:key=>['plant','human','bacterial'].includes(key),
  beforePhase(from,to){if((plantSteps.includes(from)||from.startsWith('b-'))&&custom.includes(to)){const route=api.organism();snapshots[route]=api.getSnapshot();snapshot=snapshots[route];returnFocus=route;}if(!custom.includes(to))stopFlight();},
- plantReward(value){if(value)completions[api.organism()]=true;completed=completions.plant;scene.dataset.plantComplete=String(completed);scene.dataset.bacterialComplete=String(completions.bacterial);},
+ resetVisits(){stopFlight();snapshots={};snapshot=null;completions={plant:false,bacterial:false};for(const set of Object.values(visited))set.clear();},
+ plantReward(value){if(value&&!api.isReview?.())completions[api.organism()]=true;completed=completions.plant;scene.dataset.plantComplete=String(completed);scene.dataset.bacterialComplete=String(completions.bacterial);},
  navigate(phase,direction){if(phase==='chooser'){if(direction<0)api.navigateTo('people');return true;}if(['plant','human','bacterial'].includes(phase)){if(direction<0)returnToCells();return true;}if(phase==='onion'&&direction<0){returnToCells();return true;}if(phase==='roles'&&direction>0)return true;return false;},
  guide(phase){return phase==='chooser'?'Choose Plant or E. coli to explore. Each visit keeps its own progress. The human cell journey is upcoming.':cells[phase]?`Select a structure label or a small marker on the illustration to read about it. Return to cells keeps what you have inspected.${phase==='plant'?' Visit the onion specimen to follow the plant learning route.':''}`:'';},
  pause(value){if(value)chooserDepth.reset();for(const a of flight)value?a.pause():a.play();},reduceMotion(value){if(value){stopFlight();chooserDepth.reset();}}
