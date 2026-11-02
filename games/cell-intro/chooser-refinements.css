@@ -1,0 +1,17 @@
+#scene[data-phase=chooser]{background:#20322c}
+.choice-art{display:block;position:relative;width:100%;aspect-ratio:3/2;overflow:visible;pointer-events:none;--cell-tissue-alpha:.86;--cell-tissue-peek:.78;--cell-vacuole-alpha:.88;--cell-vacuole-peek:.82}
+.choice-art[data-material=plant]{--cell-tissue-alpha:.92;--cell-tissue-peek:.86}
+.choice-art[data-material=human]{--cell-tissue-alpha:.84;--cell-tissue-peek:.76}
+.choice-cell-visual{display:block;width:100%;height:100%;overflow:visible;transform:translate(var(--cell-drift-x,0px),var(--cell-drift-y,0px));transition:transform .65s cubic-bezier(.2,.7,.3,1);will-change:auto}
+.choice-tissue-mask{fill-opacity:var(--cell-tissue-alpha);transition:fill-opacity .7s ease}
+.choice-vacuole-mask{fill:color-mix(in srgb,white calc(var(--cell-vacuole-alpha)*100%),black);fill-opacity:1;transition:fill .7s ease}
+.cell-choice:is(:hover,:focus-visible) .choice-tissue-mask{fill-opacity:var(--cell-tissue-peek)}
+.cell-choice:is(:hover,:focus-visible) .choice-vacuole-mask{fill:color-mix(in srgb,white calc(var(--cell-vacuole-peek)*100%),black)}
+#scene[data-phase=chooser] .cell-choice{overflow:visible}
+#scene[data-phase=chooser] .cell-choice:focus-visible{outline:none;border-color:#a8c7b5;background:#ffffff05}
+#chooser-scale-note{margin:24px 0 0;text-align:center;font-size:12px;line-height:18px;color:#c6d0c1}
+@media(min-width:651px){#scene[data-phase=chooser] .choice-art{max-width:calc(clamp(180px,29svh,330px)*1.5);margin:auto}}
+@media(max-width:650px){#scene[data-phase=chooser] .choice-art{width:100%;max-width:none}#chooser-scale-note{margin:20px 0 0;font-size:12px}}
+#scene[data-paused=true] .choice-cell-visual{transform:none;transition:none}
+#scene[data-paused=true] :is(.choice-tissue-mask,.choice-vacuole-mask){transition:none}
+@media(prefers-reduced-motion:reduce){.choice-cell-visual{transform:none!important;transition:none!important}.choice-tissue-mask,.choice-vacuole-mask{transition:none!important}}

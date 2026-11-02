@@ -218,7 +218,7 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 #settings button:focus-visible,#settings summary:focus-visible{outline:2px solid #416c60;outline-offset:2px}
 #review-navigation>.scene-picker{bottom:calc(100% + 10px);left:0;width:350px;max-width:calc(100vw - 48px);padding:6px;display:block}
 #scene-menu{max-height:min(420px,calc(100svh - 160px));overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a79c8e transparent}
-.scene-option{width:100%;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:8px;min-height:44px;padding:10px 12px;border:0;border-radius:9px;background:transparent;color:#443d40;font-size:14px;line-height:1.35;text-align:left}
+.scene-option{width:100%;display:grid;grid-template-columns:48px 1fr;align-items:center;gap:8px;min-height:44px;padding:10px 12px;border:0;border-radius:9px;background:transparent;color:#443d40;font-size:14px;line-height:1.35;text-align:left}
 .scene-option-number{color:#83777d;font-size:12px;font-variant-numeric:tabular-nums}
 .scene-option[aria-current=true]{background:#557f7317;color:#244c41}
 .scene-option:hover{background:#ffffff80}

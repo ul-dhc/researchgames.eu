@@ -535,7 +535,7 @@ nav{transition:opacity .7s ease}
 #scene[data-phase=protein] #story{z-index:5}
 #scene[data-phase=protein] #story::before{bottom:0}
 
-/* Light exploration labels: anatomy and leader lines carry the active emphasis. */
+/* Exploration labels: anatomy and leader lines carry the active emphasis. */
 #scene[data-phase=explore] .part-label{background:#eee5d8c7;border:1px solid #f5ece029;box-shadow:none;color:#493c4b}
 #scene[data-phase=explore] .part-label:hover{background:#e5eee9e8;border-color:#168f9166;outline:none;box-shadow:none}
 #scene[data-phase=explore] .part-label[aria-pressed=true],#scene[data-phase=explore] .part-label[aria-pressed=true]:hover{background:#d8eeeede;border:1px solid #168f917d;box-shadow:none;color:#154b4e;outline:none}

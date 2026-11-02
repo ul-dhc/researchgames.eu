@@ -1,0 +1,53 @@
+/* Shared roles: teal actions, warm-yellow prompts, green completion. */
+:root{--action:#285f60;--action-hover:#204f51;--action-pressed:#193f42;--action-edge:#82b8b1;--action-soft:#285f6029;--action-selected:#d8eeee;--success-text:#dcffc2;--success-edge:#91bd77;--success-paper:#dcffc2;--success-ink:#234329}
+#scene :is(.activity-choice,.role-card)[data-selected=true],#scene .role-illustration[aria-pressed=true]{border-color:var(--action-edge);box-shadow:none;background:var(--action-soft)}
+#scene :is(#ribosome-target,#select-gene)[data-destination=true],#scene #select-gene[aria-pressed=true]{border-color:var(--action-edge)}
+#scene .role-card[data-matched=true]{border-color:var(--success-edge);background:#91bd7712}
+#scene :is(.role-confirm,.role-connection),#scene[data-role-complete=true] #caption,#scene #role-feedback[data-success=true]{color:var(--success-text)!important;text-shadow:0 1px 2px #102215;font-weight:500}
+#scene #copy-instructions[data-success=true]{background:var(--success-paper);color:var(--success-ink);border-color:var(--success-edge)}
+#scene #role-selected-cue{display:block;min-height:0;position:static;padding:0;margin:8px 0 16px;background:none;gap:0}
+#scene #role-selected-cue :is(img,.b-complex-icon){display:none!important}
+#scene #dna-info-label{transform:none!important;position:absolute;left:0;top:calc(100% + 8px);z-index:6}
+#scene #rna-message:hover #rna-strand,#scene #rna-message:focus-visible #rna-strand{filter:brightness(1.15) contrast(1.04)}
+#scene[data-organism=bacterial] #rna-strand{filter:brightness(1.50) saturate(1.18) drop-shadow(0 1px 1px #16314bc9)}
+#scene[data-organism=bacterial] #rna-message:is(:hover,:focus-visible) #rna-strand{filter:brightness(1.67) saturate(1.18) drop-shadow(0 1px 1px #16314bc9)}
+#scene[data-organism=bacterial] #rna-message{z-index:6}
+#scene #protein-work-cue{z-index:5;min-height:0!important;margin:0!important;padding:0!important;pointer-events:none;background:none!important}
+#scene #protein-work-cue>span{padding:0!important;background:none!important;color:var(--progress-text);font-size:15px;line-height:1.4;border:0;box-shadow:none}
+#scene[data-phase=protein] #protein-workbar{min-height:0}
+#scene[data-organism=bacterial] #amino-1 span{background:radial-gradient(circle at 30% 25%,#f5e3aa,#d4ad63 68%,#8d673e)}
+#scene[data-organism=bacterial] #amino-2 span{background:radial-gradient(circle at 30% 25%,#f2c8b5,#d18d83 68%,#8e5664)}
+#scene[data-organism=bacterial] #amino-3 span{background:radial-gradient(circle at 30% 25%,#e2d7f4,#b19dd8 68%,#6a609b)}
+/* One matching component in both routes; this four-chain picture is just its art. */
+#scene[data-organism=bacterial] #b-enzyme-card{height:clamp(105px,14svh,175px);width:calc(clamp(105px,14svh,175px)*1.25);margin:0 auto;flex-shrink:0}
+@media(max-width:650px){#scene[data-organism=bacterial] #b-enzyme-card{height:90px;width:112px}}
+
+#scene #select-gene{border-color:var(--action-edge);background:var(--action-soft)}
+
+@media(min-width:651px){
+ #scene #role-match[data-complete=true] #role-parts{align-items:stretch}
+ #scene #role-match[data-complete=true] .role-card{display:flex;flex-direction:column}
+ #scene #role-match[data-complete=true] .role-illustration{min-height:150px;justify-content:flex-end}
+ #scene #role-match[data-complete=true] .role-paired{flex:1}
+ #scene #role-match[data-complete=true] .role-confirm{margin-top:auto}
+}
+
+@media(max-width:650px){#scene #role-match[data-complete=true] #b-enzyme-card{height:66px;width:82px}}
+
+:root{--action-preview:#83c4c2;--selected:var(--action-selected);--selected-ink:var(--action-pressed);--info-edge-selected:var(--action-edge)}
+#scene :is(#amino-pool button,.activity-choice)[aria-pressed=true],#scene #place-nucleus[aria-disabled=false],#scene #select-model-nucleus[aria-pressed=true]{border-color:var(--action-edge);background:var(--action-soft);box-shadow:none}
+#scene :is(#b-active-edge,#b-active-leader){stroke:var(--action-preview)}
+
+/* Local yellow prompts belong to the action workspace, in both routes. */
+#scene #learning-work-cue{position:absolute;z-index:5;pointer-events:none;color:var(--progress-text);font-size:15px;line-height:1.4}
+#scene #learning-work-cue[hidden]{display:none}
+#scene #learning-work-cue :is(#learning-instruction,#learning-feedback){font:inherit;color:var(--progress-text);margin:0;padding:0;background:none;border:0;box-shadow:none;text-shadow:none}
+@media(max-width:650px){#scene[data-phase=protein] #nucleus-model{min-height:500px!important}}
+
+/* Molecular engagement uses the same clock and visual language in both routes. */
+#scene #rna-reading-signal{position:absolute;inset:0;pointer-events:none;mask-size:contain;mask-position:center;mask-repeat:no-repeat;background:linear-gradient(90deg,transparent,#fff0b899 40%,#fff8eac9 50%,#fff0b899 60%,transparent);background-size:35% 100%;background-repeat:no-repeat;opacity:0}
+#scene #ribosome-target[data-translating=true]:not(:hover):not(:focus-visible) img{filter:brightness(var(--reading-brightness,1))}
+#scene #ribosome-reading-status{position:absolute;z-index:5;margin:0;color:var(--progress-text);font-size:13px;line-height:19px;pointer-events:none}
+#scene .resource-tray{box-sizing:border-box;border:1px solid #ead79838;border-radius:12px;background:#f5ecd609;padding:8px}
+#scene #sugar-supply-tray{position:absolute;width:136px;height:114px;z-index:1;pointer-events:none}
+#scene #sugar-supply-tray[hidden],#scene #ribosome-reading-status[hidden]{display:none}

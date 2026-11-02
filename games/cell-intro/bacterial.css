@@ -1,0 +1,118 @@
+#bacterial-tour{position:relative;margin:24px auto 40px;max-width:1120px;z-index:3;padding:0 20px}#bacterial-tour[hidden],#bacterial-field[hidden]{display:none}#b-art-frame{position:relative;width:100%;aspect-ratio:1.5;max-height:550px;overflow:hidden}#b-cell-art,#b-anatomy-cue{position:absolute;width:100%;height:100%;object-fit:contain;transform-origin:50% 45%;pointer-events:none}#b-active-region{fill:rgba(239,217,151,.15);stroke:none}#b-active-region[data-kind=edge]{fill:none;stroke:#ead798;stroke-width:7;stroke-linecap:round}#b-fact-labels{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:10px}.b-science-label{font:400 13px/18px inherit;min-height:44px;padding:10px 16px;border-radius:8px;background:#eee8d9;color:#353e3d;border:1px solid #ccc9b9}.b-science-label[aria-expanded=true]{outline:2px solid #d6bf82}#bacterial-field{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}#bacterial-field img{position:absolute;max-width:none;object-fit:fill}#scene[data-organism=bacterial] .nuclear-camera,#scene[data-organism=bacterial] .cell-camera,#scene[data-organism=bacterial] #cell-game-model,#scene[data-organism=bacterial] #nucleus-object,#scene[data-organism=bacterial] #chromatin-environment,#scene[data-organism=bacterial] #cell-surroundings,#scene[data-organism=bacterial] #cell-context-window{visibility:hidden!important}#scene[data-organism=bacterial] #pore-target,#scene[data-organism=bacterial] #pore-info-label{display:none!important}#scene[data-organism=bacterial][data-bacterial-early=true] #world,#scene[data-organism=bacterial][data-bacterial-early=true] #physical,#scene[data-organism=bacterial][data-bacterial-early=true] #nuclear-world{visibility:hidden!important}#scene[data-organism=bacterial] #nucleus-model{isolation:isolate}#scene[data-organism=bacterial] #dna-learning,#scene[data-organism=bacterial] #dna-lens{z-index:2}.b-complex-icon{display:none;position:relative;width:110px;height:90px;flex-shrink:0}.b-complex-icon img{position:absolute;width:65%;height:65%;object-fit:contain}.b-complex-icon img:nth-child(1){left:0;top:0}.b-complex-icon img:nth-child(2){right:0;top:0}.b-complex-icon img:nth-child(3){left:0;bottom:0}.b-complex-icon img:nth-child(4){right:0;bottom:0}#scene[data-organism=bacterial] .b-complex-icon{display:block}#scene[data-organism=bacterial] #role-select-enzyme>img{display:none}#b-selected-complex[hidden]{display:none!important}.scene-group-title{font-size:12px;padding:14px 12px 6px;color:#c7ccbd}#scene[data-organism=bacterial] #bacterial-action{display:inline-flex}#scene[data-organism=bacterial] #bacterial-action[hidden]{display:none}#scene[data-organism=bacterial][data-bacterial-early=true] #story{position:relative}#b-enzyme-units{pointer-events:none}@media(max-width:650px){#bacterial-tour{padding:0;margin-top:16px}#b-art-frame{width:100%;height:320px;aspect-ratio:auto}#b-cell-art,#b-anatomy-cue{object-fit:contain}#b-fact-labels{padding:0 16px;gap:8px}#bacterial-tour{padding-bottom:30px}}
+
+.b-science-label{font-family:inherit;font-size:13px;line-height:18px}#bacterial-field{mask-image:linear-gradient(transparent,#000 12%,#000 85%,transparent)}#scene[data-organism=bacterial][data-phase=roles]:before{background-image:url('assets/cell-bacterial-alpha-1536.webp');background-size:cover;opacity:.18}#scene[data-organism=bacterial] #b-enzyme-card img,#scene[data-organism=bacterial] #b-selected-complex img{width:65%;height:65%;max-height:none}#scene[data-organism=bacterial] #b-enzyme-card{width:150px;height:105px;margin:0 auto}
+
+#bacterial-field{mask-image:radial-gradient(ellipse at 50% 50%,#000 30%,#000c 55%,transparent 78%)}
+#b-active-region{fill:#c5a9df40;stroke:none}#b-active-leader{fill:none;stroke:#76babb;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}#b-active-point{fill:#285f60;stroke:#b4e2df;stroke-width:3}
+#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #rna-message[data-reading=false]>span{bottom:auto;top:calc(100% + 4px)}
+#scene[data-organism=bacterial][data-phase=export] #select-gene{display:none}
+@media(min-width:651px){
+ #scene[data-organism=bacterial][data-phase=protein]{min-height:100svh}
+ #scene[data-organism=bacterial][data-phase=protein] #story{max-width:none;top:78px}
+ #scene[data-organism=bacterial][data-phase=protein] #caption{font-size:34px;line-height:1.12;margin-bottom:10px}
+ #scene[data-organism=bacterial][data-phase=protein] #detail{font-size:18px;line-height:1.4;max-width:78ch}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-workbar{position:relative;margin-top:8px}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue{min-height:48px;margin:0;max-width:calc(100% - 330px)}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue>span{padding:6px 0}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-controls{position:absolute;right:0;top:0;margin:0;min-height:0}
+ 
+ 
+ 
+ 
+}
+@media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #nucleus-model{height:440px!important}#b-anatomy-cue{height:auto;aspect-ratio:1.5;top:50%;translate:0 -50%}}
+@media(max-width:650px){
+ #scene[data-organism=bacterial][data-phase=protein] #process-copy-reserve{display:none}
+ #scene[data-organism=bacterial][data-phase=protein] #detail{min-height:132px}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-controls:not(:has(>button:not([hidden]))){min-height:0;margin:0}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-controls{min-height:48px}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue{min-height:0;margin:8px 0 0}
+ #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue>span{padding:4px 0}
+ #scene[data-organism=bacterial][data-phase=protein] #nucleus-model{height:420px!important;margin-top:12px}
+}
+@media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #detail{min-height:156px}}
+@media(min-width:651px){}
+#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}
+@media(min-width:651px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #caption{font-size:34px;line-height:1.12}}
+@media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #caption{font-size:30px;line-height:1.14}}
+/* Bacterial surfaces are owned by this route, including the first frame after leaving it. */
+#scene:not([data-organism=bacterial]) :is(#bacterial-field,#bacterial-tour,#b-enzyme-units,#b-enzyme-card,#b-selected-complex,#bacterial-action){display:none!important}
+#scene[data-organism=bacterial]:not(:is([data-phase=dna-focus],[data-phase=gene],[data-phase=message],[data-phase=export],[data-phase=protein],[data-phase=roles])) #bacterial-field{display:none!important}
+#scene:not([data-organism=bacterial]) #bacterial-field img{display:none!important}
+#scene[data-organism=bacterial][data-bacterial-early=true] #bacterial-tour{padding:0;width:calc(100% - 48px);margin:14px auto 24px}
+#scene[data-organism=bacterial]:is([data-phase=b-explore],[data-phase=b-find]) #b-art-frame{height:420px;max-height:none;aspect-ratio:auto;overflow:visible}
+#b-anatomy-cue{inset:0;width:100%;height:100%;aspect-ratio:auto;translate:none}
+#b-label-leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+#b-fact-labels{position:absolute;inset:0;display:block;margin:0;padding:0;pointer-events:none}
+#b-fact-labels[hidden]{display:none}
+.b-science-label{position:absolute;z-index:2;pointer-events:auto;min-height:44px;padding:8px 12px;white-space:nowrap;box-shadow:none}
+.b-science-label[data-active=true],.b-science-label[aria-expanded=true]{background:#d8eeee;color:#154b4e;border-color:#76babb;outline:none}
+.b-science-label:focus-visible{outline:2px solid #9ed1cf;outline-offset:3px}
+#b-active-region{fill:#c9a9e25c;stroke:none}
+#b-active-edge{fill:none;stroke:#83c4c2;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#b-active-edge[data-kind=ribosome]{stroke-width:5;fill:#b9a0d866}
+#b-active-edge[data-kind=flagella]{stroke-width:7}
+#b-active-leader{fill:none;stroke:#83c4c2;stroke-width:1.6;stroke-linecap:round}
+@media(max-width:650px){
+ #scene[data-organism=bacterial][data-bacterial-early=true] #bacterial-tour{width:calc(100% - 24px);margin:12px auto 24px;padding-bottom:0}
+ #scene[data-organism=bacterial]:is([data-phase=b-explore],[data-phase=b-find]) #b-art-frame{height:360px}
+ #b-anatomy-cue{inset:0;width:100%;height:100%;top:0;translate:none;aspect-ratio:auto}
+ .b-science-label{white-space:normal;font-size:13px;line-height:18px;min-height:44px;height:44px;padding:4px 6px}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #object-info{position:relative;top:auto;left:auto;right:auto;order:4;align-self:center;width:calc(100% - 48px);max-height:none;margin:0 24px 84px;overflow:visible}
+}
+
+@media(max-width:650px){
+ #scene[data-organism=bacterial][data-bacterial-early=true]{display:flex;flex-direction:column;height:auto;min-height:100svh;padding:90px 0 100px;overflow:clip}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #story{position:relative;inset:auto;order:1;flex:none;margin:0 24px}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #bacterial-tour{order:2;flex:none}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #object-info{order:3;flex:none;margin-bottom:0}
+}
+@media(min-width:651px){#scene[data-organism=bacterial][data-bacterial-early=true]{overflow:clip}}
+/* A continuous bacterial interior follows the molecular journey behind all UI. */
+#scene[data-organism=bacterial][data-bacterial-molecular=true]{background:var(--bacterial-interior-ground,#34454f)}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] .shade{background:none!important}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] #story::before{display:none!important}
+#scene[data-organism=bacterial][data-phase=roles]::before{display:none}
+#bacterial-field{position:absolute;inset:0;z-index:0;mask-image:none!important;overflow:hidden;width:100%;height:100%}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] :is(#caption,#detail){text-shadow:0 1px 5px #243b4bb3}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{background:#cedde016;border-color:#dce8eb40;backdrop-filter:blur(6px)}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] nav button{background:#2b455052;border-color:#dce8eb77}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] #guide-toggle{background:#31495382}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] #return-cells{background:#31495352}
+#scene[data-organism=bacterial]:not(:is([data-phase=dna-focus],[data-phase=gene],[data-phase=message],[data-phase=export],[data-phase=protein],[data-phase=roles])) #bacterial-field{display:none!important}
+#scene[data-organism=bacterial] #amino-1>span{background:radial-gradient(circle at 30% 22%,#e2ebed,#8cabbc 65%,#456276)}
+#scene[data-organism=bacterial] #amino-2>span{background:radial-gradient(circle at 30% 22%,#e5e9da,#a5b89d 65%,#627967)}
+#scene[data-organism=bacterial] #amino-3>span{background:radial-gradient(circle at 30% 22%,#edf0ed,#abb8c4 65%,#687b90)}
+#b-active-edge[data-kind=ribosome]{stroke:#bcd9e1;stroke-width:2;fill:#a1c5cfaa}
+#scene[data-organism=bacterial] #b-active-region[data-kind=ribosome]{fill:#a1c5cfaa}
+#scene[data-organism=bacterial] #ribosome-small-subunit{clip-path:inset(64% 8% 0 8%)}
+/* Molecule information uses light response, independently of task destinations. */
+#scene #ribosome-target img{transition:filter .15s ease}
+#scene #ribosome-target:is(:hover,:focus-visible) img,
+#scene:has(#ribosome-info-label:is(:hover,:focus-visible)) #ribosome-target img{filter:brightness(1.10) contrast(1.035)}
+#scene #ribosome-target:focus-visible{outline:none}
+#scene:has(#ribosome-target:is(:hover,:focus-visible)) #ribosome-info-label,
+#scene #ribosome-info-label:is(:hover,:focus-visible){background:#e3eeee;color:#214c50;border-color:#9dbdbd}
+#scene #folded-protein,#scene #b-enzyme-units{pointer-events:all;cursor:pointer}
+#scene #folded-protein:focus-visible,#scene #b-enzyme-units:focus-visible{outline:none}
+#scene #folded-protein:is(:hover,:focus-visible),
+#scene #b-enzyme-units:is(:hover,:focus-visible) image,
+#scene:has(#protein-label:is(:hover,:focus-visible)) :is(#folded-protein,#b-enzyme-units image){filter:brightness(1.10) contrast(1.035)}
+#scene:has(#folded-protein:is(:hover,:focus-visible),#b-enzyme-units:is(:hover,:focus-visible)) #protein-label,
+#scene #protein-label:is(:hover,:focus-visible){background:#e3eeee;color:#214c50;border-color:#9dbdbd}
+#scene #ribosome-target:is(:hover,:focus-visible){filter:none}
+@media(min-width:651px){#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{background:transparent;border:0;backdrop-filter:none}}
+#scene[data-organism=bacterial][data-learning-info=messenger-rna] #rna-message>span,
+#scene[data-organism=bacterial][data-learning-info=ribosome] #ribosome-info-label{background:#d8e6e9;color:#244b5b}
+#scene:has(#folded-protein:is(:hover,:focus-visible),#b-enzyme-units:is(:hover,:focus-visible),#protein-label:is(:hover,:focus-visible)) :is(#folded-protein,#b-enzyme-units image){filter:brightness(1.10) contrast(1.035)}
+@media(min-width:651px){#scene[data-organism=bacterial][data-phase=protein]:is([data-protein-stage=growing],[data-protein-stage=chain]) #protein-work-controls{right:26%}}
+/* C1–C4 share one camera frame and narration reserve. */
+#scene[data-organism=bacterial][data-bacterial-early=true] #b-art-frame{height:420px;max-height:none;aspect-ratio:auto;overflow:visible}
+#scene[data-organism=bacterial][data-bacterial-early=true] #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}
+#scene[data-organism=bacterial][data-bacterial-early=true] #story-actions{display:flex!important;min-height:48px}
+#b-anatomy-cue[hidden],#b-label-leaders[hidden],#b-dna-hit-art[hidden],#b-dna-feedback[hidden]{display:none!important}
+#b-dna-hit-art{position:absolute;inset:0;width:100%;height:100%;transform-origin:50% 45%;pointer-events:none;overflow:visible}
+#scene #b-dna-target{pointer-events:all;cursor:pointer;fill:transparent;stroke:transparent;stroke-width:44;stroke-linejoin:round;outline:none!important;box-shadow:none!important}
+#scene #b-dna-target:is(:hover,:focus-visible){fill:#ead79818;stroke:transparent;outline:none!important;box-shadow:none!important;filter:none}
+#b-dna-feedback{position:absolute;bottom:0;left:8%;right:8%;text-align:center;color:#f3e7c6;font-size:14px;line-height:20px;margin:0;pointer-events:none}
+@media(max-width:650px){#scene[data-organism=bacterial][data-bacterial-early=true] #b-art-frame{height:360px}}
