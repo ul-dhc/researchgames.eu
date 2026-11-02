@@ -1,5 +1,5 @@
-import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-mushroom4';
-import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-mushroom4';
+import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-mushroom-wide5';
+import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-mushroom-wide5';
 /* Local checkpoint: cell choice, visual continuity and initial inspection only. */
 export function createCellBranches(api){
  const {scene,$}=api,host=$('cell-branches');
