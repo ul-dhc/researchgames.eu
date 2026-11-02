@@ -13,9 +13,6 @@
 #scene[data-phase=skin] #skin-cue{left:54%;top:33%;background:#f0e7d9eb;color:#443844;border-radius:6px;text-shadow:none}
 #scene[data-phase=skin] #skin-cue:after{height:18px;border-color:#f0e7d9}
 /* Reveal is one attached image handoff: pointer/press feedback plus the first visible frame. */
-#scene #choose-cell:hover>span{background:var(--action-hover);border-color:#f3ecdf;box-shadow:0 0 0 2px #f3ecdf80}
-#scene #choose-cell:active>span{background:var(--action-pressed);box-shadow:inset 0 2px 4px #142d30}
-#scene[data-cell-reveal=opening] #cell-outline{filter:drop-shadow(0 0 4px #d8eeee80)}
 #scene #cue,#scene #nucleus-action-contour{display:none!important}
 /* Recognition starts with an unsegmented image. Description choices are optional. */
 #guess-surface{position:absolute;top:0;left:0;z-index:2;transform-origin:0 0;clip-path:polygon(9% 34%,81% 10%,92% 12%,96% 20%,97% 54%,89% 61%,28% 72%,10% 72%,6% 62%);border:0;background:none;padding:0;cursor:crosshair}
@@ -25,7 +22,6 @@
 #guess-alternative{pointer-events:auto;margin-top:12px}
 #guess-alternative summary{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #f3ecdf66;border-radius:22px;background:#211e20b3;font-size:14px;cursor:pointer}
 #guess-alternative>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#guess-alternative .quiet{font-size:13px;padding:9px 12px}
 #guess-feedback{position:absolute;left:0;right:0;bottom:calc(100% + 12px);margin:0;padding:9px 12px;border:0;border-radius:5px;background:#ead9e0;color:#684251;box-shadow:none;text-shadow:none;font-size:15px;line-height:1.4;pointer-events:none}
 #guess-feedback[data-tone=correct]{background:#dce8d8;color:#315435;border-color:#779675}
 /* Process comments are quiet notes, never information labels or button-like pills. */
@@ -63,7 +59,6 @@
 @media(max-width:650px){#scene #role-selected-cue{min-height:104px}#scene #role-feedback{max-width:100%}}
 
 /* Passive progress is warm text only, on stable unfilled rows. */
-:root{--progress-text:#ead798}
 #scene :is(#guess-feedback,#learning-feedback,#activity-feedback,#inspection-progress,#role-feedback,#protein-work-status),#scene #role-selected-cue,#scene #protein-work-cue[data-passive=true],#scene #protein-work-cue[data-passive=true]>span,#scene[data-plant-complete=true] [data-status=plant]{background:none;border:0;border-radius:0;box-shadow:none;text-shadow:none;color:var(--progress-text)}
 #scene #guess-feedback{width:fit-content;max-width:min(42ch,100%);right:auto;padding:0;font-size:15px;line-height:1.4}
 #scene #guess-feedback[data-tone=correct]{background:none;color:var(--progress-text);border:0}
@@ -75,7 +70,7 @@
 #scene[data-phase=approach][data-nucleus-reaction=true] #nucleus{opacity:1;transition:none;background:#d8eeee35;box-shadow:inset 0 0 0 2px #7db6ad;pointer-events:none;border:0;outline:none}
 #scene[data-phase=approach] #nucleus>span{display:none}
 /* Information controls use one screen-space metric; artwork alone changes scale. */
-#scene[data-phase] :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info,#rna-message>span){display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:inherit;font-size:13px;font-weight:400;line-height:18px;min-height:44px;min-width:0;padding:8px 10px;border-width:1px;border-style:solid;border-radius:8px;white-space:nowrap}
+#scene[data-phase] :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info,#rna-message>span){display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:inherit;font-size:13px;font-weight:400;line-height:18px;min-height:44px;min-width:0;padding:8px 10px;border-style:solid;white-space:nowrap}
 #scene[data-phase] :is(.molecule-info-label,#ribosome-info-label,#protein-label,#model-nucleus-info){width:max-content;max-width:none}
 #scene[data-phase] #ribosome-info-label{transform:translateX(-50%)}
 

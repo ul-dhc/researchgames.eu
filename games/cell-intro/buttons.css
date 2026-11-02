@@ -1,65 +1,85 @@
-/* Local intro control roles. Layout and all motion remain in the scene styles. */
-:root{--action:#285f60;--action-hover:#204f51;--action-pressed:#193f42;--paper:#f3ecdf;--ink:#443844;--selected:#d8eeee;--selected-ink:#154b4e;--edge:#b9a99a;--correct:#dce8d8;--correct-ink:#315435;--retry:#ead9e0;--retry-ink:#774956}
-#scene button,#scene summary,#settings button{transition:background-color .14s,border-color .14s,color .14s;touch-action:manipulation;text-decoration:none}
-#scene :is(.primary,#activity-next,#copy-instructions){background:var(--action);border:1px solid #76a6a180;color:var(--paper);font-weight:500;box-shadow:0 2px 8px #172e3026;min-height:48px;border-radius:10px}
-#scene :is(.primary,#activity-next,#copy-instructions):hover:not(:disabled){background:var(--action-hover);border-color:#97bfba;filter:none}
-#scene :is(.primary,#activity-next,#copy-instructions):active:not(:disabled){background:var(--action-pressed);box-shadow:inset 0 2px 4px #0e25274d}
-#scene .quiet{min-height:44px;background:#211e20b3;border:1px solid #f3ecdf80;color:var(--paper);box-shadow:none}
-#scene .quiet:hover:not(:disabled){background:#443844e6;border-color:#f3ecdf}
-#scene .quiet:active:not(:disabled){background:#302932f2;box-shadow:inset 0 1px 3px #17131940}
-#scene :is(.primary,.quiet):disabled{opacity:.65;cursor:default}
-#scene #copy-instructions[data-success=true]{background:var(--correct);color:var(--correct-ink);border-color:#779675;box-shadow:none;opacity:1}
-/* Utility controls stay small and consistent; the keyboard ring works on light/dark art. */
-#scene :is(nav button,.icon-button){min-width:44px;min-height:44px;padding:10px;border:1px solid #f3ecdf66;background:#211e20b3;color:var(--paper);box-shadow:none}
-#scene :is(nav button,.icon-button) .lucide{width:19px;height:19px;stroke-width:1.8}
-#scene :is(nav button,.icon-button):hover:not(:disabled){background:#443844e6;border-color:#f3ecdfb3}
-#scene button:focus-visible,#scene summary:focus-visible,#settings :is(button,input):focus-visible{outline:2px solid var(--paper);outline-offset:3px;box-shadow:0 0 0 5px var(--action)}
+/* Shared controls. Layout stays with the scene; geometry and states live here. */
+:root{
+ --action:#285f60;--action-hover:#326e70;--action-pressed:#204f51;
+ --action-edge:var(--action);--action-preview:var(--action);--action-soft:#285f6029;
+ --paper:#f3ecdf;--ink:#292629;--progress-text:#ead798;
+ --selected:var(--action-soft);--selected-ink:var(--paper);
+ --correct:var(--action);--correct-ink:var(--paper);
+ --retry:#ead798;--retry-ink:var(--ink);--edge:#b9a99a;
+ --control-radius:10px;--control-height:48px;--focus:var(--progress-text);
+}
+#scene button,#scene summary,#settings button{font-family:inherit;transition:background-color .16s ease,color .16s ease,border-color .16s ease;touch-action:manipulation;text-decoration:none}
+#scene :is(.primary,.quiet,#activity-next,#copy-instructions,#activity-explore){display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;min-height:var(--control-height)!important;padding:12px 18px!important;border:0!important;border-radius:var(--control-radius)!important;font-size:15px!important;font-weight:500;line-height:1.35;text-decoration:none;box-shadow:none!important;text-shadow:none;filter:none!important}
+#scene :is(.primary,#activity-next,#copy-instructions){background:var(--action)!important;color:var(--paper)!important}
+#scene :is(.primary,#activity-next,#copy-instructions):hover:not(:disabled){background:var(--action-hover)!important}
+#scene :is(.primary,#activity-next,#copy-instructions):active:not(:disabled){background:var(--action-pressed)!important}
+#scene :is(.quiet,#activity-explore){background:#f3ecdf0a!important;color:var(--paper)!important}
+#scene :is(.quiet,#activity-explore):hover:not(:disabled){background:#f3ecdf1f!important;color:var(--paper)!important;text-decoration:none}
+#scene :is(.quiet,#activity-explore):active:not(:disabled){background:#f3ecdf30!important}
+#scene :is(.primary,.quiet):disabled{opacity:.55;cursor:default}
+#scene button:focus-visible,#scene summary:focus-visible,#settings :is(button,input):focus-visible{outline:2px solid var(--focus);outline-offset:3px;box-shadow:none}
 #scene button:hover:not(:focus-visible){outline:none}
-/* Embedded targets use verbs. Their name labels remain information-only. */
-#scene :is(#nucleus>span,#choose-cell>span,#pore-target>span,#ribosome-task-cue,#sugar-task-cue,#select-gene>span,#place-activity-part>span){display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;background:var(--action);color:var(--paper);border:1px solid #97bfba;border-radius:22px;box-shadow:0 2px 6px #142d3033;text-shadow:none;font-size:13px;line-height:1.2;white-space:nowrap;outline:none;pointer-events:auto}
-#scene :is(#nucleus,#choose-cell,#pore-target,#select-gene,#place-activity-part):hover>span,#scene #ribosome-target:hover>#ribosome-task-cue,#scene #sugar-substrate:hover>#sugar-task-cue{background:var(--action-hover);color:var(--paper);border-color:#b4d1ca;outline:none;box-shadow:none;filter:none}
-#scene #choose-cell>span{transform:none}
-#scene #select-model-nucleus>span{display:inline-flex;align-items:center;justify-content:center;min-height:44px;width:132px;background:var(--selected);color:var(--selected-ink);border:1px solid #168f9180;box-shadow:none;text-shadow:none}
-#scene[data-phase=model] :is(#cytoplasm-intro,#vacuole-label)[data-cue-active=true],#scene[data-phase=model] #select-model-nucleus[data-cue-active=true]>span{background:var(--selected);color:var(--selected-ink);border-color:#168f9180}
-#scene[data-phase=model] #select-model-nucleus[aria-pressed=true]>span{background:var(--action);color:var(--paper);border-color:#97bfba}
-#scene #select-model-nucleus[aria-pressed=true]{border-color:#168f91;background:#168f9110;box-shadow:none}
-#scene #select-model-nucleus:hover{border-color:#168f91;background:#168f9110;box-shadow:none}
-#scene #model-nucleus-info{transform:none;z-index:6;width:64px;font-size:12px;padding:6px}
-#scene #place-nucleus{border-color:#76a6a1;color:var(--paper);background:#285f601a}
-#scene #place-nucleus[aria-disabled=false]{border:2px dashed #168f91;background:#285f6026}
-#scene #place-nucleus[aria-disabled=false]:hover{outline:none;border-color:#9fc8c2;background:#285f6040}
-#scene #pore-target{border-color:#168f91;background:#168f911a}
+/* Embedded task captions use the primary action component, without an extra ring. */
+#scene :is(#nucleus>span,#pore-target>span,#ribosome-task-cue,#select-gene>span,#place-activity-part>span,#select-model-nucleus>span){display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:48px;padding:12px 18px;background:var(--action);color:var(--paper);border:0;border-radius:var(--control-radius);box-shadow:none;text-shadow:none;font-size:15px;line-height:1.35;white-space:nowrap;pointer-events:auto;transition:background-color .16s ease}
+#scene :is(#nucleus,#pore-target,#select-gene,#place-activity-part,#select-model-nucleus):hover>span,#scene #ribosome-target:hover>#ribosome-task-cue{background:var(--action-hover);color:var(--paper);border:0;outline:none;box-shadow:none;filter:none}
+#scene :is(#nucleus,#pore-target,#select-gene,#place-activity-part,#select-model-nucleus):active>span,#scene #ribosome-target:active>#ribosome-task-cue{background:var(--action-pressed)}
+#scene :is(#pore-target,#select-gene){border-color:var(--action);background:var(--action-soft)}
+#scene #select-gene[aria-pressed=true]>span{background:var(--action);color:var(--paper)}
+#scene #place-activity-part[aria-disabled=true]>span{background:#f3ecdf12;color:#f3ecdf80;cursor:default}
+#scene #select-model-nucleus,#scene #select-model-nucleus:is(:hover,:focus-visible,[aria-pressed=true],[data-cue-active=true]){border:0!important;background:none!important;box-shadow:none!important;animation:none!important;outline:none}
+#scene #select-model-nucleus>span{width:auto}
+#scene #select-model-nucleus:focus-visible>span{outline:2px solid var(--focus);outline-offset:3px}
+#scene[data-phase=model]:has(#select-model-nucleus:is(:hover,:focus-visible)) #nucleus-cutaway{filter:brightness(1.22) contrast(1.08)}
+#scene #place-nucleus{border:1px dashed #f3ecdf70;background:#f3ecdf06;color:var(--paper)}
+#scene #place-nucleus[aria-disabled=false]{border-color:var(--action);background:var(--action-soft)}
+#scene #place-nucleus[aria-disabled=false]:hover{border-color:var(--action);background:#285f6040;outline:none}
 #scene #pore-target>span{bottom:calc(100% + 8px);transform:none;width:144px}
 #scene #ribosome-target>#ribosome-task-cue{display:none;position:absolute;top:calc(100% + 52px);left:50%;transform:translateX(-50%);z-index:8}
 #scene #ribosome-target[data-destination=true]>#ribosome-task-cue{display:inline-flex}
-#scene #ribosome-target[data-destination=true]{outline:2px solid #168f91;outline-offset:3px;border-radius:30px}
-#scene #sugar-task-cue{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%)}
-#scene #select-gene[aria-pressed=true]>span{background:var(--correct);color:var(--correct-ink);border-color:#779675}
-#scene #place-activity-part[aria-disabled=true]>span{background:#eee5d8;color:#746775;border-color:#b9a99a;box-shadow:none}
-/* Choices are outlined selections; correct/retry keep their distinct marks and words. */
-#scene .activity-choice[aria-pressed=true]{background:var(--selected);border-color:#168f91;box-shadow:inset 0 0 0 1px #168f91}
-#scene .activity-choice[data-feedback=correct]{background:var(--correct);border-color:#779675;box-shadow:none}
-#scene .activity-choice[data-feedback=retry]{background:var(--retry);border-color:#ac8296;box-shadow:none}
-#scene .role-illustration[aria-pressed=true]{border-color:#168f91;background:#d8eeee12;box-shadow:inset 0 0 0 1px #168f91}
+#scene #ribosome-target[data-destination=true]{outline:2px solid var(--action);outline-offset:3px;border-radius:30px}
+#scene[data-phase=protein] #ribosome-target>#ribosome-task-cue{top:-50px;left:auto;right:-32px;transform:none}
+#scene #choose-cell{position:static;inset:auto;width:auto;height:auto;transform:none;clip-path:none}
+#scene #choose-cell>span{position:static;inset:auto;transform:none;min-height:0;padding:0;border:0;background:none;color:inherit;font:inherit;box-shadow:none;outline:none}
+/* Icon controls retain a generous invisible hit area around the small glyph. */
+#scene :is(nav button,.icon-button){min-width:44px;min-height:44px;padding:10px;border:0;background:transparent;color:var(--paper);box-shadow:none}
+#scene :is(nav button,.icon-button) .lucide{width:19px;height:19px;stroke-width:1.8}
+#scene :is(nav button,.icon-button):hover:not(:disabled){background:#f3ecdf12}
+#scene #guide-toggle{min-width:44px;min-height:44px;padding:10px;gap:7px;border:0;border-radius:8px;background:transparent;color:var(--paper)}
+#scene #guide-toggle svg{color:var(--progress-text);width:18px;height:18px}
+#scene #guide-toggle:hover{background:#f3ecdf12}
+/* The activity uses a dark, quiet panel, so yellow process text is always readable. */
+#scene #model-activity{box-sizing:border-box;background:#252326f2;color:var(--paper);border:1px solid #f3ecdf24;box-shadow:none;--progress-text:#ead798}
+#scene #model-activity :is(.activity-kicker,#activity-feedback){color:var(--progress-text)}
+#scene #model-activity :is(.activity-framing,#activity-explore){color:#e0d8ce}
+#scene .activity-choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#scene .activity-choice{min-width:0;min-height:112px;box-sizing:border-box;padding:8px 5px;background:#f3ecdf08;color:var(--paper);border:1px solid #f3ecdf40;border-radius:10px;font-size:12px;line-height:1.35;box-shadow:none}
+#scene .activity-choice>span:not(.choice-feedback-mark){display:block;max-width:100%;white-space:normal;word-break:normal;overflow-wrap:normal;hyphens:none}
+#scene .activity-choice:hover:not(:disabled){background:#f3ecdf18}
+#scene :is(.activity-choice,.role-illustration)[aria-pressed=true]{border-color:var(--action);background:var(--action-soft);box-shadow:none}
+#scene .activity-choice[data-feedback=correct]{border-color:var(--action);background:var(--action-soft);box-shadow:none}
+#scene .activity-choice[data-feedback=correct] .choice-feedback-mark{background:var(--action);color:var(--paper)}
+#scene .activity-choice[data-feedback=retry]{border-color:var(--progress-text);background:#ead79812;box-shadow:none}
+#scene .activity-choice[data-feedback=retry] .choice-feedback-mark{background:var(--progress-text);color:var(--ink)}
+#scene .role-card[data-matched=true]{border-color:var(--action);background:var(--action-soft)}
+#scene :is(.role-confirm,.role-connection),#scene[data-role-complete=true] #caption,#scene #role-feedback[data-success=true]{color:var(--paper)!important;text-shadow:none;font-weight:500}
+#scene .role-confirm svg{color:var(--action)}
 #scene .role-job{border-width:1px;box-shadow:none}
-#scene .role-job:hover:not(:disabled){background:#d8eeee20;border-color:#168f91}
-/* Settings and scene selection use the same paper family as information surfaces. */
-#settings{background:#f0e7d9fa;color:var(--ink);border-color:#b9a99a;box-shadow:0 10px 35px #211e2055}
+#scene .role-job:hover:not(:disabled){background:#f3ecdf12;border-color:var(--action)}
+#amino-pool button[data-next=true]{outline:2px solid var(--action);outline-offset:3px}
+#scene .amino-acid{touch-action:none;user-select:none}
+/* Settings and scene selection remain neutral utility surfaces. */
+#settings{background:#f0e7d9fa;color:var(--ink);border-color:var(--edge);box-shadow:0 10px 35px #211e2055}
 #settings :is(.settings-note,.range-row,.setting p,#audio-state){color:#645967}
 #settings .setting{border-color:#b9a99a66}
-#settings .quiet,#settings .icon-button{background:transparent;color:var(--ink);border-color:#9c8b9c}
-#settings .quiet:hover,#settings .icon-button:hover{background:#e2d8ce}
+#settings :is(.quiet,.icon-button){background:transparent;color:var(--ink);border-color:#9c8b9c}
+#settings :is(.quiet,.icon-button):hover{background:#e2d8ce}
 #settings input{accent-color:var(--action)}
 #settings .track-choice{color:var(--ink);background:transparent;border-color:#b9a99a80;min-height:44px}
-#settings .track-choice:has(input:checked){background:var(--selected);border-color:#168f91;color:var(--selected-ink)}
-#scene #review-toggle{background:transparent;color:var(--paper);border:1px solid transparent;border-radius:22px;padding:10px 14px;min-height:44px}
-#scene #review-toggle:hover{background:#f3ecdf16;color:var(--paper)}
-#scene #review-navigation>div{background:#f0e7d9fa;border-color:#b9a99a;color:var(--ink);backdrop-filter:none}
-#scene #scene-menu button{min-height:44px;background:transparent;color:var(--ink);border-color:transparent;box-shadow:none}
-#scene #scene-menu button:hover{background:#d8eeee;color:var(--selected-ink)}
-#scene #scene-menu button[aria-current=true]{background:#d8eeee;border-color:#168f91}
+#settings .track-choice:has(input:checked){background:var(--action-soft);border-color:var(--action);color:var(--ink)}
+#scene #review-toggle{background:transparent;color:var(--paper);border:0;border-radius:10px;padding:10px 14px;min-height:48px}
+#scene #review-toggle:hover{background:#f3ecdf16}
+#scene #review-navigation>div{background:#f0e7d9fa;border-color:var(--edge);color:var(--ink);backdrop-filter:none}
+#scene #scene-menu button{min-height:44px;background:transparent;color:var(--ink);border:0;box-shadow:none}
+#scene #scene-menu button:hover,#scene #scene-menu button[aria-current=true]{background:var(--action-soft)}
+@media(max-width:380px){#scene .activity-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){#scene button,#scene summary,#settings button{transition:none}}
-/* RNA's information label sits below the working ribosome; keep its task above/right. */
-#scene[data-phase=protein] #ribosome-target>#ribosome-task-cue{top:-50px;left:auto;right:-32px;transform:none}
-/* Actions use modest corners; information uses quiet capsules. */
-#scene :is(#nucleus>span,#choose-cell>span,#pore-target>span,#ribosome-task-cue,#sugar-task-cue,#select-gene>span,#place-activity-part>span,#select-model-nucleus>span){border-radius:10px}

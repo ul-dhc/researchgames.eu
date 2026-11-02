@@ -1,10 +1,6 @@
-/* Shared roles: teal actions, warm-yellow prompts, green completion. */
-:root{--action:#285f60;--action-hover:#204f51;--action-pressed:#193f42;--action-edge:#82b8b1;--action-soft:#285f6029;--action-selected:#d8eeee;--success-text:#dcffc2;--success-edge:#91bd77;--success-paper:#dcffc2;--success-ink:#234329}
+/* Shared molecular layout and motion. Control and label states live in their component files. */
 #scene :is(.activity-choice,.role-card)[data-selected=true],#scene .role-illustration[aria-pressed=true]{border-color:var(--action-edge);box-shadow:none;background:var(--action-soft)}
 #scene :is(#ribosome-target,#select-gene)[data-destination=true],#scene #select-gene[aria-pressed=true]{border-color:var(--action-edge)}
-#scene .role-card[data-matched=true]{border-color:var(--success-edge);background:#91bd7712}
-#scene :is(.role-confirm,.role-connection),#scene[data-role-complete=true] #caption,#scene #role-feedback[data-success=true]{color:var(--success-text)!important;text-shadow:0 1px 2px #102215;font-weight:500}
-#scene #copy-instructions[data-success=true]{background:var(--success-paper);color:var(--success-ink);border-color:var(--success-edge)}
 #scene #role-selected-cue{display:block;min-height:0;position:static;padding:0;margin:8px 0 16px;background:none;gap:0}
 #scene #role-selected-cue :is(img,.b-complex-icon){display:none!important}
 #scene #dna-info-label{transform:none!important;position:absolute;left:0;top:calc(100% + 8px);z-index:6}
@@ -34,9 +30,6 @@
 
 @media(max-width:650px){#scene #role-match[data-complete=true] #b-enzyme-card{height:66px;width:82px}}
 
-:root{--action-preview:#83c4c2;--selected:var(--action-selected);--selected-ink:var(--action-pressed);--info-edge-selected:var(--action-edge)}
-#scene :is(#amino-pool button,.activity-choice)[aria-pressed=true],#scene #place-nucleus[aria-disabled=false],#scene #select-model-nucleus[aria-pressed=true]{border-color:var(--action-edge);background:var(--action-soft);box-shadow:none}
-#scene :is(#b-active-edge,#b-active-leader){stroke:var(--action-preview)}
 
 /* Local yellow prompts belong to the action workspace, in both routes. */
 #scene #learning-work-cue{position:absolute;z-index:5;pointer-events:none;color:var(--progress-text);font-size:15px;line-height:1.4}
@@ -48,13 +41,8 @@
 #scene #rna-reading-signal{position:absolute;inset:0;pointer-events:none;mask-size:contain;mask-position:center;mask-repeat:no-repeat;background:linear-gradient(90deg,transparent,#fff0b899 40%,#fff8eac9 50%,#fff0b899 60%,transparent);background-size:35% 100%;background-repeat:no-repeat;opacity:0}
 #scene #ribosome-target[data-translating=true]:not(:hover):not(:focus-visible) img{filter:brightness(var(--reading-brightness,1))}
 #scene #ribosome-reading-status{position:absolute;z-index:5;margin:0;color:var(--progress-text);font-size:13px;line-height:19px;pointer-events:none}
-#scene .resource-tray{box-sizing:border-box;border:1px solid #ead79838;border-radius:12px;background:#f5ecd609;padding:8px}
-#scene #sugar-supply-tray{position:absolute;width:136px;height:114px;z-index:1;pointer-events:none}
-#scene #sugar-supply-tray[hidden],#scene #ribosome-reading-status[hidden]{display:none}
 
 /* Instructions inherit readable ink from their actual panel surface. */
-:root{--instruction-on-light:#214f50;--instruction-on-dark:#ead798}
-#scene :is(#model-activity,#object-info,#interaction-guide,#settings,.scene-picker),#settings{--progress-text:var(--instruction-on-light)}
 /* A11 names preview the actual nucleus artwork, without another boundary ring. */
 #scene[data-organism=plant][data-phase=model]:has(#cell-game-model[data-structure-preview=nucleus]) #nucleus-cutaway{filter:brightness(1.22) contrast(1.08) saturate(1.05)}
 #scene[data-organism=plant][data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:transparent!important;background:transparent!important;box-shadow:none!important;animation:none!important}
@@ -63,12 +51,10 @@
 /* A16 copies only the selected section, preserving the original DNA artwork. */
 #scene #dna-copy-signal{position:absolute;inset:0;pointer-events:none;z-index:3;mask-image:url('assets/dna-organic.webp');mask-size:contain;mask-position:center;mask-repeat:no-repeat;clip-path:inset(16% 10% 20% 10%);background:linear-gradient(90deg,transparent calc(var(--copy-front,10%) - 4%),#fff6d6b3 var(--copy-front,10%),transparent calc(var(--copy-front,10%) + 4%));opacity:0}
 
-#scene #learning-work-cue[data-instruction-surface=light]{--progress-text:var(--instruction-on-light)}
 @media(max-width:650px){#scene[data-organism=plant][data-phase=export] #nucleus-model{margin-bottom:62px}}
 
-#navigation-feedback{font-size:15px;line-height:1.4;color:var(--instruction-on-dark);max-width:42ch;margin:12px 0 0}
+#navigation-feedback{font-size:15px;line-height:1.4;color:var(--progress-text);max-width:42ch;margin:12px 0 0}
 #review-context{font-size:12px;line-height:1.4;color:#e0d4bc;margin:0 0 10px}
-#amino-pool button[data-next=true]{outline:2px solid #8bc5bd;outline-offset:3px}
 
 #scene[data-organism=plant]:is([data-phase=gene],[data-phase=message]) #select-gene{left:10%;width:80%}
 
@@ -78,9 +64,11 @@
 #amino-drag-ghost{position:fixed;z-index:1000;pointer-events:none;display:block;width:28px;height:28px;border-radius:46% 54% 41% 59%;box-shadow:inset -2px -3px 4px #5f485a66,0 2px 3px #241b2d55}
 
 /* Copy status and its CTA occupy separate rows, after all protruding anatomy labels. */
-#scene[data-phase=message]{min-height:max(100svh,var(--message-scene-height,100svh))}
-#scene[data-phase=message] #dna-learning{bottom:auto;flex-direction:row;align-items:center;gap:20px}
+#scene:is([data-phase=gene],[data-phase=message]){min-height:max(100svh,var(--message-scene-height,100svh))}
+#scene:is([data-phase=gene],[data-phase=message]) #dna-learning{bottom:auto;flex-direction:row;align-items:center;gap:20px}
 #scene #learning-work-cue[data-layout=flow]{position:relative;inset:auto;order:1;flex:0 1 42ch;width:auto;max-width:42ch}
-#scene #protein-work-cue[data-instruction-surface=light],#scene #ribosome-reading-status[data-instruction-surface=light]{--progress-text:#000;text-shadow:none}
-#scene #protein-work-cue[data-instruction-surface=transition-dark],#scene #ribosome-reading-status[data-instruction-surface=transition-dark]{--progress-text:#fff;text-shadow:none}
-@media(max-width:650px){#scene[data-phase=message] #dna-learning{top:auto;flex-direction:column;align-items:flex-start;gap:12px}#scene #learning-work-cue[data-layout=flow]{order:0;flex:none;align-self:stretch}}
+@media(max-width:650px){#scene:is([data-phase=gene],[data-phase=message]) #dna-learning{top:auto;flex-direction:column;align-items:flex-start;gap:12px}#scene #learning-work-cue[data-layout=flow]{order:0;flex:none;align-self:stretch}}
+
+/* Process text has one yellow ink and one contrast-safe supporting surface. */
+#scene :is(#learning-work-cue,#protein-work-cue,#ribosome-reading-status){color:var(--progress-text);background:#211e20e8!important;padding:8px 10px!important;box-sizing:border-box;border-radius:8px;text-shadow:none}
+#scene #protein-work-cue>span{color:var(--progress-text)}

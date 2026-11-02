@@ -1,6 +1,6 @@
 # Asset information
 
-The opening photographs include project-supplied assets and the public-domain USGS fern photograph credited below. No separate public reuse licence is assigned to the project-supplied photographs here.
+The opening photographs are project-supplied assets. No separate public reuse licence is assigned to the project-supplied photographs here.
 
 Cellular and molecular artwork is original project illustration produced using OpenAI ImageGen. These are educational reconstructions, not photographs of microscopic specimens. The opening plant cells and the onion-cell sequence represent different specimens.
 
@@ -11,5 +11,3 @@ Music, Track 2: **Sci-Fi Ambient**, by leberch (Nikita Kondrashev), Pixabay trac
 Icons: [Lucide](https://lucide.dev/), under the ISC licence reproduced in [lucide-LICENSE.txt](lucide-LICENSE.txt).
 
 The ResearchGames logo is the existing project brand asset from this website's `assets/brand` directory.
-
-Living-world fern photograph: U.S. Geological Survey, [Hoh Rain Forest Fern in Autumn Sun](https://www.usgs.gov/media/images/hoh-rain-forest-fern-autumn-sun), public domain. Resized and cropped for the scene; the original photograph is not AI-generated.

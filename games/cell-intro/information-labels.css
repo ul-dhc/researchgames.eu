@@ -1,13 +1,9 @@
 /* A shared information-only surface. Task controls and full Guide panels keep their roles. */
 :root{
- --info-paper:rgba(247,236,207,.86);
- --info-paper-lit:rgba(255,246,223,.96);
- --info-paper-selected:rgba(221,239,228,.92);
- --info-paper-selected-lit:rgba(232,247,235,.98);
- --info-edge:rgba(220,197,142,.56);
- --info-edge-lit:rgba(239,213,157,.92);
- --info-edge-selected:#76a8a5;
- --info-ink:#214f50;--info-ink-selected:#214f50;--info-radius:999px;
+ --info-paper:rgba(247,236,207,.06);--info-paper-lit:rgba(247,236,207,.18);
+ --info-paper-selected:rgba(247,236,207,.22);--info-paper-selected-lit:rgba(247,236,207,.28);
+ --info-edge:rgba(220,197,142,.56);--info-edge-lit:rgba(239,213,157,.92);--info-edge-selected:rgba(239,213,157,.92);
+ --info-ink:var(--paper);--info-ink-selected:var(--paper);--info-radius:999px;
 }
 #scene .information-label{
  --label-paper:var(--info-paper);--label-edge:var(--info-edge);--label-ink:var(--info-ink);
@@ -16,16 +12,16 @@
  padding:0 12px!important;font-family:inherit;font-size:13px!important;line-height:18px!important;font-weight:400;white-space:nowrap;
  background:var(--label-paper)!important;color:var(--label-ink)!important;
  border:1px solid var(--label-edge)!important;border-radius:var(--info-radius)!important;
- box-shadow:none!important;text-shadow:var(--info-text-shadow,none)!important;outline:none!important;text-decoration:none!important;
+ box-shadow:none!important;text-shadow:var(--info-text-shadow,none)!important;outline:none;text-decoration:none!important;
  backdrop-filter:blur(3px) saturate(.95);-webkit-backdrop-filter:blur(3px) saturate(.95);
  transition:background-color .16s ease,border-color .16s ease,color .16s ease!important;
 }
-/* Pale model/card surfaces use dark ink, with the same quiet capsule treatment. */
-#scene:is([data-phase=model],[data-phase=explore]),#scene .role-card{
- --info-ink:#242b26;--info-ink-selected:#214f50;--info-text-shadow:none;
- --info-paper:rgba(255,246,220,.92);--info-paper-lit:rgba(255,246,220,.98);
- --info-paper-selected:rgba(219,239,224,.94);--info-paper-selected-lit:rgba(229,246,232,.99);
- --info-edge:rgba(139,115,63,.65);--info-edge-lit:rgba(139,115,63,.92);
+/* Only the pale cell and nucleus models need a stronger paper surface. */
+#scene[data-phase=model] :is(#vacuole-label,#cytoplasm-intro),#scene .information-label[data-surface=light]{
+ --info-ink:#292629;--info-ink-selected:#292629;--info-text-shadow:none;
+ --info-paper:rgba(255,246,220,.76);--info-paper-lit:rgba(255,246,220,.93);
+ --info-paper-selected:rgba(255,246,220,.88);--info-paper-selected-lit:rgba(255,246,220,.97);
+ --info-edge:rgba(139,115,63,.65);--info-edge-lit:rgba(139,115,63,.92);--info-edge-selected:rgba(139,115,63,.92);
 }
 #scene .information-label:is(:hover,:focus-visible),#scene #rna-message:is(:hover,:focus-visible)>.information-label{
  --label-paper:var(--info-paper-lit);--label-edge:var(--info-edge-lit);
@@ -41,8 +37,12 @@
 #scene #rna-message[aria-expanded=true]:is(:hover,:focus-visible)>.information-label{
  --label-paper:var(--info-paper-selected-lit);--label-edge:var(--info-edge-selected);--label-ink:var(--info-ink-selected);
 }
-#scene .role-info.information-label{width:44px!important;padding:0!important;flex-shrink:0}
+/* Information icons use their native glyph circle, with no button disc. */
+#scene .role-info.information-label{width:44px!important;padding:0!important;flex-shrink:0;background:transparent!important;border:0!important;border-radius:8px!important;color:var(--progress-text)!important;backdrop-filter:none}
+#scene .role-info.information-label:hover{background:#f3ecdf0c!important}
 #scene .role-info svg{width:18px;height:18px;stroke-width:1.6}
+#scene .information-label:focus-visible,#scene #rna-message:focus-visible>.information-label{outline:2px solid var(--focus);outline-offset:3px;box-shadow:none}
+#scene #model-nucleus-info{transform:none}
 #scene #protein-label{max-width:none;white-space:nowrap}
 #scene #rna-message>.information-label{max-width:none}
 #scene:not([data-learning-info=ribosome]):has(#ribosome-target:is(:hover,:focus-visible)) #ribosome-info-label,

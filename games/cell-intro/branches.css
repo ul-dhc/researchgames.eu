@@ -32,8 +32,6 @@ button.cell-choice{cursor:pointer}.cell-choice:hover,.cell-choice:focus-visible{
 #scene[data-phase=model] :is(#cytoplasm-intro,#vacuole-label)[data-cue-active=true],#scene[data-phase=model] #select-model-nucleus[data-cue-active=true]>span{background:#eadfeb;color:#4b3552;border-color:#a889aa}
 #scene[data-phase=model] #select-model-nucleus{border-color:transparent;background:transparent;box-shadow:none}
 #scene[data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:#a889aa;background:#a889aa0b;box-shadow:none}
-#scene[data-phase=explore] .part-label[data-preview-active=true]{background:var(--interaction-tint);color:var(--interaction-ink);border-color:var(--interaction-accent);box-shadow:none}
-#scene[data-phase=explore] .part-label[data-preview-active=false]{background:#eee5d8e8;color:#493c4b;border-color:#f5ece029;box-shadow:none}
 #scene[data-phase=explore] .part-hit{min-width:44px;min-height:44px}
 .part-hit:after,#active-part-link-point{display:none}
 #scene a{text-decoration:none}#scene a:hover{filter:brightness(1.14)}
@@ -67,13 +65,6 @@ button.cell-choice:active img{transform:scale(1.005);filter:brightness(1.12)}
 /* Solid paper surfaces keep narration and imagery from bleeding through. */
 #scene #object-info,#scene #interaction-guide{background:#f0e7d9;opacity:1;backdrop-filter:none}
 
-/* Keep the phone's cell context within the illustration, clear of both text areas. */
-#cell-context-window{position:absolute;inset:0;pointer-events:none;z-index:-1;overflow:visible}
-#cell-context-origin{position:absolute;inset:0}
-@media(max-width:650px){
- #scene:is([data-phase=export],[data-phase=protein]) #cell-context-window{left:calc((100% - 100vw)/2);right:auto;width:100vw;overflow:hidden;mask-image:linear-gradient(transparent,#000 23%,#000 77%,transparent);mask-composite:add}
- #scene:is([data-phase=export],[data-phase=protein]) #cell-context-origin{left:calc((100vw - var(--context-panel-width))/2);right:auto;width:var(--context-panel-width)}
-}
 #scene[data-phase=model] #vacuole-label:is(:hover,[aria-pressed=true]){outline:none;box-shadow:none}
 #scene[data-phase=model] #vacuole-label:focus-visible{outline:2px solid var(--interaction-accent);outline-offset:3px}
 /* Molecular scenes need local text contrast, not a screen-wide opaque veil. */
@@ -81,12 +72,6 @@ button.cell-choice:active img{transform:scale(1.005);filter:brightness(1.12)}
 #scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #story::before{display:block;inset:-90px auto -28px calc(-1 * var(--gutter));width:100vw;background:linear-gradient(180deg,#211e20e8 0%,#211e20cc calc(100% - 50px),transparent 100%);filter:none;mask-image:none;opacity:1;z-index:-1}
 #scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #dna-learning::before{display:none}
 #scene:is([data-phase=export],[data-phase=protein]) :is(#detail,#learning-instruction,#learning-feedback,#protein-work-cue){text-shadow:0 1px 4px #17131aaa}
-
-/* One paper-like surface for anatomy and molecule names; focus has one ring. */
-#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info,#rna-message>span,#pore-target>span,#select-gene>span,#select-model-nucleus>span,#nucleus>span){background:#f0e7d9eb;color:#443844;border:1px solid #b9a99a55;box-shadow:none;text-shadow:none;filter:none}
-#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info):is(:hover,[aria-pressed=true],[aria-expanded=true],[data-preview-active=true]),#scene :is(#rna-message,#pore-target,#select-gene,#select-model-nucleus,#nucleus):is(:hover,[aria-pressed=true],[aria-expanded=true])>span,
-#scene[data-learning-info=messenger-rna] #rna-message>span,#scene[data-learning-info=ribosome] #ribosome-info-label,#scene[data-learning-info=cytoplasm] #cytoplasm-location{background:#d8eeeef2;color:#154b4e;border-color:#168f917d;box-shadow:none;outline:none;filter:none}
-#scene :is(.part-label,.molecule-info-label,#vacuole-label,#cytoplasm-intro,#cytoplasm-location,#ribosome-info-label,#protein-label,#amino-info-label,#cell-wall-info,#cell-membrane-info):focus-visible{outline:2px solid #168f91;outline-offset:3px;box-shadow:none}
 #role-actions{gap:12px;margin-top:28px;align-items:center;flex-wrap:wrap}
 #role-actions #role-replay{margin:0}
 #role-actions #return-cells{order:0}

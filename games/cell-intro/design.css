@@ -7,7 +7,6 @@ header,nav{left:var(--gutter);right:var(--gutter)}
 #scene #story-actions:not(:has(>button:not([hidden]),>details:not([hidden]),#assembly-bridge-actions:not([hidden]))){display:none}
 #scene nav{opacity:1;position:absolute;bottom:max(22px,env(safe-area-inset-bottom));transition:none}
 nav button{background:#211e20b3;border-color:#ffffff65}
-.primary{min-height:48px;font-size:16px;padding:12px 23px;box-shadow:0 3px 16px #1c151b20}
 #guide-toggle{right:var(--gutter);background:#30292de6;border-color:#eee1cf80}
 #scene #interaction-guide,#scene #object-info{position:fixed;top:82px;right:var(--gutter);left:auto;width:320px;max-height:calc(100svh - 180px);overflow:auto;z-index:10}
 #scene #object-info p,#interaction-guide p{font-size:18px;line-height:1.5}
@@ -193,9 +192,6 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 #settings .setting output{font-variant-numeric:tabular-nums;color:#6b6264}
 #settings .range-row{font-size:11px;gap:8px;color:#776e71}
 #settings input[type=range]{accent-color:#557f73;min-height:44px;margin:0}
-#settings .quiet{font-size:14px;min-height:44px;padding:8px 14px;border-color:#75686c44;background:#ffffff25;color:#443d40}
-#settings .quiet[aria-pressed=true]{background:#dce8df88;border-color:#607e7155}
-#settings .quiet:hover{background:#ffffff80}
 #settings #sound{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;align-self:flex-start}
 #settings #sound>span{display:none}
 #settings #sound svg{width:20px;height:20px}
@@ -235,11 +231,11 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 
 /* The living-world photograph keeps a broad plant-and-forest context. */
 @media(min-width:651px){#scene[data-phase=world] #story{right:70%}}
-#scene[data-phase=world] #specimen-view{inset:auto 2% auto 32%;top:50%;height:auto;aspect-ratio:1.65;transform:translateY(-50%)}
+#scene[data-phase=world] #specimen-view{inset:auto 2% auto 32%;top:50%;height:auto;aspect-ratio:1.95;transform:translateY(-50%)}
 #scene[data-phase=world] #physical{object-fit:cover;object-position:50% 50%;filter:brightness(.98) contrast(1.02) saturate(.9)}
 #scene[data-phase=world] .shade{background:linear-gradient(90deg,#211e20b3,transparent 45%)}
 @media(max-width:650px){
- #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.65}
+ #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.95}
  #scene[data-phase=world] #specimen-view{inset:0;width:100%;height:100%;transform:none}
  #scene[data-phase=world] .shade{background:none}
 }
