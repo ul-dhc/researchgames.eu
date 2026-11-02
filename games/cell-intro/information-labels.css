@@ -16,11 +16,12 @@
  backdrop-filter:blur(3px) saturate(.95);-webkit-backdrop-filter:blur(3px) saturate(.95);
  transition:background-color .16s ease,border-color .16s ease,color .16s ease!important;
 }
-/* Only the pale cell and nucleus models need a stronger paper surface. */
-#scene[data-phase=model] :is(#vacuole-label,#cytoplasm-intro),#scene .information-label[data-surface=light]{
+/* A shared workspace theme keeps every anatomy label in the group equivalent.
+   Pale cell/nucleus workspaces use one restrained translucent paper treatment. */
+#nucleus-model[data-info-surface=light]{
  --info-ink:#292629;--info-ink-selected:#292629;--info-text-shadow:none;
- --info-paper:rgba(255,246,220,.76);--info-paper-lit:rgba(255,246,220,.93);
- --info-paper-selected:rgba(255,246,220,.88);--info-paper-selected-lit:rgba(255,246,220,.97);
+ --info-paper:rgba(255,246,220,.58);--info-paper-lit:rgba(255,246,220,.72);
+ --info-paper-selected:rgba(255,246,220,.68);--info-paper-selected-lit:rgba(255,246,220,.78);
  --info-edge:rgba(139,115,63,.65);--info-edge-lit:rgba(139,115,63,.92);--info-edge-selected:rgba(139,115,63,.92);
 }
 #scene .information-label:is(:hover,:focus-visible),#scene #rna-message:is(:hover,:focus-visible)>.information-label{

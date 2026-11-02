@@ -8,8 +8,8 @@
 #scene[data-organism=bacterial] #rna-strand{filter:brightness(1.50) saturate(1.18) drop-shadow(0 1px 1px #16314bc9)}
 #scene[data-organism=bacterial] #rna-message:is(:hover,:focus-visible) #rna-strand{filter:brightness(1.67) saturate(1.18) drop-shadow(0 1px 1px #16314bc9)}
 #scene[data-organism=bacterial] #rna-message{z-index:6}
-#scene #protein-work-cue{z-index:5;min-height:0!important;margin:0!important;padding:0!important;pointer-events:none;background:none!important}
-#scene #protein-work-cue>span{padding:0!important;background:none!important;color:var(--progress-text);font-size:15px;line-height:1.4;border:0;box-shadow:none}
+#scene #protein-work-cue{z-index:5;min-height:0!important;margin:0!important;pointer-events:none}
+#scene #protein-work-cue>span{color:var(--progress-text);font-size:15px;line-height:1.4}
 #scene[data-phase=protein] #protein-workbar{min-height:0}
 #scene[data-organism=bacterial] #amino-1 span{background:radial-gradient(circle at 30% 25%,#f5e3aa,#d4ad63 68%,#8d673e)}
 #scene[data-organism=bacterial] #amino-2 span{background:radial-gradient(circle at 30% 25%,#f2c8b5,#d18d83 68%,#8e5664)}
@@ -42,7 +42,7 @@
 #scene #ribosome-target[data-translating=true]:not(:hover):not(:focus-visible) img{filter:brightness(var(--reading-brightness,1))}
 #scene #ribosome-reading-status{position:absolute;z-index:5;margin:0;color:var(--progress-text);font-size:13px;line-height:19px;pointer-events:none}
 
-/* Instructions inherit readable ink from their actual panel surface. */
+/* The A11 information label previews the actual nucleus artwork. */
 /* A11 names preview the actual nucleus artwork, without another boundary ring. */
 #scene[data-organism=plant][data-phase=model]:has(#cell-game-model[data-structure-preview=nucleus]) #nucleus-cutaway{filter:brightness(1.22) contrast(1.08) saturate(1.05)}
 #scene[data-organism=plant][data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:transparent!important;background:transparent!important;box-shadow:none!important;animation:none!important}
@@ -64,11 +64,27 @@
 #amino-drag-ghost{position:fixed;z-index:1000;pointer-events:none;display:block;width:28px;height:28px;border-radius:46% 54% 41% 59%;box-shadow:inset -2px -3px 4px #5f485a66,0 2px 3px #241b2d55}
 
 /* Copy status and its CTA occupy separate rows, after all protruding anatomy labels. */
-#scene:is([data-phase=gene],[data-phase=message]){min-height:max(100svh,var(--message-scene-height,100svh))}
+#scene:is([data-phase=gene],[data-phase=message],[data-phase=export]){min-height:max(100svh,var(--message-scene-height,100svh))}
 #scene:is([data-phase=gene],[data-phase=message]) #dna-learning{bottom:auto;flex-direction:row;align-items:center;gap:20px}
 #scene #learning-work-cue[data-layout=flow]{position:relative;inset:auto;order:1;flex:0 1 42ch;width:auto;max-width:42ch}
 @media(max-width:650px){#scene:is([data-phase=gene],[data-phase=message]) #dna-learning{top:auto;flex-direction:column;align-items:flex-start;gap:12px}#scene #learning-work-cue[data-layout=flow]{order:0;flex:none;align-self:stretch}}
 
-/* Process text has one yellow ink and one contrast-safe supporting surface. */
-#scene :is(#learning-work-cue,#protein-work-cue,#ribosome-reading-status){color:var(--progress-text);background:#211e20e8!important;padding:8px 10px!important;box-sizing:border-box;border-radius:8px;text-shadow:none}
+/* Dark workspaces keep process text plain yellow; spacing belongs to layout. */
+#scene :is(#learning-work-cue,#protein-work-cue,#ribosome-reading-status){color:var(--progress-text);box-sizing:border-box;border-radius:0;text-shadow:none}
 #scene #protein-work-cue>span{color:var(--progress-text)}
+
+/* Stage-specific handoffs share their actual message/ribosome work zone. */
+#scene #dna-learning[data-handoff-subject]{bottom:auto;flex-direction:column;align-items:center;gap:12px}
+#scene #dna-learning[data-handoff-subject] #learning-work-cue{order:0;flex:none;max-width:100%;text-align:center}
+#scene #dna-learning[data-handoff-subject] #learning-next{order:1;margin:0}
+#scene #learning-action[data-subject=ready-chain],#scene #learning-action[data-subject=substrate]{pointer-events:auto}
+@media(max-width:650px){
+ #scene #dna-learning[data-handoff-subject]{align-items:stretch}
+ #scene #dna-learning[data-handoff-subject] #learning-work-cue{text-align:left}
+ #scene #dna-learning[data-handoff-subject][data-message-side=right] #learning-next{align-self:flex-end}
+ #scene #dna-learning[data-handoff-subject][data-message-side=left] #learning-next{align-self:flex-start}
+}
+
+#scene :is(#protein-workbar,#protein-work-controls,#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback){background:transparent!important;border:0!important;box-shadow:none!important}
+#scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback){padding:0!important}
+#scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback)::before,#scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback)::after{background:transparent!important;border:0!important;box-shadow:none!important}
