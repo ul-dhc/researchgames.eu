@@ -154,8 +154,13 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 @media(max-width:650px){
  #scene:is([data-phase=scales],[data-phase=skin]) #story{top:clamp(330px,50svh,450px);bottom:auto}
 }
-@media(min-width:651px) and (max-height:650px){
- #scene[data-phase=assemble] #model-activity{max-height:calc(max(100svh,780px) - var(--story-end) - 90px)}
+/* Short laptops give the activity its own column from the top of the work area.
+   The panel grows with feedback in page flow; its action never sits in a clipped scroller. */
+@media(min-width:900px) and (max-height:900px){
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]){display:grid;grid-template-columns:minmax(0,1fr) 410px;column-gap:24px;align-content:start;height:auto;min-height:100svh;padding:88px var(--gutter) 110px;overflow:clip}
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #story{position:relative;inset:auto;grid-column:1;grid-row:1;align-self:start;max-width:none;margin:0}
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #model-activity{position:relative;inset:auto;grid-column:2;grid-row:1;align-self:start;width:100%;max-height:none;overflow:visible;margin:0;padding:16px}
+ #scene[data-phase=assemble]:not([data-assembly-complete=true]) #activity-feedback{min-height:44px}
 }
 #scene[data-phase=assemble]:not([data-assembly-complete=true]) #story-actions{display:none}
 

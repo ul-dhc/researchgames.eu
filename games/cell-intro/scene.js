@@ -1,8 +1,8 @@
-import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-shared-system8b';
-import { createCellBranches } from './branches.js?v=20261102-shared-system8b';
-import { updateIcons } from './icons.js?v=20261102-shared-system8b';
-import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-shared-system8b';
-import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261102-shared-system8b';
+import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-a13-laptop9';
+import { createCellBranches } from './branches.js?v=20261102-a13-laptop9';
+import { updateIcons } from './icons.js?v=20261102-a13-laptop9';
+import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-a13-laptop9';
+import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261102-a13-laptop9';
 const $=id=>document.getElementById(id);
 const scene=$('scene'),world=$('world'),cell=$('cell'),cue=$('cue'),nucleus=$('nucleus');
 const physical=$('physical'),chooseCell=$('choose-cell');
