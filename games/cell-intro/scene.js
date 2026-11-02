@@ -1,8 +1,8 @@
-import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-shared-system8';
-import { createCellBranches } from './branches.js?v=20261102-shared-system8';
-import { updateIcons } from './icons.js?v=20261102-shared-system8';
-import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-shared-system8';
-import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261102-shared-system8';
+import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-shared-system8b';
+import { createCellBranches } from './branches.js?v=20261102-shared-system8b';
+import { updateIcons } from './icons.js?v=20261102-shared-system8b';
+import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-shared-system8b';
+import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261102-shared-system8b';
 const $=id=>document.getElementById(id);
 const scene=$('scene'),world=$('world'),cell=$('cell'),cue=$('cue'),nucleus=$('nucleus');
 const physical=$('physical'),chooseCell=$('choose-cell');
@@ -270,6 +270,7 @@ function renderModel(){
  $('cell-wall-info').disabled=!modelReady||phase!=='model';$('cell-membrane-info').disabled=!modelReady||phase!=='model';$('cell-boundary-key').hidden=true;
  $('return-cell').hidden=!['explore','assemble'].includes(phase);$('start-activity').hidden=phase!=='explore';$('exploration-next').hidden=phase!=='explore';$('exploration-secondary').hidden=phase!=='explore';const backHost=phase==='explore'?$('exploration-secondary'):$('story-actions');if($('return-cell').parentElement!==backHost)backHost.append($('return-cell'));
  modelGeometry={mw,mh,x,y,w,h,portrait};renderNucleusCues(modelGeometry);
+ if(phase==='explore')for(const el of panel.querySelectorAll('.part-label'))setInformationSurface(el);
  renderCellCues({mw,mh,cw,ch,cx,cy});
  renderActivity();renderLearning({mw,mh,x,y,w,h,portrait});
  branches.render(phase);bacteria.renderEarly(phase,phaseElapsed,still,infoKey);bacteria.matching(roleSelected);$('scene-number').textContent=sceneName(phase);if(isBacterial()&&!['idle','teaser','world','people','chooser'].includes(phase)){$('location').textContent='Same E. coli cell · cytoplasm';$('image-notice').textContent='E. coli cutaway';if(bacteria.early.includes(phase))$('guide-toggle').hidden=false;}
@@ -349,6 +350,11 @@ function renderChromatinEnvironment(g,progress){
  const camera=document.querySelector?.('.nuclear-camera');if(camera)camera.style.opacity=String(1-Math.min(1,progress*1.8));
 }
 function learningFeedback(text){if($('learning-feedback').textContent!==text)$('learning-feedback').textContent=text;}
+function setInformationSurface(label){
+ const r=label.getBoundingClientRect(),n=$('nucleus-object').getBoundingClientRect(),cx=(r.left+r.right)/2,cy=(r.top+r.bottom)/2;
+ const overlaps=n.width>0&&n.height>0&&((cx-n.left-n.width/2)/(n.width/2))**2+((cy-n.top-n.height/2)/(n.height/2))**2<1;
+ label.dataset.surface=!isBacterial()&&overlaps?'light':'dark';
+}
 function showLearningLayer(id,visible){const element=$(id);element.hidden=!visible;element.toggleAttribute?.('hidden',!visible);element.inert=!visible;if(element.namespaceURI==='http://www.w3.org/2000/svg'||id==='protein-chain')element.style.display=visible?'':'none';}
 function refreshNarrator(allowScroll=false){const copy=currentCopy();$('caption').textContent=copy[0];$('caption').hidden=!copy[0];$('detail-space').textContent=copy[1];$('detail-accessible').textContent=copy[1];$('narration-live').textContent=copy.join(' ');revealTime=0;revealed=still||paused;paintNarration(revealed?copy[1].length:0);if(allowScroll&&scene.clientWidth<650)scene.scrollIntoView?.({block:'start',behavior:still?'auto':'smooth'});}
 function porePassagePoint(start,pore,exit,progress){
@@ -599,7 +605,7 @@ function renderLearning(g){
  }
  if(phase==='protein'){const result=renderProteinWork(g,{rx,ry,rw,rh,focus},action,next);instruction=result.instruction;feedback=result.feedback;nextText=result.nextText;}
  else{$('protein-work-cue').hidden=true;for(const id of ['sucrose-info-label','glucose-info-label','fructose-info-label','amino-feed-info-label','enzyme-contact-detail'])showLearningLayer(id,false);$('protein-workbar').hidden=true;for(const button of [action,next])if(button.parentElement!==$('dna-learning'))$('dna-learning').append(button);}
- for(const el of [$('rna-message').querySelector('.information-label'),$('pore-info-label')]){const r=el.getBoundingClientRect(),n=$('nucleus-object').getBoundingClientRect();el.dataset.surface=!isBacterial()&&phase==='export'&&!rnaArrived&&r.left<n.right&&r.right>n.left&&r.top<n.bottom&&r.bottom>n.top?'light':'dark';}
+ for(const el of [$('rna-message').querySelector('.information-label'),$('pore-info-label')]){if(phase==='export'&&!rnaArrived)setInformationSurface(el);else el.dataset.surface='dark';}
  placeCytoplasmLabel();
  renderReading({eligible:phase==='export'&&rnaArrived||phase==='protein'&&['build','growing','repeat-growing'].includes(proteinStage),rx,ry,rw,rh,mw});
  action.classList.toggle('quiet',phase==='protein'&&proteinStage==='done');action.classList.toggle('primary',!(phase==='protein'&&proteinStage==='done'));

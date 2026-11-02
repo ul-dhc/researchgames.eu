@@ -1,5 +1,5 @@
-import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-shared-system8';
-import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-shared-system8';
+import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261102-shared-system8b';
+import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261102-shared-system8b';
 /* Local checkpoint: cell choice, visual continuity and initial inspection only. */
 export function createCellBranches(api){
  const {scene,$}=api,host=$('cell-branches');
