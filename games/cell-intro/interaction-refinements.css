@@ -59,3 +59,9 @@
 #scene[data-organism=plant][data-phase=model]:has(#cell-game-model[data-structure-preview=nucleus]) #nucleus-cutaway{filter:brightness(1.22) contrast(1.08) saturate(1.05)}
 #scene[data-organism=plant][data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:transparent!important;background:transparent!important;box-shadow:none!important;animation:none!important}
 #scene[data-organism=plant][data-phase=model] #model-nucleus-info[data-cue-active=true]:not([aria-expanded=true]){--label-paper:var(--info-paper-lit);--label-edge:var(--info-edge-lit)}
+
+/* A16 copies only the selected section, preserving the original DNA artwork. */
+#scene #dna-copy-signal{position:absolute;inset:0;pointer-events:none;z-index:3;mask-image:url('assets/dna-organic.webp');mask-size:contain;mask-position:center;mask-repeat:no-repeat;clip-path:inset(16% 36% 20% 40%);background:linear-gradient(90deg,transparent calc(var(--copy-front,40%) - 4%),#fff6d6b3 var(--copy-front,40%),transparent calc(var(--copy-front,40%) + 4%));opacity:0}
+
+#scene #learning-work-cue[data-instruction-surface=light]{--progress-text:var(--instruction-on-light)}
+@media(max-width:650px){#scene[data-organism=plant][data-phase=export] #nucleus-model{margin-bottom:62px}}

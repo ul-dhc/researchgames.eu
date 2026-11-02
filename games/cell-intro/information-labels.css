@@ -1,13 +1,13 @@
 /* A shared information-only surface. Task controls and full Guide panels keep their roles. */
 :root{
- --info-paper:rgba(247,236,207,.08);
- --info-paper-lit:rgba(255,246,223,.22);
- --info-paper-selected:rgba(137,195,184,.18);
- --info-paper-selected-lit:rgba(167,217,204,.28);
+ --info-paper:rgba(247,236,207,.86);
+ --info-paper-lit:rgba(255,246,223,.96);
+ --info-paper-selected:rgba(221,239,228,.92);
+ --info-paper-selected-lit:rgba(232,247,235,.98);
  --info-edge:rgba(220,197,142,.56);
  --info-edge-lit:rgba(239,213,157,.92);
  --info-edge-selected:#76a8a5;
- --info-ink:#f7edd6;--info-ink-selected:#d7f2e8;--info-radius:999px;
+ --info-ink:#214f50;--info-ink-selected:#214f50;--info-radius:999px;
 }
 #scene .information-label{
  --label-paper:var(--info-paper);--label-edge:var(--info-edge);--label-ink:var(--info-ink);
@@ -16,15 +16,15 @@
  padding:0 12px!important;font-family:inherit;font-size:13px!important;line-height:18px!important;font-weight:400;white-space:nowrap;
  background:var(--label-paper)!important;color:var(--label-ink)!important;
  border:1px solid var(--label-edge)!important;border-radius:var(--info-radius)!important;
- box-shadow:none!important;text-shadow:var(--info-text-shadow,0 1px 2px #101615b3)!important;outline:none!important;text-decoration:none!important;
+ box-shadow:none!important;text-shadow:var(--info-text-shadow,none)!important;outline:none!important;text-decoration:none!important;
  backdrop-filter:blur(3px) saturate(.95);-webkit-backdrop-filter:blur(3px) saturate(.95);
  transition:background-color .16s ease,border-color .16s ease,color .16s ease!important;
 }
 /* Pale model/card surfaces use dark ink, with the same quiet capsule treatment. */
 #scene:is([data-phase=model],[data-phase=explore]),#scene .role-card{
  --info-ink:#242b26;--info-ink-selected:#214f50;--info-text-shadow:none;
- --info-paper:rgba(255,246,220,.32);--info-paper-lit:rgba(255,246,220,.48);
- --info-paper-selected:rgba(219,239,224,.44);--info-paper-selected-lit:rgba(229,246,232,.58);
+ --info-paper:rgba(255,246,220,.92);--info-paper-lit:rgba(255,246,220,.98);
+ --info-paper-selected:rgba(219,239,224,.94);--info-paper-selected-lit:rgba(229,246,232,.99);
  --info-edge:rgba(139,115,63,.65);--info-edge-lit:rgba(139,115,63,.92);
 }
 #scene .information-label:is(:hover,:focus-visible),#scene #rna-message:is(:hover,:focus-visible)>.information-label{
