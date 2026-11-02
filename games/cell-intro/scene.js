@@ -1,7 +1,7 @@
-import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-full1';
-import { createCellBranches } from './branches.js?v=20261102-full1';
-import { updateIcons } from './icons.js?v=20261102-full1';
-import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-full1';
+import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261102-readability2';
+import { createCellBranches } from './branches.js?v=20261102-readability2';
+import { updateIcons } from './icons.js?v=20261102-readability2';
+import { SoundtrackPlayer } from './ambient-mixer.js?v=20261102-readability2';
 const $=id=>document.getElementById(id);
 const scene=$('scene'),world=$('world'),cell=$('cell'),cue=$('cue'),nucleus=$('nucleus');
 const physical=$('physical'),chooseCell=$('choose-cell');
@@ -1002,11 +1002,9 @@ function renderChooserReveal(){
 }
 
 function installExplorationCues(){
- for(const [id,key]of [['cytoplasm-intro','cytoplasm'],['vacuole-label','vacuole'],['select-model-nucleus','nucleus']]){
-  const button=$(id);
-  for(const event of ['mouseenter','focus'])button.addEventListener(event,()=>{if(phase==='model'){hoverCell=key;renderCellCues();}});
-  for(const event of ['mouseleave','blur'])button.addEventListener(event,()=>{if(hoverCell===key){hoverCell='';renderCellCues();}});
- }
+ const targets=[['cytoplasm-intro','cytoplasm'],['vacuole-label','vacuole'],['select-model-nucleus','nucleus'],['model-nucleus-info','nucleus']];
+ const preview=()=>{const hovered=targets.find(([id])=>$(id).matches(':hover')),focused=targets.find(([id])=>$(id)===document.activeElement);hoverCell=phase==='model'?(hovered?.[1]||focused?.[1]||''):'';renderCellCues();};
+ for(const [id]of targets)for(const event of ['mouseenter','mouseleave','focus','blur'])$(id).addEventListener(event,preview);
  const svg=$('cell-game-model').querySelector('svg'),ns='http://www.w3.org/2000/svg';
  const outer=svg.querySelectorAll(':scope > path')[1],vacuole=$('vacuole-shape');
  const mask=document.createElementNS(ns,'mask');mask.id='cytoplasm-region-mask';mask.setAttribute('maskUnits','userSpaceOnUse');mask.setAttribute('x','0');mask.setAttribute('y','0');mask.setAttribute('width','1100');mask.setAttribute('height','600');
@@ -1021,7 +1019,7 @@ function installExplorationCues(){
 }
 function renderCellCues(){
  const key=phase==='model'?(hoverCell||(['nucleus','vacuole','cytoplasm'].includes(infoKey)?infoKey:'')):'';
- for(const [id,part]of [['cytoplasm-intro','cytoplasm'],['vacuole-label','vacuole'],['select-model-nucleus','nucleus']])$(id).dataset.cueActive=String(key===part);
+ for(const [id,part]of [['cytoplasm-intro','cytoplasm'],['vacuole-label','vacuole'],['select-model-nucleus','nucleus'],['model-nucleus-info','nucleus']])$(id).dataset.cueActive=String(key===part);
  $('cell-game-model').dataset.structurePreview=key;
  $('cell-cytoplasm-region').style.display=key==='cytoplasm'?'':'none';
 }

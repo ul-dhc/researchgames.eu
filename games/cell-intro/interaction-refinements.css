@@ -51,3 +51,11 @@
 #scene .resource-tray{box-sizing:border-box;border:1px solid #ead79838;border-radius:12px;background:#f5ecd609;padding:8px}
 #scene #sugar-supply-tray{position:absolute;width:136px;height:114px;z-index:1;pointer-events:none}
 #scene #sugar-supply-tray[hidden],#scene #ribosome-reading-status[hidden]{display:none}
+
+/* Instructions inherit readable ink from their actual panel surface. */
+:root{--instruction-on-light:#214f50;--instruction-on-dark:#ead798}
+#scene :is(#model-activity,#object-info,#interaction-guide,#settings,.scene-picker),#settings{--progress-text:var(--instruction-on-light)}
+/* A11 names preview the actual nucleus artwork, without another boundary ring. */
+#scene[data-organism=plant][data-phase=model]:has(#cell-game-model[data-structure-preview=nucleus]) #nucleus-cutaway{filter:brightness(1.22) contrast(1.08) saturate(1.05)}
+#scene[data-organism=plant][data-phase=model] #select-model-nucleus[data-cue-active=true]{border-color:transparent!important;background:transparent!important;box-shadow:none!important;animation:none!important}
+#scene[data-organism=plant][data-phase=model] #model-nucleus-info[data-cue-active=true]:not([aria-expanded=true]){--label-paper:var(--info-paper-lit);--label-edge:var(--info-edge-lit)}
