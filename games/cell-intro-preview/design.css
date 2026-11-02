@@ -232,3 +232,13 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 
 /* Camera overscan must not make the opening a focus-scroll container. */
 #scene[data-phase=idle]{overflow:clip}
+
+/* Keep the broad mushroom cap and forest context together in the supplied photo. */
+#scene[data-phase=world] #specimen-view{inset:auto 4% auto 47%;top:50%;height:auto;aspect-ratio:1.55;transform:translateY(-50%)}
+#scene[data-phase=world] #physical{object-fit:cover;object-position:50% 50%;filter:brightness(.98) contrast(1.02) saturate(.9)}
+#scene[data-phase=world] .shade{background:linear-gradient(90deg,#211e20b3,transparent 45%)}
+@media(max-width:650px){
+ #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.55}
+ #scene[data-phase=world] #specimen-view{inset:0;width:100%;height:100%;transform:none}
+ #scene[data-phase=world] .shade{background:none}
+}

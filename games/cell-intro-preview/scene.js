@@ -42,7 +42,7 @@ const captions={
 let chooserInstant=true,chooserReadAt=-1,hoverCell='',hoverPart='',modelGeometry=null,modelEntryZoom=1;
 let roleInitialized=false,roleSelected='',roleMatched=[],roleOrder=[],roleCardOrder=[],roleWrong='';
 let phase='idle',approach=0,cellEntry=1600,paused=false,still=reduced.matches,soundOn=readAudioPreference().soundOn,last=0,revealTime=0,revealed=true,raf=0,audioState='ready',audioAttempt=0,hasBegun=false,narrationSpeed=1,transitioning=false,transitionTime=0,transitionDuration=1600,phaseHold=0,phaseElapsed=0,settingsWasPaused=false,settingsReturning=false,navigationHold=false,manualSceneHold=false,musicFinished=false,skinFocus=null,approachFrame=null,skinFrame=null,skinMatch=null,nuclearMatch=null,outgoingMotion=null,transitionStatic=false,incomingDecoded=true,visualLoadToken=0,nuclearTime=0,titleTime=0,modelReady=false,modelEntryStatic=false,modelSelected=false,liftStart=null,selectedPart='',infoKey='',infoTrigger=null,guideOpen=false,guideSeen=false,activityStarted=false,activityStep=0,activityPlaced=0,activityChoice='',activityCommitted=false,activityFeedback='',activityOrder=[],bridgeClock=0,learningClock=0,geneSelected=false,copyAt=-1,rnaMade=false,rnaSelected=false,rnaTravelAt=-1,rnaArrived=false,rnaExported=false,rnaTravelStage='',rnaDrag=null,rnaDragPosition=null,rnaStageStart=null,rnaTransportHint='',rnaDragEnded=0,learningGeometry=null,proteinCount=0,proteinCompletionReached=false,chromatinStart=null,controlsAwake=1200,copyExplained=false,proteinStage='purpose',aminoSelected=0,aminoUsed=[],proteinFoldAt=-1,sugarAt=-1,proteinFocusAt=-1,proteinEntryTop=null,proteinEntryHeight=null,proteinGrowAt=-1,proteinAddAt=-1,proteinGrowReadyAt=-1,proteinFoldReadyAt=-1,proteinReactionReadyAt=-1,rnaDeliveryExplained=false,rnaArrivalAt=-1,exploreInvited=false,exploreReadClock=0;
-const physicalSources={idle:'assets/elodea-leaf-opening.webp',teaser:'assets/elodea-leaf-opening.webp',world:'assets/forest-mushroom.webp',people:'assets/frog-on-hand.webp',onion:'assets/onion-bulbs.webp',scales:'assets/onion-yellow-cutaway.webp',skin:'assets/onion-yellow-cutaway.webp'};
+const physicalSources={idle:'assets/elodea-leaf-opening.webp',teaser:'assets/elodea-leaf-opening.webp',world:'assets/forest-mushroom-photo-1920.webp',people:'assets/frog-on-hand.webp',onion:'assets/onion-bulbs.webp',scales:'assets/onion-yellow-cutaway.webp',skin:'assets/onion-yellow-cutaway.webp'};
 const photoPhases=['idle','world','people','onion'];
 const learningPhases=['dna-focus','gene','message','export','protein'];
 const nuclearPhases=['inside','nucleolus','model','explore','assemble','roles',...learningPhases];
@@ -570,8 +570,9 @@ function prepareVisual(key){
  incomingDecoded=true;
  if(!target)return;
  const src=isNuclear?'assets/onion-nuclear-interior.webp':physicalSources[key];
+ if(!isNuclear){target.alt=key==='world'?'A red-capped mushroom with pale spots among moss and grasses in a forest.':'';target.srcset=key==='world'?'assets/forest-mushroom-photo-960.webp 960w, assets/forest-mushroom-photo-1920.webp 1920w':'';target.sizes=key==='world'?'(max-width: 650px) calc(100vw - 40px), 49vw':'';}
  if(target.dataset.source===src&&target.complete&&target.naturalWidth)return;
- if(target.dataset.source!==src){target.dataset.source=src;target.src=src;if(!isNuclear)$('physical-backdrop').src=src;}
+ if(target.dataset.source!==src){target.dataset.source=src;target.src=src;if(!isNuclear)$('physical-backdrop').src=key==='world'&&innerWidth<=650?'assets/forest-mushroom-photo-960.webp':src;}
  if(typeof target.decode!=='function')return;
  incomingDecoded=false;
  target.decode().then(()=>{if(token!==visualLoadToken)return;incomingDecoded=true;last=0;if(transitionStatic){cancelShotTransition();syncControls();}}).catch(()=>{if(token!==visualLoadToken)return;incomingDecoded=true;last=0;if(transitionStatic){cancelShotTransition();syncControls();}});
@@ -815,7 +816,7 @@ function warmRoleArtwork(){
 }
 function scheduleLaterImages(){
  if(preloadQueued)return;preloadQueued=true;
- const warm=()=>{for(const src of ['assets/teaser-human-epithelium.webp','assets/forest-mushroom.webp','assets/frog-on-hand.webp']){const image=new Image();image.fetchPriority='low';image.decoding='async';image.src=src;preloadedImages.push(image);}};
+ const warm=()=>{for(const src of ['assets/teaser-human-epithelium.webp','assets/forest-mushroom-photo-1920.webp','assets/frog-on-hand.webp']){const image=new Image();image.fetchPriority='low';image.decoding='async';image.src=src.includes('forest-mushroom-photo')&&innerWidth<=650?'assets/forest-mushroom-photo-960.webp':src;preloadedImages.push(image);}};
  if(typeof requestIdleCallback==='function')requestIdleCallback(warm,{timeout:1500});else requestAnimationFrame(warm);
 }
 physical.addEventListener('load',scheduleLaterImages,{once:true});if(physical.complete&&physical.naturalWidth)scheduleLaterImages();
