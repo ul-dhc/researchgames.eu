@@ -76,3 +76,11 @@
 
 #scene .amino-acid{touch-action:none;user-select:none}
 #amino-drag-ghost{position:fixed;z-index:1000;pointer-events:none;display:block;width:28px;height:28px;border-radius:46% 54% 41% 59%;box-shadow:inset -2px -3px 4px #5f485a66,0 2px 3px #241b2d55}
+
+/* Copy status and its CTA occupy separate rows, after all protruding anatomy labels. */
+#scene[data-phase=message]{min-height:max(100svh,var(--message-scene-height,100svh))}
+#scene[data-phase=message] #dna-learning{bottom:auto;flex-direction:row;align-items:center;gap:20px}
+#scene #learning-work-cue[data-layout=flow]{position:relative;inset:auto;order:1;flex:0 1 42ch;width:auto;max-width:42ch}
+#scene #protein-work-cue[data-instruction-surface=light],#scene #ribosome-reading-status[data-instruction-surface=light]{--progress-text:#000;text-shadow:none}
+#scene #protein-work-cue[data-instruction-surface=transition-dark],#scene #ribosome-reading-status[data-instruction-surface=transition-dark]{--progress-text:#fff;text-shadow:none}
+@media(max-width:650px){#scene[data-phase=message] #dna-learning{top:auto;flex-direction:column;align-items:flex-start;gap:12px}#scene #learning-work-cue[data-layout=flow]{order:0;flex:none;align-self:stretch}}
