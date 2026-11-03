@@ -382,5 +382,5 @@ footer,.site-header~footer{height:auto;min-height:76px;padding-block:24px;margin
 .dialog-close{color:var(--ink)}
 
 /* Credits have their own sections, outside the scoring explanation. */
-dialog .artist-credit a{font-size:calc(19px * var(--text-scale));font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+dialog .artist-credit a{font-size:inherit;font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
 dialog .dialog-source{margin-top:0}
