@@ -20,13 +20,14 @@ export function renderVisits() {
     root.setAttribute('aria-label',title);
     root.replaceChildren();
     const append=(tag,text,parent=root)=>{const el=document.createElement(tag);el.textContent=text;parent.append(el);return el;};
-    append('h2',title);
+    const headingLevel=root.dataset.headingLevel==='3'?3:2;
+    const heading=append('h'+headingLevel,title);heading.className='rg-visits-heading';
     let cards=append('div','');cards.className='rg-visits-cards';
     for(const id of ids){
-      if(site && id!=='landing' && ids.indexOf(id)===1){append('h2',t.gameTitle);cards=append('div','');cards.className='rg-visits-cards';}
+      if(site && id!=='landing' && ids.indexOf(id)===1){const heading=append('h'+headingLevel,t.gameTitle);heading.className='rg-visits-heading';cards=append('div','');cards.className='rg-visits-cards';}
       const entry=model?.periods[period]?.[id];
       const card=append('article','',cards);
-      append('h3',names[lang][id],card);
+      const cardTitle=append('h'+(headingLevel+1),names[lang][id],card);cardTitle.className='rg-visits-card-title';
       if(id==='landing')card.className='rg-visits-landing';
       append('strong',entry?new Intl.NumberFormat(lang).format(entry.visits):'–',card);
       if(!entry) append('p',t.unavailable,card);

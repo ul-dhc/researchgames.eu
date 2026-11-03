@@ -30,3 +30,23 @@ button,select,.open,nav>a,footer>a{transition:background-color .2s ease,border-c
 #theme .theme-moon{display:none}
 :root[data-theme=light] #theme .theme-sun{display:none}
 :root[data-theme=light] #theme .theme-moon{display:block}
+
+/* Shared overview: stable section anchors and persistent jump links. */
+.section-nav{position:sticky;top:12px;z-index:10;display:flex;flex-wrap:wrap;gap:8px;padding:10px;margin:0 0 36px;border:1px solid var(--line);border-radius:14px;background:var(--bg);box-shadow:0 6px 22px #00000016}
+.section-nav a{display:flex;align-items:center;gap:9px;min-height:42px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:650;text-decoration:none}
+.section-nav a>span:first-child{font-size:11px;color:var(--accent);font-variant-numeric:tabular-nums}
+.section-nav a:hover,.section-nav a:focus-visible{background:var(--soft);color:var(--text);text-decoration:none}
+.dashboard-section{scroll-margin-top:104px}
+.dashboard-section+.dashboard-section{margin-top:56px;padding-top:36px;border-top:1px solid var(--line)}
+.section-lead{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.section-index{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;background:var(--soft);color:var(--accent);border:1px solid var(--line);border-radius:50%;font-size:12px;font-weight:750}
+.section-copy h2{font-size:28px;line-height:1.25;letter-spacing:-.8px;margin:0}
+.section-copy p{font-size:14px;line-height:1.65;color:var(--muted);margin:8px 0 0}
+.dashboard-section:target .section-index{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.dashboard-section [data-rg-visits]{margin:0}
+.dashboard-section .coverage{margin-top:0}
+.dashboard-section .panel h3{font-size:20px;margin:0;letter-spacing:-.4px}
+.method-body{padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--panel);max-width:900px}
+.method-body h3{font-size:16px;margin:0 0 12px}
+.method-body p{font-size:14px;line-height:1.8;color:var(--muted);margin:0}
+@media(max-width:600px){.section-nav{display:grid;grid-template-columns:1fr 1fr;gap:4px;top:8px;padding:6px;margin-bottom:28px}.section-nav a{padding:9px 10px;font-size:12px;gap:7px}.dashboard-section{scroll-margin-top:132px}.dashboard-section+.dashboard-section{margin-top:40px;padding-top:28px}.section-copy h2{font-size:24px}.section-copy p{font-size:13px}.section-lead{gap:12px}.method-body{padding:20px}}

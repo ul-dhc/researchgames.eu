@@ -7,3 +7,6 @@
 [data-rg-visits="site"] .rg-visits-landing{background:var(--soft,#1d2640);border-color:var(--accent,#b4a1ff)}
 [data-rg-visits="site"] .rg-visits-landing strong{font-size:48px}
 @media(max-width:600px){[data-rg-visits="site"]>.rg-visits-cards{grid-template-columns:1fr}}
+
+[data-rg-visits] .rg-visits-heading{font-size:20px;font-weight:650;letter-spacing:-.3px;margin:0 0 16px}
+[data-rg-visits] .rg-visits-card-title{font-size:14px;font-weight:600;margin:0 0 8px}

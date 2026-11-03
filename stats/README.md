@@ -133,3 +133,11 @@ inside a cell. The cell card includes its public preview. UL107 remains excluded
 `VISIT_PAGES` is the collector allowlist; `VISIT_GAMES` contains only games.
 Landing visits are never added to a game count. The existing individual dashboards
 continue to show only their own game.
+
+## Overview sections
+
+The joint dashboard has four numbered sections: page visits, gameplay, game
+dashboards, and about the data. Sticky native anchor links at the top navigate to
+`#visits`, `#gameplay`, `#game-reports`, and `#about-data`. Both LV and EN labels
+are supported. The visits component uses a lower heading level in this overview;
+individual dashboards keep their existing heading structure.
