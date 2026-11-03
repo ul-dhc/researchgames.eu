@@ -31,17 +31,18 @@ export function renderTimeline(container, series, language) {
     container.innerHTML = `<p class="empty">${lv ? 'Laika grafiks būs redzams, kad būs pieejami dati.' : 'The timeline will appear when data is available.'}</p>`;
     return;
   }
+  const helpId=(container.id||'timeline')+'-help';
   let selected = series.dates.length - 1;
   let width, x, y;
   const height = 280, left = 38, right = 14, top = 20, bottom = 42;
-  const peak = Math.max(1, ...available.flatMap(game => game.values));
+  const peak = available.reduce((peak,game)=>game.values.reduce((peak,value)=>Math.max(peak,value),peak),1);
   const step = Math.max(1, Math.ceil(peak / 4));
   const max = step * 4;
   const unavailable = lv ? 'Dati nav pieejami' : 'Data unavailable';
   container.innerHTML = `
     <div class="timeline-legend">${series.games.map((game, i) => `<span class="series-key series-${i}${game.values ? '' : ' unavailable'}"><span class="series-swatch" aria-hidden="true"></span>${escape(game.name)}${game.values ? '' : ` (${unavailable})`}</span>`).join('')}</div>
-    <p class="timeline-help" id="timeline-help">${lv ? 'Pārvieto rādītāju vai pieskaries grafikam, lai apskatītu dienu. Ar tastatūru izmanto bulttaustiņus.' : 'Move the pointer or touch the chart to inspect a day. Use arrow keys with a keyboard.'}</p>
-    <svg class="line-chart" role="slider" tabindex="0" aria-label="${lv ? 'Diena laika grafikā' : 'Day on timeline'}" aria-describedby="timeline-help" aria-valuemin="0" aria-valuemax="${series.dates.length - 1}"></svg>
+    <p class="timeline-help" id="${helpId}">${lv ? 'Pārvieto rādītāju vai pieskaries grafikam, lai apskatītu dienu. Ar tastatūru izmanto bulttaustiņus.' : 'Move the pointer or touch the chart to inspect a day. Use arrow keys with a keyboard.'}</p>
+    <svg class="line-chart" role="slider" tabindex="0" aria-label="${lv ? 'Diena laika grafikā' : 'Day on timeline'}" aria-describedby="${helpId}" aria-valuemin="0" aria-valuemax="${series.dates.length - 1}"></svg>
     <div class="timeline-readout" aria-live="polite" aria-atomic="true"></div>`;
   const svg = container.querySelector('svg');
   const readout = container.querySelector('.timeline-readout');

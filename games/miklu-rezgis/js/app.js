@@ -917,13 +917,17 @@ function setNextEnabled(val) {
   const button = document.getElementById('next-btn');
   button.disabled = !val;
   document.body.classList.toggle('next-ready', Boolean(val));
-  const label = val && state.participationMode === 'research' && state.gameMode !== 'party'
-    ? 'Novērtēt mīklu'
-    : state.gameMode === 'daily'
-      ? 'Pabeigt'
-      : state.gameMode === 'party'
-        ? 'Turpināt'
-        : 'Nākamā mīkla';
+  let label = 'Nākamā mīkla';
+  const lastInLevel = state.riddleIdx === (state.isBonus ? state.bonusRiddles.length : state.shuffledLevel.length) - 1;
+  if (state.gameMode === 'daily') {
+    label = 'Pabeigt spēli';
+  } else if (state.gameMode === 'party') {
+    const p = state.party;
+    label = p && p.currentPlayer === 1 && p.round >= p.riddlesPerPlayer - 1 ? 'Pabeigt spēli' : 'Turpināt';
+  } else if (lastInLevel) {
+    label = state.isBonus || state.currentLevel === 10 ? 'Pabeigt spēli' : 'Pabeigt līmeni';
+  }
+  if (val && state.participationMode === 'research' && state.gameMode !== 'party') label = 'Novērtēt mīklu';
   button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
 }
 

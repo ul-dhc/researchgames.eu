@@ -1,0 +1,21 @@
+/* Shared dashboard controls; native select remains available if enhancement cannot load. */
+:root{--rg-select-ready:1}
+[data-rg-native-select]{display:none!important}
+.rg-select{display:inline-flex;position:relative;vertical-align:middle;min-width:160px;padding:0!important;border:0!important;background:transparent!important;border-radius:10px;font:inherit;color:inherit}
+.rg-select-trigger{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-width:0;min-height:42px;padding:10px 13px;margin:0;border:1px solid var(--line,var(--border,#352f70));border-radius:10px;background:var(--panel,var(--surface,#111a2d));color:var(--text,var(--ink,#edf1fc));font:inherit;font-size:calc(13px * var(--rg-text-scale,1));line-height:1.4;text-align:left;cursor:pointer;box-shadow:none}
+.rg-select-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rg-select-trigger svg{width:16px;height:16px;flex:0 0 16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--muted,#a9b4ce)}
+.rg-select-trigger:hover,.rg-select-trigger[aria-expanded=true]{border-color:var(--accent,var(--purple-soft,var(--blue,var(--violet2,#a18af4))));background:var(--soft,var(--panel-2,var(--panel2,var(--surface-soft,#1d2640))))}
+.rg-select-trigger:focus-visible{outline:2px solid var(--accent,var(--purple-soft,var(--blue,var(--violet2,#a18af4))));outline-offset:3px}
+.rg-select-trigger:disabled{opacity:.5;cursor:default}
+.rg-select-list{position:fixed;inset:auto;box-sizing:border-box;margin:0;padding:5px;overflow:auto;overscroll-behavior:contain;z-index:10000;border:1px solid var(--line,var(--border,#352f70));border-radius:12px;background:var(--panel,var(--surface,#111a2d));color:var(--text,var(--ink,#edf1fc));box-shadow:0 12px 36px #00000038;font:calc(13px * var(--rg-text-scale,1))/1.45 Inter,system-ui,-apple-system,'Segoe UI',sans-serif;text-align:left;color-scheme:inherit}
+.rg-select-list[hidden]{display:none!important}
+.rg-select-list::backdrop{background:transparent;pointer-events:none}
+.rg-select-option{display:flex;align-items:center;gap:9px;min-height:40px;padding:9px 10px;box-sizing:border-box;border-radius:7px;cursor:pointer;overflow-wrap:anywhere}
+.rg-select-check{flex:0 0 15px;width:15px;color:var(--accent,var(--purple-soft,var(--blue,var(--violet2,#a18af4))));visibility:hidden;font-size:calc(14px * var(--rg-text-scale,1))}
+.rg-select-option[aria-selected=true] .rg-select-check{visibility:visible}
+.rg-select-option[data-active=true]{background:var(--soft,var(--panel-2,var(--panel2,var(--surface-soft,#1d2640))))}
+.rg-select-option[aria-selected=true]{font-weight:650}
+.rg-select-option[aria-disabled=true]{opacity:.4;cursor:default}
+@media(max-width:760px){.rg-select-trigger{min-height:46px;font-size:calc(14px * var(--rg-text-scale,1))}.rg-select-list{font-size:calc(14px * var(--rg-text-scale,1))}.rg-select-option{min-height:44px}}
+@media(prefers-reduced-motion:no-preference){.rg-select-trigger{transition:background-color .15s,border-color .15s}.rg-select-trigger[aria-expanded=true] svg{transform:rotate(180deg)}}

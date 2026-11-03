@@ -1,4 +1,4 @@
-# ResearchGames overview
+# ResearchGames.eu overview
 
 Static LV/EN overview at `/stats/`, linked from both homepage footers. It reads one precomputed public JSON file containing all three games and all three periods. The browser immediately displays the already loaded snapshot. If sources are older than 15 minutes, missing, or failed, it refreshes only those sources for the selected period in the background.
 
@@ -73,3 +73,113 @@ The shared `SummaryCache.gs` wrapper still caches successful public summaries pe
 ## LU107 dashboard recovery
 
 The separate LU107 dashboard keeps its period-specific saved data on reload, retries one transient API failure, and retains the newer source timestamp. Switching periods cancels the previous request, preventing late responses from appearing under the wrong filter. Failed background refreshes keep the dashboard visible with a notice. Reload no longer sends `force=1` to bypass the source cache.
+
+## Page visits (2026-11-03)
+
+The overview, website-hosted Riddle Grid dashboard, and Livonian Apps Script dashboard
+share `visits-ui.js` and `visits.css`. UL107 is intentionally excluded from visit
+collection and display; its gameplay dashboard and historical summary remain unchanged.
+The Livonian source is backed up in `games/libiesu-vietvardi/apps-script/Dashboard.html`.
+Visits use each dashboard’s existing period selector. The overview links to the
+website-hosted Riddle Grid dashboard and the existing Livonian redirect.
+The shared assets are loaded from researchgames.eu by the Apps Script HTML.
+
+`visits.js` is the explicit game-page allowlist. GoatCounter normalizes the observed
+paths without trailing slashes. Riddle totals include the main and children's game
+pages; dashboard, about and other website pages are excluded. These are summed
+page visits, not unique people across pages, gameplay starts, or conversions.
+Visit counts respond only to the period selector, not research/session filters.
+
+The existing snapshot workflow calls `scripts/update-visits.mjs` using the repository
+Actions secret `GOATCOUNTER_API_TOKEN`. Configure a GoatCounter token with only
+Read statistics permission for researchgames.goatcounter.com. Never put the token
+in source, public JSON, frontend JavaScript, URLs, or logs. Email verification is
+required by GoatCounter before API use. Only aggregate counts and reporting dates
+are published to `analytics-data/visits.json`; the API response is never saved.
+
+Periods all/90d/30d/7d are collected sequentially below the API rate limit. Rolling
+periods include today and the starting calendar day N days ago in Europe/Riga,
+matching the existing dashboard date filters (the starting day is included). All-time
+requests start in 2000 and cover only history actually retained by GoatCounter;
+they do not reconstruct pre-tracking visits. Missing configuration or collection
+failures preserve previous counts, period bounds and timestamps with a failure
+flag. Missing data displays a dash, never a fabricated zero. Counts older than
+20 minutes show a saved-data notice. The browser caches validated data and never
+replaces a newer game/period with an older fallback.
+
+Run `node stats/scripts/update-visits.mjs` with the token supplied through the
+environment to refresh the bundled fallback. The scheduled collector automatically
+publishes the separate visits file without rebuilding the website. The visits
+collector is independent of gameplay analytics, so one source failing does not
+prevent the other from refreshing. Verify exact allowlisted paths against GoatCounter
+when adding or renaming games. Test with `node --test stats/tests/visits.test.mjs`.
+
+Deployment record: GoatCounter email verified and the scoped Read statistics token
+stored as the repository Actions secret on 2026-11-03. Livonian dashboard deployment
+updated from v24 to **v26**; Riddle Grid dashboard deployment updated from v31 to
+**v33**. Existing deployment URLs and access settings were retained. The riddle
+receiver deployment was not changed. The legacy Apps Script riddle dashboard keeps
+its existing 30-day default; the website dashboard keeps its all-time default.
+
+The shared visits script uses a cache-busting request for the public snapshot,
+so a previously cached missing or incomplete first snapshot does not delay recovery.
+
+## Landing-page visits and overview order (2026-11-03)
+
+The joint overview starts with page visits, before gameplay totals and timelines.
+A featured ResearchGames.eu landing-page card sums `/` and `/lv`; individual game
+cards follow for Riddle Grid, Livonian place names, Muns teirums, and A world
+inside a cell. The cell card includes its public preview. UL107 remains excluded.
+`VISIT_PAGES` is the collector allowlist; `VISIT_GAMES` contains only games.
+Landing visits are never added to a game count. The existing individual dashboards
+continue to show only their own game.
+
+## Overview sections
+
+The joint dashboard has four numbered sections: page visits, gameplay, game
+dashboards, and about the data. Sticky native anchor links at the top navigate to
+`#visits`, `#gameplay`, `#game-reports`, and `#about-data`. Both LV and EN labels
+are supported. The visits component uses a lower heading level in this overview;
+individual dashboards keep their existing heading structure.
+
+## Shared dropdown controls
+
+`dashboard-select.css` and `dashboard-select.js` provide the themed single-select controls used by the overview, LU dashboard and both Apps Script dashboards. The riddle static dashboard receives them through its build script. Keep these shared assets at the same version in each HTML entry point.
+
+The original selects retain their IDs, values and filter listeners. Enhancement starts only after the stylesheet loads; otherwise the native controls remain usable. Dynamic options, disabled states, translated labels and reset buttons synchronize with the visible control. Keyboard support includes arrows, Home/End, text search, Enter/Space to select, Escape to cancel and Tab to leave. Menus use the popover top layer where available, with viewport-clamped positioning as a fallback.
+
+For UI changes, check both themes and languages, period filtering, the riddle version/participation filters, Escape cancellation and narrow viewport placement. Apps Script HTML integrations require redeploying the existing dashboard deployments; do not update telemetry receiver deployments.
+
+## Shared website audience
+
+`/stats/audience.html` is the separate, bilingual audience report linked from the overview visits section. It combines the exact `VISIT_PAGES` allowlist, including the homepage and active games, and excludes analytics pages and UL107. The five independent distributions are countries (`locations`), browser languages (`languages`), screen-width groups (`sizes`), browsers and operating systems. Screen groups follow GoatCounter: up to 600, 601–1000, 1001–1920, over 1920 CSS pixels, plus unknown.
+
+`update-audience.mjs` uses the existing read-statistics secret. It sends the complete comma-separated path allowlist with `path_by_name=true`, validates every page of results, and strips API records to label/key/count only. Requests are spaced and retried once. Failed categories retain their original date range and timestamp independently. The existing workflow publishes `audience.json` to `analytics-data`; `stats/audience.json` is the bundled fallback. No raw visits, IPs, sessions, referrers or individual profiles are exported.
+
+The UI offers all-time, 90-, 30- and 7-day periods with the same Riga date windows as the visits dashboard. Each distribution uses its own sum (including unknown values) as the percentage denominator. The report does not infer device type, native language, unique people, or cross-category combinations. Native filters are enhanced by the shared themed dropdown component. It reads the raw data snapshot automatically every five minutes while visible, retains validated browser cache, and never replaces newer category data with an older fallback.
+
+API reference: https://www.goatcounter.com/api.html and https://www.goatcounter.com/api.json.
+
+Brand naming: always use **ResearchGames.eu** in visible labels, headings, page titles and metadata in both Latvian and English. Logos may split the name across markup, but must render the complete name including `.eu`.
+
+Audience layout: countries and browser languages show the five most frequent values initially; remaining values stay in a collapsed disclosure. Percentages still use the complete category total.
+
+## Page-visit timeline
+
+The top of the overview, directly below the title/period controls and above the section navigation, renders a daily line chart: total, ResearchGames.eu landing page, Mīklu režģis, Lībiešu vietvārdi, Muns teirums and the cell game. Mīklu režģis and Lībiešu vietvārdi retain their gameplay-chart colors. Series order/colors are fixed in `visit-timeline.js` and the scoped `.visit-timeline-panel` CSS. Dark/light themes, LV/EN labels, keyboard day selection and touch inspection use the shared timeline renderer. Each chart has its own help-text ID.
+
+The existing GoatCounter hits requests already ask for daily data. `requestVisitSeries` now validates and combines each exact path’s daily values, retaining only nonzero `{date, visits}` records and the source’s reporting-day bounds. The daily sum must match the visit count. Dates follow GoatCounter’s daily grouping; range filters still use the established Riga start/end times. All-time rendering starts at the first observed visit, rather than the API’s year-2000 query boundary. Bounded periods retain quiet days, including partial reporting boundary days.
+
+Count-only snapshots remain compatible. Missing history or history ending before the latest reporting day does not become a zero line; the total line requires daily data from every included page group. Source failures preserve the previous count and history together. No new API credentials or additional daily-statistics requests are needed. When adding a game, extend the allowlist and the timeline color assignments together.
+
+Timeline readouts keep each figure directly beside its label, including on narrow screens; do not stretch the label column to push figures to the far edge.
+
+Visit curves use broad, rounded highlighter strokes (4 px; total 5 px) at 40% opacity, with dash spacing adjusted to the wider strokes. Selection markers stay restrained; labels and figures stay fully opaque.
+
+The shared gameplay-session chart follows the same highlighter treatment: rounded 4 px strokes at 40% opacity, spaced dash patterns, and small selection markers.
+
+## Overview text size (A+)
+
+The main overview header offers A+ with three sizes: normal (100%), enlarged (118%) and large (135%). Radio controls work with keyboard arrows; Escape or clicking outside closes the native popover. The selection is stored locally as `rg-dashboard-text-size` and restored before rendering. Both LV and EN labels, graph axis text, readouts, cards and dropdown options scale through `--rg-text-scale`; shared styles default to 1 elsewhere. Text scaling does not change chart data or line thickness. Keep the enlarged mobile layout free from horizontal overflow.
+
+The shared overview opens with the last 7 days selected by default for visits, gameplay and totals.

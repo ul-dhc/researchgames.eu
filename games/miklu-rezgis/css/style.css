@@ -595,7 +595,8 @@ body.about-open .site-footer{order:2;flex:0 0 auto;margin-top:0;}
 .about-score-list strong{color:#e5f0fc;font-size:14px;}
 .about-score-list span{color:#9fafc4;font-size:14px;line-height:1.55;}
 .about-note{padding:16px 18px;border-left:3px solid #3dd0aa;border-radius:0 10px 10px 0;background:rgba(48,201,164,.07);}
-.about-thanks{margin-top:42px!important;color:#7f91a9!important;font-size:13.5px!important;}
+.about-thanks{align-self:center;max-width:640px;margin:12px 24px 18px;padding:12px 0;color:#a8b7ca;font-size:15px;line-height:1.7;text-align:center;}
+html[data-theme="light"] .about-thanks{color:#496477;}
 .about-contact{display:flex;align-items:center;gap:11px;margin:21px 0!important;padding-top:19px;border-top:1px solid rgba(130,163,210,.14);}
 .about-contact-icon{
   display:inline-flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;
@@ -1285,4 +1286,14 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
   body.game-active.next-ready .puzzle-area {
     padding-bottom: calc(84px + env(safe-area-inset-bottom));
   }
+}
+
+/* Additional official partner marks: Latvian HZF and the archive. */
+.about-partners-secondary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:22px;padding-top:26px;border-top:0;}
+.about-partners-secondary .about-partner{width:min(300px,100%);justify-self:center;}
+.about-partners-secondary .about-partner-garamantas{width:min(240px,85%);justify-self:center;}
+@media(max-width:600px){
+  .about-partners-secondary{grid-template-columns:1fr;justify-items:center;gap:30px;}
+  .about-partners-secondary .about-partner{width:min(300px,88%);}
+  .about-partners-secondary .about-partner-garamantas{width:min(240px,75%);}
 }

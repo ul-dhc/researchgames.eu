@@ -47,7 +47,7 @@ test('finger-drag selection remains unchanged and no tap-endpoint interaction is
 });
 
 test('adult next action becomes visible only when ready and preserves research, daily and party routes',()=>{
- const classes=new Set(),button={},state={gameMode:10,participationMode:'player'};
+ const classes=new Set(),button={},state={gameMode:10,participationMode:'player',riddleIdx:0,currentLevel:1,shuffledLevel:[{},{}],bonusRiddles:[]};
  const ctx=vm.createContext({state,document:{getElementById:()=>button,body:{classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);}}}}});
  vm.runInContext(extract(main,'setNextEnabled'),ctx);
  for(const [mode,participation,label] of [[10,'player','Nākamā mīkla'],[10,'research','Novērtēt mīklu'],['daily','player','Pabeigt'],['party','party','Turpināt']]){
@@ -68,4 +68,19 @@ test('mobile riddle positioning uses the newly rendered card, leaving desktop sc
  mobile=false;vm.runInContext('scrollToRiddleOnMobile()',ctx);assert.equal(frames.length,0);
  assert.match(extract(main,'loadRiddle'),/scrollToRiddleOnMobile\(\)/);
  assert.match(extract(child,'nextRiddle'),/closest\('\.riddle-card'\)/);
+});
+
+
+test('last riddle labels match level, game, bonus and party completion without skipping research feedback',()=>{
+ const button={},state={gameMode:50,participationMode:'player',currentLevel:1,riddleIdx:0,shuffledLevel:[{},{}],isBonus:false,bonusRiddles:[{},{}]};
+ const ctx=vm.createContext({state,document:{getElementById:()=>button,body:{classList:{toggle(){}}}}});
+ vm.runInContext(extract(main,'setNextEnabled'),ctx);
+ const label=()=>{vm.runInContext('setNextEnabled(true)',ctx);return button.innerHTML.split(' <svg')[0];};
+ assert.equal(label(),'Nākamā mīkla');state.riddleIdx=1;assert.equal(label(),'Pabeigt līmeni');
+ state.currentLevel=10;assert.equal(label(),'Pabeigt spēli');
+ state.isBonus=true;state.riddleIdx=0;assert.equal(label(),'Nākamā mīkla');state.riddleIdx=1;assert.equal(label(),'Pabeigt spēli');
+ state.participationMode='research';assert.equal(label(),'Novērtēt mīklu');
+ state.participationMode='player';state.gameMode='daily';assert.equal(label(),'Pabeigt spēli');
+ state.gameMode='party';state.party={round:2,riddlesPerPlayer:3,currentPlayer:0};assert.equal(label(),'Turpināt');
+ state.party.currentPlayer=1;assert.equal(label(),'Pabeigt spēli');state.party.round=1;assert.equal(label(),'Turpināt');
 });
