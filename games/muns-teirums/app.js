@@ -7,6 +7,17 @@ import { makeDeck, createGame, selectCard, resolveMismatch, scoreFor, sampleMead
 
 const $ = id => document.getElementById(id);
 const grid = $('memory-grid');
+// Move the existing controls, preserving their state and keyboard behavior.
+const boardTools = document.querySelector('.board-tools');
+const boardToolsHome = document.createComment('board tools');
+boardTools.before(boardToolsHome);
+const mobileLayout = matchMedia('(max-width: 760px)');
+function placeBoardTools() {
+  if (mobileLayout.matches) document.querySelector('.site-header').append(boardTools);
+  else boardToolsHome.after(boardTools);
+}
+mobileLayout.addEventListener('change', placeBoardTools);
+placeBoardTools();
 for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 8 });
 for (const node of document.querySelectorAll('[data-i18n-text]')) node.firstChild.textContent = t(node.dataset.i18nText) + ' ';
 for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
