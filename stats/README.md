@@ -213,3 +213,8 @@ its visit allowlist entry, and dashboard game/card/visit configuration. Keep eve
 names versioned and add schema tests before extending variants. For more detailed
 research (scores, duration, per-plant errors), add a separate explicit schema and
 storage design; do not encode individual results in GoatCounter event paths.
+
+The partner-facing `/games/muns-teirums/stats/` now serves the dashboard directly,
+keeping its URL in the address bar. Regenerate it after template changes with
+`node stats/scripts/build-latgalian-page.mjs`. Both routes load the same modules,
+styles and snapshots; audience links use absolute paths.

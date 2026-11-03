@@ -36,7 +36,7 @@ function render(){
  document.documentElement.lang=language;document.title=`${t('title')} – ResearchGames.eu`;
  document.querySelectorAll('[data-text]').forEach(el=>el.textContent=t(el.dataset.text));
  document.querySelectorAll('[data-lang]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.lang===language)));
- $('home').href='/stats/?lang='+language;$('audience-link').href='./audience.html?lang='+language;
+ $('home').href='/stats/?lang='+language;$('audience-link').href='/stats/audience.html?lang='+language;
  document.querySelector('.brand').href=language==='lv'?'/lv/':'/';
  updateThemeButton();updateTextSizeControl();
  $('totals').setAttribute('aria-label',language==='lv'?'Kopsavilkums':'Summary');

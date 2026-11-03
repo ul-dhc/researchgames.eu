@@ -54,7 +54,7 @@ function render() {
  document.title = `ResearchGames.eu – ${t('title')}`;
  document.querySelectorAll('[data-text]').forEach(el => {el.textContent = t(el.dataset.text);});
  document.querySelectorAll('[data-lang]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.lang === language)));
- if($('latgalian-link'))$('latgalian-link').href='./latgalian.html?lang='+language;
+ if($('latgalian-link'))$('latgalian-link').href='/games/muns-teirums/stats/?lang='+language;
  $('audience-link').href = './audience.html?lang='+language;
  $('home').href = language === 'lv' ? '/lv/' : '/';
  document.querySelector('.brand').href = $('home').href;
