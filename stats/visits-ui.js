@@ -1,4 +1,4 @@
-import {buildVisitTimeline} from './visit-timeline.js?v=20261103-1';
+import {buildVisitTimeline} from './visit-timeline.js?v=20261103-latgalian-1';
 import {renderTimeline} from './timeline.js?v=20261103-visits-1';
 import {normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS} from './visits.js?v=20261103-timeline-1';
 const SNAPSHOT_URL='https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/visits.json';
@@ -57,15 +57,15 @@ function renderVisitTimelines(){
     root.querySelector('#visit-timeline')?._timelineCleanup?.();
     root.replaceChildren();root.setAttribute('aria-label',t.timelineTitle);
     const heading=document.createElement(root.dataset.headingLevel==='2'?'h2':'h3');heading.textContent=t.timelineTitle;root.append(heading);
-    const note=document.createElement('p');note.className='visit-timeline-note';note.textContent=t.timelineIntro;root.append(note);
+    const note=document.createElement('p');note.className='visit-timeline-note';note.textContent=root.dataset.rgVisitTimeline==='site'?t.timelineIntro:(lang==='lv'?'Spēles lapas apmeklējumi pa dienām. Šodienas dati vēl papildinās.':'Game-page visits by day. Today is still in progress.');root.append(note);
     const chart=document.createElement('div');chart.id='visit-timeline';root.append(chart);
     const entries=model?.periods[period]||{};
-    const series=buildVisitTimeline(entries,period,names[lang],t.total);
+    const series=buildVisitTimeline(entries,period,names[lang],t.total,root.dataset.rgVisitTimeline==='site'?undefined:[root.dataset.rgVisitTimeline]);
     if(!series.dates.length){const empty=document.createElement('p');empty.className='empty';empty.textContent=t.timelineUnavailable;chart.append(empty);return;}
     renderTimeline(chart,series,lang);
     chart.querySelector('svg')?.setAttribute('aria-label',lang==='lv'?'Diena lapas apmeklējumu grafikā':'Day on page-visits timeline');
     if(!series.games[0].values){const partial=document.createElement('p');partial.className='visit-timeline-note';partial.textContent=t.timelinePartial;root.append(partial);}
-    if(Object.values(entries).some(entry=>entry.failed||Date.now()-Date.parse(entry.fetchedAt)>20*60000)){const saved=document.createElement('p');saved.className='visit-timeline-note';saved.textContent=t.saved;root.append(saved);}
+    if(Object.entries(entries).filter(([id])=>root.dataset.rgVisitTimeline==='site'||id===root.dataset.rgVisitTimeline).some(([,entry])=>entry.failed||Date.now()-Date.parse(entry.fetchedAt)>20*60000)){const saved=document.createElement('p');saved.className='visit-timeline-note';saved.textContent=t.saved;root.append(saved);}
   });
 }
 function remember(incoming){

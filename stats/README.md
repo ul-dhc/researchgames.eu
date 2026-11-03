@@ -183,3 +183,33 @@ The shared gameplay-session chart follows the same highlighter treatment: rounde
 The main overview header offers A+ with three sizes: normal (100%), enlarged (118%) and large (135%). Radio controls work with keyboard arrows; Escape or clicking outside closes the native popover. The selection is stored locally as `rg-dashboard-text-size` and restored before rendering. Both LV and EN labels, graph axis text, readouts, cards and dropdown options scale through `--rg-text-scale`; shared styles default to 1 elsewhere. Text scaling does not change chart data or line thickness. Keep the enlarged mobile layout free from horizontal overflow.
 
 The shared overview opens with the last 7 days selected by default for visits, gameplay and totals.
+
+
+## Latgalian plant-name series
+
+`latgalian.html` uses the shared stylesheet, accessible dropdowns and timeline
+renderer. It has LV/EN, dark/light, persistent 100/118/135% reading sizes, section
+shortcuts and a default 7-day period. It currently covers Muns teirums; page visits
+stay independent of the gameplay size/mode filters. The shared overview links to
+this report without adding aggregate events to its differently defined session
+counts. Scores and durations are not collected in this event-based implementation.
+
+`latgalian-model.js` defines the explicit game/variant/action allowlist and strips
+all other fields. `scripts/update-latgalian.mjs` uses the existing read-statistics
+GoatCounter secret, requests exact event paths and publishes only counts per day
+and variant to `analytics-data/latgalian.json`. It reuses the verified daily hit
+parser with `expectedEvent:true`; page-visit requests still reject events. A failed
+period retains its last successful timestamp and receives `failed:true`. A cold
+failure is unavailable, never zero. The bundled JSON starts with no periods until
+the first real collection. Five-minute Actions/frontend refreshes maintain it.
+
+Event counters are not linked sessions. Finish and start may occur in different
+periods; no completion percentage or inferred abandonment is shown. Direct skips
+can occur without a start. GoatCounter blocking/offline use may undercount. Tracking
+starts with the 2026-11-03 release, not when the game was originally published.
+
+Adding another series game requires its event instrumentation, a PLANT_GAMES entry,
+its visit allowlist entry, and dashboard game/card/visit configuration. Keep event
+names versioned and add schema tests before extending variants. For more detailed
+research (scores, duration, per-plant errors), add a separate explicit schema and
+storage design; do not encode individual results in GoatCounter event paths.

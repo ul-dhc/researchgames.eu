@@ -10,7 +10,7 @@ on:
         default: true
   push:
     branches: [main]
-    paths: ['stats/**', 'games/miklu-rezgis/**', '.github/workflows/analytics-snapshot.yml']
+    paths: ['stats/**', 'games/miklu-rezgis/**', 'games/muns-teirums/**', '.github/workflows/analytics-snapshot.yml']
 permissions:
   contents: write
 concurrency:
@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '22'
       - name: Test snapshot handling
-        run: node --test stats/tests/*.test.mjs games/miklu-rezgis/tests/*.test.mjs
+        run: node --test stats/tests/*.test.mjs games/miklu-rezgis/tests/*.test.mjs games/muns-teirums/tests/*.test.mjs
       - name: Read last published snapshot
         run: |
           echo '{}' > games/miklu-rezgis/data/riddles-refresh.json
@@ -49,6 +49,15 @@ jobs:
           if git cat-file -e origin/analytics-data:audience.json 2>/dev/null; then
             git show origin/analytics-data:audience.json > stats/audience.json
           fi
+      - name: Read previous Latgalian gameplay data
+        run: |
+          if git cat-file -e origin/analytics-data:latgalian.json 2>/dev/null; then
+            git show origin/analytics-data:latgalian.json > stats/latgalian.json
+          fi
+      - name: Collect Latgalian gameplay events
+        env:
+          GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
+        run: node stats/scripts/update-latgalian.mjs
       - name: Collect audience distributions
         env:
           GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
@@ -65,6 +74,7 @@ jobs:
         run: node games/miklu-rezgis/scripts/update-data.mjs
       - name: Publish data branch
         run: |
+          cp stats/latgalian.json "$RUNNER_TEMP/latgalian.json"
           cp stats/audience.json "$RUNNER_TEMP/audience.json"
           cp stats/visits.json "$RUNNER_TEMP/visits.json"
           cp stats/snapshot.json "$RUNNER_TEMP/stats.json"
@@ -72,19 +82,20 @@ jobs:
           cp games/miklu-rezgis/data/miklu-dashboard.json "$RUNNER_TEMP/miklu-dashboard.json"
           cp games/miklu-rezgis/data/riddles-refresh.json "$RUNNER_TEMP/riddles-refresh.json"
           rm games/miklu-rezgis/data/riddles-refresh.json
-          git restore stats/audience.json stats/visits.json stats/snapshot.json games/miklu-rezgis/data/riddles.json games/miklu-rezgis/data/miklu-dashboard.json
+          git restore stats/latgalian.json stats/audience.json stats/visits.json stats/snapshot.json games/miklu-rezgis/data/riddles.json games/miklu-rezgis/data/miklu-dashboard.json
           if git show-ref --verify --quiet refs/remotes/origin/analytics-data; then
             git switch --force-create analytics-data origin/analytics-data
           else
             git switch --orphan analytics-data
           fi
+          cp "$RUNNER_TEMP/latgalian.json" latgalian.json
           cp "$RUNNER_TEMP/audience.json" audience.json
           cp "$RUNNER_TEMP/visits.json" visits.json
           cp "$RUNNER_TEMP/stats.json" stats.json
           cp "$RUNNER_TEMP/riddles.json" riddles.json
           cp "$RUNNER_TEMP/miklu-dashboard.json" miklu-dashboard.json
           cp "$RUNNER_TEMP/riddles-refresh.json" riddles-refresh.json
-          git add audience.json visits.json stats.json riddles.json miklu-dashboard.json riddles-refresh.json
+          git add latgalian.json audience.json visits.json stats.json riddles.json miklu-dashboard.json riddles-refresh.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
