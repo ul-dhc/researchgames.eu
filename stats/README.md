@@ -1,4 +1,4 @@
-# ResearchGames overview
+# ResearchGames.eu overview
 
 Static LV/EN overview at `/stats/`, linked from both homepage footers. It reads one precomputed public JSON file containing all three games and all three periods. The browser immediately displays the already loaded snapshot. If sources are older than 15 minutes, missing, or failed, it refreshes only those sources for the selected period in the background.
 
@@ -127,7 +127,7 @@ so a previously cached missing or incomplete first snapshot does not delay recov
 ## Landing-page visits and overview order (2026-11-03)
 
 The joint overview starts with page visits, before gameplay totals and timelines.
-A featured ResearchGames landing-page card sums `/` and `/lv`; individual game
+A featured ResearchGames.eu landing-page card sums `/` and `/lv`; individual game
 cards follow for Riddle Grid, Livonian place names, Muns teirums, and A world
 inside a cell. The cell card includes its public preview. UL107 remains excluded.
 `VISIT_PAGES` is the collector allowlist; `VISIT_GAMES` contains only games.
@@ -159,3 +159,5 @@ For UI changes, check both themes and languages, period filtering, the riddle ve
 The UI offers all-time, 90-, 30- and 7-day periods with the same Riga date windows as the visits dashboard. Each distribution uses its own sum (including unknown values) as the percentage denominator. The report does not infer device type, native language, unique people, or cross-category combinations. Native filters are enhanced by the shared themed dropdown component. It reads the raw data snapshot automatically every five minutes while visible, retains validated browser cache, and never replaces newer category data with an older fallback.
 
 API reference: https://www.goatcounter.com/api.html and https://www.goatcounter.com/api.json.
+
+Brand naming: always use **ResearchGames.eu** in visible labels, headings, page titles and metadata in both Latvian and English. Logos may split the name across markup, but must render the complete name including `.eu`.
