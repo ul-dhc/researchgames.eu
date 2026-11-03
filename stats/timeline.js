@@ -23,8 +23,8 @@ export function renderTimeline(container, series, language) {
   container._timelineCleanup?.();
   const lv = language === 'lv';
   const locale = lv ? 'lv-LV' : 'en-GB';
-  const format = new Intl.DateTimeFormat(locale, {day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
-  const short = new Intl.DateTimeFormat(locale, {day:'numeric',month:'short',timeZone:'UTC'});
+  const format = new Intl.DateTimeFormat(locale, {day:'numeric',month:'short',year:'numeric',timeZone:'Europe/Riga'});
+  const short = new Intl.DateTimeFormat(locale, {day:'numeric',month:'short',timeZone:'Europe/Riga'});
   const dateValue = date => new Date(`${date}T00:00:00Z`);
   const available = series.games.filter(game => game.values);
   if (!available.length) {

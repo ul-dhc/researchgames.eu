@@ -1,3 +1,4 @@
+import {formatTimestamp} from '../../../stats/time.js?v=20261104-riga-1';
 import {fetchStats,newestStats} from './data.js?v=1';
 const API_URL = 'https://script.google.com/macros/s/AKfycbyGbE2KbIAsfQvGqaG0QMusF0jeGptC9AYbH6iZv4-T9bS4OztKznyfwcNQrBVdr18F2w/exec';
 const ROUND_COLORS = ['#017592', '#41b449', '#65348c', '#8a2432', '#204592'];
@@ -124,7 +125,7 @@ function writeCachedStats(period, data) {
 }
 
 function render(data) {
-  elements.updated.textContent = `${t('updated')} ${new Intl.DateTimeFormat(language === 'lv' ? 'lv-LV' : 'en-GB', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(data.generatedAt))}`;
+  elements.updated.textContent = `${t('updated')} ${formatTimestamp(data.generatedAt,language,'medium')}`;
   renderKpis(data.overview);
   renderContributions(data.overview);
   renderTimeline(data.timeline);
@@ -176,7 +177,7 @@ function renderTimeline(items) {
   elements.timeline.innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(t('timeline'))}">${grid}<polygon class="chart-area" points="${area}"/><polyline class="chart-line" points="${points('sessions')}"/><polyline class="chart-line chart-line-completed" points="${points('completed')}"/>${sessionPoints}${completedPoints}${labels}</svg>`;
 }
 
-function formatShortDate(value) { return new Intl.DateTimeFormat(language === 'lv' ? 'lv-LV' : 'en-GB', { day: 'numeric', month: 'short' }).format(new Date(`${value}T12:00:00`)); }
+function formatShortDate(value) { return new Intl.DateTimeFormat(language === 'lv' ? 'lv-LV' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'Europe/Riga' }).format(new Date(`${value}T12:00:00Z`)); }
 
 function renderFunnel(items) {
   const labels = [t('started'), `1. ${t('roundShort')}`, `2. ${t('roundShort')}`, `3. ${t('roundShort')}`, `4. ${t('roundShort')}`, `5. ${t('roundShort')}`, t('completedStage')];

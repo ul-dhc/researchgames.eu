@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="../../../stats/dashboard-select.css?v=20261103-1">
   <script src="../../../stats/dashboard-select.js?v=20261103-1" defer></script>
   <link rel="stylesheet" href="../../../stats/visits.css?v=20261103-2">
-  <script type="module" src="../../../stats/visits-ui.js?v=20261103-4"></script>
+  <script type="module" src="../../../stats/visits-ui.js?v=20261104-riga-1"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Mīklu režģis – pētniecības dati</title>
@@ -815,7 +815,7 @@ SOFTWARE.
           '</span></div><div class="item-text"><span class="variant-riddle">' + esc(item.riddleText) +
           '</span><br><span class="variant-proposal">' + esc(item.text) + '</span></div>';
       });
-      $('updated').textContent = (currentLang === 'en' ? 'Updated ' : 'Atjaunots ') + data.generatedAt;
+      $('updated').textContent = (currentLang === 'en' ? 'Updated ' : 'Atjaunots ') + data.generatedAt + (currentLang === 'en' ? ' (Riga time)' : ' (Rīgas laiks)');
       setStatus('');
     }
 

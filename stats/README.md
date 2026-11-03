@@ -218,3 +218,29 @@ The partner-facing `/games/muns-teirums/stats/` now serves the dashboard directl
 keeping its URL in the address bar. Regenerate it after template changes with
 `node stats/scripts/build-latgalian-page.mjs`. Both routes load the same modules,
 styles and snapshots; audience links use absolute paths.
+
+
+## Time zone — Europe/Riga (2026-11-04)
+
+All dashboard timestamps use Europe/Riga, regardless of the viewer's operating
+system/browser time zone or LV/EN language. The shared `time.js` formatter handles
+winter/summer offsets. The shared overview, visits, audience, Muns/Mums teirums
+report and archived LU107 report use this formatter. Riddle snapshot aggregation
+and formatted comments already explicitly use Europe/Riga. Calendar-only timeline
+keys are not instants; render their existing date without shifting to another day.
+Keep ISO timestamps in JSON/records as UTC instants for unambiguous sorting.
+
+The GoatCounter API uses the API token owner's time-zone preference for its daily
+hit series. On 2026-11-04 that existing user's preference was changed from UTC to
+Europe/Riga, retaining all other settings. Keep this preference if tokens are
+rotated. Scheduled visit and plant-event snapshots refresh the day grouping;
+previous saved snapshots retain their original retrieval timestamps. Audience
+technology/distribution aggregates have the source API's own UTC-based granularity;
+our filter bounds and displayed retrieval timestamps use Riga. Do not fabricate a
+local-day redistribution from already aggregated audience categories.
+
+The Livonian Apps Script template explicitly formats its update instant in Riga.
+Its chart rows are calendar dates, represented as local calendar placeholders for
+Google Charts; do not interpret those placeholders as stored event timestamps.
+Tests cover midnight, summer/winter transition, and rendering from foreign host
+zones. Existing Riga period-boundary tests remain in `tests/visits.test.mjs`.
