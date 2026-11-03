@@ -1,6 +1,6 @@
 import {readFile,writeFile,rename} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {VISIT_GAMES,VISIT_PERIODS,normalizeVisits,visitRange} from '../visits.js';
+import {VISIT_PAGES,VISIT_PERIODS,normalizeVisits,visitRange} from '../visits.js';
 const API = 'https://researchgames.goatcounter.com/api/v0/stats/hits';
 export async function requestVisits(paths, range, token, fetcher=fetch) {
   if (!token) throw new Error('GOATCOUNTER_API_TOKEN is not configured');
@@ -36,7 +36,7 @@ export async function collectVisits(previous, request, now=new Date()) {
   for (const period of VISIT_PERIODS) {
     result.periods[period]={};
     const range=visitRange(period,now);
-    for (const [id,paths] of Object.entries(VISIT_GAMES)) {
+    for (const [id,paths] of Object.entries(VISIT_PAGES)) {
       try {
         const visits=await request(paths,range);
         if (!Number.isSafeInteger(visits)||visits<0) throw new Error('Invalid visit total');

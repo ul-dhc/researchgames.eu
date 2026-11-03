@@ -123,3 +123,13 @@ its existing 30-day default; the website dashboard keeps its all-time default.
 
 The shared visits script uses a cache-busting request for the public snapshot,
 so a previously cached missing or incomplete first snapshot does not delay recovery.
+
+## Landing-page visits and overview order (2026-11-03)
+
+The joint overview starts with page visits, before gameplay totals and timelines.
+A featured ResearchGames landing-page card sums `/` and `/lv`; individual game
+cards follow for Riddle Grid, Livonian place names, Muns teirums, and A world
+inside a cell. The cell card includes its public preview. UL107 remains excluded.
+`VISIT_PAGES` is the collector allowlist; `VISIT_GAMES` contains only games.
+Landing visits are never added to a game count. The existing individual dashboards
+continue to show only their own game.

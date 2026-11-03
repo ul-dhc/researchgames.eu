@@ -1,6 +1,8 @@
+import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeVisits,mergeVisits,visitRange,VISIT_GAMES} from '../visits.js';
+import {normalizeVisits,mergeVisits,visitRange,VISIT_GAMES,VISIT_PAGES} from '../visits.js';
 import {collectVisits,requestVisits} from '../scripts/update-visits.mjs';
 const now=new Date('2026-11-03T17:00:00Z');
 test('Riga calendar windows include today and handle daylight-saving changes',()=>{
@@ -13,7 +15,7 @@ test('collector excludes UL and preserves failed values with their original peri
  assert.equal(VISIT_GAMES.lu107,undefined);
  const {snapshot}=await collectVisits(null,async()=>12,now);
  const {snapshot:failed,failures}=await collectVisits(snapshot,async()=>{throw new Error('offline');},new Date('2026-11-04T17:00:00Z'));
- assert.equal(failures,8);
+ assert.equal(failures,Object.keys(VISIT_PAGES).length*4);
  assert.deepEqual(failed.periods['7d']['miklu-rezgis'],{...snapshot.periods['7d']['miklu-rezgis'],failed:true});
  const {snapshot:missing}=await collectVisits(null,async()=>{throw new Error('no token');},now);
  assert.deepEqual(missing.periods.all,{});
@@ -58,4 +60,33 @@ test('an older fallback fills missing game-periods without replacing newer count
  assert.equal(merged.periods.all['miklu-rezgis'].visits,12);
  assert.equal(merged.periods.all['libiesu-vietvardi'].visits,19);
  assert.equal(merged.periods['7d']['miklu-rezgis'].visits,19);
+});
+
+test('landing and active game visits stay separate, with UL excluded',async()=>{
+ assert.deepEqual(VISIT_PAGES.landing,['/','/lv']);
+ assert.deepEqual(VISIT_GAMES['muns-teirums'],['/games/muns-teirums']);
+ assert.equal(VISIT_PAGES.lu107,undefined);
+ const {snapshot}=await collectVisits(null,async paths=>paths.includes('/')?100:8,now);
+ assert.equal(snapshot.periods.all.landing.visits,100);
+ assert.equal(snapshot.periods.all['miklu-rezgis'].visits,8);
+ assert.equal(snapshot.periods.all['muns-teirums'].visits,8);
+});
+
+test('browser refresh requests the public snapshot with a cache-busting URL',async()=>{
+ const {snapshot}=await collectVisits(null,async()=>5,now);
+ const requests=[];
+ const source=(await readFile(new URL('../visits-ui.js',import.meta.url),'utf8'))
+   .replace(/^import .*;\n/,'').replace('export function renderVisits','function renderVisits')
+   .replaceAll('import.meta.url',JSON.stringify('https://researchgames.eu/stats/visits-ui.js'));
+ const context={URL,Date,Intl,AbortSignal,normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS:['all','90d','30d','7d'],
+   localStorage:{getItem:()=>null,setItem(){}},setInterval(){},
+   document:{hidden:false,documentElement:{lang:'lv'},querySelectorAll:()=>[],addEventListener(){}},
+   MutationObserver:class{observe(){}},
+   fetch:async url=>{requests.push(String(url));return {ok:true,json:async()=>snapshot};}};
+ vm.runInNewContext(source,context);
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(requests.length,1);
+ const url=new URL(requests[0]);
+ assert.equal(url.origin,'https://raw.githubusercontent.com');
+ assert.ok(url.searchParams.has('t'));
 });

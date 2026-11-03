@@ -1,15 +1,18 @@
 // Only these game pages enter public visit statistics. UL107 is intentionally excluded.
 export const VISIT_GAMES = {
   'miklu-rezgis': ['/games/miklu-rezgis', '/games/miklu-rezgis/berniem'],
-  'libiesu-vietvardi': ['/games/libiesu-vietvardi']
+  'libiesu-vietvardi': ['/games/libiesu-vietvardi'],
+  'muns-teirums': ['/games/muns-teirums'],
+  'cell-intro': ['/games/cell-intro', '/games/cell-intro-preview']
 };
+export const VISIT_PAGES = {landing: ['/', '/lv'], ...VISIT_GAMES};
 export const VISIT_PERIODS = ['all', '90d', '30d', '7d'];
 export function normalizeVisits(raw) {
   if (raw?.version !== 1 || !Number.isFinite(Date.parse(raw.generatedAt))) throw new Error('Invalid visits snapshot');
   const periods = {};
   for (const period of VISIT_PERIODS) {
     periods[period] = {};
-    for (const id of Object.keys(VISIT_GAMES)) {
+    for (const id of Object.keys(VISIT_PAGES)) {
       const entry = raw.periods?.[period]?.[id];
       if (!entry) continue;
       if (!Number.isSafeInteger(entry.visits) || entry.visits < 0 ||
