@@ -14,7 +14,7 @@ export const interfaceStrings = {
   },
   "01.04": {
     "lv": "Atrodi saistītos augus – zīmējumu un tā nosaukumu!",
-    "ltg": "Atrūnit radnīceigūs augus – zeimiejumu i juo nūsaukumu!"
+    "ltg": "Atrūnit augus – zeimiejumu i juo nūsaukumu!"
   },
   "01.05": {
     "lv": "Katrā spēlē cits tīrums – {augu_skaits} augi no 37.",
