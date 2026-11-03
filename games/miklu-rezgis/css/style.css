@@ -1270,3 +1270,19 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
 @media (max-width:520px){
   .start-mark{flex-basis:46px;}
 }
+
+/* A completed riddle's next step stays visible without scrolling on phones. */
+@media (max-width: 900px) {
+  body.game-active #next-btn:disabled { display: none; }
+  body.game-active.next-ready #next-btn {
+    position: fixed; left: 12px; right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    width: calc(100% - 24px); max-width: none; margin: 0;
+    min-height: 54px; z-index: 40;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+  }
+  body.game-active.next-ready .puzzle-area {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+}

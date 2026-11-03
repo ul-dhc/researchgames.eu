@@ -45,3 +45,15 @@ test('finger-drag selection remains unchanged and no tap-endpoint interaction is
  assert.match(css,/\.change-variant, footer \{ display: none; \}/);
  assert.match(css,/\.next-button \{\s*position: fixed/);
 });
+
+test('adult next action becomes visible only when ready and preserves research, daily and party routes',()=>{
+ const classes=new Set(),button={},state={gameMode:10,participationMode:'player'};
+ const ctx=vm.createContext({state,document:{getElementById:()=>button,body:{classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);}}}}});
+ vm.runInContext(extract(main,'setNextEnabled'),ctx);
+ for(const [mode,participation,label] of [[10,'player','Nākamā mīkla'],[10,'research','Novērtēt mīklu'],['daily','player','Pabeigt'],['party','party','Turpināt']]){
+  state.gameMode=mode;state.participationMode=participation;
+  vm.runInContext('setNextEnabled(true)',ctx);
+  assert.equal(button.disabled,false);assert.equal(classes.has('next-ready'),true);assert.ok(button.innerHTML.startsWith(label));
+  vm.runInContext('setNextEnabled(false)',ctx);assert.equal(button.disabled,true);assert.equal(classes.has('next-ready'),false);
+ }
+});

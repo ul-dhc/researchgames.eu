@@ -916,13 +916,14 @@ function setStatus(msg, cls) {
 function setNextEnabled(val) {
   const button = document.getElementById('next-btn');
   button.disabled = !val;
+  document.body.classList.toggle('next-ready', Boolean(val));
   const label = val && state.participationMode === 'research' && state.gameMode !== 'party'
     ? 'Novērtēt mīklu'
     : state.gameMode === 'daily'
       ? 'Pabeigt'
       : state.gameMode === 'party'
         ? 'Turpināt'
-        : 'Nākamā';
+        : 'Nākamā mīkla';
   button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
 }
 
