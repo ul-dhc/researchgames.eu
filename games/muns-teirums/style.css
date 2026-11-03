@@ -380,3 +380,7 @@ footer,.site-header~footer{height:auto;min-height:76px;padding-block:24px;margin
 @media(min-width:480px) and (max-width:760px){.memory-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:760px){body.is-complete .hero-copy{display:none}}
 .dialog-close{color:var(--ink)}
+
+/* Credits have their own sections, outside the scoring explanation. */
+dialog .artist-credit a{font-size:calc(19px * var(--text-scale));font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+dialog .dialog-source{margin-top:0}
