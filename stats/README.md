@@ -177,3 +177,7 @@ Timeline readouts keep each figure directly beside its label, including on narro
 Visit curves use broad, rounded highlighter strokes (5 px; total 6 px) at 40% opacity, with dash spacing adjusted to the wider strokes. Selection markers stay restrained; labels and figures stay fully opaque.
 
 The shared gameplay-session chart follows the same highlighter treatment: rounded 5 px strokes at 40% opacity, spaced dash patterns, and small selection markers.
+
+## Overview text size (A+)
+
+The main overview header offers A+ with three sizes: normal (100%), enlarged (118%) and large (135%). Radio controls work with keyboard arrows; Escape or clicking outside closes the native popover. The selection is stored locally as `rg-dashboard-text-size` and restored before rendering. Both LV and EN labels, graph axis text, readouts, cards and dropdown options scale through `--rg-text-scale`; shared styles default to 1 elsewhere. Text scaling does not change chart data or line thickness. Keep the enlarged mobile layout free from horizontal overflow.

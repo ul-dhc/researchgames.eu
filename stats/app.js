@@ -4,11 +4,13 @@ import { combineSummaries, fetchSummary } from './data.js?v=20260922-5';
 import { normalizeSnapshot, snapshotState, mergeSnapshots, refreshStaleSources } from './snapshot.js?v=20260928-2';
 const copy = {
  lv: {
+  textSize:'Teksta izmērs',sizeNormal:'Parasts',sizeMedium:'Palielināts',sizeLarge:'Liels',
   audienceTitle:'Vietnes auditorija',audienceIntro:'Valstis, pārlūka valodas, ekrāni un tehnoloģijas — sākumlapai un visām aktīvajām spēlēm kopā.',
   navVisits:'Apmeklējumi',navGameplay:'Spēlēšana',navReports:'Spēļu pārskati',navData:'Par datiem',visitsIntro:'Cik bieži apmeklē ResearchGames.eu sākumlapu un katras spēles lapu.',gameplayIntro:'Reģistrētās sesijas, pabeigtās spēles un aktivitāte laika gaitā.',dataIntro:'Ko nozīmē rādītāji un kā salīdzināt spēļu datus.',
   refreshing:'Atjauno fonā…',cached:'Saglabātie dati',cacheFailed:'Dati gaida atjaunošanu',received:'Dati saņemti',cacheNotice:'Redzami arī iepriekš saglabātie dati; to laiks norādīts pie katras spēles.',skip:'Pāriet uz saturu',home:'Uz sākumlapu',lightTheme:'Pārslēgt uz gaišo režīmu',darkTheme:'Pārslēgt uz tumšo režīmu',title:'Spēļu analītika',intro:'Kopējais pārskats un katras spēles dati vienuviet.',period:'Periods',all:'Viss periods',month:'Pēdējās 30 dienas',week:'Pēdējās 7 dienas',refresh:'Atjaunot',activity:'Aktivitāte',timeline:'Reģistrētās sesijas pa dienām',activeDays:'Katra līnija ir viena spēle. Sesiju skaits pa dienām.',details:'Detalizētie dati',games:'Spēļu pārskati',existing:'Atver katras spēles esošo dashboard.',method:'Kā lasīt šo pārskatu',methodText:'Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.',footer:'Apkopoti spēlēšanas dati. Detalizētie pārskati saglabā savu pašreizējo piekļuvi.',sessions:'Reģistrētās sesijas',completed:'Pabeigtās spēles',connected:'Spēles ar datiem',totalNote:'Pieejamo spēļu summa',coverageNote:'Šajā pārskatā iekļautās spēles',loading:'Ielādē datus…',partial:'Daļējs pārskats',complete:'Visu spēļu pārskats',coverage:'Dati pieejami {n} no {total} spēlēm. Kopsummās: {names}.',none:'Pašlaik kopsavilkuma dati nav pieejami. Spēļu detalizētos pārskatus var atvērt zemāk.',open:'Atvērt spēles dashboard',live:'Dati pieejami',pending:'Dati vēl nav pieslēgti',error:'Datus neizdevās ielādēt',pendingNote:'Šīs spēles dati vēl nav iekļauti kopsummās. Tie apskatāmi esošajā dashboardā.',errorNote:'Šīs spēles dati nav iekļauti pašreizējā pārskatā. Mēģini atjaunot datus vai atver spēles dashboard.',completion:'Pabeigšanas īpatsvars',duration:'Vidējais ilgums',rating:'Vērtējums',updated:'Dati atjaunoti',empty:'Izvēlētajā periodā pievienotajās spēlēs nav reģistrētu sesiju.',noTimeline:'Aktivitātes grafiks būs redzams, kad būs pieejami dati.',durationNote:'Vidējais ilgums aprēķināts pabeigtajām spēlēm.',lu:'LU 107. jubilejas spēle',luDescription:'Jautājumi, kārtas un Latvijas Universitātes atklāšana.',riddle:'Mīklu režģis',riddleDescription:'Mīklas, minējumi un valodas izzināšana.',liv:'Lībiešu vietvārdi',livDescription:'Vietvārdi, kartes un lībiešu kultūrtelpa.',luNote:'Sesija tiek reģistrēta, sākot spēli.',riddleNote:'Sesija tiek reģistrēta pēc pirmās pabeigtās vai izlaistās mīklas.',livNote:'Spēlēšanas sesijas un pabeigtās kārtas.',included:'Iekļauts',outOf:'no'
  },
  en: {
+  textSize:'Text size',sizeNormal:'Normal',sizeMedium:'Enlarged',sizeLarge:'Large',
   audienceTitle:'Website audience',audienceIntro:'Countries, browser languages, screens and technology across the landing page and all active games.',
   navVisits:'Page visits',navGameplay:'Gameplay',navReports:'Game dashboards',navData:'About the data',visitsIntro:'Visits to the ResearchGames.eu landing page and each game page.',gameplayIntro:'Recorded sessions, completed games and activity over time.',dataIntro:'What the metrics mean and how to compare game data.',
   refreshing:'Updating in background…',cached:'Saved data',cacheFailed:'Awaiting data update',received:'Data received',cacheNotice:'Previously saved data is also shown; its time is listed for each game.',skip:'Skip to content',home:'Back to home',lightTheme:'Switch to light theme',darkTheme:'Switch to dark theme',title:'Game analytics',intro:'An overview of activity and individual game insights in one place.',period:'Period',all:'All time',month:'Last 30 days',week:'Last 7 days',refresh:'Refresh',activity:'Activity',timeline:'Recorded sessions by day',activeDays:'One line per game. Recorded sessions per day.',details:'Explore the data',games:'Game dashboards',existing:'Open each game’s existing dashboard.',method:'How to read this overview',methodText:'Totals include only games with available data. Sessions are not unique players. Games record session starts and completion differently, so completion rates are shown separately for each game. Dates and periods follow each game’s existing reporting rules. Scores are not added or averaged across games.',footer:'Aggregated gameplay data. Detailed dashboards retain their existing access settings.',sessions:'Recorded sessions',completed:'Completed games',connected:'Games with data',totalNote:'Sum across available games',coverageNote:'Games included in this overview',loading:'Loading data…',partial:'Partial overview',complete:'All games overview',coverage:'Data available for {n} of {total} games. Totals include: {names}.',none:'Summary data is currently unavailable. You can open the individual game dashboards below.',open:'Open game dashboard',live:'Data available',pending:'Data not yet connected',error:'Could not load data',pendingNote:'This game is not yet included in the totals. Its data is available in the existing dashboard.',errorNote:'This game is not included in the current overview. Refresh the data or open the game dashboard.',completion:'Completion rate',duration:'Average duration',rating:'Rating',updated:'Data updated',empty:'No recorded sessions in the connected games for this period.',noTimeline:'Activity will appear when data is available.',durationNote:'Average duration is calculated for completed games.',lu:'UL 107th anniversary game',luDescription:'Questions, rounds and discoveries at the University of Latvia.',riddle:'Riddle Grid',riddleDescription:'Riddles, guesses and language exploration.',liv:'Livonian place names',livDescription:'Place names, maps and Livonian cultural heritage.',luNote:'A session is recorded when the game starts.',riddleNote:'A session is recorded after the first completed or skipped riddle.',livNote:'Gameplay sessions and completed rounds.',included:'Included',outOf:'of'
@@ -30,8 +32,22 @@ function updateThemeButton() {
  $('theme').setAttribute('aria-label', label);
  $('theme').title = label;
 }
+function updateTextSizeControl(){
+ const button=$('text-size-toggle');if(!button)return;
+ const size=document.documentElement.dataset.textSize||'normal';
+ document.querySelectorAll('input[name="text-size"]').forEach(input=>input.checked=input.value===size);
+ const label=t('textSize')+': '+t({normal:'sizeNormal',medium:'sizeMedium',large:'sizeLarge'}[size]||'sizeNormal');
+ button.setAttribute('aria-label',label);button.title=label;
+}
+function positionTextMenu(){
+ const menu=$('text-size-menu');if(!menu?.matches(':popover-open'))return;
+ const box=$('text-size-toggle').getBoundingClientRect(),inset=12;
+ menu.style.left=Math.max(inset,Math.min(box.right-menu.offsetWidth,innerWidth-menu.offsetWidth-inset))+'px';
+ menu.style.top=Math.max(inset,Math.min(box.bottom+8,innerHeight-menu.offsetHeight-inset))+'px';
+}
 function render() {
  updateThemeButton();
+ updateTextSizeControl();
  document.documentElement.lang = language;
  document.title = `ResearchGames.eu – ${t('title')}`;
  document.querySelectorAll('[data-text]').forEach(el => {el.textContent = t(el.dataset.text);});
@@ -110,6 +126,18 @@ async function load() {
   }
  }
 }
+document.querySelectorAll('input[name="text-size"]').forEach(input=>input.addEventListener('change',()=>{
+ if(!input.checked)return;
+ document.documentElement.dataset.textSize=input.value;
+ try{localStorage.setItem('rg-dashboard-text-size',input.value);}catch{}
+ updateTextSizeControl();positionTextMenu();
+}));
+$('text-size-menu')?.addEventListener('toggle',event=>{
+ const open=event.newState==='open';$('text-size-toggle').setAttribute('aria-expanded',String(open));
+ if(open){positionTextMenu();$('text-size-menu').querySelector('input:checked')?.focus({preventScroll:true});}
+});
+window.addEventListener('resize',positionTextMenu);
+window.addEventListener('scroll',()=>{const menu=$('text-size-menu');if(menu?.matches(':popover-open'))menu.hidePopover();},{passive:true});
 $('period').addEventListener('change',load);
 $('refresh').addEventListener('click',load);
 setInterval(()=>{if (!document.hidden && !loading) load();},5*60000);
