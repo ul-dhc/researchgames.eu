@@ -112,3 +112,10 @@ publishes the separate visits file without rebuilding the website. The visits
 collector is independent of gameplay analytics, so one source failing does not
 prevent the other from refreshing. Verify exact allowlisted paths against GoatCounter
 when adding or renaming games. Test with `node --test stats/tests/visits.test.mjs`.
+
+Deployment record: GoatCounter email verified and the scoped Read statistics token
+stored as the repository Actions secret on 2026-11-03. Livonian dashboard deployment
+updated from v24 to **v25**; Riddle Grid dashboard deployment updated from v31 to
+**v32**. Existing deployment URLs and access settings were retained. The riddle
+receiver deployment was not changed. The legacy Apps Script riddle dashboard keeps
+its existing 30-day default; the website dashboard keeps its all-time default.

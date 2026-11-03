@@ -42,3 +42,10 @@ test('exact paths, authentication and complete results; raw referrers and IDs do
  }
  await assert.rejects(requestVisits(['/games/miklu-rezgis'],visitRange('all',now),''));
 });
+
+test('a transient API failure is retried before abandoning a game-period',async()=>{
+ let calls=0;
+ const fetcher=async url=>{calls++;return calls===1?{ok:false,status:502}:{ok:true,json:async()=>({more:false,hits:[{path:'/games/miklu-rezgis',count:17}]})};};
+ assert.equal(await requestVisits(['/games/miklu-rezgis'],visitRange('all',now),'example',fetcher),17);
+ assert.equal(calls,2);
+});
