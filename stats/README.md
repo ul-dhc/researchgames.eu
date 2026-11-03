@@ -174,4 +174,6 @@ Count-only snapshots remain compatible. Missing history or history ending before
 
 Timeline readouts keep each figure directly beside its label, including on narrow screens; do not stretch the label column to push figures to the far edge.
 
-Visit curves use thin, semi-transparent strokes (1.35 px at 58%; total 1.6 px at 65%) and restrained selection markers. Labels and figures stay fully opaque.
+Visit curves use broad, rounded highlighter strokes (5 px; total 6 px) at 40% opacity, with dash spacing adjusted to the wider strokes. Selection markers stay restrained; labels and figures stay fully opaque.
+
+The shared gameplay-session chart follows the same highlighter treatment: rounded 5 px strokes at 40% opacity, spaced dash patterns, and small selection markers.
