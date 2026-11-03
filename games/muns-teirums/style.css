@@ -417,3 +417,13 @@ dialog .partner-rg img{max-width:200px}
 dialog .partner-dhc img{max-width:195px}
 dialog .partner-hzf img{max-width:225px}
 @media(max-width:420px){dialog .partner-logos{gap:16px}dialog .partner-logo{height:65px}}
+
+/* Small linked white marks in the footer. */
+footer,.site-header~footer{padding-block:16px;flex-direction:row;justify-content:space-between;align-items:center}
+.footer-mark{display:inline-flex;align-items:center;min-height:44px;flex-shrink:0;transition:opacity .25s}
+.footer-mark:hover{opacity:.75}
+.footer-mark:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:4px}
+.footer-mark img{display:block;height:auto;filter:brightness(0) invert(1)}
+.footer-rg img{width:150px}
+.footer-voluda img{width:108px}
+@media(max-width:380px){.footer-rg img{width:135px}.footer-voluda img{width:94px}}
