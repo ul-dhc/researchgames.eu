@@ -23,13 +23,25 @@ export function normalizeVisits(raw) {
   }
   return {version:1,generatedAt:raw.generatedAt,periods};
 }
-// Rolling periods include today and the preceding N-1 calendar days in Riga.
+export function mergeVisits(previous,incoming) {
+  if(!previous) return incoming;
+  const periods={};
+  for(const period of VISIT_PERIODS){
+    periods[period]={...previous.periods[period]};
+    for(const [id,entry] of Object.entries(incoming.periods[period]||{})){
+      const old=periods[period][id];
+      if(!old||Date.parse(entry.fetchedAt)>=Date.parse(old.fetchedAt))periods[period][id]=entry;
+    }
+  }
+  return {version:1,generatedAt:new Date(Math.max(Date.parse(previous.generatedAt),Date.parse(incoming.generatedAt))).toISOString(),periods};
+}
+// Match existing dashboard date filters: include today and the starting day N days ago.
 export function visitRange(period, now = new Date()) {
   if (!VISIT_PERIODS.includes(period)) throw new Error('Unknown visits period');
   const today = new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Riga'}).format(now);
   const date = new Date(today + 'T00:00:00Z');
   if (period === 'all') date.setUTCFullYear(2000, 0, 1);
-  else date.setUTCDate(date.getUTCDate() - parseInt(period) + 1);
+  else date.setUTCDate(date.getUTCDate() - parseInt(period));
   // Resolve the zone offset at local midnight, including daylight-saving changes.
   let midnight = date.getTime();
   for (let i=0; i<3; i++) {

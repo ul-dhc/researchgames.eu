@@ -1,4 +1,4 @@
-import {normalizeVisits} from './visits.js';
+import {normalizeVisits,mergeVisits,VISIT_GAMES,VISIT_PERIODS} from './visits.js';
 const URL='https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/visits.json';
 const KEY='rg-visits-v1';
 let model;
@@ -15,6 +15,7 @@ export function renderVisits() {
     const selected=control?.value||'all';
     const period=selected==='0'?'all':/^\d+$/.test(selected)?selected+'d':selected;
     const ids=root.dataset.rgVisits==='all'?Object.keys(names[lang]):[root.dataset.rgVisits];
+    root.setAttribute('aria-label',t.title);
     root.replaceChildren();
     const append=(tag,text,parent=root)=>{const el=document.createElement(tag);el.textContent=text;parent.append(el);return el;};
     append('h2',t.title);
@@ -39,17 +40,15 @@ export function renderVisits() {
   });
 }
 function remember(incoming){
-  if(!model) model=incoming;
-  else for(const [period,entries] of Object.entries(incoming.periods))for(const [id,entry] of Object.entries(entries)){
-    const old=model.periods[period]?.[id];
-    if(!old||Date.parse(entry.fetchedAt)>=Date.parse(old.fetchedAt))model.periods[period][id]=entry;
-  }
+  model=mergeVisits(model,incoming);
   try{localStorage.setItem(KEY,JSON.stringify(model));}catch{}
 }
 async function refresh(){
   if(document.hidden)return;
+  let failed=false;
   try{const r=await fetch(URL,{signal:AbortSignal.timeout(10000),cache:'no-store'});if(!r.ok)throw new Error();remember(normalizeVisits(await r.json()));}
-  catch{try{const r=await fetch(new URL('./visits.json',import.meta.url),{signal:AbortSignal.timeout(3000)});if(r.ok)remember(normalizeVisits(await r.json()));}catch{}}
+  catch{failed=true;}
+  if(failed||VISIT_PERIODS.some(period=>Object.keys(VISIT_GAMES).some(id=>!model?.periods[period]?.[id]))){try{const r=await fetch(new URL('./visits.json',import.meta.url),{signal:AbortSignal.timeout(3000)});if(r.ok)remember(normalizeVisits(await r.json()));}catch{}}
   renderVisits();
 }
 document.addEventListener('change',event=>{if(event.target.matches('select'))renderVisits();});

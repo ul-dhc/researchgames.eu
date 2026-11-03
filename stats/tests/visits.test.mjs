@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeVisits,visitRange,VISIT_GAMES} from '../visits.js';
+import {normalizeVisits,mergeVisits,visitRange,VISIT_GAMES} from '../visits.js';
 import {collectVisits,requestVisits} from '../scripts/update-visits.mjs';
 const now=new Date('2026-11-03T17:00:00Z');
 test('Riga calendar windows include today and handle daylight-saving changes',()=>{
- assert.equal(visitRange('7d',now).start,'2026-10-27T22:00:00.000Z');
- assert.equal(visitRange('30d',now).start,'2026-10-04T21:00:00.000Z');
+ assert.equal(visitRange('7d',now).start,'2026-10-26T22:00:00.000Z');
+ assert.equal(visitRange('30d',now).start,'2026-10-03T21:00:00.000Z');
  assert.equal(visitRange('all',now).start,'1999-12-31T22:00:00.000Z');
  assert.throws(()=>visitRange('bogus',now));
 });
@@ -48,4 +48,14 @@ test('a transient API failure is retried before abandoning a game-period',async(
  const fetcher=async url=>{calls++;return calls===1?{ok:false,status:502}:{ok:true,json:async()=>({more:false,hits:[{path:'/games/miklu-rezgis',count:17}]})};};
  assert.equal(await requestVisits(['/games/miklu-rezgis'],visitRange('all',now),'example',fetcher),17);
  assert.equal(calls,2);
+});
+
+test('an older fallback fills missing game-periods without replacing newer counts',async()=>{
+ const {snapshot:old}=await collectVisits(null,async()=>12,now);
+ const {snapshot:fresh}=await collectVisits(null,async()=>19,new Date('2026-11-04T17:00:00Z'));
+ delete fresh.periods.all['miklu-rezgis'];
+ const merged=mergeVisits(fresh,old);
+ assert.equal(merged.periods.all['miklu-rezgis'].visits,12);
+ assert.equal(merged.periods.all['libiesu-vietvardi'].visits,19);
+ assert.equal(merged.periods['7d']['miklu-rezgis'].visits,19);
 });

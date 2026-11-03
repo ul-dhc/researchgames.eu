@@ -98,7 +98,8 @@ required by GoatCounter before API use. Only aggregate counts and reporting date
 are published to `analytics-data/visits.json`; the API response is never saved.
 
 Periods all/90d/30d/7d are collected sequentially below the API rate limit. Rolling
-periods include today and the previous N-1 Europe/Riga calendar days. All-time
+periods include today and the starting calendar day N days ago in Europe/Riga,
+matching the existing dashboard date filters (the starting day is included). All-time
 requests start in 2000 and cover only history actually retained by GoatCounter;
 they do not reconstruct pre-tracking visits. Missing configuration or collection
 failures preserve previous counts, period bounds and timestamps with a failure
