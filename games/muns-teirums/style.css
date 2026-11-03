@@ -427,3 +427,9 @@ footer,.site-header~footer{padding-block:16px;flex-direction:row;justify-content
 .footer-rg img{width:150px}
 .footer-voluda img{width:108px}
 @media(max-width:380px){.footer-rg img{width:135px}.footer-voluda img{width:94px}}
+/* Match both footer marks to the warm ResearchGames.eu text tone. */
+.footer-mark{position:relative}
+.footer-mark img{opacity:0}
+.footer-mark::after{content:"";position:absolute;inset:0;background:var(--cream);mask-position:center;mask-size:100% auto;mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:100% auto;-webkit-mask-repeat:no-repeat;pointer-events:none}
+.footer-rg::after{mask-image:url('assets/partners/researchgames.svg');-webkit-mask-image:url('assets/partners/researchgames.svg')}
+.footer-voluda::after{mask-image:url('assets/partners/voluda.png');-webkit-mask-image:url('assets/partners/voluda.png')}
