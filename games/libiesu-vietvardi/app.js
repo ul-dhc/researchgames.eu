@@ -3,23 +3,32 @@
 
   const DATA = GAME_DATA;
   const ALL_PAIRS = DATA.pairs.map((p, i) => ({ ...p, id: i }));
-  const TOTAL_ROUNDS = Math.max(...ALL_PAIRS.map(p => p.round));
+  let mode = new URLSearchParams(location.search).get("mode");
+  if (mode === "coast") mode = "map";
+  if (mode === "long") mode = "full";
+  if (!["five", "ten", "map", "full"].includes(mode)) mode = "full";
+  let sessionPlan = LivonianModes.createPlan(ALL_PAIRS, mode);
+  let TOTAL_ROUNDS = sessionPlan.length;
+  let roundCompleteTimer = null;
+  let matchFeedbackTimer = null;
+  let routeLayer = null;
+  let routeAnimation = null;
+  let journeyGeneration = 0;
+  let mapQuestionLayer = null;
+  let mapQuestion = null;
   const LANG = location.hash.toLowerCase() === "#en" ? "en" : "lv";
   const IS_EN = LANG === "en";
   const LS_BEST = "liv-game-best-score";
+  const isShortGame = () => mode === "five" || mode === "ten";
+  const shortPlaceCount = () => mode === "ten" ? 10 : 5;
+  const bestKey = () => mode === "full" ? `${LS_BEST}-long` : `${LS_BEST}-${mode}`;
   const LS_THEME = "liv-game-theme";
   const LS_TEXT_SIZE = "liv-game-text-size";
-  const savedTextSize = localStorage.getItem(LS_TEXT_SIZE) === "large" ? "large" : "normal";
+  const textSizes = ["normal", "large", "xlarge"];
+  const savedTextSize = textSizes.includes(localStorage.getItem(LS_TEXT_SIZE)) ? localStorage.getItem(LS_TEXT_SIZE) : "normal";
   document.documentElement.dataset.textSize = savedTextSize;
 
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZJv4C-LK3cMy-ejINa4Di-Orr37jfLYed2pxw8CnZOneu8H72wJ3okuyd72Xu07FzAg/exec";
-
-  const POINTS_CORRECT = 10;
-  const WRONG_PENALTY = 2;
-  const TIME_TARGET_SECONDS = 330;
-  const TIME_BONUS_PER_SECOND = 1.5;
-  const TIME_BONUS_MAX = 180;
-  const TIME_BONUS_MIN = -120;
 
   const FACTS = [
     { lv: "Lībieši ir Latvijas pamattauta un pirmiedzīvotāji. Lībiešu valoda pieder somugru valodu saimei un ir tuva igauņu valodai.", en: "The Livonians are an indigenous people of Latvia. Livonian belongs to the Finnic branch of the Uralic language family and is closely related to Estonian." },
@@ -39,7 +48,7 @@
   const UI = {
     exitConfirm: IS_EN ? "Are you sure you want to stop the game and return to the start? Your progress will be lost." : "Vai tiešām vēlies pārtraukt spēli un atgriezties sākumā? Tavs veikums tiks pazaudēts.",
     correct: IS_EN ? "Correct!" : "Pareizi!",
-    wrong: IS_EN ? "Not quite — try again" : "Nav pareizi – mēģini vēlreiz",
+    wrong: IS_EN ? "Not quite – try again" : "Nav pareizi – mēģini vēlreiz",
     round: n => IS_EN ? `Round ${n} of ${TOTAL_ROUNDS}` : `${n}. kārta no ${TOTAL_ROUNDS}`,
     all: IS_EN ? "all" : "visus",
     seeResults: IS_EN ? "See results" : "Skatīt rezultātu",
@@ -80,7 +89,7 @@
     "LU Lībiešu institūts ↗": "University of Latvia Livonian Institute ↗",
     "© 2026 LU Digitālo humanitāro zinātņu centrs": "© 2026 University of Latvia Digital Humanities Centre",
     "Kā spēlēt": "How to play",
-    "Katrā kārtā redzēsi divas vārdu kolonnas –": "In each round you will see two columns of words —",
+    "Katrā kārtā redzēsi divas vārdu kolonnas –": "In each round you will see two columns of words –",
     "un": "and",
     "valodā.": ".",
     "Uzklikšķini uz viena vārda katrā kolonnā. Spēle pāri pārbaudīs automātiski.": "Click one word in each column. The game checks the pair automatically.",
@@ -97,7 +106,7 @@
     "Punkti": "Points", "Precizitāte": "Accuracy", "Laiks": "Time", "Atrasti vietvārdi": "Place names found",
     "Vai zināji?": "Did you know?", "Nākamā kārta": "Next round", "Sākt no sākuma": "Start over",
     "Šajā kārtā atklātās vietas": "Places discovered in this round", "Atrastie vietvārdi": "Discovered place names",
-    "Tu esi atklājis 53 Latvijas vietvārdus lībiešu valodā!": "You have discovered 53 Latvian place names in Livonian!",
+    "Tu esi atklājis 25 Latvijas vietvārdus lībiešu valodā!": "You have discovered 25 Latvian place names in Livonian!",
     "Kopā punkti": "Total points", "Kopējais laiks": "Total time", "Labākais rezultāts": "Best score",
     "Par šo spēli": "About this game", "Dalīties ar rezultātu": "Share your result"
     ,"Vai esi ar mieru atbildēt uz dažiem pētnieku jautājumiem?": "Do you agree to answer a few questions from the researchers?"
@@ -199,9 +208,11 @@
       textSizeSwitcher.innerHTML = `
         <button type="button" class="text-size-option" data-size="normal" aria-label="${IS_EN ? "Standard text size" : "Standarta teksta izmērs"}">A</button>
         <span aria-hidden="true"></span>
-        <button type="button" class="text-size-option text-size-option-large" data-size="large" aria-label="${IS_EN ? "Larger text" : "Lielāks teksts"}">A+</button>`;
+        <button type="button" class="text-size-option text-size-option-large" data-size="large" aria-label="${IS_EN ? "Larger text" : "Lielāks teksts"}">A+</button>
+        <span aria-hidden="true"></span>
+        <button type="button" class="text-size-option text-size-option-large" data-size="xlarge" aria-label="${IS_EN ? "Largest text" : "Vislielākais teksts"}">A++</button>`;
       const updateTextSizeControls = () => {
-        const current = document.documentElement.dataset.textSize === "large" ? "large" : "normal";
+        const current = document.documentElement.dataset.textSize;
         document.querySelectorAll(".text-size-option").forEach(button => {
           const active = button.dataset.size === current;
           button.classList.toggle("active", active);
@@ -210,16 +221,12 @@
       };
       textSizeSwitcher.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", () => {
-          const next = button.dataset.size === "large" ? "large" : "normal";
+          const next = button.dataset.size;
           document.documentElement.dataset.textSize = next;
           localStorage.setItem(LS_TEXT_SIZE, next);
           updateTextSizeControls();
           requestAnimationFrame(() => {
-            if (constellationMap) {
-              constellationMap.invalidateSize();
-              constellationMap.fitBounds(OVERVIEW_BOUNDS);
-            }
-            [gameMap, roundMap, finalMap].forEach(map => map && map.invalidateSize());
+            [gameMap, roundMap, finalMap].forEach(map => { if (map) { map.invalidateSize({ pan: false }); map._summaryRelayout?.(); } });
           });
         });
       });
@@ -254,7 +261,7 @@
 
   let state = {
     round: 1, score: 0, totalCorrect: 0, totalAttempts: 0,
-    roundAttempts: 0, roundCorrect: 0, roundStartTime: 0, roundScoreStart: 0,
+    roundAttempts: 0, roundCorrect: 0, roundActiveStartMs: 0, roundScoreStart: 0,
     matchedIds: new Set(), matchedOrder: [],
     selLiv: null, selLv: null, busy: false,
     sessionId: createSessionId(), sessionStartedAt: "", roundResults: [], completedAt: "",
@@ -316,7 +323,88 @@
     }
     return a;
   }
-  function pairsForRound(r) { return ALL_PAIRS.filter(p => p.round === r); }
+  function pairsForRound(r) { return sessionPlan[r - 1]; }
+
+  const modeCopy = {
+    five: {
+      name: IS_EN ? "Quick game" : "Ātrā spēle",
+      play: IS_EN ? "Play the quick game" : "Spēlēt ātro spēli",
+      meta: IS_EN ? "5 places · 1 round" : "5 vietvārdi · 1 kārta",
+      description: IS_EN ? "One random place from each difficulty level. Match all five and discover them on the map." : "Pa vienai nejaušai vietai no katra grūtības līmeņa. Savieno visus piecus pārus un noslēgumā atklāj tos kartē.",
+    },
+    ten: {
+      name: IS_EN ? "Medium game" : "Vidējā spēle",
+      play: IS_EN ? "Play the medium game" : "Spēlēt vidējo spēli",
+      meta: IS_EN ? "10 places · 2 rounds" : "10 vietvārdi · 2 kārtas",
+      description: IS_EN ? "Ten random places in two rounds of five. Start with easier names, then take on the harder names in the second round. Discover all ten on the final map." : "Desmit nejauši vietvārdi divās kārtās pa pieciem. Sāc ar vieglākiem nosaukumiem, bet otrajā kārtā savieno grūtāk atpazīstamus vietvārdus. Noslēgumā atklāj visas desmit vietas kartē.",
+    },
+    map: {
+      name: IS_EN ? "Find on the map" : "Atrodi kartē",
+      play: IS_EN ? "Play the map search" : "Spēlēt meklēšanu kartē",
+      meta: IS_EN ? "5 questions · 5 points" : "5 uzdevumi · 5 punkti kartē",
+      description: IS_EN ? "Read a Livonian place name and find its location among five points on the map. Discover five places in each game." : "Izlasi vietvārdu lībiešu valodā un atrodi tā atrašanās vietu starp pieciem kartes punktiem. Katrā spēlē atklāj piecas vietas.",
+    },
+    full: {
+      name: IS_EN ? "Long game" : "Garā spēle",
+      play: IS_EN ? "Play the long game" : "Spēlēt garo spēli",
+      meta: IS_EN ? "25 places · 5 rounds" : "25 vietvārdi · 5 kārtas",
+      description: IS_EN ? "Five rounds of five places, randomly selected from each round’s pool. Start with similar names and work your way to the most challenging." : "Piecas kārtas pa pieciem vietvārdiem, nejauši izvēlētiem no katras kārtas vietām. Sāc ar līdzīgākajiem nosaukumiem un pakāpeniski nonāc līdz izaicinošākajiem.",
+    },
+  };
+  function updateModeUI() {
+    const previousMode = document.documentElement.dataset.mode;
+    document.documentElement.dataset.mode = mode;
+    $("#map-task-panel").classList.toggle("hidden", mode !== "map");
+    $("#map-task-eyebrow").textContent = IS_EN ? "Find on the map" : "Atrodi kartē";
+    $("#map-task-help").textContent = IS_EN ? "Where is this place? Choose one of the five marked points." : "Kur atrodas šī vieta? Izvēlies vienu no pieciem atzīmētajiem punktiem.";
+    $("#mode-description").textContent = modeCopy[mode].description;
+    $$('a[href^="about.html"]').forEach(link => {
+      link.href = `about.html?mode=${mode === "full" ? "long" : mode}${IS_EN ? "#en" : ""}`;
+    });
+    $(".hero-sub").textContent = mode === "map"
+      ? (IS_EN ? "Read a Livonian place name and discover where it is on the map." : "Izlasi vietvārdu lībiešu valodā un atklāj, kur tas atrodas kartē.")
+      : (IS_EN ? "Match place names in Livonian and Latvian. Discover the heritage of Livonian place names!" : "Savieno vietvārdus lībiešu un latviešu valodā. Atklāj lībiešu vietvārdu mantojumu!");
+    $$(".mode-option").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.mode === mode)));
+    $("#btn-start").firstChild.textContent = `${modeCopy[mode].play} `;
+    $$(".brand-sub").forEach(el => { el.textContent = modeCopy[mode].name; });
+    $(".difficulty-ladder").classList.toggle("hidden", mode !== "full");
+    $(".how-title").classList.toggle("hidden", mode !== "full");
+    $(".step-cards").classList.toggle("hidden", mode !== "full");
+    $("#research-panel").classList.toggle("hidden", mode !== "full");
+    $("#short-result-actions").classList.toggle("hidden", mode === "full");
+    $("#short-final-fact").classList.toggle("hidden", mode === "full");
+    $("#btn-short-replay").textContent = isShortGame()
+      ? (mode === "ten" ? (IS_EN ? "Ten more places" : "Vēl desmit vietas") : (IS_EN ? "Five more places" : "Vēl piecas vietas"))
+      : (IS_EN ? "New map game" : "Jauna kartes spēle");
+    $("#btn-choose-mode").textContent = IS_EN ? "Choose another game" : "Izvēlēties citu variantu";
+    const url = new URL(location.href);
+    if (mode === "full") url.searchParams.delete("mode");
+    else url.searchParams.set("mode", mode);
+    $("#coast-map-links").classList.toggle("hidden", mode !== "coast");
+    $("#coast-google-maps").href = LivonianJourney.googleMapsUrl();
+    $("#coast-google-maps").textContent = IS_EN ? "Open the coastal walk in Google Maps ↗" : "Atvērt piekrastes pastaigu Google Maps ↗";
+    $("#coast-maps-note").textContent = IS_EN ? "Google Maps suggests its own walking route through these villages." : "Google Maps piedāvās savu gājēju maršrutu caur šiem ciemiem.";
+    $("#coast-mobile-label").textContent = IS_EN ? "For a trip on your phone:" : "Ceļojumam telefonā:";
+    $("#coast-google-first").href = LivonianJourney.googleMapsUrl(LivonianJourney.roads.stops.slice(0, 5));
+    $("#coast-google-last").href = LivonianJourney.googleMapsUrl(LivonianJourney.roads.stops.slice(4));
+    $("#coast-google-first").textContent = IS_EN ? "Part 1 · Miķeļtornis–Pitrags" : "1. posms · Miķeļtornis–Pitrags";
+    $("#coast-google-last").textContent = IS_EN ? "Part 2 · Pitrags–Kolka" : "2. posms · Pitrags–Kolka";
+    history.replaceState(null, "", url);
+    refreshConstellationPlaces();
+    if (previousMode && previousMode !== mode) refreshAllMapTiles();
+  }
+  ["five", "ten", "full", "map"].forEach(value => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "mode-option";
+    button.dataset.mode = value;
+    const name = document.createElement("strong"); name.textContent = modeCopy[value].name;
+    const meta = document.createElement("span"); meta.textContent = modeCopy[value].meta;
+    button.append(name, meta);
+    button.addEventListener("click", () => { mode = value; updateModeUI(); });
+    $("#mode-picker").appendChild(button);
+  });
+  $("#mode-picker").setAttribute("aria-label", IS_EN ? "Game variant" : "Spēles variants");
   function fmtTime(ms) {
     const s = Math.round(ms / 1000);
     const m = Math.floor(s / 60);
@@ -359,13 +447,11 @@
     return `<span class="pt-main">${esc(p.liv)}</span><span class="pt-sep"> · </span><span class="pt-sub">${esc(p.lv)}</span>`;
   }
 
-  const TILE_URLS = {
-    dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_2duh_1_3b490eae277cfe5b0f255e34",
-    light: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2duh_1_3b490eae277cfe5b0f255e34",
-  };
+  const CARTO_TILE_KEY = "cb1_2duh_1_3b490eae277cfe5b0f255e34";
   const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
   function currentTileUrl() {
-    return document.documentElement.getAttribute("data-theme") === "light" ? TILE_URLS.light : TILE_URLS.dark;
+    const style = LivonianBasemaps.style(document.documentElement.getAttribute("data-theme"), mode);
+    return `https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png?key=${CARTO_TILE_KEY}`;
   }
   function makeTileLayer() {
     return L.tileLayer(currentTileUrl(), { attribution: TILE_ATTR, subdomains: "abcd", maxZoom: 18 });
@@ -388,6 +474,14 @@
   }
   const ALL_LATLNGS = ALL_PAIRS.map(p => [p.lat, p.lon]);
   const OVERVIEW_BOUNDS = L.latLngBounds(ALL_LATLNGS).pad(0.15);
+
+  // Larger circles separate game places from the basemap's small city dots.
+  function placeMarker(coordinate, { size = 11, className = "geo-dot dim", interactive = true } = {}) {
+    return L.circleMarker(coordinate, {
+      radius: size / 2, className, weight: 2.5, fillOpacity: 1,
+      interactive, keyboard: false, bubblingMouseEvents: false
+    });
+  }
 
   function setDotState(marker, add, remove) {
     const el = marker.getElement && marker.getElement();
@@ -413,6 +507,23 @@
   }
 
   let constellationMap = null;
+  let constellationPlaces = null;
+  function constellationPairs() {
+    return mode === "coast" ? LivonianModes.createPlan(ALL_PAIRS, "coast").flat() : ALL_PAIRS;
+  }
+  function fitConstellation() {
+    if (!constellationMap) return;
+    constellationMap.invalidateSize({ pan: false });
+    constellationMap.fitBounds(L.latLngBounds(constellationPairs().map(mapCoordinate)).pad(.2), { maxZoom: 11, animate: false });
+  }
+  function refreshConstellationPlaces() {
+    if (!constellationMap || !constellationPlaces) return;
+    constellationPlaces.clearLayers();
+    constellationPairs().forEach(pair => {
+      placeMarker(mapCoordinate(pair), { size: 10, interactive: false }).addTo(constellationPlaces);
+    });
+    requestAnimationFrame(fitConstellation);
+  }
   function buildConstellation() {
     const container = $("#constellation-map");
     if (!container) return;
@@ -423,13 +534,8 @@
       keyboard: false, touchZoom: false, tap: false, fadeAnimation: true,
     });
     addThemedTiles(constellationMap);
-    ALL_PAIRS.forEach(p => {
-      L.circleMarker([p.lat, p.lon], { radius: 3.2, className: "geo-dot dim", weight: 0, fillOpacity: 0.8, interactive: false }).addTo(constellationMap);
-    });
-    const fitConstellation = () => {
-      constellationMap.invalidateSize();
-      constellationMap.fitBounds(OVERVIEW_BOUNDS);
-    };
+    constellationPlaces = L.layerGroup().addTo(constellationMap);
+    refreshConstellationPlaces();
     requestAnimationFrame(fitConstellation);
     if (window.ResizeObserver) {
       const observer = new ResizeObserver(() => requestAnimationFrame(fitConstellation));
@@ -438,7 +544,7 @@
     }
   }
   buildConstellation();
-  window.addEventListener("resize", () => { if (constellationMap) constellationMap.invalidateSize(); });
+  if (!window.ResizeObserver) window.addEventListener("resize", () => requestAnimationFrame(fitConstellation));
 
   let gameMap = null;
   const gameMarkers = {};
@@ -452,17 +558,22 @@
     gameMap = L.map(container, { zoomControl: true, attributionControl: true, minZoom: 6, maxZoom: 15 });
     gameMap.zoomControl.setPosition("bottomright");
     addThemedTiles(gameMap);
+    routeLayer = L.layerGroup().addTo(gameMap);
     ALL_PAIRS.forEach(pair => {
-      const m = L.circleMarker([pair.lat, pair.lon], { radius: 5, className: "geo-dot dim", weight: 1, keyboard: false, bubblingMouseEvents: false }).addTo(gameMap);
+      const m = placeMarker([pair.lat, pair.lon]).addTo(gameMap);
       m.bindTooltip(tooltipHtml(pair), { direction: "top", offset: [0, -6], className: "place-tooltip" });
       keepMarkerHoverOnly(m);
       gameMarkers[pair.id] = m;
     });
   }
 
+  function mapCoordinate(pair) {
+    return mode === "coast" ? LivonianJourney.coordinate(pair.lv) : [pair.lat, pair.lon];
+  }
+
   function fitToRoundBounds(pairs, animate) {
     if (!gameMap || !pairs.length) return;
-    const bounds = L.latLngBounds(pairs.map(p => [p.lat, p.lon])).pad(0.35);
+    const bounds = L.latLngBounds(pairs.map(mapCoordinate)).pad(0.35);
     currentRoundBounds = bounds;
     if (animate) gameMap.flyToBounds(bounds, { duration: 1, maxZoom: 12 });
     else gameMap.fitBounds(bounds, { maxZoom: 12 });
@@ -474,6 +585,14 @@
       m.closeTooltip();
     });
     currentLitId = null;
+    mapQuestionLayer?.clearLayers();
+    $("#map-next").classList.add("hidden");
+    journeyGeneration++;
+    gameMap?.stop();
+    setJourneyTravelling(false);
+    if (routeAnimation) cancelAnimationFrame(routeAnimation);
+    routeAnimation = null;
+    routeLayer?.clearLayers();
     clearComet();
   }
 
@@ -573,7 +692,86 @@
 
   const FIRST_COMET_ORIGIN = [58.6, 17.8];
 
+  function drawCoastRoute(map, layer, points) {
+    for (let i = 1; i < points.length; i++) {
+      L.polyline(LivonianJourney.pathBetween(points[i - 1].lv, points[i].lv), {
+        className: "coast-route", weight: 4, interactive: false,
+      }).addTo(layer);
+    }
+  }
+
+  function setJourneyTravelling(travelling) {
+    $("#screen-game").classList.toggle("is-travelling", travelling);
+    $(".match-panel").setAttribute("aria-busy", String(travelling));
+    $$("#screen-game .word-chip").forEach(button => { button.disabled = travelling; });
+    $("#route-trip-status").classList.toggle("hidden", !travelling);
+    if (!gameMap) return;
+    [gameMap.dragging, gameMap.touchZoom, gameMap.scrollWheelZoom, gameMap.doubleClickZoom, gameMap.boxZoom, gameMap.keyboard]
+      .forEach(handler => handler && (travelling ? handler.disable() : handler.enable()));
+  }
+
+  function animateCoastTrip(pair, onArrive) {
+    const generation = ++journeyGeneration;
+    const discovered = state.matchedOrder.map(id => ALL_PAIRS[id]);
+    const previous = discovered[discovered.length - 2];
+    const road = previous ? LivonianJourney.pathBetween(previous.lv, pair.lv) : [mapCoordinate(pair)];
+    const track = LivonianJourney.createTrack(road);
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    routeLayer.clearLayers();
+    drawCoastRoute(gameMap, routeLayer, discovered.slice(0, -1));
+    const segment = L.polyline([road[0]], { className: "coast-route coast-route-active", weight: 4, interactive: false }).addTo(routeLayer);
+    const traveller = L.circleMarker(road[0], { radius: 7, className: "coast-traveller", weight: 3, interactive: false }).addTo(routeLayer);
+    Object.values(gameMarkers).forEach(marker => { setDotState(marker, [], ["current"]); marker.closeTooltip(); });
+    setJourneyTravelling(true);
+    const status = $("#route-trip-status");
+    const progress = $("#journey-progress");
+    const tripName = previous ? `${previous.lv} → ${pair.lv}` : pair.lv;
+    progress.textContent = IS_EN ? `Travelling · ${tripName}` : `Ceļā · ${tripName}`;
+    const arrive = () => {
+      if (generation !== journeyGeneration) return;
+      routeAnimation = null;
+      segment.setLatLngs(road);
+      traveller.remove();
+      setJourneyTravelling(false);
+      const marker = gameMarkers[pair.id];
+      setDotState(marker, ["lit", "current"], ["dim"]);
+      marker.openTooltip();
+      currentLitId = pair.id;
+      onArrive();
+    };
+    gameMap.stop();
+    if (reducedMotion) {
+      gameMap.setView(road[road.length - 1], 14, { animate: false });
+      arrive();
+      return;
+    }
+    // Travel at a steady speed along measured road distance, never vertex count.
+    const duration = previous ? Math.max(5500, Math.min(11000, track.length / 1.5)) : 1400;
+    const startsAt = performance.now() + 1000;
+    let lastCameraAt = 0;
+    gameMap.flyTo(road[0], 14, { duration: .9 });
+    if (matchMedia("(max-width: 980px)").matches) $(".map-wrap").scrollIntoView({ behavior: "smooth", block: "center" });
+    const frame = now => {
+      if (generation !== journeyGeneration) return;
+      const t = Math.max(0, Math.min(1, (now - startsAt) / duration));
+      const sample = LivonianJourney.sampleTrack(track, t);
+      segment.setLatLngs([...road.slice(0, sample.index), sample.coordinate]);
+      traveller.setLatLng(sample.coordinate);
+      status.textContent = previous
+        ? `${tripName} · ${(track.length / 1000).toFixed(1)} km · ${Math.round(t * 100)}%`
+        : (IS_EN ? `Starting the journey · ${pair.lv}` : `Ceļojums sākas · ${pair.lv}`);
+      if (now >= startsAt && now - lastCameraAt >= 100) {
+        gameMap.setView(sample.coordinate, 14, { animate: false });
+        lastCameraAt = now;
+      }
+      if (t < 1) routeAnimation = requestAnimationFrame(frame);
+      else { gameMap.setView(road[road.length - 1], 14, { animate: false }); arrive(); }
+    };
+    routeAnimation = requestAnimationFrame(frame);
+  }
+
   function celebrateMatch(pair) {
+    if (isShortGame()) return;
     const marker = gameMarkers[pair.id];
     if (!marker) return;
 
@@ -600,64 +798,18 @@
   let roundMap = null, roundLayer = null;
   let finalMap = null, finalLayer = null;
 
-  const measureCanvas = document.createElement("canvas");
-  const measureCtx = measureCanvas.getContext("2d");
-  function textWidth(str, px, weight) {
-    measureCtx.font = `${weight || 700} ${px}px Inter, sans-serif`;
-    return measureCtx.measureText(str).width;
-  }
-
-  function layoutLabels(points, viewport) {
-    const placed = [];
-    const ordered = points.slice().sort((a, b) => a.y - b.y || a.x - b.x);
-    const results = [];
-    const overlapArea = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0))
-      * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
-    ordered.forEach(p => {
-      const compact = viewport.x < 700;
-      const mainW = textWidth(p.liv, compact ? 10 : 12, 700);
-      const sepW = textWidth(" · ", compact ? 9 : 11, 400);
-      const subW = textWidth(p.lv, compact ? 9 : 11, 500);
-      const w = mainW + sepW + subW + (compact ? 20 : 30);
-      const h = compact ? 24 : 30;
-      const candidates = [
-        { dx: 12, dy: -h / 2 }, { dx: 12, dy: h / 2 - 6 },
-        { dx: -w - 12, dy: -h / 2 }, { dx: -w - 12, dy: h / 2 - 6 },
-        { dx: -w / 2, dy: -h - 16 }, { dx: -w / 2, dy: 16 },
-      ];
-      const maxRadius = Math.hypot(viewport.x, viewport.y) * .72;
-      for (let radius = 48; radius <= maxRadius; radius += 34) {
-        for (let step = 0; step < 16; step++) {
-          const angle = (step / 16) * Math.PI * 2 - Math.PI / 2;
-          candidates.push({
-            dx: Math.cos(angle) * radius - w / 2,
-            dy: Math.sin(angle) * radius - h / 2,
-          });
-        }
-      }
-      let chosen = null;
-      for (const c of candidates) {
-        const bx0 = p.x + c.dx, by0 = p.y + c.dy, bx1 = bx0 + w, by1 = by0 + h;
-        const inView = !viewport || (bx0 >= 8 && by0 >= 8 && bx1 <= viewport.x - 8 && by1 <= viewport.y - 8);
-        const collides = placed.some(b => !(bx1 < b.x0 - 4 || bx0 > b.x1 + 4 || by1 < b.y0 - 4 || by0 > b.y1 + 4));
-        if (inView && !collides) { chosen = c; break; }
-      }
-      if (!chosen) {
-        const ranked = candidates.map(c => {
-          const x0 = p.x + c.dx, y0 = p.y + c.dy;
-          const box = { x0, y0, x1: x0 + w, y1: y0 + h };
-          const inView = x0 >= 8 && y0 >= 8 && box.x1 <= viewport.x - 8 && box.y1 <= viewport.y - 8;
-          const overlap = placed.reduce((sum, b) => sum + overlapArea(box, b), 0);
-          return { c, inView, score: overlap * 100 + Math.hypot(c.dx + w / 2, c.dy + h / 2) };
-        }).filter(v => v.inView).sort((a, b) => a.score - b.score);
-        chosen = ranked.length ? ranked[0].c : { dx: 8 - p.x, dy: 8 - p.y };
-      }
-      const bx0 = p.x + chosen.dx, by0 = p.y + chosen.dy;
-      placed.push({ x0: bx0, y0: by0, x1: bx0 + w, y1: by0 + h });
-      const leader = Math.hypot(chosen.dx + w / 2, chosen.dy + h / 2) > 30;
-      results.push({ ...p, dx: chosen.dx, dy: chosen.dy, w, h, leader });
+  function measureSummaryLabels(container, points) {
+    const probe = document.createElement("div");
+    probe.className = "place-tooltip place-label-fixed";
+    probe.style.cssText = "position:absolute;left:0;top:0;width:max-content;visibility:hidden;pointer-events:none;animation:none;transition:none;";
+    container.appendChild(probe);
+    const measured = points.map(point => {
+      probe.innerHTML = tooltipHtml(point);
+      const rect = probe.getBoundingClientRect();
+      return { ...point, w: Math.ceil(rect.width) + 2, h: Math.ceil(rect.height) + 2 };
     });
-    return results;
+    probe.remove();
+    return measured;
   }
 
   function renderSummaryMap(which, ids) {
@@ -675,11 +827,16 @@
       if (isRound) { roundMap = map; roundLayer = layer; }
       else { finalMap = map; finalLayer = layer; }
     }
-    const pts = ids.map(id => ALL_PAIRS[id]);
+    const pts = ids.map(id => {
+      const pair = ALL_PAIRS[id];
+      const [lat, lon] = mapCoordinate(pair);
+      return { ...pair, lat, lon };
+    });
     const latlngs = pts.map(p => [p.lat, p.lon]);
     if (!latlngs.length) return;
 
     layer.clearLayers();
+    if (mode === "coast") drawCoastRoute(map, layer, pts);
     const dotLayer = L.layerGroup().addTo(layer);
     const annotationLayer = L.layerGroup().addTo(layer);
     const focusSummaryItem = (id, active) => {
@@ -692,8 +849,10 @@
     };
     pts.forEach((p, pointIndex) => {
       const arrivalClass = !isRound ? " final-dot-arrival" : "";
-      const dot = L.circleMarker([p.lat, p.lon], { radius: 6, className: `geo-dot lit summary-item summary-id-${p.id}${arrivalClass}`, weight: 1.6, keyboard: false, bubblingMouseEvents: false })
+      const dot = placeMarker([p.lat, p.lon], { size: 12, className: `geo-dot lit summary-item summary-id-${p.id}${arrivalClass}` })
         .addTo(dotLayer);
+      dot._placeId = p.id;
+      dot.bindTooltip(tooltipHtml(p), { direction: "top", offset: [0, -10], className: "place-tooltip" });
       keepMarkerHoverOnly(dot);
       dot.on("mouseover", () => focusSummaryItem(p.id, true));
       dot.on("mouseout", () => focusSummaryItem(p.id, false));
@@ -712,7 +871,21 @@
         return { id: p.id, x: pt.x, y: pt.y, liv: p.liv, lv: p.lv, lat: p.lat, lon: p.lon };
       }).filter(p => p.x >= 0 && p.x <= viewport.x && p.y >= 0 && p.y <= viewport.y);
 
-      const laid = layoutLabels(pxPoints, viewport);
+      const container = $(containerId);
+      const origin = container.getBoundingClientRect();
+      const blocked = Array.from(container.querySelectorAll(".leaflet-control-zoom, .leaflet-control-attribution")).map(control => {
+        const rect = control.getBoundingClientRect();
+        return { x0: rect.left - origin.left - 6, y0: rect.top - origin.top - 6, x1: rect.right - origin.left + 6, y1: rect.bottom - origin.top + 6 };
+      });
+      const laid = LivonianMapLabels.layoutLabels(measureSummaryLabels(container, pxPoints), viewport, blocked);
+      const labelled = new Set(laid.map(point => point.id));
+      dotLayer.eachLayer(dot => {
+        if (labelled.has(dot._placeId)) dot.unbindTooltip();
+        else if (!dot.getTooltip()) {
+          const point = pts.find(point => point.id === dot._placeId);
+          dot.bindTooltip(tooltipHtml(point), { direction: "top", offset: [0, -10], className: "place-tooltip" });
+        }
+      });
       const arrivalOrder = new Map([...laid].sort((a, b) => a.x - b.x || a.y - b.y).map((p, index) => [p.id, index]));
       laid.forEach(p => {
         const arrivalIndex = arrivalOrder.get(p.id) || 0;
@@ -769,6 +942,7 @@
     map._summaryHide = hideAnnotations;
     map.on("zoomend moveend resize", map._summaryRelayout);
     map.on("zoomstart movestart", map._summaryHide);
+    if (document.fonts) document.fonts.ready.then(() => map._summaryRelayout?.());
 
     requestAnimationFrame(() => {
       map.invalidateSize();
@@ -809,9 +983,17 @@
     listLiv.innerHTML = "";
     listLv.innerHTML = "";
     matchedPairEls = [];
-    shuffle(currentRoundPairs).forEach(p => listLiv.appendChild(createChip(p, "liv")));
+    (mode === "coast" ? currentRoundPairs : shuffle(currentRoundPairs)).forEach(p => listLiv.appendChild(createChip(p, "liv")));
     shuffle(currentRoundPairs).forEach(p => listLv.appendChild(createChip(p, "lv")));
+    prepareCoastStop();
     redrawAllConnectors();
+  }
+
+  function prepareCoastStop() {
+    if (mode !== "coast") return;
+    $("#journey-progress").textContent = IS_EN
+      ? `${state.totalCorrect} of 8 places discovered · Choose a name in either column`
+      : `Atklātas ${state.totalCorrect} no 8 vietām · Izvēlies nosaukumu jebkurā kolonnā`;
   }
 
   const SVG_NS = "http://www.w3.org/2000/svg";
@@ -876,9 +1058,11 @@
     const el = $("#score-delta");
     if (!el) return;
     el.className = "score-delta";
+    el.textContent = "";
+    if (amount === 0) return;
     void el.offsetWidth;
     el.textContent = amount > 0 ? `+${amount}` : `−${Math.abs(amount)}`;
-    el.classList.add(amount > 0 ? "good" : "bad");
+    el.classList.add(amount >= 0 ? "good" : "bad");
   }
 
   function attemptMatch() {
@@ -889,7 +1073,8 @@
     const a = state.selLiv, b = state.selLv;
 
     if (a.id === b.id) {
-      state.score += POINTS_CORRECT;
+      const result = LivonianScoring.answer(state.score, true);
+      state.score = result.score;
       state.totalCorrect++;
       state.roundCorrect++;
       state.matchedIds.add(a.id);
@@ -902,50 +1087,164 @@
       matchedPairEls.push({ livEl: a.el, lvEl: b.el });
 
       state.matchedOrder.push(a.id);
-      celebrateMatch(a.pair);
       updateTopStats();
-      animateScoreDelta(POINTS_CORRECT);
+      animateScoreDelta(result.delta);
 
       state.selLiv = null;
       state.selLv = null;
-      state.busy = false;
       redrawAllConnectors();
-
-      if (currentRoundPairs.every(p => state.matchedIds.has(p.id))) {
-        setTimeout(onRoundComplete, 1300);
-      }
+      const continueGame = () => {
+        const complete = currentRoundPairs.every(p => state.matchedIds.has(p.id));
+        state.busy = complete;
+        prepareCoastStop();
+        if (complete) {
+          pauseActiveTimer();
+          roundCompleteTimer = setTimeout(onRoundComplete, mode === "coast" ? 1000 : 1300);
+        }
+      };
+      if (mode === "coast") animateCoastTrip(a.pair, continueGame);
+      else { celebrateMatch(a.pair); continueGame(); }
     } else {
-      state.score = Math.max(0, state.score - WRONG_PENALTY);
+      const result = LivonianScoring.answer(state.score, false);
+      state.score = result.score;
       toast("bad", UI.wrong);
       a.el.classList.add("wrong");
       b.el.classList.add("wrong");
       updateTopStats();
-      animateScoreDelta(-WRONG_PENALTY);
-      setTimeout(() => {
+      animateScoreDelta(result.delta);
+      matchFeedbackTimer = setTimeout(() => {
+        matchFeedbackTimer = null;
         a.el.classList.remove("wrong", "selected");
         b.el.classList.remove("wrong", "selected");
         state.selLiv = null;
         state.selLv = null;
         state.busy = false;
+        prepareCoastStop();
         clearConnector();
       }, 480);
     }
   }
 
-  function updateTopStats() {
-    $("#stat-round").textContent = UI.round(state.round);
-    $("#stat-score").textContent = state.score;
-    const matchedInRound = currentRoundPairs.filter(p => state.matchedIds.has(p.id)).length;
-    $("#round-progress-fill").style.width = `${(matchedInRound / currentRoundPairs.length) * 100}%`;
-  }
-
-  function startRound(n) {
+  function startMapQuestion(n) {
     initGameMap();
     resetGameMapMarkers();
+    Object.values(gameMarkers).forEach(marker => gameMap.removeLayer(marker));
+    if (!mapQuestionLayer) mapQuestionLayer = L.layerGroup().addTo(gameMap);
     state.round = n;
     state.roundAttempts = 0;
     state.roundCorrect = 0;
-    state.roundStartTime = performance.now();
+    state.roundActiveStartMs = activeTimeMs();
+    state.roundScoreStart = state.score;
+    state.busy = false;
+    currentRoundPairs = pairsForRound(n);
+    const target = currentRoundPairs[0];
+    const choices = LivonianModes.createMapChoices(ALL_PAIRS, target);
+    mapQuestion = { target, choices, guessed: new Set(), solved: false, buttons: [] };
+    $("#map-target-name").textContent = target.liv;
+    $("#map-task-count").textContent = IS_EN ? `Question ${n} of ${TOTAL_ROUNDS}` : `${n}. uzdevums no ${TOTAL_ROUNDS}`;
+    $("#map-answer-feedback").textContent = "";
+    $("#map-answer-feedback").className = "map-answer-feedback";
+    $("#journey-progress").classList.add("hidden");
+    $(".map-wrap").appendChild(toastCard);
+    choices.forEach((pair, index) => {
+      const letter = String.fromCharCode(65 + index);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "map-choice";
+      button.dataset.id = pair.id;
+      button.textContent = letter;
+      button.setAttribute("aria-label", IS_EN ? `Point ${letter}` : `Punkts ${letter}`);
+      button.addEventListener("click", () => answerMapQuestion(pair, button));
+      const holder = document.createElement("div"); holder.appendChild(button);
+      const marker = L.marker([pair.lat, pair.lon], {
+        icon: L.divIcon({ className: "map-choice-icon", html: holder, iconSize: [44, 44], iconAnchor: [22, 22] }),
+        keyboard: false,
+      }).addTo(mapQuestionLayer);
+      L.DomEvent.disableClickPropagation(holder);
+      mapQuestion.buttons.push(button);
+    });
+    $("#map-next").textContent = n === TOTAL_ROUNDS ? (IS_EN ? "See results" : "Skatīt rezultātu") : (IS_EN ? "Next place" : "Nākamā vieta");
+    updateTopStats();
+    showScreen("game");
+    resumeActiveTimer();
+    requestAnimationFrame(() => {
+      gameMap.invalidateSize();
+      currentRoundBounds = L.latLngBounds(choices.map(pair => [pair.lat, pair.lon])).pad(.15);
+      gameMap.fitBounds(currentRoundBounds, { paddingTopLeft: [32, 40], paddingBottomRight: [48, 90], maxZoom: 10, animate: false });
+    });
+  }
+
+  function answerMapQuestion(pair, button) {
+    if (mode !== "map" || !mapQuestion || mapQuestion.solved || mapQuestion.guessed.has(pair.id) || state.busy) return;
+    mapQuestion.guessed.add(pair.id);
+    state.totalAttempts++;
+    state.roundAttempts++;
+    const feedback = $("#map-answer-feedback");
+    if (pair.id !== mapQuestion.target.id) {
+      const result = LivonianScoring.answer(state.score, false);
+      state.score = result.score;
+      button.classList.add("is-wrong");
+      button.disabled = true;
+      button.setAttribute("aria-label", IS_EN ? `Incorrect: ${pair.lv}` : `Nepareizi: ${pair.lv}`);
+      feedback.className = "map-answer-feedback is-wrong";
+      feedback.textContent = IS_EN ? `That is ${pair.lv}. Try another point.` : `Šī vieta ir ${pair.lv}. Izvēlies citu punktu.`;
+      animateScoreDelta(result.delta);
+      updateTopStats();
+      return;
+    }
+    mapQuestion.solved = true;
+    state.busy = true;
+    const result = LivonianScoring.answer(state.score, true);
+    state.score = result.score;
+    state.totalCorrect++;
+    state.roundCorrect++;
+    state.matchedIds.add(pair.id);
+    state.matchedOrder.push(pair.id);
+    button.classList.add("is-correct");
+    button.setAttribute("aria-label", `${pair.liv} – ${pair.lv}`);
+    mapQuestion.buttons.forEach(choice => { choice.disabled = true; });
+    feedback.className = "map-answer-feedback is-correct";
+    feedback.textContent = `${IS_EN ? "Correct!" : "Pareizi!"} ${pair.liv} – ${pair.lv}.`;
+    pauseActiveTimer();
+    state.roundResults[state.round - 1] = { timeMs: Math.round(activeTimeMs() - state.roundActiveStartMs), points: state.score - state.roundScoreStart };
+    animateScoreDelta(result.delta);
+    updateTopStats();
+    $("#map-next").classList.remove("hidden");
+    $("#map-next").focus({ preventScroll: true });
+  }
+  $("#map-next").addEventListener("click", () => {
+    if (mode !== "map" || !mapQuestion?.solved) return;
+    if (state.round === TOTAL_ROUNDS) finishGame();
+    else startMapQuestion(state.round + 1);
+  });
+
+  function updateTopStats() {
+    $("#stat-round").textContent = mode === "map"
+      ? (IS_EN ? `Question ${state.round} of ${TOTAL_ROUNDS}` : `${state.round}. uzdevums no ${TOTAL_ROUNDS}`)
+      : isShortGame()
+      ? `${state.totalCorrect} / ${shortPlaceCount()} ${IS_EN ? "places" : "vietas"}` : UI.round(state.round);
+    $("#stat-score").textContent = state.score;
+    const matchedInRound = currentRoundPairs.filter(p => state.matchedIds.has(p.id)).length;
+    $("#round-progress-fill").style.width = `${(mode === "map" ? state.totalCorrect / TOTAL_ROUNDS : isShortGame() ? state.totalCorrect / shortPlaceCount() : matchedInRound / currentRoundPairs.length) * 100}%`;
+  }
+
+  function startRound(n) {
+    if (mode === "map") { startMapQuestion(n); return; }
+    if (!isShortGame()) initGameMap();
+    if (gameMap && (mode !== "coast" || n === 1)) resetGameMapMarkers();
+    if (gameMap) {
+      const visibleIds = new Set((mode === "coast" ? sessionPlan.flat() : ALL_PAIRS).map(pair => pair.id));
+      ALL_PAIRS.forEach(pair => {
+        if (visibleIds.has(pair.id)) gameMarkers[pair.id].setLatLng(mapCoordinate(pair)).addTo(gameMap);
+        else gameMap.removeLayer(gameMarkers[pair.id]);
+      });
+    }
+    $("#journey-progress").classList.toggle("hidden", mode !== "coast");
+    (isShortGame() ? $(".match-panel") : $(".map-wrap")).appendChild(toastCard);
+    state.round = n;
+    state.roundAttempts = 0;
+    state.roundCorrect = 0;
+    state.roundActiveStartMs = activeTimeMs();
     state.roundScoreStart = state.score;
     state.selLiv = null;
     state.selLv = null;
@@ -956,25 +1255,32 @@
     showScreen("game");
     resumeActiveTimer();
     requestAnimationFrame(() => {
-      if (!gameMap) return;
+      if (!gameMap || isShortGame()) return;
       gameMap.invalidateSize();
       fitToRoundBounds(currentRoundPairs, false);
     });
   }
 
   function onRoundComplete() {
+    roundCompleteTimer = null;
     pauseActiveTimer();
-    const elapsed = Math.round(performance.now() - state.roundStartTime);
-    const acc = state.roundAttempts ? Math.round((state.roundCorrect / state.roundAttempts) * 100) : 100;
+    const elapsed = Math.round(activeTimeMs() - state.roundActiveStartMs);
+    const acc = LivonianScoring.accuracy(state.roundCorrect, state.roundAttempts);
     const thisRoundScore = state.score - state.roundScoreStart;
     state.roundResults[state.round - 1] = { timeMs: elapsed, points: thisRoundScore };
     queueSessionProgress("in_progress", state.round);
+    if (mode !== "full" && state.round === TOTAL_ROUNDS) { finishGame(); return; }
+    if (isShortGame()) {
+      startRound(state.round + 1);
+      toast("good", IS_EN ? "Five found! The harder round starts now." : "Piecas atrastas! Tagad grūtākā kārta.");
+      return;
+    }
 
     $("#round-header-label").textContent = UI.round(state.round);
     $("#round-total-score").textContent = state.score;
     $("#round-title").textContent = ROUND_TITLES[Math.min(state.round - 1, ROUND_TITLES.length - 1)];
     $("#round-found-count").textContent = UI.all;
-    $("#round-score").textContent = `+${thisRoundScore}`;
+    $("#round-score").textContent = LivonianScoring.signed(thisRoundScore);
     $("#round-acc").textContent = `${acc}%`;
     $("#round-time").textContent = fmtTime(elapsed);
     $("#round-found-frac").textContent = `${currentRoundPairs.length}/${currentRoundPairs.length}`;
@@ -990,7 +1296,7 @@
     }
 
     showScreen("round");
-    renderSummaryMap("round", currentRoundPairs.map(p => p.id));
+    renderSummaryMap("round", mode === "coast" ? state.matchedOrder : currentRoundPairs.map(p => p.id));
 
     const isLast = state.round >= TOTAL_ROUNDS;
     $("#btn-next-round").innerHTML = isLast
@@ -1008,12 +1314,9 @@
     if (state.completedAt) return;
     pauseActiveTimer();
     const elapsedMs = activeTimeMs();
-    const elapsedSeconds = elapsedMs / 1000;
-    const scoreBeforeTimeBonus = state.score;
-    let timeBonus = Math.round((TIME_TARGET_SECONDS - elapsedSeconds) * TIME_BONUS_PER_SECOND);
-    timeBonus = Math.max(TIME_BONUS_MIN, Math.min(TIME_BONUS_MAX, timeBonus));
-    state.score = Math.max(0, state.score + timeBonus);
-    const effectiveTimeBonus = state.score - scoreBeforeTimeBonus;
+    const result = LivonianScoring.finish(state.score, elapsedMs, mode);
+    state.score = result.score;
+    const effectiveTimeBonus = result.bonus;
     const finalRoundResult = state.roundResults[TOTAL_ROUNDS - 1];
     if (finalRoundResult) finalRoundResult.points += effectiveTimeBonus;
     state.completedAt = new Date().toISOString();
@@ -1021,21 +1324,32 @@
     state.finalTotalPoints = state.score;
     queueSessionProgress("game_completed", TOTAL_ROUNDS);
 
-    const overallAcc = state.totalAttempts ? Math.round((state.totalCorrect / state.totalAttempts) * 100) : 100;
-    const best = Math.max(state.score, parseInt(localStorage.getItem(LS_BEST) || "0", 10));
-    localStorage.setItem(LS_BEST, String(best));
+    const overallAcc = LivonianScoring.accuracy(state.totalCorrect, state.totalAttempts);
+    const best = Math.max(state.score, parseInt(localStorage.getItem(bestKey()) || "0", 10));
+    localStorage.setItem(bestKey(), String(best));
 
-    const n = ALL_PAIRS.length;
+    const n = sessionPlan.flat().length;
     $("#final-title").textContent = IS_EN
       ? `You have discovered ${n} Latvian place names in Livonian!`
       : `Tu esi atklājis ${n} Latvijas vietvārdus lībiešu valodā!`;
+    if (isShortGame()) $("#final-title").textContent = IS_EN ? `You discovered ${n} places in Livonian!` : `Atklātas ${n} vietas lībiešu valodā!`;
+    if (mode === "map") $("#final-title").textContent = IS_EN ? `You found ${n} places on the map!` : `Kartē atrastas ${n} vietas!`;
+    if (mode === "coast") $("#final-title").textContent = IS_EN ? "You travelled the Livonian coast – 8 places discovered!" : "Lībiešu krasts izceļots – atklātas 8 vietas!";
+    $("#final-time-note").classList.toggle("hidden", mode !== "full");
+    $("#short-final-fact").textContent = mode === "map"
+      ? (IS_EN ? "Five Livonian place names, five locations discovered. Try a new set!" : "Pieci lībiešu vietvārdi – piecas atklātas vietas. Izmēģini jaunu izlasi!")
+      : isShortGame()
+      ? (mode === "ten"
+        ? (IS_EN ? "Ten places, five levels of difficulty. Where will the next game take you?" : "Desmit vietas, pieci grūtības līmeņi. Kur aizvedīs nākamā spēle?")
+        : (IS_EN ? "Five places, five levels of difficulty. Where will the next game take you?" : "Piecas vietas, pieci grūtības līmeņi. Kur aizvedīs nākamā spēle?"))
+      : (IS_EN ? "Your journey: Miķeļtornis → Sīkrags → Mazirbe → Košrags → Pitrags → Saunags → Vaide → Kolka." : "Tavs ceļojums: Miķeļtornis → Sīkrags → Mazirbe → Košrags → Pitrags → Saunags → Vaide → Kolka.");
     $("#final-score").textContent = state.score;
     $("#final-acc").textContent = `${overallAcc}%`;
     $("#final-best").textContent = best;
     $("#final-time").textContent = fmtTime(elapsedMs);
-    $("#final-time-note").textContent = timeBonus >= 0
-      ? (IS_EN ? `Time bonus: +${timeBonus} points (great pace!)` : `Laika bonuss: +${timeBonus} punkti (ātrs temps!)`)
-      : (IS_EN ? `Time bonus: ${timeBonus} points (try to be faster next time)` : `Laika bonuss: ${timeBonus} punkti (nākamreiz mēģini ātrāk)`);
+    $("#final-time-note").textContent = effectiveTimeBonus >= 0
+      ? (IS_EN ? `Time bonus: +${effectiveTimeBonus} points (great pace!)` : `Laika bonuss: +${effectiveTimeBonus} punkti (ātrs temps!)`)
+      : (IS_EN ? `Time bonus: ${effectiveTimeBonus} points (try to be faster next time)` : `Laika bonuss: ${effectiveTimeBonus} punkti (nākamreiz mēģini ātrāk)`);
 
     showScreen("final");
     resetResearchUI();
@@ -1135,6 +1449,7 @@
   }
 
   function queueSessionProgress(status, lastCompletedRound) {
+    if (mode !== "full") return Promise.resolve();
     const payload = progressSessionPayload(status, lastCompletedRound);
     state.progressSubmissionPromise = state.progressSubmissionPromise
       .catch(() => {})
@@ -1223,7 +1538,7 @@
   }
 
   function showResearchQuestion() {
-    const eligible = ALL_PAIRS.filter(pair => pair.round === 4 || pair.round === 5);
+    const eligible = sessionPlan.flat().filter(pair => pair.round === 4 || pair.round === 5);
     const target = shuffle(eligible)[0];
     const distractors = shuffle([...new Set(ALL_PAIRS.map(pair => pair.liv).filter(name => name !== target.liv))]).slice(0, 2);
     const rememberValue = "I don't remember";
@@ -1352,9 +1667,20 @@
   }
 
   function resetAll() {
+    clearTimeout(roundCompleteTimer);
+    mapQuestion = null;
+    mapQuestionLayer?.clearLayers();
+    $("#map-next").classList.add("hidden");
+    clearTimeout(matchFeedbackTimer);
+    matchFeedbackTimer = null;
+    roundCompleteTimer = null;
+    clearTimeout(toast._t);
+    toastCard.classList.remove("show");
+    $("#score-delta").className = "score-delta";
+    $("#score-delta").textContent = "";
     state = {
       round: 1, score: 0, totalCorrect: 0, totalAttempts: 0,
-      roundAttempts: 0, roundCorrect: 0, roundStartTime: 0, roundScoreStart: 0,
+      roundAttempts: 0, roundCorrect: 0, roundActiveStartMs: 0, roundScoreStart: 0,
       matchedIds: new Set(), matchedOrder: [], selLiv: null, selLv: null, busy: false,
       sessionId: createSessionId(), sessionStartedAt: "", roundResults: [], completedAt: "",
       finalTotalTimeMs: 0, finalTotalPoints: 0,
@@ -1368,6 +1694,9 @@
   function beginNewSession() {
     markCurrentSessionAbandoned();
     resetAll();
+    sessionPlan = LivonianModes.createPlan(ALL_PAIRS, mode);
+    TOTAL_ROUNDS = sessionPlan.length;
+    updateModeUI();
     state.sessionStartedAt = new Date().toISOString();
     queueSessionProgress("in_progress", 0);
     startRound(1);
@@ -1379,6 +1708,8 @@
     queueSessionProgress("abandoned", lastCompletedRound);
   }
 
+  $("#btn-short-replay").addEventListener("click", beginNewSession);
+  $("#btn-choose-mode").addEventListener("click", () => { resetAll(); showScreen("start"); $("#mode-picker button").focus(); });
   $("#btn-start").addEventListener("click", beginNewSession);
   $("#btn-replay").addEventListener("click", async event => {
     const button = event.currentTarget;
@@ -1402,5 +1733,6 @@
     if (confirm(UI.restartConfirm)) beginNewSession();
   });
 
+  updateModeUI();
   showScreen("start");
 })();
