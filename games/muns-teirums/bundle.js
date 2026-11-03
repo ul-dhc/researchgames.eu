@@ -538,8 +538,8 @@ const interfaceStrings = {
     "ltg": "Kotrai spēlei ir cyts teirums – {augu skaits} augi nu 37."
   },
   "01.06": {
-    "lv": "Savieno pārus",
-    "ltg": "Savīnoj puorus"
+    "lv": "Sākt spēli",
+    "ltg": "Suokt spēli"
   },
   "01.07": {
     "lv": "Izlaist spēli",
