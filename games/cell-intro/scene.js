@@ -1,8 +1,8 @@
-import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261103-copy-labels11';
-import { createCellBranches } from './branches.js?v=20261103-copy-labels11';
-import { updateIcons } from './icons.js?v=20261103-copy-labels11';
-import { SoundtrackPlayer } from './ambient-mixer.js?v=20261103-copy-labels11';
-import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261103-copy-labels11';
+import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=20261103-action-nav12';
+import { createCellBranches } from './branches.js?v=20261103-action-nav12';
+import { updateIcons } from './icons.js?v=20261103-action-nav12';
+import { SoundtrackPlayer } from './ambient-mixer.js?v=20261103-action-nav12';
+import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION} from './cell-facts.js?v=20261103-action-nav12';
 const $=id=>document.getElementById(id);
 const scene=$('scene'),world=$('world'),cell=$('cell'),cue=$('cue'),nucleus=$('nucleus');
 const physical=$('physical'),chooseCell=$('choose-cell');
@@ -568,6 +568,18 @@ function renderProteinWork(g,work,action,next){
    else{cue.style.left=poolX+'px';cue.style.width=Math.min(260,Math.max(100,left-poolX-16))+'px';cue.style.maxWidth=cue.style.width;cue.style.top='0px';}
   }else{
    const width=Math.min(320,mw-16),centre=(sugarX+60+jobCentre.x)/2;action.style.width=width+'px';action.style.maxWidth=width+'px';action.style.left=Math.max(8,Math.min(mw-width-8,centre-width/2))+'px';action.style.top=(parseFloat(cue.style.top)+cue.getBoundingClientRect().height+12)+'px';
+   // Fixed playback buttons can cross this subject-anchored action on short
+   // screens or after a viewport change. Use their actual hit areas, leaving
+   // the empty centre of the playback bar available to the reaction action.
+   const gap=12,rect=action.getBoundingClientRect(),controls=[...scene.querySelectorAll('nav[aria-label="Playback and reading controls"] button')].filter(e=>e.checkVisibility({visibilityProperty:true})).map(e=>e.getBoundingClientRect());
+   const intersects=(a,b)=>a.left<b.right+gap&&a.right>b.left-gap&&a.top<b.bottom+gap&&a.bottom>b.top-gap;
+   if(controls.some(r=>intersects(rect,r))){
+    const obstacles=[...controls,...[cue,sugar,label,$('sucrose-info-label'),$('glucose-info-label'),$('fructose-info-label')].filter(e=>e.checkVisibility({visibilityProperty:true})).map(e=>e.getBoundingClientRect())];
+    const xs=[rect.left,...controls.flatMap(r=>[r.right+gap,r.left-rect.width-gap])],ys=[rect.top,...controls.map(r=>r.top-rect.height-gap)];
+    const candidates=ys.flatMap(top=>xs.map(left=>({left,top,right:left+rect.width,bottom:top+rect.height}))).filter(r=>r.left>=panelRect.left+8&&r.right<=panelRect.left+mw-8&&r.top>=panelRect.top&&r.bottom<=innerHeight-8&&!obstacles.some(o=>intersects(r,o)));
+    candidates.sort((a,b)=>(a.left-rect.left)**2+4*(a.top-rect.top)**2-((b.left-rect.left)**2+4*(b.top-rect.top)**2));
+    if(candidates.length){action.style.left=(candidates[0].left-panelRect.left)+'px';action.style.top=(candidates[0].top-panelRect.top)+'px';}
+   }
   }
  }
 

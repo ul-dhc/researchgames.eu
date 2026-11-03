@@ -1,5 +1,5 @@
-import {ribosomeRegions,ribosomeRegionCount} from './bacterial-ribosome-regions.js?v=20261103-copy-labels11';
-import {cellFacts,DNA_INSTRUCTIONS} from './cell-facts.js?v=20261103-copy-labels11';
+import {ribosomeRegions,ribosomeRegionCount} from './bacterial-ribosome-regions.js?v=20261103-action-nav12';
+import {cellFacts,DNA_INSTRUCTIONS} from './cell-facts.js?v=20261103-action-nav12';
 export const bacterialScenes=[
  {id:'b-orient',title:'One cell, one living organism.'},{id:'b-close',title:'Closer to the same cell.'},{id:'b-explore',title:'A different arrangement.'},{id:'b-find',title:'Find the DNA.'},
  {id:'dna-focus',title:'A closer look at DNA.'},{id:'gene',title:'One gene, one example.'},{id:'message',title:'Copy the instructions.'},{id:'export',title:'Read the message here.'},
