@@ -8,18 +8,30 @@
 #preview-end a .lucide{width:18px;height:18px;flex:none}
 .preview-home{gap:6px}
 .preview-home .lucide{width:18px;height:18px;flex:none}
-#preview-end :is(button,a):focus-visible{outline:2px solid #c6e1d2;outline-offset:3px}
+#preview-end :is(button,a):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 .preview-cell{cursor:default}
 .preview-cell:is(:hover,:active){border-color:transparent;background:transparent}
 .preview-cell:is(:hover,:active) img{filter:none;transform:none}
-.preview-cell .choice-status{justify-self:start;display:inline-block;margin-top:5px;padding:7px 13px;border-radius:14px;background:#264b43;color:#f4faf3;font-size:15px;line-height:1.2;font-weight:650;letter-spacing:.02em}
+.preview-cell .choice-status{justify-self:start;display:inline-block;margin-top:5px;padding:7px 13px;border-radius:14px;background:color-mix(in srgb,var(--paper) 8%,transparent);color:var(--paper);font-size:15px;line-height:1.2;font-weight:650;letter-spacing:.02em}
 @media(max-width:650px){#preview-end{order:3;gap:8px;margin:22px 12px 0}}
 
 #scene-number{display:none!important}
 .preview-home{display:inline-flex;align-items:center;width:fit-content;min-height:44px;margin-top:-10px;padding:8px 10px;margin-left:-10px;color:#f1e9dc;font-size:14px;text-decoration:none;border-radius:8px;pointer-events:auto}
 .preview-home{opacity:.85;transition:opacity .18s,color .18s}
 #scene .preview-home:hover{opacity:1;color:#fff;background:transparent;filter:none}
-.preview-home:focus-visible{outline:2px solid #c6e1d2;outline-offset:3px}
+.preview-home:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 
-.preview-label{position:absolute;left:88px;top:0;display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #e8ca70;border-radius:20px;background:#f2d885;color:#382c13;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-shadow:none}
+.preview-label{position:absolute;left:88px;top:0;display:inline-flex;align-items:center;padding:5px 10px;border:1px solid transparent;border-radius:20px;background:var(--progress-text);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-shadow:none}
 @media(max-width:650px){.preview-label{left:0;top:42px}#scene[data-phase=chooser]{padding-top:116px}}
+
+/* Shared preview utility states. */
+#scene nav{border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
+#scene :is(nav button,.icon-button),#settings .icon-button{border-radius:var(--control-radius)}
+#settings input[type=range],#settings .track-choice input{accent-color:var(--action)}
+#settings #sound,#settings :is(.quiet,.icon-button){background:transparent!important;color:var(--ink)!important;border:0!important}
+#settings #sound:hover,#settings :is(.quiet,.icon-button):hover{background:#e2d8ce!important}
+#settings .track-choice:focus-within,#settings summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+#settings #sound{width:44px;height:44px;min-height:44px!important;padding:10px!important}
+#settings #sound:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+#settings #music-about a{color:var(--ink)}
+@media(min-width:651px) and (max-height:700px){#scene[data-phase=chooser] nav{position:absolute}}
