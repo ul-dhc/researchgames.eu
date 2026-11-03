@@ -22,6 +22,20 @@ export function normalizeVisits(raw) {
       // Project only approved aggregate fields; never publish raw API records.
       periods[period][id] = {visits:entry.visits,start:entry.start,end:entry.end,
         fetchedAt:entry.fetchedAt,failed:entry.failed === true};
+      const validDay=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+      if(Array.isArray(entry.timeline)&&validDay(entry.timelineStart)&&validDay(entry.timelineEnd)&&entry.timelineStart<=entry.timelineEnd){
+        let valid=true,sum=0;const seen=new Set(),timeline=[];
+        for(const day of entry.timeline){
+          if(!validDay(day.date)||day.date<entry.timelineStart||day.date>entry.timelineEnd||seen.has(day.date)||!Number.isSafeInteger(day.visits)||day.visits<0){valid=false;break;}
+          seen.add(day.date);sum+=day.visits;
+          if(day.visits)timeline.push({date:day.date,visits:day.visits});
+        }
+        if(valid&&sum===entry.visits){
+          periods[period][id].timeline=timeline.sort((a,b)=>a.date.localeCompare(b.date));
+          periods[period][id].timelineStart=entry.timelineStart;
+          periods[period][id].timelineEnd=entry.timelineEnd;
+        }
+      }
     }
   }
   return {version:1,generatedAt:raw.generatedAt,periods};

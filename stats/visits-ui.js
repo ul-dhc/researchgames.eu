@@ -1,12 +1,14 @@
-import {normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS} from './visits.js?v=20261103-3';
+import {buildVisitTimeline} from './visit-timeline.js?v=20261103-1';
+import {renderTimeline} from './timeline.js?v=20261103-visits-1';
+import {normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS} from './visits.js?v=20261103-timeline-1';
 const SNAPSHOT_URL='https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/visits.json';
 const KEY='rg-visits-v1';
 let model;
 try {model=normalizeVisits(JSON.parse(localStorage.getItem(KEY)));} catch {}
 const names={lv:{'miklu-rezgis':'Mīklu režģis','libiesu-vietvardi':'Lībiešu vietvārdi','muns-teirums':'Muns teirums','cell-intro':'Pasaule šūnā',landing:'ResearchGames.eu sākumlapa'},en:{'miklu-rezgis':'Riddle Grid','libiesu-vietvardi':'Livonian place names','muns-teirums':'Muns teirums','cell-intro':'A world inside a cell',landing:'ResearchGames.eu landing page'}};
 const copy={
-  lv:{siteTitle:'Lapas apmeklējumi',gameTitle:'Spēļu lapas',landingNote:'Sākumlapas apmeklējumi latviešu un angļu valodā kopā.',cellNote:'Šūnas spēles un priekšskatījuma lapas kopā.',title:'Spēles lapas apmeklējumi',unavailable:'Apmeklējumu dati pašlaik nav pieejami.',note:'Avots: GoatCounter. Apmeklējumi nav unikālie cilvēki vai spēlēšanas sesijas. Uzskaite aptver tikai periodu, kad lapā darbojas izsekošana.',scope:'Apmeklējumi attiecas uz visu spēles lapu; spēles un dalībnieku filtri tos nemaina.',saved:'Saglabātie dati; gaida atjaunošanu.',updated:'Atjaunots',range:'Datu periods',overview:'LU jubilejas spēle nav iekļauta.',riddle:'Iekļauta galvenā un bērnu spēles lapa.'},
-  en:{siteTitle:'Page visits',gameTitle:'Game pages',landingNote:'Combined visits to the Latvian and English landing pages.',cellNote:'Includes the cell game and preview pages.',title:'Game-page visits',unavailable:'Visit data is currently unavailable.',note:'Source: GoatCounter. Visits are not unique people or gameplay sessions. Only the period with tracking enabled is covered.',scope:'Visits cover the whole game page; game and participant filters do not change them.',saved:'Saved data; awaiting an update.',updated:'Updated',range:'Data period',overview:'The UL anniversary game is excluded.',riddle:'Includes the main game and children’s game pages.'}
+  lv:{timelineTitle:'Lapas apmeklējumi pa dienām',timelineIntro:'Kopā, sākumlapa un katra spēle. Datumi pēc GoatCounter dienu grupējuma; šodienas dati vēl papildinās.',total:'Kopā',timelineUnavailable:'Dienu dati pašlaik nav pieejami. Kopsummas redzamas zemāk.',timelinePartial:'Kopējā līkne pieejama, kad ir dienu dati visām lapām.',siteTitle:'Lapas apmeklējumi',gameTitle:'Spēļu lapas',landingNote:'Sākumlapas apmeklējumi latviešu un angļu valodā kopā.',cellNote:'Šūnas spēles un priekšskatījuma lapas kopā.',title:'Spēles lapas apmeklējumi',unavailable:'Apmeklējumu dati pašlaik nav pieejami.',note:'Avots: GoatCounter. Apmeklējumi nav unikālie cilvēki vai spēlēšanas sesijas. Uzskaite aptver tikai periodu, kad lapā darbojas izsekošana.',scope:'Apmeklējumi attiecas uz visu spēles lapu; spēles un dalībnieku filtri tos nemaina.',saved:'Saglabātie dati; gaida atjaunošanu.',updated:'Atjaunots',range:'Datu periods',overview:'LU jubilejas spēle nav iekļauta.',riddle:'Iekļauta galvenā un bērnu spēles lapa.'},
+  en:{timelineTitle:'Page visits by day',timelineIntro:'Total, landing page and each game. Dates follow GoatCounter’s daily grouping; today is still in progress.',total:'Total',timelineUnavailable:'Daily data are currently unavailable. Totals remain available below.',timelinePartial:'The total line is available when every page has daily data.',siteTitle:'Page visits',gameTitle:'Game pages',landingNote:'Combined visits to the Latvian and English landing pages.',cellNote:'Includes the cell game and preview pages.',title:'Game-page visits',unavailable:'Visit data is currently unavailable.',note:'Source: GoatCounter. Visits are not unique people or gameplay sessions. Only the period with tracking enabled is covered.',scope:'Visits cover the whole game page; game and participant filters do not change them.',saved:'Saved data; awaiting an update.',updated:'Updated',range:'Data period',overview:'The UL anniversary game is excluded.',riddle:'Includes the main game and children’s game pages.'}
 };
 export function renderVisits() {
   document.querySelectorAll('[data-rg-visits]').forEach(root=>{
@@ -44,6 +46,25 @@ export function renderVisits() {
     if(ids.length>1) append('p',t.overview);
     if(ids.length===1) append('p',t.scope);
     append('p',t.note);
+  });
+  renderVisitTimelines();
+}
+function renderVisitTimelines(){
+  document.querySelectorAll('[data-rg-visit-timeline]').forEach(root=>{
+    const lang=document.documentElement.lang==='en'?'en':'lv',t=copy[lang];
+    const selected=document.getElementById(root.dataset.periodControl||'period')?.value||'all';
+    const period=selected==='0'?'all':/^\d+$/.test(selected)?selected+'d':selected;
+    root.querySelector('#visit-timeline')?._timelineCleanup?.();
+    root.replaceChildren();root.setAttribute('aria-label',t.timelineTitle);
+    const heading=document.createElement(root.dataset.headingLevel==='2'?'h2':'h3');heading.textContent=t.timelineTitle;root.append(heading);
+    const note=document.createElement('p');note.className='visit-timeline-note';note.textContent=t.timelineIntro;root.append(note);
+    const chart=document.createElement('div');chart.id='visit-timeline';root.append(chart);
+    const entries=model?.periods[period]||{};
+    const series=buildVisitTimeline(entries,period,names[lang],t.total);
+    if(!series.dates.length){const empty=document.createElement('p');empty.className='empty';empty.textContent=t.timelineUnavailable;chart.append(empty);return;}
+    renderTimeline(chart,series,lang);
+    if(!series.games[0].values){const partial=document.createElement('p');partial.className='visit-timeline-note';partial.textContent=t.timelinePartial;root.append(partial);}
+    if(Object.values(entries).some(entry=>entry.failed||Date.now()-Date.parse(entry.fetchedAt)>20*60000)){const saved=document.createElement('p');saved.className='visit-timeline-note';saved.textContent=t.saved;root.append(saved);}
   });
 }
 function remember(incoming){

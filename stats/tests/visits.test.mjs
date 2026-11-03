@@ -76,7 +76,7 @@ test('browser refresh requests the public snapshot with a cache-busting URL',asy
  const {snapshot}=await collectVisits(null,async()=>5,now);
  const requests=[];
  const source=(await readFile(new URL('../visits-ui.js',import.meta.url),'utf8'))
-   .replace(/^import .*;\n/,'').replace('export function renderVisits','function renderVisits')
+   .replace(/^import .*;\n/gm,'').replace('export function renderVisits','function renderVisits')
    .replaceAll('import.meta.url',JSON.stringify('https://researchgames.eu/stats/visits-ui.js'));
  const context={URL,Date,Intl,AbortSignal,normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS:['all','90d','30d','7d'],
    localStorage:{getItem:()=>null,setItem(){}},setInterval(){},
