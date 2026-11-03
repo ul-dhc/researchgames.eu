@@ -1286,3 +1286,13 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
     padding-bottom: calc(84px + env(safe-area-inset-bottom));
   }
 }
+
+/* Additional official partner marks: Latvian and English HZF, then the archive. */
+.about-partners-secondary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:22px;padding-top:26px;border-top:0;}
+.about-partners-secondary .about-partner{width:100%;}
+.about-partners-secondary .about-partner-garamantas{width:85%;justify-self:center;}
+@media(max-width:600px){
+  .about-partners-secondary{grid-template-columns:1fr;justify-items:center;gap:30px;}
+  .about-partners-secondary .about-partner{width:min(300px,88%);}
+  .about-partners-secondary .about-partner-garamantas{width:min(240px,75%);}
+}
