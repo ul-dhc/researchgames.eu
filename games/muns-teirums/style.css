@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root{color-scheme:dark;--forest:#092c25;--forest-deep:#061f1b;--cream:#f4ecd8;--muted:#bec6b8;--accent:#d4b2e4;--flower:#5c3b66;--ink:#183c2e;--line:#b9c7a649;--sans:'DM Sans',Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:clip;background:radial-gradient(ellipse at 75% 20%,#15403299,transparent 57%),radial-gradient(ellipse at 7% 90%,#22583d60,transparent 45%),var(--forest-deep);color:var(--cream);font-family:var(--sans);line-height:1.5;min-height:100svh}body:before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23ffffff' filter='url(%23n)' opacity='.6' d='M0 0h180v180H0z'/%3E%3C/svg%3E")}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}button:disabled{cursor:default}button,a{touch-action:manipulation}a{color:inherit}img{display:block;max-width:100%}[hidden]{display:none!important}:focus-visible{outline:3px solid var(--accent);outline-offset:5px}::selection{background:var(--accent);color:var(--forest)}.skip-link{position:fixed;left:20px;top:-80px;z-index:99;padding:12px;background:var(--cream);color:var(--forest)}.skip-link:focus{top:12px}
+.site-header{max-width:1480px;margin:auto;padding:26px clamp(22px,4.5vw,72px);display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:12px;font-size:calc(25px * var(--text-scale,1));font-weight:700;text-decoration:none;letter-spacing:-.8px}.brand img{width:44px;height:44px}.brand-eu{font-weight:400}.header-actions{display:flex;gap:25px;align-items:center}.pilot-label{color:var(--muted);font-size:calc(12px * var(--text-scale,1))}.quiet-button{border:0;background:none;padding:10px 0;font-size:calc(13px * var(--text-scale,1));text-decoration:none}.quiet-button span{margin-left:12px}.quiet-button:hover{color:var(--accent)}
+.hero{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:clamp(30px,5vw,84px);max-width:1480px;margin:auto;padding:34px clamp(22px,4.5vw,72px) 32px;align-items:start}.hero-copy{position:relative;min-width:0;padding-top:22px}.eyebrow{font-size:calc(10px * var(--text-scale,1));letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:10px;margin:0 0 14px}.little-cross{width:15px;height:15px;display:inline-block;background:linear-gradient(var(--accent),var(--accent)) center/5px 15px no-repeat,linear-gradient(var(--accent),var(--accent)) center/15px 5px no-repeat}h1{font-size:calc(clamp(58px,6.25vw,94px) * var(--text-scale,1));line-height:.99;letter-spacing:-5px;font-weight:600;margin:20px 0 26px}h1 em{font-style:normal;color:var(--accent)}.hero-intro{font-size:calc(clamp(17px,1.6vw,22px) * var(--text-scale,1));font-weight:400;line-height:1.55;max-width:360px;margin:0;color:#e8e5d2}.intro-facts{display:flex;gap:26px;margin:30px 0}.intro-facts>div{display:flex;flex-direction:column}.intro-facts strong{font-size:calc(23px * var(--text-scale,1));font-weight:500;line-height:1.2}.intro-facts span{font-size:calc(11px * var(--text-scale,1));color:var(--muted);margin-top:5px}.actions{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}.primary-button{display:inline-flex;align-items:center;justify-content:space-between;gap:36px;background:var(--accent);color:#142b24;border:0;border-radius:50px;padding:16px 27px;font-size:calc(19px * var(--text-scale,1));font-weight:600;transition:background .2s,transform .2s;min-height:58px}.primary-button>span{font-size:calc(29px * var(--text-scale,1));font-weight:400;line-height:1}.primary-button:hover{background:#e3caf0;transform:translateY(-2px)}.score-rule{font-size:calc(11px * var(--text-scale,1));color:var(--muted);line-height:1.8;margin:18px 0 0}.score-rule strong{color:var(--cream);font-weight:500}.score-rule span{margin:0 9px}.botanical-corner{position:relative;height:200px;max-width:410px;margin-top:8px;isolation:isolate;pointer-events:none;overflow:hidden;mask-image:linear-gradient(#000 83%,transparent)}.decoration{position:absolute;object-fit:contain}.pansy{height:208px;left:110px;top:8px;z-index:2;transform:rotate(8deg)}.tansy{height:235px;width:180px;left:0;top:24px;transform:rotate(-17deg)}.plantain{height:175px;width:200px;left:230px;top:65px;transform:rotate(24deg)}.accent-note{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:calc(10px * var(--text-scale,1));margin:0}.color-dot{width:7px;height:7px;background:var(--accent);border-radius:50%}
+.memory-shell{width:100%;min-width:0;padding-top:16px;scroll-margin-top:18px}.game-topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:17px}.game-topline .eyebrow{font-size:calc(9px * var(--text-scale,1));letter-spacing:1.6px;margin-bottom:4px}.game-topline h2{font-size:calc(22px * var(--text-scale,1));font-weight:500;letter-spacing:-.5px;line-height:1.25;margin:0}.board-count{font-size:calc(11px * var(--text-scale,1));color:var(--muted);border:1px solid var(--line);border-radius:40px;padding:5px 13px}.game-stats{display:grid;grid-template-columns:repeat(4,1fr);margin:0 0 17px;gap:12px;border-bottom:1px solid var(--line);padding:0 0 13px}.game-stats div{display:flex;flex-direction:column}.game-stats span{font-size:calc(9px * var(--text-scale,1));text-transform:uppercase;letter-spacing:.9px;color:var(--muted)}.game-stats strong{font-size:calc(19px * var(--text-scale,1));font-weight:500;font-variant-numeric:tabular-nums}.game-stats div:first-child strong{color:var(--accent)}
+.memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;perspective:1000px}.memory-card{aspect-ratio:1/1.11;min-width:0;border:0;padding:0;background:none;perspective:900px;position:relative;border-radius:14px;transition:transform .2s}.memory-card:not(.flipped):not(:disabled):hover{transform:translateY(-3px)}.card-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.3,1)}.memory-card.flipped .card-inner{transform:rotateY(180deg)}.card-front,.card-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid #d9dfb978;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden}.card-back{background:radial-gradient(ellipse at 50% 25%,#31543b80,transparent 85%),linear-gradient(140deg,#1a402d,#0b2a23);box-shadow:inset 0 0 25px #89ac7310,0 5px 12px #00000014}.card-back:after{content:'';position:absolute;inset:5px;border:1px solid #d2daba12;border-radius:10px}.card-back img{width:43%;max-width:62px;opacity:.95;transition:transform .25s}.memory-card:hover .card-back img{transform:scale(1.06)}.card-front{transform:rotateY(180deg);background:radial-gradient(ellipse at 24% 12%,#fff8e7,transparent 80%),linear-gradient(150deg,#f4e9ca,#ebdcba);border-color:#f2e6c8;color:var(--ink);padding:10px;text-align:center;box-shadow:inset 0 0 22px #b0974a16}.card-front img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}.name-face{flex-direction:column;gap:9px;padding:10px 8px}.plant-name{font-size:calc(clamp(16px,1.65vw,25px) * var(--text-scale,1));font-weight:700;line-height:1.13;letter-spacing:-.6px;overflow-wrap:normal;hyphens:manual}.plant-name.long-name{font-size:calc(clamp(15px,1.4vw,21px) * var(--text-scale,1))}.plant-variants{font-size:calc(clamp(11px,1.08vw,16px) * var(--text-scale,1));font-weight:400;font-style:italic;line-height:1.3;display:block}.memory-card.matched .card-front{border:2px solid var(--accent);box-shadow:0 0 0 1px #d4b2e430;animation:match-settle .6s ease-out}.match-check{position:absolute;right:6px;top:5px;width:17px;height:17px;line-height:17px;font-size:calc(11px * var(--text-scale,1));border-radius:50%;background:var(--forest);color:var(--accent);display:none}.matched .match-check{display:block}.memory-card.mismatch .card-front{border-color:#a77560}.preview .memory-card{cursor:pointer}.preview .card-inner{transition:none}.board-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:47px;padding:10px 0;border-bottom:1px solid var(--line)}#game-status{font-size:calc(11px * var(--text-scale,1));line-height:1.5;margin:0;color:#e2e5d5;min-height:17px}.progress-dots{display:flex;gap:5px;flex-shrink:0}.progress-dots i{width:5px;height:5px;border-radius:50%;background:#aeb69c3d}.progress-dots i.found{background:var(--accent)}.game-note{font-size:calc(10px * var(--text-scale,1));color:var(--muted);margin:11px 0 0}.result{margin-top:24px}.result h2{font-size:calc(clamp(40px,4.1vw,60px) * var(--text-scale,1));font-weight:500;line-height:1.08;letter-spacing:-2px;margin:10px 0 20px}.result-score{display:flex;align-items:baseline;gap:12px;margin:10px 0}.result-score strong{font-size:calc(58px * var(--text-scale,1));line-height:1;color:var(--accent);font-weight:500;letter-spacing:-2px}.result-score span{font-size:calc(12px * var(--text-scale,1));color:var(--muted)}#result-detail{font-size:calc(13px * var(--text-scale,1));color:var(--muted)}body.is-playing h1{font-size:calc(clamp(50px,5.2vw,78px) * var(--text-scale,1))}body.is-playing .hero-intro{font-size:calc(17px * var(--text-scale,1))}body.is-playing .botanical-corner{margin-top:30px;height:220px}body.is-complete h1,body.is-complete .hero-intro,body.is-complete .score-rule{display:none}body.is-complete .hero-copy>.eyebrow{display:none}body.is-complete .actions{margin-top:28px}body.is-complete .result{display:flex;flex-direction:column;order:-1}body.is-complete .hero-copy{display:flex;flex-direction:column}body.is-complete .botanical-corner{order:2}body.is-complete .accent-note{order:3}
+.herbarium{grid-column:1/-1;padding-top:40px;border-top:1px solid var(--line);scroll-margin-top:25px}.herbarium>h2{font-size:calc(30px * var(--text-scale,1));font-weight:500;letter-spacing:-1px}.plant-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.gallery-plant{background:#f2e6c8;color:var(--ink);padding:22px;border-radius:15px}.gallery-plant img{height:170px;width:100%;object-fit:contain;mix-blend-mode:multiply;margin-bottom:15px}.gallery-plant h3{font-size:calc(19px * var(--text-scale,1));line-height:1.2;margin:0 0 7px}.gallery-plant p{font-size:calc(13px * var(--text-scale,1));margin:0 0 10px}.gallery-plant .lv-name{font-size:calc(11px * var(--text-scale,1));padding-top:12px;border-top:1px solid #183c2e30;opacity:.8}.gallery-plant a{font-size:calc(11px * var(--text-scale,1))}.site-header~footer,footer{max-width:1480px;margin:0 auto;padding:22px clamp(22px,4.5vw,72px);display:flex;gap:15px;justify-content:space-between;align-items:center;font-size:calc(10px * var(--text-scale,1));color:var(--muted)}footer strong{color:#e1dfce;font-weight:500}dialog{border:1px solid #97a88350;border-radius:20px;background:#f5ecd7;color:var(--ink);max-width:580px;width:calc(100% - 32px);padding:36px;max-height:85svh;box-shadow:0 24px 100px #0008}dialog::backdrop{background:#02150fe0;backdrop-filter:blur(7px)}dialog .eyebrow{color:var(--flower)}dialog h2{font-size:calc(32px * var(--text-scale,1));font-weight:500;line-height:1.15;letter-spacing:-1px;margin:18px 0}dialog p{font-size:calc(14px * var(--text-scale,1));line-height:1.65}dialog h3{font-size:calc(15px * var(--text-scale,1));margin:24px 0 7px}dialog .dialog-source{font-size:calc(11px * var(--text-scale,1));opacity:.75;margin:24px 0}dialog .primary-button{font-size:calc(15px * var(--text-scale,1));min-height:46px;padding:10px 22px}.dialog-close{position:absolute;right:22px;top:8px;font-size:calc(28px * var(--text-scale,1))}.swatch{display:inline-block;width:12px;height:12px;background:var(--accent);border-radius:50%}.dark-swatch{background:var(--flower)}.noscript{padding:30px;text-align:center}
+@keyframes match-settle{50%{box-shadow:0 0 22px #d4b2e475}100%{box-shadow:0 0 0 1px #d4b2e430}}
+@media(min-width:1600px){.hero{padding-top:50px}.memory-shell{max-width:740px}.memory-card{aspect-ratio:1/1.05}.botanical-corner{height:250px}.pansy{height:255px}.tansy{height:290px}.plantain{top:80px;height:210px}}
+@media(max-width:1000px){.hero{grid-template-columns:minmax(250px,.75fr) minmax(0,1.25fr);gap:26px;padding-top:15px}.hero-copy{padding-top:15px}h1{font-size:calc(66px * var(--text-scale,1));letter-spacing:-3px}.intro-facts{gap:19px}.memory-grid{gap:7px}.plant-name{font-size:calc(19px * var(--text-scale,1))}.plant-name.long-name{font-size:calc(16px * var(--text-scale,1))}.plant-variants{font-size:calc(12px * var(--text-scale,1))}.card-front{padding:8px}.name-face{gap:7px;padding:6px}.botanical-corner{height:170px}.pansy{left:70px;height:180px}.tansy{left:-20px;height:190px}.plantain{left:155px;height:150px}.primary-button{font-size:calc(16px * var(--text-scale,1));padding:14px 23px;gap:25px}.board-foot{align-items:flex-start}.progress-dots{padding-top:6px}}
+@media(max-width:760px){.site-header{padding:18px 22px}.brand{font-size:calc(21px * var(--text-scale,1));gap:8px}.brand img{width:34px;height:34px}.header-actions{gap:12px}.pilot-label{display:none}.hero{grid-template-columns:1fr;gap:28px;padding:16px 22px 28px}.hero-copy{padding-top:3px;display:grid;grid-template-columns:1fr 140px;position:relative}.hero-copy>.eyebrow,h1,.hero-intro,.intro-facts,.actions,.score-rule,.result{grid-column:1/-1}h1{font-size:calc(clamp(56px,12vw,80px) * var(--text-scale,1));letter-spacing:-3px;margin:12px 0 20px}h1 br{display:none}.hero-intro{font-size:calc(18px * var(--text-scale,1));max-width:310px}.intro-facts{margin:24px 0;gap:30px}.botanical-corner{position:absolute;width:150px;height:190px;right:-10px;top:122px;opacity:.85;z-index:-1}.tansy,.plantain{display:none}.pansy{height:190px;left:0;top:0}.accent-note{grid-column:1/-1;margin-top:18px;font-size:calc(9px * var(--text-scale,1))}.score-rule{font-size:calc(11px * var(--text-scale,1));margin-top:13px}.memory-shell{padding-top:0;max-width:650px;justify-self:center}.game-topline{margin-bottom:14px}.game-topline h2{font-size:calc(21px * var(--text-scale,1))}.memory-grid{gap:8px}.memory-card{aspect-ratio:1/1.2;border-radius:11px}.card-front,.card-back{border-radius:11px}.plant-name{font-size:calc(clamp(17px,3.4vw,23px) * var(--text-scale,1))}.plant-name.long-name{font-size:calc(clamp(14px,2.9vw,20px) * var(--text-scale,1))}.plant-variants{font-size:calc(clamp(11px,2.4vw,15px) * var(--text-scale,1))}.name-face{padding:7px 4px;gap:7px}.game-stats{gap:10px;margin-bottom:14px}.game-stats strong{font-size:calc(19px * var(--text-scale,1))}.game-stats span{font-size:calc(8px * var(--text-scale,1))}.board-foot{min-height:50px}.game-note{font-size:calc(10px * var(--text-scale,1))}.board-count{font-size:calc(10px * var(--text-scale,1))}.board-foot #game-status{font-size:calc(10px * var(--text-scale,1))}.progress-dots{gap:4px}.progress-dots i{width:4px;height:4px}body.is-playing .hero-copy{display:block}body.is-playing h1{font-size:calc(40px * var(--text-scale,1));letter-spacing:-1.7px;margin:9px 0 11px}body.is-playing .hero-copy>.eyebrow{font-size:calc(8px * var(--text-scale,1));margin-bottom:8px}body.is-playing .hero-intro{font-size:calc(14px * var(--text-scale,1));max-width:360px}body.is-playing .hero-intro br{display:none}body.is-playing .hero-copy .botanical-corner,body.is-playing .accent-note,body.is-playing .score-rule{display:none}body.is-playing .actions{margin-top:10px}body.is-playing .restart{font-size:calc(12px * var(--text-scale,1));padding:5px 0}body.is-playing .hero{gap:20px}body.is-complete .hero-copy{display:flex}body.is-complete .hero-copy>.result{margin-top:5px}body.is-complete .result h2{font-size:calc(44px * var(--text-scale,1));letter-spacing:-2px;margin:10px 0}body.is-complete .result h2 br{display:none}body.is-complete .result-score strong{font-size:calc(48px * var(--text-scale,1))}body.is-complete .actions{margin:12px 0 0;gap:20px}body.is-complete .primary-button{min-height:48px}.herbarium{padding-top:28px}.herbarium>h2{font-size:calc(26px * var(--text-scale,1))}.plant-gallery{grid-template-columns:repeat(2,1fr);gap:12px}.gallery-plant{padding:17px}.gallery-plant img{height:150px}.gallery-plant h3{font-size:calc(18px * var(--text-scale,1))}footer{align-items:flex-start;flex-direction:column;font-size:calc(9px * var(--text-scale,1));gap:6px;padding:15px 22px 25px}dialog{padding:28px}}
+@media(max-width:380px){.hero{padding-inline:16px}.site-header{padding-inline:16px}.brand{font-size:calc(19px * var(--text-scale,1))}.memory-grid{gap:6px}.plant-name{font-size:calc(16px * var(--text-scale,1))}.plant-name.long-name{font-size:calc(13px * var(--text-scale,1))}.plant-variants{font-size:calc(10px * var(--text-scale,1))}.memory-card{aspect-ratio:1/1.3}.name-face{padding:5px 3px;gap:5px}.board-foot{gap:6px}.card-front{padding:6px}.match-check{width:14px;height:14px;line-height:14px;font-size:calc(9px * var(--text-scale,1))}}
+@media(max-width:760px){.plant-name.long-word{font-size:calc(clamp(11px,3.2vw,16px) * var(--text-scale,1))}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Locally bundled Lucide SVGs; RG's card-back logo remains the brand mark. */
+.lucide{display:inline-block;width:19px;height:19px;vertical-align:middle;flex-shrink:0}
+.quiet-button{display:inline-flex;align-items:center;gap:10px}
+.primary-button>.lucide{width:25px;height:25px}
+.eyebrow>.lucide{width:18px;height:18px}
+.match-check>.lucide{width:12px;height:12px}
+.matched .match-check{display:grid;place-items:center}
+.dialog-close .lucide{width:22px;height:22px}
+.gallery-plant a{display:inline-flex;align-items:center;gap:5px}
+.gallery-plant a .lucide{width:13px;height:13px}
+
+/* Desktop board scales to available viewport height, including active-game stats. */
+@media(min-width:1000px) and (min-height:600px){
+  .site-header{height:76px;padding-block:16px}
+  .hero{padding-block:12px;grid-template-rows:minmax(0,calc(100svh - 144px));align-items:center;row-gap:32px}
+  .hero-copy{height:100%;min-height:0;padding-top:0;display:flex;flex-direction:column;justify-content:center}
+  .hero-copy>.eyebrow{margin-bottom:8px;flex-shrink:0}
+  h1,body.is-playing h1{font-size:calc(clamp(46px,min(6vw,9svh),86px) * var(--text-scale,1));letter-spacing:-3px;margin:10px 0 18px;flex-shrink:0}
+  .hero-intro,body.is-playing .hero-intro{font-size:calc(clamp(16px,2.15svh,21px) * var(--text-scale,1));line-height:1.45;flex-shrink:0}
+  .intro-facts{margin:20px 0;flex-shrink:0}
+  .intro-facts strong{font-size:calc(21px * var(--text-scale,1))}
+  .actions{flex-shrink:0}
+  .primary-button{min-height:50px;padding:12px 24px;font-size:calc(17px * var(--text-scale,1))}
+  .score-rule{margin-top:12px;line-height:1.6;flex-shrink:0}
+  .botanical-corner,body.is-playing .botanical-corner{flex:1 1 150px;min-height:0;max-height:180px;margin-top:8px;width:100%}
+  .pansy{height:100%;top:0}
+  .tansy{height:110%;top:6%;width:auto}
+  .plantain{height:80%;top:30%}
+  .accent-note{flex-shrink:0}
+  .memory-shell{height:100%;min-height:0;padding-top:0;display:flex;flex-direction:column;max-width:740px;justify-self:end}
+  .game-topline{flex-shrink:0;margin-bottom:12px}
+  .game-topline h2{font-size:calc(20px * var(--text-scale,1))}
+  .game-stats{flex-shrink:0;margin-bottom:12px;padding-bottom:10px}
+  .game-stats strong{font-size:calc(18px * var(--text-scale,1))}
+  .memory-grid{flex:1 1 0;min-height:0;grid-template-rows:repeat(4,minmax(0,1fr));gap:8px}
+  .memory-card{aspect-ratio:auto;min-height:0}
+  .card-front{padding:8px}
+  .name-face{gap:6px}
+  .plant-name{font-size:calc(clamp(16px,2.5svh,25px) * var(--text-scale,1))}
+  .plant-name.long-name{font-size:calc(clamp(14px,2.2svh,21px) * var(--text-scale,1))}
+  .plant-variants{font-size:calc(clamp(11px,1.8svh,16px) * var(--text-scale,1))}
+  .board-foot{flex-shrink:0;min-height:38px;padding:8px 0}
+  .game-note{flex-shrink:0;margin-top:8px;font-size:calc(10px * var(--text-scale,1))}
+  .herbarium{grid-row:2;padding-top:24px}
+  footer,.site-header~footer{height:44px;padding-block:8px}
+  .result{margin-top:0}
+  .result h2{font-size:calc(clamp(36px,6svh,60px) * var(--text-scale,1))}
+  body.is-complete .actions{margin-top:20px}
+}
+
+/* Botanical poster: original artwork, quiet plant silhouettes and cream type. */
+body{background:radial-gradient(ellipse at 28% 65%,#164a365c,transparent 57%),radial-gradient(ellipse at 83% 5%,#16473745,transparent 54%),#052a23}
+.botanical-shadows{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.botanical-shadows img{position:absolute;display:block;max-width:none;object-fit:contain;filter:brightness(0) invert(83%) sepia(16%) saturate(560%) hue-rotate(17deg)}
+.shadow-stem{width:32vw;height:76svh;left:23%;top:-28%;transform:rotate(-29deg);opacity:.12}
+.shadow-flowers{width:26vw;height:71svh;right:-9%;top:32%;transform:rotate(13deg);opacity:.13}
+.shadow-leaf{width:39vw;height:60svh;right:-7%;top:-24%;transform:rotate(105deg);opacity:.07}
+.site-header,.hero,footer{position:relative;z-index:1}
+.hero-copy{isolation:isolate}
+h1 em{color:var(--cream)}
+.hero-copy>.eyebrow{font-size:calc(9px * var(--text-scale,1));letter-spacing:2.2px;color:#dac3e5}
+.hero-intro{font-style:italic;line-height:1.4}
+.hero-intro:after{content:'';display:block;width:74px;height:3px;background:var(--accent);margin-top:22px}
+.intro-facts>div{display:grid;grid-template-columns:auto 1fr;column-gap:9px;row-gap:3px;align-items:center}
+.intro-facts .lucide{grid-column:1;grid-row:1/3;width:27px;height:27px;color:var(--cream)}
+.intro-facts strong{grid-column:2;grid-row:1}
+.intro-facts span{grid-column:2;grid-row:2;margin-top:0}
+.primary-button{background:#d9b3e9;box-shadow:0 5px 24px #010e1126}
+.hero-stem{display:none;position:absolute;object-fit:contain;pointer-events:none;z-index:-1}
+@media(min-width:1000px) and (min-height:600px){
+  .hero-copy{justify-content:flex-start;padding-top:clamp(0px,2svh,24px)}
+  h1,body.is-playing h1{font-weight:700;letter-spacing:-3.5px;font-size:calc(clamp(49px,min(6.2vw,9.4svh),88px) * var(--text-scale,1));line-height:1.01;margin:13px 0 20px;max-width:390px}
+  .hero-intro,body.is-playing .hero-intro{font-size:calc(clamp(17px,2.5svh,25px) * var(--text-scale,1));max-width:360px}
+  .hero-intro:after{margin-top:clamp(12px,2.4svh,25px)}
+  .intro-facts{gap:clamp(18px,2vw,29px);margin:clamp(17px,2.8svh,28px) 0}
+  .intro-facts strong{font-size:calc(24px * var(--text-scale,1))}
+  .intro-facts span{font-size:calc(10px * var(--text-scale,1))}
+  .primary-button{font-size:calc(19px * var(--text-scale,1));min-height:54px;padding:12px 25px;gap:28px}
+  .score-rule{font-size:calc(10px * var(--text-scale,1));opacity:.85}
+  .botanical-corner,body.is-playing .botanical-corner{width:calc(100% + 85px);margin-left:-48px;max-width:530px;flex:1 1 240px;max-height:310px;margin-top:6px;mask-image:linear-gradient(#000 83%,transparent)}
+  .plantain{height:108%;width:68%;left:-3%;top:6%;transform:rotate(-14deg);z-index:2}
+  .tansy{height:112%;width:50%;left:49%;top:8%;transform:rotate(11deg);z-index:1}
+  .pansy{height:62%;width:36%;left:35%;top:42%;transform:rotate(-5deg);z-index:3}
+  .accent-note{font-size:calc(9px * var(--text-scale,1));opacity:.8}
+  body.is-playing .hero-intro{font-style:normal;font-size:calc(18px * var(--text-scale,1));max-width:340px}
+  body.is-playing .hero-intro:after{margin-top:18px}
+  body.is-playing .botanical-corner{margin-top:20px}
+  body.is-complete .hero-copy{padding-top:10px}
+}
+@media(min-width:1150px) and (min-height:800px){
+  .hero-stem{display:block;right:-37px;top:5%;height:49%;width:38%;transform:rotate(-10deg);filter:drop-shadow(0 8px 8px #011a1a45)}
+  .hero-copy h1{max-width:360px;font-size:calc(clamp(60px,min(5.5vw,9svh),86px) * var(--text-scale,1))}
+  .hero-copy .hero-intro{max-width:330px}
+  body.is-complete .hero-stem{opacity:.35}
+}
+@media(max-width:999px){.hero-intro:after{width:54px;margin-top:15px}.intro-facts{gap:20px}.intro-facts .lucide{width:23px;height:23px}.shadow-stem{width:48vw;left:35%;opacity:.08}.shadow-flowers{width:45vw;right:-20%;opacity:.09}}
+@media(max-width:760px){.shadow-stem{width:60vw;height:50svh;top:-10%;left:60%}.shadow-flowers{width:60vw;right:-32%;top:40%}.hero-intro{max-width:270px}.hero-intro:after{margin-top:17px}.intro-facts{gap:24px}.intro-facts .lucide{width:24px;height:24px}.intro-facts strong{font-size:calc(22px * var(--text-scale,1))}body.is-playing .hero-intro:after{display:none}}
+@media(min-width:1000px) and (min-height:600px) and (max-height:760px){
+  .hero-copy{padding-top:0}
+  h1,body.is-playing h1{font-size:calc(clamp(42px,7.4svh,56px) * var(--text-scale,1));margin:7px 0 12px;letter-spacing:-2px}
+  .hero-copy>.eyebrow{margin-bottom:5px}
+  .hero-intro,body.is-playing .hero-intro{font-size:calc(16px * var(--text-scale,1));line-height:1.35}
+  .hero-intro:after{margin-top:10px;height:2px}
+  .intro-facts{margin:13px 0;gap:23px}
+  .intro-facts strong{font-size:calc(21px * var(--text-scale,1))}
+  .intro-facts .lucide{width:24px;height:24px}
+  .primary-button{min-height:47px;font-size:calc(17px * var(--text-scale,1));padding-block:10px}
+  .score-rule{margin-top:9px;font-size:calc(9px * var(--text-scale,1));line-height:1.5}
+  .botanical-corner,body.is-playing .botanical-corner{flex:1 1 70px;max-height:140px;margin-top:0}
+  .accent-note{font-size:calc(8px * var(--text-scale,1))}
+}
+@media(min-width:1150px) and (min-height:800px){
+  .hero-copy h1,body.is-playing .hero-copy h1{max-width:400px;font-size:calc(clamp(58px,min(4.7vw,8svh),78px) * var(--text-scale,1))}
+}
+/* Statistics have a permanent place below the board, so starting never moves it. */
+.game-stats{margin:14px 0 0;padding:10px 0 0;border-top:1px solid var(--line);border-bottom:0}
+@media(min-width:1000px) and (min-height:600px){.game-stats{margin:12px 0 0;padding:10px 0 0;min-height:48px}}
+@media(max-width:760px){.game-stats{margin:12px 0 0}}
+
+/* A lighter botanical display face for the game name. */
+#title{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;letter-spacing:-.025em;line-height:1.01}
+#title em{font-style:italic;font-weight:400;color:var(--cream)}
+#about-title{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:calc(38px * var(--text-scale,1))}
+
+/* Quiet typography and a final botanical gallery, one plant per row. */
+#title,#title em{font-style:italic;font-weight:400}
+.hero-intro,body.is-playing .hero-intro{font-style:normal}
+.card-inner{transition:transform .85s cubic-bezier(.22,.61,.36,1)}
+.memory-card{transition:transform .65s cubic-bezier(.22,.61,.36,1)}
+.primary-button{transition:background .55s ease,transform .65s cubic-bezier(.22,.61,.36,1)}
+body.is-complete .hero{grid-template-rows:auto;align-items:start}
+body.is-complete .memory-shell{height:auto;min-height:0}
+body.is-complete .memory-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:none;grid-auto-rows:clamp(200px,22vw,260px);gap:24px 16px;flex:none;perspective:none}
+body.is-complete .memory-card{height:100%;aspect-ratio:auto;transform-origin:top left;cursor:default}
+body.is-complete .memory-card .card-inner{transform:rotateY(180deg)}
+body.is-complete .memory-card .card-front{border:1px solid #f4ecd82b;box-shadow:0 12px 35px #011b1620;animation:none;padding:22px}
+body.is-complete .memory-card:nth-child(even) .card-front{background:transparent;border-color:transparent;box-shadow:none;color:var(--cream);align-items:flex-start;text-align:left;padding:25px 12px;gap:12px}
+body.is-complete .memory-card:nth-child(even) .plant-name{font-family:"Cormorant Garamond",Georgia,serif;font-size:calc(clamp(26px,3vw,40px) * var(--text-scale,1));font-weight:400;line-height:1.05;letter-spacing:-.4px}
+body.is-complete .plant-variants{font-size:calc(15px * var(--text-scale,1));font-style:normal;line-height:1.5;color:#d9d7bd}
+.gallery-lv-name{font-size:calc(11px * var(--text-scale,1));line-height:1.5;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:3px;width:100%}
+body.is-complete .match-check{display:none}
+body.is-complete .game-stats{margin-top:22px}
+body.is-complete .result{animation:meadow-arrive 1.2s cubic-bezier(.22,.61,.36,1) both}
+@keyframes meadow-arrive{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1000px) and (min-height:600px){
+  body.is-complete .hero-copy{position:sticky;top:24px;height:calc(100svh - 120px)}
+  body.is-complete .game-topline{margin-bottom:24px}
+}
+@media(max-width:760px){
+  body.is-complete .memory-grid{grid-auto-rows:190px;gap:18px 10px}
+  body.is-complete .memory-card .card-front{padding:12px}
+  body.is-complete .memory-card:nth-child(even) .card-front{padding:12px 5px;gap:9px}
+  body.is-complete .memory-card:nth-child(even) .plant-name{font-size:calc(28px * var(--text-scale,1))}
+  body.is-complete .plant-variants{font-size:calc(12px * var(--text-scale,1))}
+  .gallery-lv-name{font-size:calc(10px * var(--text-scale,1));padding-top:8px}
+}
+@media(prefers-reduced-motion:reduce){body.is-complete .result{animation:none}}
+body.is-complete{overflow-anchor:none}
+body.is-complete .result h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400}
+/* Larger names, with the same light italic treatment and no closing full stop. */
+#title{font-size:calc(clamp(72px,7vw,112px) * var(--text-scale,1));line-height:.96}
+body.is-complete .result h2{font-size:calc(clamp(64px,7vw,104px) * var(--text-scale,1));font-style:italic;line-height:.97;letter-spacing:-.025em}
+body.is-complete .game-topline h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:calc(clamp(32px,3vw,46px) * var(--text-scale,1));font-weight:400;font-style:italic}
+@media(min-width:1000px) and (min-height:600px){
+  #title{font-size:calc(clamp(68px,min(6.5vw,11svh),112px) * var(--text-scale,1))}
+  body.is-complete .result h2{font-size:calc(clamp(64px,min(6.4vw,10svh),104px) * var(--text-scale,1))}
+}
+@media(min-width:1000px) and (min-height:600px) and (max-height:760px){#title{font-size:calc(clamp(48px,8svh,60px) * var(--text-scale,1))}}
+@media(max-width:760px){#title{font-size:calc(clamp(72px,18vw,102px) * var(--text-scale,1))}body.is-playing #title{font-size:calc(48px * var(--text-scale,1))}body.is-complete .result h2{font-size:calc(64px * var(--text-scale,1))}}
+/* Quieter RG signature, more visible collaboration credit. */
+.site-header .brand{font-size:calc(20px * var(--text-scale,1));gap:9px;letter-spacing:-.5px}
+.site-header .brand img{width:32px;height:32px}
+footer,.site-header~footer{font-size:calc(15px * var(--text-scale,1))}
+footer strong{font-size:calc(17px * var(--text-scale,1));font-weight:500;color:var(--cream)}
+@media(max-width:760px){.site-header .brand{font-size:calc(18px * var(--text-scale,1));gap:7px}.site-header .brand img{width:28px;height:28px}footer,.site-header~footer{font-size:calc(13px * var(--text-scale,1))}footer strong{font-size:calc(15px * var(--text-scale,1))}}
+/* Keep the meadow names on one line, sized to their own column. */
+.hero-copy{container-type:inline-size}
+#title{white-space:nowrap;max-width:none;font-size:calc(clamp(38px,19cqi,104px) * var(--text-scale,1))}
+body.is-playing #title{white-space:nowrap;font-size:calc(clamp(34px,16cqi,86px) * var(--text-scale,1))}
+body.is-complete .result h2{white-space:nowrap;font-size:calc(clamp(38px,19cqi,104px) * var(--text-scale,1))}
+.memory-card .card-inner{transition-duration:.55s}
+@media(min-width:1150px) and (min-height:800px){.hero-stem{top:24%;height:43%}}
+.meadow-note{grid-column:1/-1;flex-shrink:0;font-size:calc(12px * var(--text-scale,1));line-height:1.5;color:var(--muted);max-width:350px;margin:13px 0 0}
+body.is-complete .meadow-note{display:none}
+/* Round size selector replaces the static pair-count label. */
+.pair-picker{display:flex;align-items:center;gap:3px;border:1px solid var(--line);border-radius:30px;padding:4px;margin:0;flex-shrink:0;min-width:0}
+.pair-picker button{border:0;background:transparent;color:var(--muted);border-radius:50%;width:30px;height:30px;padding:0;font-size:calc(12px * var(--text-scale,1));transition:background .3s,color .3s}
+.pair-picker button[aria-pressed="true"]{background:var(--accent);color:var(--forest-deep)}
+.pair-picker button:hover{color:var(--cream);background:#d4b2e420}
+.pair-picker button[aria-pressed="true"]:hover{background:var(--accent);color:var(--forest-deep)}
+.pair-picker>span{font-size:calc(10px * var(--text-scale,1));color:var(--muted);padding:0 9px 0 5px}
+@media(min-width:1000px) and (min-height:600px){
+  body:not(.is-complete) .memory-grid{grid-template-rows:repeat(var(--board-rows,4),minmax(0,1fr))}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"] .name-face{padding:5px;gap:4px}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"] .plant-name{font-size:calc(clamp(13px,2svh,21px) * var(--text-scale,1))}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"] .plant-variants{font-size:calc(clamp(10px,1.5svh,13px) * var(--text-scale,1))}
+}
+@media(max-width:760px){.pair-picker{gap:1px;padding:3px}.pair-picker button{width:26px;height:26px;font-size:calc(11px * var(--text-scale,1))}.pair-picker>span{font-size:calc(9px * var(--text-scale,1));padding-right:5px}.game-topline{gap:9px}.game-topline h2{font-size:calc(18px * var(--text-scale,1))}}
+/* Optional clock and points, next to the meadow size. */
+.board-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-shrink:0}
+.mode-picker{display:flex;align-items:center;gap:4px;margin:0;padding:4px;border:1px solid var(--line);border-radius:30px;min-width:0}
+.mode-toggle{display:grid;place-items:center;width:30px;height:30px;padding:0;background:transparent;border:0;border-radius:50%;color:var(--muted);transition:background .3s,color .3s}
+.mode-toggle .lucide{width:18px;height:18px}
+.mode-toggle:hover{background:#d4b2e420;color:var(--cream)}
+.mode-toggle[aria-pressed="true"]{background:var(--accent);color:var(--forest-deep)}
+.game-stats{grid-template-columns:repeat(var(--stat-columns,1),minmax(0,1fr))}
+#score-breakdown{font-size:calc(11px * var(--text-scale,1));line-height:1.6;color:var(--muted);max-width:330px;margin:0 0 12px}
+@media(max-width:760px){.board-tools{flex-direction:column;align-items:flex-end;gap:6px}.mode-picker{padding:3px}.mode-toggle{width:26px;height:26px}.mode-toggle .lucide{width:17px;height:17px}}
+
+/* The completed meadow uses the plant collection as its only gallery. */
+.game-stats,.board-foot{border:0}
+.hero-copy>.meadow-note{margin-bottom:28px}
+body.is-complete .hero{display:block;min-height:calc(100svh - 120px)}
+body.is-complete .hero-copy,body.is-complete .memory-shell{display:none}
+body.is-complete .herbarium{padding:16px 0 40px;margin:0;width:100%}
+.meadow-heading{display:flex;justify-content:space-between;align-items:center;gap:32px;margin-bottom:25px}
+#herbarium-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:calc(clamp(58px,7vw,100px) * var(--text-scale,1));font-weight:400;font-style:italic;line-height:1;letter-spacing:-.03em;margin:0 0 15px;white-space:nowrap}
+#herbarium-count{font-size:calc(17px * var(--text-scale,1));color:var(--muted);margin:0}
+.meadow-heading .result{margin:0;max-width:400px;text-align:right}
+.meadow-heading .result-score{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;margin:0}
+.meadow-heading .result-score strong{font-size:calc(42px * var(--text-scale,1))}
+.meadow-heading .result-score span{font-size:calc(12px * var(--text-scale,1))}
+.meadow-heading #result-detail{margin:4px 0;font-size:calc(14px * var(--text-scale,1));color:var(--muted)}
+.meadow-heading #score-breakdown{max-width:none;margin:7px 0 0}
+.result-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;margin-bottom:20px}
+#copy-status{font-size:calc(13px * var(--text-scale,1));color:var(--accent)}
+.share-text{font-size:calc(clamp(16px,1.4vw,19px) * var(--text-scale,1));font-weight:300;line-height:1.7;max-width:1000px;color:var(--cream);margin:0 0 38px;user-select:text}
+.plant-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:22px}
+.gallery-plant{height:100%;padding:22px;border-radius:18px}
+.gallery-plant img{height:210px;width:100%;object-fit:contain;margin-bottom:20px}
+.gallery-plant h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:calc(30px * var(--text-scale,1));line-height:1.05;margin:0 0 12px;overflow-wrap:anywhere}
+.gallery-plant p{font-size:calc(13px * var(--text-scale,1));line-height:1.6}
+.gallery-plant .other-name{margin:3px 0;color:var(--muted);font-size:calc(12px * var(--text-scale,1))}
+.gallery-plant .plant-fact{margin:20px 0 6px}
+.gallery-plant a{font-size:calc(11px * var(--text-scale,1));line-height:1.5;margin-top:12px}
+.gallery-plant .fact-source{display:flex;margin-top:0}
+@media(max-width:1100px){.plant-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.meadow-heading{display:block}.meadow-heading .result{text-align:left;margin-top:20px}.meadow-heading .result-score{justify-content:flex-start}.plant-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.gallery-plant{padding:16px}.gallery-plant img{height:170px}.gallery-plant h3{font-size:calc(26px * var(--text-scale,1))}.hero-copy>.meadow-note{margin-bottom:28px}}
+@media(max-width:420px){.plant-gallery{grid-template-columns:1fr}.gallery-plant img{height:230px}}
+body.is-complete .herbarium{border:0}
+.gallery-plant .other-name{color:#395441}
+body.is-complete .meadow-heading .result{order:0}
+
+/* Use original artwork silhouettes directly so local-file previews keep their shadows. */
+.botanical-shadows .shadow-stem{opacity:.16}
+.botanical-shadows .shadow-flowers{opacity:.17}
+.botanical-shadows .shadow-leaf{opacity:.10}
+@media(max-width:999px){.botanical-shadows .shadow-stem{opacity:.12}.botanical-shadows .shadow-flowers{opacity:.13}}
+
+/* An unhurried reveal before entering the meadow collection. */
+body.is-revealing .memory-card .card-inner{transition:transform .85s cubic-bezier(.22,.61,.36,1)}
+body.is-revealing .memory-card{pointer-events:none}
+body.is-revealing .game-stats{visibility:hidden}
+body.is-revealing #skip-game{opacity:.55;cursor:default}
+@media(prefers-reduced-motion:reduce){body.is-revealing .memory-card .card-inner{transition:none}}
+
+/* Keep the longer field name on a single line. */
+#title{font-size:calc(clamp(34px,17cqi,104px) * var(--text-scale,1))}
+body.is-playing #title{font-size:calc(clamp(32px,15cqi,86px) * var(--text-scale,1))}
+#herbarium-title{font-size:calc(clamp(44px,7vw,100px) * var(--text-scale,1))}
+
+footer a,.artist-credit a{font-weight:400;text-decoration:none}
+footer a:hover,.artist-credit a:hover{color:var(--flower)}
+footer a:hover{color:var(--accent)}
+
+/* A slow dissolve lets the open cards give way to the collected plants. */
+.memory-shell{transition:opacity 1.5s ease,transform 1.5s cubic-bezier(.22,.61,.36,1)}
+body.is-gallery-transition .memory-shell{opacity:0;transform:translateY(-10px);pointer-events:none}
+body.is-gallery-transition .hero-copy{opacity:.45;transition:opacity 1.5s ease}
+body.is-gallery-transition #skip-game{pointer-events:none}
+#copy-result{font-size:calc(14px * var(--text-scale,1));font-weight:400;color:var(--muted);gap:9px}
+#copy-result:hover{color:var(--accent)}
+#copy-result .lucide{width:17px;height:17px}
+@media(prefers-reduced-motion:reduce){.memory-shell,body.is-gallery-transition .hero-copy{transition:none}}
+
+.plant-links{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-top:14px}
+.gallery-plant .plant-links a{display:inline-flex;margin:0;white-space:nowrap}
+
+:root{--text-scale:1}
+:root.large-text{--text-scale:1.2}
+.font-size-toggle{font-size:18px;min-width:44px;min-height:44px;justify-content:center;border-radius:50%;padding:5px;line-height:1}
+.font-size-toggle[aria-pressed="true"]{color:var(--accent);background:#d4b2e418}
+/* Already-large display names keep their fit; reading text gains twenty percent. */
+#title,#herbarium-title,.brand{--text-scale:1}
+@media(max-width:760px){.header-actions{gap:10px}.font-size-toggle{min-width:40px;min-height:40px}}
+/* Font size changes leave the board's position and card geometry unchanged. */
+.game-topline{min-height:44px}
+.large-text .name-face{gap:5px}
+.gallery-plant{transition:transform .65s cubic-bezier(.22,.61,.36,1),box-shadow .65s ease,background .65s ease}
+@media(hover:hover) and (pointer:fine){.gallery-plant:hover{transform:translateY(-5px);box-shadow:0 16px 36px #02150f28;background:#f8edd2}}
+.gallery-plant:focus-within{box-shadow:0 0 0 2px var(--accent)}
+@media(prefers-reduced-motion:reduce){.gallery-plant{transition:none}.gallery-plant:hover{transform:none}}
+
+/* Source credit shares the regular description size and contrast. */
+dialog .dialog-source{font-size:calc(14px * var(--text-scale,1));line-height:1.65;opacity:1}
+
+.dialog-close{top:10px;right:12px;min-width:44px;min-height:44px;display:grid;place-items:center;padding:10px;z-index:1}
+
+/* All language rows share the same readable size and contrast. */
+.gallery-plant .lv-name,.gallery-plant .other-name{font-size:calc(12px * var(--text-scale,1));font-weight:400;line-height:1.6;color:var(--ink);opacity:1}
+
+/* Keep reference links aligned at the foot of each gallery card. */
+.plant-gallery{align-items:stretch}
+.gallery-plant{display:flex;flex-direction:column}
+.gallery-plant>img{flex-shrink:0}
+.gallery-plant .plant-links{margin-top:auto;padding-top:14px}
+
+/* Keep the RG signature in the footer and the controls above the game. */
+.site-header{justify-content:flex-end}
+footer .brand{font-size:18px;gap:8px;letter-spacing:-.4px;font-weight:700}
+footer .brand img{width:28px;height:28px}
+footer{min-height:44px;height:auto}
+footer::before{content:"";position:absolute;top:0;left:clamp(22px,4.5vw,72px);right:clamp(22px,4.5vw,72px);height:1px;background:linear-gradient(90deg,transparent,#d4b2e438 15%,#d4b2e438 85%,transparent);pointer-events:none}
+@media(max-width:760px){footer .brand{font-size:17px}footer .brand img{width:26px;height:26px}}

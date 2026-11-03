@@ -1,0 +1,264 @@
+{
+  "checked": "2026-11-03",
+  "links": [
+    {
+      "id": "asinszale",
+      "nameLv": "asinszāle",
+      "url": "https://www.latvijasdaba.lv/augi/hypericum-perforatum-l/",
+      "kind": "species",
+      "note": "Divšķautņu asinszāles apraksts; avotā norādīts Hypericum sp."
+    },
+    {
+      "id": "devinviruspeks",
+      "nameLv": "deviņvīruspēks",
+      "url": "https://www.latvijasdaba.lv/augi/verbascum-thapsus-l/",
+      "kind": "species",
+      "note": "Parastā deviņvīruspēka apraksts; avotā dots vispārīgais nosaukums."
+    },
+    {
+      "id": "dzeltena-smarzilzite",
+      "nameLv": "dzeltenā smaržilzīte",
+      "url": "https://www.latvijasdaba.lv/augi/anthemis-tinctoria-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "dzirkstelite",
+      "nameLv": "dzirkstelīte",
+      "url": "https://www.latvijasdaba.lv/augi/dianthus-deltoides-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "eiropas-saulpurene",
+      "nameLv": "Eiropas saulpurene",
+      "url": "https://www.latvijasdaba.lv/augi/trollius-europaeus-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "efeju-setlozna",
+      "nameLv": "efeju sētložņa",
+      "url": "https://www.latvijasdaba.lv/augi/glechoma-hederacea-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "gandrene",
+      "nameLv": "gandrene",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/geraniaceae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    },
+    {
+      "id": "gailbiksite",
+      "nameLv": "gaiļbiksīte",
+      "url": "https://www.latvijasdaba.lv/augi/primula-veris-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "grislis",
+      "nameLv": "grīslis",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/cyperaceae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    },
+    {
+      "id": "lauka-kokalis",
+      "nameLv": "lauka kokalis",
+      "url": "https://www.latvijasdaba.lv/augi/agrostemma-githago-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "liela-celteka",
+      "nameLv": "lielā ceļteka",
+      "url": "https://www.latvijasdaba.lv/augi/plantago-major-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "liela-natre",
+      "nameLv": "lielā nātre",
+      "url": "https://www.latvijasdaba.lv/augi/urtica-dioica-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "narbulis",
+      "nameLv": "nārbulis",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/scrophulariaceae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    },
+    {
+      "id": "matainais-abolins",
+      "nameLv": "matainais āboliņš",
+      "url": "https://www.latvijasdaba.lv/augi/trifolium-arvense-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "mallepe",
+      "nameLv": "māllēpe",
+      "url": "https://www.latvijasdaba.lv/augi/tussilago-farfara-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "marsils",
+      "nameLv": "mārsils",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/labiatae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    },
+    {
+      "id": "pamislapu-pakreslite",
+      "nameLv": "pamīšlapu pakrēslīte",
+      "url": "https://www.latvijasdaba.lv/augi/chrysosplenium-alternifolium-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "parastais-biskreslins",
+      "nameLv": "parastais biškrēsliņš",
+      "url": "https://www.latvijasdaba.lv/augi/tanacetum-vulgare-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "parastais-pelaskis",
+      "nameLv": "parastais pelašķis",
+      "url": "https://www.latvijasdaba.lv/augi/achillea-millefolium-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "parastais-rasaskreslins",
+      "nameLv": "parastais rasaskrēsliņš",
+      "url": "https://www.latvijasdaba.lv/augi/alchemilla-vulgaris-l-sl/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "parasta-margrietina",
+      "nameLv": "parastā margrietiņa",
+      "url": "https://www.latvijasdaba.lv/augi/leucanthemum-vulgare-lam/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "parasta-vigrieze",
+      "nameLv": "parastā vīgrieze",
+      "url": "https://www.latvijasdaba.lv/augi/filipendula-ulmaria-l-maxim/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "plaukskene",
+      "nameLv": "plaukšķene",
+      "url": "https://www.latvijasdaba.lv/augi/silene-vulgaris-moench-garcke/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "plavas-bitene",
+      "nameLv": "pļavas bitene",
+      "url": "https://www.latvijasdaba.lv/augi/geum-rivale-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "plavas-dzelzene",
+      "nameLv": "pļavas dzelzene",
+      "url": "https://www.latvijasdaba.lv/augi/centaurea-jacea-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "plavas-plaukskene",
+      "nameLv": "pļavas plaukšķene",
+      "url": "https://www.latvijasdaba.lv/augi/coronaria-flos-cuculi-l-abraun/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "purva-atalene",
+      "nameLv": "purva atālene",
+      "url": "https://www.latvijasdaba.lv/augi/parnassia-palustris-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "rudzupuke",
+      "nameLv": "rudzupuķe",
+      "url": "https://www.latvijasdaba.lv/augi/centaurea-cyanus-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "spilve",
+      "nameLv": "spilve",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/cyperaceae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    },
+    {
+      "id": "sunu-vijolite",
+      "nameLv": "suņu vijolīte",
+      "url": "https://www.latvijasdaba.lv/augi/viola-canina-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "tiruma-kosa",
+      "nameLv": "tīruma kosa",
+      "url": "https://www.latvijasdaba.lv/augi/equisetum-arvense-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "tiruma-peterene",
+      "nameLv": "tīruma pēterene",
+      "url": "https://www.latvijasdaba.lv/augi/knautia-arvensis-l-coult/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "tiruma-zilausis",
+      "nameLv": "tīruma zilausis",
+      "url": "https://www.latvijasdaba.lv/augi/consolida-regalis-gray/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "trejkrasu-atraitnite",
+      "nameLv": "trejkrāsu atraitnīte",
+      "url": "https://www.latvijasdaba.lv/augi/viola-tricolor-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "vermele",
+      "nameLv": "vērmele",
+      "url": "https://www.latvijasdaba.lv/augi/artemisia-absinthium-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "vibotne",
+      "nameLv": "vībotne",
+      "url": "https://www.latvijasdaba.lv/augi/artemisia-vulgaris-l/",
+      "kind": "species",
+      "note": ""
+    },
+    {
+      "id": "zvagulis",
+      "nameLv": "zvagulis",
+      "url": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/scrophulariaceae/",
+      "kind": "family",
+      "note": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    }
+  ]
+}
