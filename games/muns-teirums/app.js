@@ -253,6 +253,25 @@ function finishToGallery(skipped) {
   }
 }
 
+function returnToStart() {
+  cancelReveal();
+  clearTimeout(mismatchTimeout); clearTimeout(finishTimeout); pauseTimer();
+  elapsed = 0; runningSince = null; game = null; mode = 'preview';
+  document.body.classList.remove('is-playing', 'is-complete', 'is-gallery-transition');
+  $('herbarium').hidden = true; $('result').hidden = true;
+  $('restart-game').hidden = true; $('start-game').hidden = false;
+  $('start-game').firstChild.textContent = t('01.06') + ' ';
+  $('board-title').textContent = t('01.09');
+  $('board-kicker').hidden = true;
+  $('game-status').textContent = '';
+  $('game-stats').hidden = false;
+  $('score').textContent = '0'; $('moves').textContent = '0'; $('timer').textContent = '00:00';
+  $('copy-status').textContent = ''; shareText = '';
+  preview();
+  $('start-game').focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+}
+
 function preview() {
   updateSizeInfo();
   grid.classList.add('preview');
@@ -291,7 +310,7 @@ function buildGallery() {
 }
 
 $('start-game').addEventListener('click', startGame);
-$('restart-game').addEventListener('click', startGame);
+$('restart-game').addEventListener('click', returnToStart);
 $('skip-game').addEventListener('click', () => {
   if (['revealing', 'transitioning', 'complete'].includes(mode)) return;
   if (mode === 'preview') startGame();
@@ -327,7 +346,7 @@ for (const option of ['time', 'points']) {
     else startGame();
   });
 }
-$('new-meadow').addEventListener('click', startGame);
+$('new-meadow').addEventListener('click', returnToStart);
 document.querySelectorAll('[data-icon]').forEach(node => { node.innerHTML = icons[node.dataset.icon]; });
 $('copy-result').addEventListener('click', async () => {
   let copied = false;
