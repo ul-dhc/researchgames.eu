@@ -1,4 +1,4 @@
-import {normalizeVisits,mergeVisits,VISIT_GAMES,VISIT_PERIODS} from './visits.js';
+import {normalizeVisits,mergeVisits,VISIT_GAMES,VISIT_PERIODS} from './visits.js?v=20261103-2';
 const URL='https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/visits.json';
 const KEY='rg-visits-v1';
 let model;
@@ -46,7 +46,8 @@ function remember(incoming){
 async function refresh(){
   if(document.hidden)return;
   let failed=false;
-  try{const r=await fetch(URL,{signal:AbortSignal.timeout(10000),cache:'no-store'});if(!r.ok)throw new Error();remember(normalizeVisits(await r.json()));}
+  const url=new URL(URL);url.searchParams.set('t',String(Date.now()));
+  try{const r=await fetch(url,{signal:AbortSignal.timeout(10000),cache:'no-store'});if(!r.ok)throw new Error();remember(normalizeVisits(await r.json()));}
   catch{failed=true;}
   if(failed||VISIT_PERIODS.some(period=>Object.keys(VISIT_GAMES).some(id=>!model?.periods[period]?.[id]))){try{const r=await fetch(new URL('./visits.json',import.meta.url),{signal:AbortSignal.timeout(3000)});if(r.ok)remember(normalizeVisits(await r.json()));}catch{}}
   renderVisits();

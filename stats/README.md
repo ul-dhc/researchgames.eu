@@ -116,7 +116,10 @@ when adding or renaming games. Test with `node --test stats/tests/visits.test.mj
 
 Deployment record: GoatCounter email verified and the scoped Read statistics token
 stored as the repository Actions secret on 2026-11-03. Livonian dashboard deployment
-updated from v24 to **v25**; Riddle Grid dashboard deployment updated from v31 to
-**v32**. Existing deployment URLs and access settings were retained. The riddle
+updated from v24 to **v26**; Riddle Grid dashboard deployment updated from v31 to
+**v33**. Existing deployment URLs and access settings were retained. The riddle
 receiver deployment was not changed. The legacy Apps Script riddle dashboard keeps
 its existing 30-day default; the website dashboard keeps its all-time default.
+
+The shared visits script uses a cache-busting request for the public snapshot,
+so a previously cached missing or incomplete first snapshot does not delay recovery.
