@@ -54,6 +54,23 @@ const state = {
 };
 
 const el = id => document.getElementById(id);
+let nextRiddleTimer = null;
+
+function clearAutoAdvance() {
+  clearTimeout(nextRiddleTimer);
+  nextRiddleTimer = null;
+}
+
+function scheduleAutoAdvance() {
+  if (!window.matchMedia('(max-width: 860px)').matches) return;
+  clearAutoAdvance();
+  const index = state.index;
+  const riddles = state.riddles;
+  nextRiddleTimer = setTimeout(() => {
+    if (state.solved && state.index === index && state.riddles === riddles) nextRiddle();
+  }, 2400);
+}
+
 
 function shuffle(items) {
   const result = [...items];
@@ -270,6 +287,7 @@ function updateCompletedRiddleState() {
     arrow
   );
   button.hidden = false;
+  el('game-screen').classList.add('riddle-complete');
 }
 
 function solveRiddle() {
@@ -289,6 +307,7 @@ function solveRiddle() {
   el('surrender-button').disabled = true;
   updateCompletedRiddleState();
   celebrate();
+  scheduleAutoAdvance();
 }
 
 function useHint() {
@@ -334,6 +353,9 @@ function surrenderRiddle() {
 }
 
 function renderRiddle() {
+  clearAutoAdvance();
+  el('game-screen').classList.remove('riddle-complete');
+  state.dragging = false;
   const riddle = state.riddles[state.index];
   state.solved = false;
   state.hintsUsed = 0;
@@ -366,15 +388,19 @@ function startGame() {
 }
 
 function nextRiddle() {
+  if (!state.solved) return;
+  clearAutoAdvance();
   if (state.index >= GAME_LENGTH - 1) {
     finishGame();
     return;
   }
   state.index += 1;
   renderRiddle();
+  if (window.matchMedia('(max-width: 860px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function finishGame() {
+  clearAutoAdvance();
   el('progress-fill').style.width = '100%';
   el('result-title').textContent = RESULT_TITLES[Math.floor(Math.random() * RESULT_TITLES.length)];
   renderWorldProgress('result-world', state.solvedCount);

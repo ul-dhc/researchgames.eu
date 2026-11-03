@@ -1312,6 +1312,7 @@ function completeRiddle() {
   setStatus(`Pareizi! +${awardedPoints} punkti${bonusText} ✓`, 'win');
   document.getElementById('give-up-btn').disabled = true;
   document.getElementById('hint-btn').disabled = true;
+  document.getElementById('shuffle-btn').disabled = true;
   setNextEnabled(true);
   if (state.gameMode !== 'daily' && state.gameMode !== 'party') saveProgress();
   recordCompletedRiddleForSession();
@@ -1376,6 +1377,7 @@ function giveUp() {
   setStatus('Atminējums atklāts. 0 punkti.', 'lose');
   document.getElementById('hint-btn').disabled = true;
   document.getElementById('give-up-btn').disabled = true;
+  document.getElementById('shuffle-btn').disabled = true;
   setNextEnabled(true);
   if (state.gameMode === 'party') recordPartyTurn(false, 0);
   if (state.gameMode === 'daily') {
@@ -1765,6 +1767,7 @@ function loadRiddle() {
 
   document.getElementById('give-up-btn').disabled = false;
   document.getElementById('hint-btn').disabled = false;
+  document.getElementById('shuffle-btn').disabled = false;
   setNextEnabled(false);
 }
 

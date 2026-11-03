@@ -862,3 +862,22 @@ footer a:hover {
     gap: 4px;
   }
 }
+
+/* Keep the next action in reach on phones; preserve finger-drag word selection. */
+@media (max-width: 860px) {
+  .change-variant, footer { display: none; }
+  main { min-height: calc(100svh - 68px); }
+  .play-area { order: 4; gap: 12px; }
+  .actions { grid-row: 1; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .secondary-button { min-height: 48px; padding-inline: 10px; }
+  .grid-wrap { grid-row: 2; }
+  .message { order: 3; min-height: 0; margin: 6px auto 10px; }
+  .message:empty { display: none; }
+  .next-button {
+    position: fixed; left: 12px; right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    width: calc(100% - 24px); margin: 0; z-index: 15;
+    min-height: 54px;
+  }
+  .riddle-complete { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+}
