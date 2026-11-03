@@ -1,8 +1,7 @@
 import {VISIT_PAGES} from './visits.js?v=20261103-timeline-1';
 const DAY=86400000;
 // Daily dates come from GoatCounter. Keep its complete first/last reporting days.
-export function buildVisitTimeline(entries,period,names,totalName){
- const ids=Object.keys(VISIT_PAGES);
+export function buildVisitTimeline(entries,period,names,totalName,ids=Object.keys(VISIT_PAGES)){
  const histories=ids.map(id=>entries?.[id]).filter(entry=>Array.isArray(entry?.timeline)&&entry.timelineStart&&entry.timelineEnd);
  if(!histories.length)return {dates:[],games:[]};
  const end=histories.map(entry=>entry.timelineEnd).sort().at(-1);
@@ -18,5 +17,5 @@ export function buildVisitTimeline(entries,period,names,totalName){
  });
  const complete=games.every(game=>game.values!==null);
  const total={id:'total',name:totalName,values:complete?dates.map((_,index)=>games.reduce((sum,game)=>sum+game.values[index],0)):null};
- return {dates,games:[total,...games]};
+ return {dates,games:ids.length===1?games:[total,...games]};
 }

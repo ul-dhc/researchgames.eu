@@ -2,7 +2,7 @@ import {readFile,writeFile,rename} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {VISIT_PAGES,VISIT_PERIODS,normalizeVisits,visitRange} from '../visits.js';
 const API = 'https://researchgames.goatcounter.com/api/v0/stats/hits';
-export async function requestVisitSeries(paths, range, token, fetcher=fetch) {
+export async function requestVisitSeries(paths, range, token, fetcher=fetch, expectedEvent=false) {
   if (!token) throw new Error('GOATCOUNTER_API_TOKEN is not configured');
   let visits=0, complete=true, timelineStart, timelineEnd;
   const days=new Map();
@@ -24,7 +24,7 @@ export async function requestVisitSeries(paths, range, token, fetcher=fetch) {
     }
     if (!Array.isArray(raw.hits) || raw.more !== false) throw new Error('Incomplete GoatCounter result');
     for (const hit of raw.hits) {
-      if (hit.event || hit.path !== path || !Number.isSafeInteger(hit.count) || hit.count < 0) throw new Error('Unexpected GoatCounter path/count');
+      if (Boolean(hit.event) !== expectedEvent || hit.path !== path || !Number.isSafeInteger(hit.count) || hit.count < 0) throw new Error('Unexpected GoatCounter path/count');
       visits += hit.count;
       if (!Array.isArray(hit.stats)) { complete=false; continue; }
       let sum=0;const seen=new Set();

@@ -29,7 +29,7 @@ Pulksteņa un zvaigznes Lucide pogas neatkarīgi ieslēdz laika un punktu skait�
 
 Laiks apstājas, kad lapa nav redzama vai atvērts apraksta dialogs. Nesakritība ir redzama 0.9 sekundes; vienas kārts atkārtots klikšķis nav jauns gājiens. Punktu formula ir izskaidrota dialogā atbilstoši ieslēgtajām opcijām; sākumlapā nav punktu skaidrojuma vai kāršu skaita/ilguma kopsavilkuma.
 
-Spēle neraksta datus serverī. Beigu galerija satur attiecīgās spēles augus, to nosaukumus un saites uz Tēzauru. Saskarne latviski; latgaliskie nosaukumi atzīmēti ar `lang="ltg"`.
+Spēles saturs un gaita darbojas pārlūkā. No 2026-11-03 esošais GoatCounter saņem arī anonīmus spēlēšanas notikumu skaitītājus; skat. uzskaiti zemāk. Beigu galerija satur attiecīgās spēles augus, to nosaukumus un saites uz Tēzauru. Saskarne latviski; latgaliskie nosaukumi atzīmēti ar `lang="ltg"`.
 
 ## Pārbaude
 
@@ -65,3 +65,24 @@ Informācijas logu var aizvērt arī ar klikšķi ārpus tā. Galerijas kārtīm
 ## Latgaliskā saskarne
 
 Saskarnē izmantots 61 lietotājas aizpildītais tulkojums no `Muns_teirums_saskarnes_teksti_LV_LTG.docx`. `translations.mjs` saglabā abu aiļu tekstus un stabilos ierakstu ID; tukšiem tulkojumiem paliek dokumentā dotais latviskais teksts. Augu nosaukumi un svešvalodu datu lauki nav pārveidoti. Pārdēvētie vietturi `{augu skaits}` un `{vuords}` sasaistīti ar augu skaitu un nosaukumu. Laika un punktu teksti izmanto tieši dokumentā norādītās formas. Statiskā sākumlapa un parastais skripts tiek veidoti no viena teksta avota.
+
+
+## Gameplay analytics — 2026-11-03
+
+Series dashboard: `/stats/latgalian.html`; game-specific shortcut:
+`/games/muns-teirums/stats/`. Linked from the shared `/stats/` overview.
+
+`analytics.mjs` emits only `start`, `complete`, `skip` counters to the existing
+GoatCounter script. Versioned event names encode game, 6/8/10 pairs, time on/off,
+and points on/off. No player/session IDs, answers, plant selections, scores,
+durations or free text are sent. `no_session:true` counts replays independently;
+the browser state prevents duplicate starts, completions or skips within a game.
+A start is the first valid card flip, completion the final match, and a skip the
+skip button (also before the first card). Restarting without a flip adds no event.
+An in-memory queue waits for the existing analytics script; no durable retry or
+claim of exactly-once delivery is made. Blockers/offline use may reduce counts.
+
+Rebuild `bundle.js` after changing `analytics.mjs` or `app.js` with
+`node games/muns-teirums/scripts/build.mjs` from the repository root.
+Tests: `node --test games/muns-teirums/tests/*.test.mjs stats/tests/*.test.mjs`.
+Historical games cannot be reconstructed. Counting begins at deployment.

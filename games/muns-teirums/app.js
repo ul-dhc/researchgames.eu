@@ -1,3 +1,4 @@
+import { createPlantAnalytics } from './analytics.mjs';
 // Adapted from the RG landing page's memory-game.js: paired cards, two flips,
 // a mismatch lock, shuffled replay, progress and an end state.
 import { t } from './translations.mjs';
@@ -5,6 +6,15 @@ import { plants } from './plants.js';
 import { icons } from './icons.js';
 import { makeDeck, createGame, selectCard, resolveMismatch, scoreFor, sampleMeadow, timeBonusFor, shareResultFor } from './game-model.mjs';
 
+// Keep a small in-memory queue while the existing GoatCounter script loads.
+const plantEvents=[];
+const analytics=createPlantAnalytics(event=>{plantEvents.push(event);flushPlantEvents();});
+function flushPlantEvents(){
+  if(typeof window.goatcounter?.count!=='function')return;
+  while(plantEvents.length)window.goatcounter.count(plantEvents.shift());
+}
+const analyticsWait=setInterval(flushPlantEvents,1000);
+setTimeout(()=>clearInterval(analyticsWait),30000);
 const $ = id => document.getElementById(id);
 const grid = $('memory-grid');
 // Move the existing controls, preserving their state and keyboard behavior.
@@ -155,6 +165,7 @@ function flip(index) {
   if (mode !== 'playing') return;
   const event = selectCard(game, index);
   if (event.type === 'ignored') return;
+  analytics.start();
   startTimer(); setFace(index, true);
   if (event.type === 'first') {
     $('game-status').textContent = t('02.05');
@@ -165,6 +176,7 @@ function flip(index) {
     event.indices.forEach(i => setFace(i, true, true));
     $('game-status').textContent = `${settings.points ? '+100 · ' : ''}${t('02.06', { latgaliskais_nosaukums: event.plant.namesLtg[0], latviskais_nosaukums: event.plant.nameLv })}`;
     if (event.complete) {
+      analytics.complete();
       mode = 'finishing'; pauseTimer();
       $('timer').textContent = time(currentSeconds());
       finishTimeout = setTimeout(finish, 1250);
@@ -190,6 +202,7 @@ function startGame() {
   previousMeadow = meadow.map(p => p.id);
   try { localStorage.setItem('rg-plant-last-meadow', JSON.stringify(previousMeadow)); } catch { /* Optional persistence. */ }
   game = createGame(makeDeck(meadow));
+  analytics.reset(pairCount,settings);
   updateSizeInfo();
   buildGallery();
   document.body.classList.add('is-playing'); document.body.classList.remove('is-complete');
@@ -312,8 +325,9 @@ function buildGallery() {
 $('start-game').addEventListener('click', startGame);
 $('restart-game').addEventListener('click', returnToStart);
 $('skip-game').addEventListener('click', () => {
-  if (['revealing', 'transitioning', 'complete'].includes(mode)) return;
+  if (['finishing', 'revealing', 'transitioning', 'complete'].includes(mode)) return;
   if (mode === 'preview') startGame();
+  analytics.skip();
   clearTimeout(mismatchTimeout); clearTimeout(finishTimeout); pauseTimer();
   mode = 'revealing';
   document.body.classList.add('is-revealing');
