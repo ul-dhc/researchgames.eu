@@ -166,7 +166,7 @@ Audience layout: countries and browser languages show the five most frequent val
 
 ## Page-visit timeline
 
-The top of the overview, directly below the title/period controls and above the section navigation, renders a daily line chart: total, ResearchGames.eu landing page, Mīklu režģis, Lībiešu vietvārdi, Muns teirums and the cell game. Series order/colors are fixed in `visit-timeline.js` and the scoped `.visit-timeline-panel` CSS. Dark/light themes, LV/EN labels, keyboard day selection and touch inspection use the shared timeline renderer. Each chart has its own help-text ID.
+The top of the overview, directly below the title/period controls and above the section navigation, renders a daily line chart: total, ResearchGames.eu landing page, Mīklu režģis, Lībiešu vietvārdi, Muns teirums and the cell game. Mīklu režģis and Lībiešu vietvārdi retain their gameplay-chart colors. Series order/colors are fixed in `visit-timeline.js` and the scoped `.visit-timeline-panel` CSS. Dark/light themes, LV/EN labels, keyboard day selection and touch inspection use the shared timeline renderer. Each chart has its own help-text ID.
 
 The existing GoatCounter hits requests already ask for daily data. `requestVisitSeries` now validates and combines each exact path’s daily values, retaining only nonzero `{date, visits}` records and the source’s reporting-day bounds. The daily sum must match the visit count. Dates follow GoatCounter’s daily grouping; range filters still use the established Riga start/end times. All-time rendering starts at the first observed visit, rather than the API’s year-2000 query boundary. Bounded periods retain quiet days, including partial reporting boundary days.
 

@@ -63,6 +63,7 @@ function renderVisitTimelines(){
     const series=buildVisitTimeline(entries,period,names[lang],t.total);
     if(!series.dates.length){const empty=document.createElement('p');empty.className='empty';empty.textContent=t.timelineUnavailable;chart.append(empty);return;}
     renderTimeline(chart,series,lang);
+    chart.querySelector('svg')?.setAttribute('aria-label',lang==='lv'?'Diena lapas apmeklējumu grafikā':'Day on page-visits timeline');
     if(!series.games[0].values){const partial=document.createElement('p');partial.className='visit-timeline-note';partial.textContent=t.timelinePartial;root.append(partial);}
     if(Object.values(entries).some(entry=>entry.failed||Date.now()-Date.parse(entry.fetchedAt)>20*60000)){const saved=document.createElement('p');saved.className='visit-timeline-note';saved.textContent=t.saved;root.append(saved);}
   });
@@ -71,18 +72,27 @@ function remember(incoming){
   model=mergeVisits(model,incoming);
   try{localStorage.setItem(KEY,JSON.stringify(model));}catch{}
 }
+async function readFallback(){
+  try{const response=await fetch(new URL('./visits.json',import.meta.url),{signal:AbortSignal.timeout(3000)});if(response.ok){remember(normalizeVisits(await response.json()));renderVisits();}}catch{}
+}
 async function refresh(){
   if(document.hidden)return;
+  const needsHistory=document.querySelectorAll('[data-rg-visit-timeline]').length>0;
+  const incomplete=()=>VISIT_PERIODS.some(period=>Object.keys(VISIT_PAGES).some(id=>!model?.periods[period]?.[id]||(needsHistory&&!Array.isArray(model?.periods[period]?.[id]?.timeline))));
+  // Render bundled daily data immediately on a cold visit while the live snapshot loads.
+  const initialFallback=needsHistory&&incomplete()?readFallback():null;
   let failed=false;
   const url=new URL(SNAPSHOT_URL);url.searchParams.set('t',String(Date.now()));
   try{const r=await fetch(url,{signal:AbortSignal.timeout(10000),cache:'no-store'});if(!r.ok)throw new Error();remember(normalizeVisits(await r.json()));}
   catch{failed=true;}
-  if(failed||VISIT_PERIODS.some(period=>Object.keys(VISIT_PAGES).some(id=>!model?.periods[period]?.[id]))){try{const r=await fetch(new URL('./visits.json',import.meta.url),{signal:AbortSignal.timeout(3000)});if(r.ok)remember(normalizeVisits(await r.json()));}catch{}}
+  if(failed||incomplete())await(initialFallback||readFallback());
+  else if(initialFallback)await initialFallback;
   renderVisits();
 }
 document.addEventListener('change',event=>{if(event.target.matches('select'))renderVisits();});
 // Overview switches language without reloading the page.
 new MutationObserver(renderVisits).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 document.addEventListener('visibilitychange',refresh);
+document.getElementById('refresh')?.addEventListener('click',refresh);
 setInterval(refresh,300000);
 renderVisits();refresh();

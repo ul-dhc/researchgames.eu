@@ -74,13 +74,13 @@ test('landing and active game visits stay separate, with UL excluded',async()=>{
 
 test('browser refresh requests the public snapshot with a cache-busting URL',async()=>{
  const {snapshot}=await collectVisits(null,async()=>5,now);
- const requests=[];
+ const requests=[];let clickRefresh;
  const source=(await readFile(new URL('../visits-ui.js',import.meta.url),'utf8'))
    .replace(/^import .*;\n/gm,'').replace('export function renderVisits','function renderVisits')
    .replaceAll('import.meta.url',JSON.stringify('https://researchgames.eu/stats/visits-ui.js'));
  const context={URL,Date,Intl,AbortSignal,normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS:['all','90d','30d','7d'],
    localStorage:{getItem:()=>null,setItem(){}},setInterval(){},
-   document:{hidden:false,documentElement:{lang:'lv'},querySelectorAll:()=>[],addEventListener(){}},
+   document:{hidden:false,documentElement:{lang:'lv'},querySelectorAll:()=>[],getElementById:id=>id==='refresh'?{addEventListener:(event,listener)=>{if(event==='click')clickRefresh=listener;}}:null,addEventListener(){}},
    MutationObserver:class{observe(){}},
    fetch:async url=>{requests.push(String(url));return {ok:true,json:async()=>snapshot};}};
  vm.runInNewContext(source,context);
@@ -89,4 +89,6 @@ test('browser refresh requests the public snapshot with a cache-busting URL',asy
  const url=new URL(requests[0]);
  assert.equal(url.origin,'https://raw.githubusercontent.com');
  assert.ok(url.searchParams.has('t'));
+ await clickRefresh();
+ assert.equal(requests.length,2);
 });
