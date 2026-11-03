@@ -88,3 +88,25 @@ test('failed daily riddle check leaves the last successful check unchanged and r
  await updateData(dir,request,{refreshRiddles:false,now});await updateData(dir,request,{refreshRiddles:false,now:now+300000});
  assert.equal(attempts,2);assert.deepEqual(JSON.parse(await readFile(dir+'/riddles-refresh.json','utf8')),check);
 });
+
+test('delayed static publication falls back to fresh public analytics and never regresses',async()=>{
+ const source=await readFile(new URL('../stats/snapshot-loader.js',import.meta.url),'utf8');
+ const old=Model.build(sessions,evaluations,questions,new Date(Date.now()-3600000).toISOString());
+ const fresh={...old,generatedAt:new Date().toISOString()},calls=[],updates=[];
+ const context=vm.createContext({Date,RiddleSnapshot:Model,AbortSignal,localStorage:{getItem:()=>null,setItem(){}},fetch:async url=>{calls.push(url);return {ok:true,json:async()=>url.includes('script.google.com')?fresh:old};}});
+ vm.runInContext(source,context);context.notify=d=>updates.push(d.generatedAt);
+ assert.equal((await vm.runInContext('DashboardSnapshot.load(notify)',context)).generatedAt,fresh.generatedAt);
+ assert.deepEqual(updates,[old.generatedAt]);
+ assert.equal((await vm.runInContext('DashboardSnapshot.refresh()',context)).generatedAt,fresh.generatedAt);
+ assert.equal(calls.filter(u=>u.includes('script.google.com')).length,1);
+});
+
+test('failed live fallback keeps saved data and limits retries',async()=>{
+ const source=await readFile(new URL('../stats/snapshot-loader.js',import.meta.url),'utf8');
+ const old=Model.build(sessions,evaluations,questions,new Date(Date.now()-3600000).toISOString());let attempts=0;
+ const context=vm.createContext({Date,RiddleSnapshot:Model,AbortSignal,localStorage:{getItem:()=>JSON.stringify(old),setItem(){}},fetch:async url=>{if(url.includes('script.google.com')){attempts++;throw new Error('offline');}return {ok:true,json:async()=>old};}});
+ vm.runInContext(source,context);await vm.runInContext('DashboardSnapshot.load()',context);
+ assert.equal((await vm.runInContext('DashboardSnapshot.refresh()',context)).generatedAt,old.generatedAt);
+ await vm.runInContext('DashboardSnapshot.refresh()',context);assert.equal(attempts,1);
+ assert.equal(vm.runInContext('DashboardSnapshot.stale()',context),true);
+});

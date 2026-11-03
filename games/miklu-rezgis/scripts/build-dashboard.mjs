@@ -3,7 +3,7 @@ import {pathToFileURL} from 'node:url';
 const root=new URL('../',import.meta.url);
 export async function buildDashboard(){
  let html=await readFile(new URL('apps-script/Dashboard.html',root),'utf8');
- html=html.replace('  <base target="_top">\n','').replace('  <script src="https://www.gstatic.com/charts/loader.js"></script>','  <script src="https://www.gstatic.com/charts/loader.js"></script>\n  <script src="snapshot-model.js?v=20261029-json-1"></script>\n  <script src="snapshot-loader.js?v=20261029-json-1"></script>');
+ html=html.replace('  <base target="_top">\n','').replace('  <script src="https://www.gstatic.com/charts/loader.js"></script>','  <script src="https://www.gstatic.com/charts/loader.js"></script>\n  <script src="snapshot-model.js?v=20261029-json-1"></script>\n  <script src="snapshot-loader.js?v=20261103-refresh-1"></script>');
  html=html.replace('      loadData();\n    });', '      if (dashboardData) renderCharts(dashboardData);\n    });');
  const start=html.indexOf('    function loadData() {'),end=html.indexOf('    function renderDashboard(data)',start);
  if(start<0||end<0)throw new Error('Dashboard template changed');
@@ -31,11 +31,13 @@ export async function buildDashboard(){
           : 'Datus neizdevās ielādēt. Lūdzu, mēģiniet vēlāk.', true);
       }
     }
-    setInterval(async function() {
+    async function refreshVisibleData() {
       if (document.hidden) return;
       try { snapshotModel = await DashboardSnapshot.refresh(); loadData(); }
       catch (error) { snapshotNotice(); }
-    }, 300000);
+    }
+    setInterval(refreshVisibleData, 300000);
+    document.addEventListener('visibilitychange', refreshVisibleData);
 
 `+html.slice(end);
  html=html.replace('  </script>\n</body>', '    loadData();\n  </script>\n</body>');

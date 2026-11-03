@@ -7,7 +7,7 @@
   <title>Mīklu režģis – pētniecības dati</title>
   <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="snapshot-model.js?v=20261029-json-1"></script>
-  <script src="snapshot-loader.js?v=20261029-json-1"></script>
+  <script src="snapshot-loader.js?v=20261103-refresh-1"></script>
   <style>
     :root {
       color-scheme: dark;
@@ -777,11 +777,13 @@ SOFTWARE.
           : 'Datus neizdevās ielādēt. Lūdzu, mēģiniet vēlāk.', true);
       }
     }
-    setInterval(async function() {
+    async function refreshVisibleData() {
       if (document.hidden) return;
       try { snapshotModel = await DashboardSnapshot.refresh(); loadData(); }
       catch (error) { snapshotNotice(); }
-    }, 300000);
+    }
+    setInterval(refreshVisibleData, 300000);
+    document.addEventListener('visibilitychange', refreshVisibleData);
 
     function renderDashboard(data) {
       dashboardData = data;

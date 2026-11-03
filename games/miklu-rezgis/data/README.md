@@ -1,8 +1,9 @@
 # Static data delivery
 
 Google Sheets remains the editing and collection system. The game reads static
-`riddles.json`; the detailed dashboard reads `miklu-dashboard.json`. Neither
-visitor-facing read path calls Sheets or Apps Script. Game submissions retain the
+`riddles.json`; the detailed dashboard reads `miklu-dashboard.json`. The game does not call Sheets or Apps Script for content. The dashboard uses
+the public aggregate Apps Script export as a fallback when its static JSON is
+older than five minutes. Game submissions retain the
 existing durable local queue and Apps Script receiver.
 
 ## Refresh and publication
@@ -23,7 +24,12 @@ copy or a newer saved copy, finally its existing built-in emergency data. Files
 can use ordinary HTTP caching. Data collection failures and older responses keep
 the previous valid version. Content must have unique IDs and all ten levels.
 
-The detailed dashboard updates visible data every five minutes and filters locally.
+The detailed dashboard checks visible data every five minutes and on returning to
+the tab, and filters locally. Stale static data triggers a public aggregate export
+request (at most once per five minutes per open page); saved data stays visible
+while it loads. Failed requests retain the newest valid snapshot. This keeps the
+dashboard independent of delayed GitHub schedules without adding requests during
+gameplay or changing the riddle content.
 The displayed update time belongs to the data, not the page load. Failed refreshes
 and snapshots older than 20 minutes show a saved-data notice. Its local filters
 use calendar dates in Europe/Riga, including the partial first day of each period.
