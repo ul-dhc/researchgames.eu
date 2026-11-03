@@ -181,3 +181,5 @@ The shared gameplay-session chart follows the same highlighter treatment: rounde
 ## Overview text size (A+)
 
 The main overview header offers A+ with three sizes: normal (100%), enlarged (118%) and large (135%). Radio controls work with keyboard arrows; Escape or clicking outside closes the native popover. The selection is stored locally as `rg-dashboard-text-size` and restored before rendering. Both LV and EN labels, graph axis text, readouts, cards and dropdown options scale through `--rg-text-scale`; shared styles default to 1 elsewhere. Text scaling does not change chart data or line thickness. Keep the enlarged mobile layout free from horizontal overflow.
+
+The shared overview opens with the last 7 days selected by default for visits, gameplay and totals.
