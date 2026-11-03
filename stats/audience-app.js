@@ -32,7 +32,8 @@ function panel(dimension,entry){
  const status=`<p class="category-status">${entry.failed?escape(t('saved'))+'<br>':''}${t('updated')}: ${date(entry.fetchedAt)}<br>${escape(range)}</p>`;
  if(!total)return status+`<p class="empty">${t('empty')}</p>`;
  const caption=`${t('total')}: ${number(total)}`;
- return status+table(rows.slice(0,10),dimension,caption)+(rows.length>10?`<details><summary>${t('more')} (${number(rows.length-10)})</summary>${table(rows.slice(10),dimension,caption)}</details>`:'');
+ const limit=dimension==='locations'||dimension==='languages'?5:10;
+ return status+table(rows.slice(0,limit),dimension,caption)+(rows.length>limit?`<details><summary>${t('more')} (${number(rows.length-limit)})</summary>${table(rows.slice(limit),dimension,caption)}</details>`:'');
 }
 function render(){
  document.documentElement.lang=language;document.title=`ResearchGames.eu – ${t('title')}`;

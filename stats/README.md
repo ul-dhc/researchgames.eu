@@ -161,3 +161,5 @@ The UI offers all-time, 90-, 30- and 7-day periods with the same Riga date windo
 API reference: https://www.goatcounter.com/api.html and https://www.goatcounter.com/api.json.
 
 Brand naming: always use **ResearchGames.eu** in visible labels, headings, page titles and metadata in both Latvian and English. Logos may split the name across markup, but must render the complete name including `.eu`.
+
+Audience layout: countries and browser languages show the five most frequent values initially; remaining values stay in a collapsed disclosure. Percentages still use the complete category total.
