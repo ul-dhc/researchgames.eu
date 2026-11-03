@@ -245,3 +245,8 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-games .exhibit:is(.livonian,.riddles) .button:active{background:rgba(126,100,185,.34);border-color:rgba(157,132,210,.65)}
 .launch-games .exhibit:is(.livonian,.riddles) .button:focus-visible{outline:2px solid #d0b6ff;outline-offset:3px}
 .launch-games .exhibit:is(.livonian,.riddles) .button .lucide{width:18px;height:18px}
+/* Preview stays transparent, with the same compact action geometry. */
+.launch-games .exhibit.cell-intro .button{align-self:flex-start;justify-content:center;width:auto;gap:18px;min-height:48px;padding:11px 18px;background:transparent;border-color:rgba(157,132,210,.48);color:#f1edf8;font-size:15px;font-weight:600;box-shadow:none}
+.launch-games .exhibit.cell-intro .button:hover{background:transparent;border-color:rgba(157,132,210,.65);transform:none;box-shadow:none}
+.launch-games .exhibit.cell-intro .button:focus-visible{outline:2px solid #d0b6ff;outline-offset:3px}
+.launch-games .exhibit.cell-intro .button .lucide{width:18px;height:18px}
