@@ -239,3 +239,9 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 @media(max-width:820px){.site-header .language-switcher{gap:5px;padding:6px}.site-header .language-switcher a,.site-header .language-switcher a.active{padding:6px 2px}}
 @media(max-width:560px){.site-header{padding-inline:12px}.site-header .brand .logo-type{font-size:15px}.site-header .logo-lockup{gap:5px}.site-header .logo-icon-brand{width:31px;height:31px;flex-basis:31px}.header-actions{gap:4px;margin-left:auto}.site-header .theme-toggle{width:54px;height:34px;padding-inline:6px}.site-header .theme-knob{width:24px;height:24px;transform:translateX(23px)}[data-theme="light"] .site-header .theme-knob{transform:none}.menu-toggle{width:32px;height:36px;padding:4px}}
 @media(max-width:360px){.site-header{padding-inline:8px}.site-header .brand .logo-type{font-size:13px}.site-header .logo-icon-brand{width:26px;height:26px;flex-basis:26px}.site-header .language-switcher{gap:3px;padding-inline:4px}}
+/* Playable games use a clear, quiet primary action. */
+.launch-games .exhibit:is(.livonian,.riddles) .button{align-self:flex-start;justify-content:center;width:auto;gap:18px;min-height:48px;padding:11px 18px;background:rgba(126,100,185,.18);border-color:rgba(157,132,210,.48);color:#f1edf8;font-size:15px;font-weight:600;box-shadow:none;transition:background-color .16s,border-color .16s}
+.launch-games .exhibit:is(.livonian,.riddles) .button:hover{background:rgba(126,100,185,.28);border-color:rgba(157,132,210,.65);transform:none;box-shadow:none}
+.launch-games .exhibit:is(.livonian,.riddles) .button:active{background:rgba(126,100,185,.34);border-color:rgba(157,132,210,.65)}
+.launch-games .exhibit:is(.livonian,.riddles) .button:focus-visible{outline:2px solid #d0b6ff;outline-offset:3px}
+.launch-games .exhibit:is(.livonian,.riddles) .button .lucide{width:18px;height:18px}
