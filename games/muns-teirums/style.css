@@ -405,3 +405,25 @@ dialog .dialog-source{margin-top:0}
   body.is-playing .hero-copy{display:flex}
   body.is-playing .hero-copy .botanical-corner,body.is-complete .hero-copy{display:none}
 }
+
+/* Partner marks retain their original proportions and share an optical baseline. */
+footer,.site-header~footer{display:block;width:100%;min-height:116px;padding-block:18px}
+.partner-logos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;gap:24px;width:100%}
+.partner-logo{display:flex;align-items:center;justify-content:center;min-width:0;height:80px;border-radius:6px;transition:opacity .25s}
+.partner-logo:hover{opacity:.78}
+.partner-logo:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.partner-logo img{display:block;width:100%;height:auto;object-fit:contain}
+.partner-voluda img{max-width:175px;filter:brightness(0) invert(1)}
+.partner-rg img{max-width:205px}
+.partner-dhc img{max-width:190px}
+.partner-hzf img{max-width:235px}
+@media(min-width:1000px) and (min-height:600px){body:not(.is-complete) .hero{grid-template-rows:minmax(0,calc(100svh - 242px))}}
+@media(max-width:760px){
+  footer,.site-header~footer{padding:24px 20px;min-height:0}
+  .partner-logos{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .partner-logo{height:70px}
+  .partner-voluda img{max-width:145px}
+  .partner-rg img{max-width:170px}
+  .partner-dhc img{max-width:160px}
+  .partner-hzf img{max-width:195px}
+}
