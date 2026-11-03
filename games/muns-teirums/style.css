@@ -328,4 +328,6 @@ footer .brand{font-size:18px;gap:8px;letter-spacing:-.4px;font-weight:700}
 footer .brand img{width:28px;height:28px}
 footer{min-height:44px;height:auto}
 footer::before{content:"";position:absolute;top:0;left:clamp(22px,4.5vw,72px);right:clamp(22px,4.5vw,72px);height:1px;background:linear-gradient(90deg,transparent,#d4b2e438 15%,#d4b2e438 85%,transparent);pointer-events:none}
+footer,.site-header~footer{height:auto;min-height:76px;padding-block:24px;margin-top:20px}
+@media(min-width:1000px) and (min-height:600px){body:not(.is-complete) .hero{grid-template-rows:minmax(0,calc(100svh - 200px))}}
 @media(max-width:760px){footer .brand{font-size:17px}footer .brand img{width:26px;height:26px}}
