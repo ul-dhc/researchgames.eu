@@ -4,6 +4,7 @@ const root=new URL('../',import.meta.url);
 export async function buildDashboard(){
  let html=await readFile(new URL('apps-script/Dashboard.html',root),'utf8');
  html=html.replace('  <base target="_top">\n','').replace('  <script src="https://www.gstatic.com/charts/loader.js"></script>','  <script src="https://www.gstatic.com/charts/loader.js"></script>\n  <script src="snapshot-model.js?v=20261029-json-1"></script>\n  <script src="snapshot-loader.js?v=20261103-refresh-1"></script>');
+ html=html.replaceAll('https://researchgames.eu/stats/dashboard-select', '../../../stats/dashboard-select');
  html=html.replaceAll('https://researchgames.eu/stats/visits', '../../../stats/visits');
  html=html.replace('      loadData();\n    });', '      if (dashboardData) renderCharts(dashboardData);\n    });');
  const start=html.indexOf('    function loadData() {'),end=html.indexOf('    function renderDashboard(data)',start);

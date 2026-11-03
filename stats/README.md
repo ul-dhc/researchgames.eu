@@ -141,3 +141,11 @@ dashboards, and about the data. Sticky native anchor links at the top navigate t
 `#visits`, `#gameplay`, `#game-reports`, and `#about-data`. Both LV and EN labels
 are supported. The visits component uses a lower heading level in this overview;
 individual dashboards keep their existing heading structure.
+
+## Shared dropdown controls
+
+`dashboard-select.css` and `dashboard-select.js` provide the themed single-select controls used by the overview, LU dashboard and both Apps Script dashboards. The riddle static dashboard receives them through its build script. Keep these shared assets at the same version in each HTML entry point.
+
+The original selects retain their IDs, values and filter listeners. Enhancement starts only after the stylesheet loads; otherwise the native controls remain usable. Dynamic options, disabled states, translated labels and reset buttons synchronize with the visible control. Keyboard support includes arrows, Home/End, text search, Enter/Space to select, Escape to cancel and Tab to leave. Menus use the popover top layer where available, with viewport-clamped positioning as a fallback.
+
+For UI changes, check both themes and languages, period filtering, the riddle version/participation filters, Escape cancellation and narrow viewport placement. Apps Script HTML integrations require redeploying the existing dashboard deployments; do not update telemetry receiver deployments.
