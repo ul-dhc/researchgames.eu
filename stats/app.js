@@ -12,8 +12,8 @@ const copy = {
 };
 const games = [
  {id:'lu107',name:'lu',description:'luDescription',note:'luNote',url:'/games/LU107/stats/'},
- {id:'miklu-rezgis',name:'riddle',description:'riddleDescription',note:'riddleNote',url:SOURCES['miklu-rezgis']},
- {id:'libiesu-vietvardi',name:'liv',description:'livDescription',note:'livNote',url:SOURCES['libiesu-vietvardi']}
+ {id:'miklu-rezgis',name:'riddle',description:'riddleDescription',note:'riddleNote',url:'/games/miklu-rezgis/stats/'},
+ {id:'libiesu-vietvardi',name:'liv',description:'livDescription',note:'livNote',url:'/games/libiesu-vietvardi/stats/'}
 ];
 let language = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'lv';
 let state = new Map(), loading = false, controller;

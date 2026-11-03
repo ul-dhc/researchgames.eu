@@ -2,6 +2,8 @@
 <html lang="lv">
 <head>
   <script data-goatcounter="https://researchgames.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="stylesheet" href="./visits.css?v=20261103-1">
+  <script type="module" src="./visits-ui.js?v=20261103-1"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ResearchGames – analītika</title>
@@ -11,7 +13,7 @@
   <link rel="stylesheet" href="./styles.css?v=20260922-4">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('researchgames-theme')||'dark'}catch(e){}</script>
   <script src="https://unpkg.com/lucide@1.34.0" defer onload="lucide.createIcons()"></script>
-  <script type="module" src="./app.js?v=20260928-2"></script>
+  <script type="module" src="./app.js?v=20261103-visits-1"></script>
 </head>
 <body>
   <a class="skip" href="#main" data-text="skip">Pāriet uz saturu</a>
@@ -28,6 +30,7 @@
     <p id="coverage" class="coverage" role="status"></p>
     <section id="totals" class="totals" aria-label="Kopsavilkums"></section>
     <section class="panel"><div class="section-heading"><div><p class="eyebrow" data-text="activity">Aktivitāte</p><h2 data-text="timeline">Reģistrētās sesijas pa dienām</h2></div><p class="subtle" data-text="activeDays">Katra līnija ir viena spēle. Sesiju skaits pa dienām.</p></div><div id="timeline"></div></section>
+    <section data-rg-visits="all" aria-label="Spēļu lapu apmeklējumi"></section>
     <section class="games-section"><div class="section-heading"><div><p class="eyebrow" data-text="details">Detalizētie dati</p><h2 data-text="games">Spēļu pārskati</h2></div><p class="subtle" data-text="existing">Atver katras spēles esošo dashboard.</p></div><div id="games" class="games"></div></section>
     <aside class="method"><h2 data-text="method">Kā lasīt šo pārskatu</h2><p data-text="methodText">Kopsummās iekļautas tikai spēles ar pieejamiem datiem. Sesijas nav unikālie spēlētāji. Spēlēs atšķiras sesijas sākuma un pabeigšanas uzskaite, tāpēc pabeigšanas īpatsvars rādīts katrai spēlei atsevišķi. Datumi un periodi pārņemti no katras spēles esošās uzskaites. Punkti netiek summēti vai vidējoti starp spēlēm.</p></aside>
     <noscript>Lai ielādētu statistiku, ieslēdz JavaScript. <a href="/games/LU107/stats/">LU107</a> · <a href="/games/miklu-rezgis/stats/">Mīklu režģis</a> · <a href="/games/libiesu-vietvardi/stats/">Lībiešu vietvārdi</a></noscript>

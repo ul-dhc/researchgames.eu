@@ -73,3 +73,42 @@ The shared `SummaryCache.gs` wrapper still caches successful public summaries pe
 ## LU107 dashboard recovery
 
 The separate LU107 dashboard keeps its period-specific saved data on reload, retries one transient API failure, and retains the newer source timestamp. Switching periods cancels the previous request, preventing late responses from appearing under the wrong filter. Failed background refreshes keep the dashboard visible with a notice. Reload no longer sends `force=1` to bypass the source cache.
+
+## Page visits (2026-11-03)
+
+The overview, website-hosted Riddle Grid dashboard, and Livonian Apps Script dashboard
+share `visits-ui.js` and `visits.css`. UL107 is intentionally excluded from visit
+collection and display; its gameplay dashboard and historical summary remain unchanged.
+The Livonian source is backed up in `games/libiesu-vietvardi/apps-script/Dashboard.html`.
+Visits use each dashboard’s existing period selector. The overview links to the
+website-hosted Riddle Grid dashboard and the existing Livonian redirect.
+The shared assets are loaded from researchgames.eu by the Apps Script HTML.
+
+`visits.js` is the explicit game-page allowlist. GoatCounter normalizes the observed
+paths without trailing slashes. Riddle totals include the main and children's game
+pages; dashboard, about and other website pages are excluded. These are summed
+page visits, not unique people across pages, gameplay starts, or conversions.
+Visit counts respond only to the period selector, not research/session filters.
+
+The existing snapshot workflow calls `scripts/update-visits.mjs` using the repository
+Actions secret `GOATCOUNTER_API_TOKEN`. Configure a GoatCounter token with only
+Read statistics permission for researchgames.goatcounter.com. Never put the token
+in source, public JSON, frontend JavaScript, URLs, or logs. Email verification is
+required by GoatCounter before API use. Only aggregate counts and reporting dates
+are published to `analytics-data/visits.json`; the API response is never saved.
+
+Periods all/90d/30d/7d are collected sequentially below the API rate limit. Rolling
+periods include today and the previous N-1 Europe/Riga calendar days. All-time
+requests start in 2000 and cover only history actually retained by GoatCounter;
+they do not reconstruct pre-tracking visits. Missing configuration or collection
+failures preserve previous counts, period bounds and timestamps with a failure
+flag. Missing data displays a dash, never a fabricated zero. Counts older than
+20 minutes show a saved-data notice. The browser caches validated data and never
+replaces a newer game/period with an older fallback.
+
+Run `node stats/scripts/update-visits.mjs` with the token supplied through the
+environment to refresh the bundled fallback. The scheduled collector automatically
+publishes the separate visits file without rebuilding the website. The visits
+collector is independent of gameplay analytics, so one source failing does not
+prevent the other from refreshing. Verify exact allowlisted paths against GoatCounter
+when adding or renaming games. Test with `node --test stats/tests/visits.test.mjs`.

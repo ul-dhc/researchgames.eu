@@ -39,6 +39,15 @@ jobs:
               fi
             done
           fi
+      - name: Read previous visit counts
+        run: |
+          if git cat-file -e origin/analytics-data:visits.json 2>/dev/null; then
+            git show origin/analytics-data:visits.json > stats/visits.json
+          fi
+      - name: Collect page visits
+        env:
+          GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
+        run: node stats/scripts/update-visits.mjs
       - name: Collect all games and periods
         run: node stats/scripts/update-snapshot.mjs
       - name: Refresh detailed dashboard and due riddle content
@@ -47,22 +56,24 @@ jobs:
         run: node games/miklu-rezgis/scripts/update-data.mjs
       - name: Publish data branch
         run: |
+          cp stats/visits.json "$RUNNER_TEMP/visits.json"
           cp stats/snapshot.json "$RUNNER_TEMP/stats.json"
           cp games/miklu-rezgis/data/riddles.json "$RUNNER_TEMP/riddles.json"
           cp games/miklu-rezgis/data/miklu-dashboard.json "$RUNNER_TEMP/miklu-dashboard.json"
           cp games/miklu-rezgis/data/riddles-refresh.json "$RUNNER_TEMP/riddles-refresh.json"
           rm games/miklu-rezgis/data/riddles-refresh.json
-          git restore stats/snapshot.json games/miklu-rezgis/data/riddles.json games/miklu-rezgis/data/miklu-dashboard.json
+          git restore stats/visits.json stats/snapshot.json games/miklu-rezgis/data/riddles.json games/miklu-rezgis/data/miklu-dashboard.json
           if git show-ref --verify --quiet refs/remotes/origin/analytics-data; then
             git switch --force-create analytics-data origin/analytics-data
           else
             git switch --orphan analytics-data
           fi
+          cp "$RUNNER_TEMP/visits.json" visits.json
           cp "$RUNNER_TEMP/stats.json" stats.json
           cp "$RUNNER_TEMP/riddles.json" riddles.json
           cp "$RUNNER_TEMP/miklu-dashboard.json" miklu-dashboard.json
           cp "$RUNNER_TEMP/riddles-refresh.json" riddles-refresh.json
-          git add stats.json riddles.json miklu-dashboard.json riddles-refresh.json
+          git add visits.json stats.json riddles.json miklu-dashboard.json riddles-refresh.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
