@@ -149,3 +149,13 @@ individual dashboards keep their existing heading structure.
 The original selects retain their IDs, values and filter listeners. Enhancement starts only after the stylesheet loads; otherwise the native controls remain usable. Dynamic options, disabled states, translated labels and reset buttons synchronize with the visible control. Keyboard support includes arrows, Home/End, text search, Enter/Space to select, Escape to cancel and Tab to leave. Menus use the popover top layer where available, with viewport-clamped positioning as a fallback.
 
 For UI changes, check both themes and languages, period filtering, the riddle version/participation filters, Escape cancellation and narrow viewport placement. Apps Script HTML integrations require redeploying the existing dashboard deployments; do not update telemetry receiver deployments.
+
+## Shared website audience
+
+`/stats/audience.html` is the separate, bilingual audience report linked from the overview visits section. It combines the exact `VISIT_PAGES` allowlist, including the homepage and active games, and excludes analytics pages and UL107. The five independent distributions are countries (`locations`), browser languages (`languages`), screen-width groups (`sizes`), browsers and operating systems. Screen groups follow GoatCounter: up to 600, 601–1000, 1001–1920, over 1920 CSS pixels, plus unknown.
+
+`update-audience.mjs` uses the existing read-statistics secret. It sends the complete comma-separated path allowlist with `path_by_name=true`, validates every page of results, and strips API records to label/key/count only. Requests are spaced and retried once. Failed categories retain their original date range and timestamp independently. The existing workflow publishes `audience.json` to `analytics-data`; `stats/audience.json` is the bundled fallback. No raw visits, IPs, sessions, referrers or individual profiles are exported.
+
+The UI offers all-time, 90-, 30- and 7-day periods with the same Riga date windows as the visits dashboard. Each distribution uses its own sum (including unknown values) as the percentage denominator. The report does not infer device type, native language, unique people, or cross-category combinations. Native filters are enhanced by the shared themed dropdown component. It reads the raw data snapshot automatically every five minutes while visible, retains validated browser cache, and never replaces newer category data with an older fallback.
+
+API reference: https://www.goatcounter.com/api.html and https://www.goatcounter.com/api.json.

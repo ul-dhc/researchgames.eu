@@ -50,3 +50,7 @@ button,select,.open,nav>a,footer>a{transition:background-color .2s ease,border-c
 .method-body h3{font-size:16px;margin:0 0 12px}
 .method-body p{font-size:14px;line-height:1.8;color:var(--muted);margin:0}
 @media(max-width:600px){.section-nav{display:grid;grid-template-columns:1fr 1fr;gap:4px;top:8px;padding:6px;margin-bottom:28px}.section-nav a{padding:9px 10px;font-size:12px;gap:7px}.dashboard-section{scroll-margin-top:132px}.dashboard-section+.dashboard-section{margin-top:40px;padding-top:28px}.section-copy h2{font-size:24px}.section-copy p{font-size:13px}.section-lead{gap:12px}.method-body{padding:20px}}
+
+/* Shared entry point for the separate audience report. */
+.audience-link{display:flex;justify-content:space-between;gap:24px;align-items:center;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 24px;margin-top:20px;font-size:14px}.audience-link strong{color:var(--accent)}.audience-link span{display:block;font-size:12px;line-height:1.7;color:var(--muted);margin-top:5px}.audience-link:hover{text-decoration:none;border-color:var(--accent)}.audience-link svg{width:22px;height:22px;flex:0 0 22px;color:var(--accent)}
+@media(max-width:500px){.audience-link{padding:18px}}
