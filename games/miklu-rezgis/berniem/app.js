@@ -396,7 +396,12 @@ function nextRiddle() {
   }
   state.index += 1;
   renderRiddle();
-  if (window.matchMedia('(max-width: 860px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.matchMedia('(max-width: 860px)').matches) {
+    requestAnimationFrame(() => {
+      const card = el('riddle-text').closest('.riddle-card');
+      window.scrollTo({ top: Math.max(0, window.scrollY + card.getBoundingClientRect().top - 16), behavior: 'instant' });
+    });
+  }
 }
 
 function finishGame() {

@@ -9,7 +9,7 @@ const extract=(source,name)=>source.match(new RegExp('function '+name+'\\([^]*?^
 test('main game disables all riddle controls on solving and restores shuffling for a new riddle',()=>{
  const buttons=Object.fromEntries(['give-up-btn','hint-btn','shuffle-btn','riddle-text'].map(id=>[id,{disabled:false}]));
  const state={gameMode:10,riddleScore:100,riddleSeconds:1,totalTimeBonus:0,totalScore:0,levelScore:0,foundWords:new Set()};
- const ctx=vm.createContext({state,document:{getElementById:id=>buttons[id]},calculateTimeBonus:()=>15,basePoints:()=>100,renderTopBar(){},setStatus(){},setNextEnabled(){},saveProgress(){},recordCompletedRiddleForSession(){},resetRiddleState(){state.gameOver=false;},currentRiddle:()=>({q:'Mīkla',a:'Muša'}),renderRiddleMetadata(){},resolveGridSize:()=>7,buildGrid:()=>({grid:[],placedWords:[],fillerCells:new Set()}),renderGrid(){},renderWordTags(){},renderPips(){},renderMiklaNum(){}});
+ const ctx=vm.createContext({state,document:{getElementById:id=>buttons[id]},calculateTimeBonus:()=>15,basePoints:()=>100,renderTopBar(){},setStatus(){},setNextEnabled(){},saveProgress(){},recordCompletedRiddleForSession(){},resetRiddleState(){state.gameOver=false;},currentRiddle:()=>({q:'Mīkla',a:'Muša'}),renderRiddleMetadata(){},resolveGridSize:()=>7,buildGrid:()=>({grid:[],placedWords:[],fillerCells:new Set()}),renderGrid(){},renderWordTags(){},renderPips(){},renderMiklaNum(){},scrollToRiddleOnMobile(){}});
  vm.runInContext(extract(main,'completeRiddle')+'\n'+extract(main,'loadRiddle'),ctx);
  vm.runInContext('completeRiddle()',ctx);
  for(const id of ['give-up-btn','hint-btn','shuffle-btn'])assert.equal(buttons[id].disabled,true,id);
@@ -20,7 +20,7 @@ test('main game disables all riddle controls on solving and restores shuffling f
 function childContext(mobile=true){
  let serial=0,nexts=0,finishes=0,renders=0;const timers=new Map();
  const state={index:0,solved:true,riddles:[{},{}]};
- const ctx=vm.createContext({state,GAME_LENGTH:5,window:{matchMedia:()=>({matches:mobile}),scrollTo(){}},setTimeout:(fn,delay)=>{timers.set(++serial,{fn,delay});return serial;},clearTimeout:id=>timers.delete(id),renderRiddle(){renders++;state.solved=false;},finishGame(){finishes++;}});
+ const ctx=vm.createContext({state,GAME_LENGTH:5,window:{matchMedia:()=>({matches:mobile}),scrollY:400,scrollTo(){}},requestAnimationFrame:fn=>fn(),el:()=>({closest:()=>({getBoundingClientRect:()=>({top:-100})})}),setTimeout:(fn,delay)=>{timers.set(++serial,{fn,delay});return serial;},clearTimeout:id=>timers.delete(id),renderRiddle(){renders++;state.solved=false;},finishGame(){finishes++;}});
  vm.runInContext('let nextRiddleTimer=null;\n'+['clearAutoAdvance','scheduleAutoAdvance','nextRiddle'].map(n=>extract(child,n)).join('\n'),ctx);
  return {state,timers,run:s=>vm.runInContext(s,ctx),get renders(){return renders;},get finishes(){return finishes;}};
 }
@@ -56,4 +56,16 @@ test('adult next action becomes visible only when ready and preserves research, 
   assert.equal(button.disabled,false);assert.equal(classes.has('next-ready'),true);assert.ok(button.innerHTML.startsWith(label));
   vm.runInContext('setNextEnabled(false)',ctx);assert.equal(button.disabled,true);assert.equal(classes.has('next-ready'),false);
  }
+});
+
+
+test('mobile riddle positioning uses the newly rendered card, leaving desktop scroll unchanged',()=>{
+ const calls=[],frames=[];let mobile=true;
+ const ctx=vm.createContext({window:{matchMedia:()=>({matches:mobile}),scrollY:700,scrollTo:options=>calls.push(options)},requestAnimationFrame:fn=>frames.push(fn),document:{getElementById:()=>({closest:()=>({getBoundingClientRect:()=>({top:-300})})})}});
+ vm.runInContext(extract(main,'scrollToRiddleOnMobile'),ctx);
+ vm.runInContext('scrollToRiddleOnMobile()',ctx);assert.equal(calls.length,0);
+ frames.shift()();assert.equal(calls[0].top,384);assert.equal(calls[0].behavior,'instant');
+ mobile=false;vm.runInContext('scrollToRiddleOnMobile()',ctx);assert.equal(frames.length,0);
+ assert.match(extract(main,'loadRiddle'),/scrollToRiddleOnMobile\(\)/);
+ assert.match(extract(child,'nextRiddle'),/closest\('\.riddle-card'\)/);
 });

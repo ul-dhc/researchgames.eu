@@ -1740,6 +1740,14 @@ function renderRiddleMetadata(riddle) {
   meta.hidden = details.length === 0 && !unitNumber;
 }
 
+function scrollToRiddleOnMobile() {
+  if (!window.matchMedia('(max-width: 900px)').matches) return;
+  requestAnimationFrame(() => {
+    const card = document.getElementById('riddle-text').closest('.mikla-card');
+    window.scrollTo({ top: Math.max(0, window.scrollY + card.getBoundingClientRect().top - 16), behavior: 'instant' });
+  });
+}
+
 function loadRiddle() {
   resetRiddleState();
   setStatus('', '');
@@ -1770,6 +1778,7 @@ function loadRiddle() {
   document.getElementById('hint-btn').disabled = false;
   document.getElementById('shuffle-btn').disabled = false;
   setNextEnabled(false);
+  scrollToRiddleOnMobile();
 }
 
 function loadSavedProgress() {
