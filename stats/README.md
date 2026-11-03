@@ -244,3 +244,12 @@ Its chart rows are calendar dates, represented as local calendar placeholders fo
 Google Charts; do not interpret those placeholders as stored event timestamps.
 Tests cover midnight, summer/winter transition, and rendering from foreign host
 zones. Existing Riga period-boundary tests remain in `tests/visits.test.mjs`.
+
+
+Livonian dashboard deployment **v29**, 2026-11-04: Riga update timestamps and current
+shared visits module. Existing deployment ID, execute-as owner, and public access
+are unchanged. The live project time zone was verified as Riga. Public deployed
+HTML was read back and matched the committed template exactly. All 100 dashboard,
+snapshot, riddle and plant-game checks passed. Bundled GoatCounter visit and plant
+fallbacks were refreshed from successful post-change collections, with the last
+reporting day verified as 2026-11-04 in Riga.
