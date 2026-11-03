@@ -173,3 +173,5 @@ The existing GoatCounter hits requests already ask for daily data. `requestVisit
 Count-only snapshots remain compatible. Missing history or history ending before the latest reporting day does not become a zero line; the total line requires daily data from every included page group. Source failures preserve the previous count and history together. No new API credentials or additional daily-statistics requests are needed. When adding a game, extend the allowlist and the timeline color assignments together.
 
 Timeline readouts keep each figure directly beside its label, including on narrow screens; do not stretch the label column to push figures to the far edge.
+
+Visit curves use thin, semi-transparent strokes (1.35 px at 58%; total 1.6 px at 65%) and restrained selection markers. Labels and figures stay fully opaque.
