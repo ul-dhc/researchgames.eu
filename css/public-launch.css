@@ -37,14 +37,19 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-hero__cta span{font-size:20px}
 .launch-hero .memory-shell{width:min(100%,830px)}
 .launch-hero .game-note{display:none}
-/* Keep progress below the cards and reveal it only after the player begins. */
-.launch-hero .game-stats{margin:14px 0 0;justify-content:stretch}
-.launch-hero .game-stats>div{flex:1;min-width:0}
+/* Quiet, single-line controls below the cards; progress appears once play starts. */
+.launch-hero .game-controls{display:flex;align-items:center;gap:12px;min-height:44px;margin-top:8px}
+.launch-hero .game-stats{display:flex;align-items:center;gap:18px;width:auto;margin:0;justify-content:flex-start;flex:none}
+.launch-hero .game-stats>div{display:flex;align-items:baseline;gap:5px;flex:none;min-width:0;padding:0;border:0;border-radius:0;background:transparent}
+.launch-hero .game-stats span{font-size:11px;text-transform:none;color:var(--muted)}
+.launch-hero .game-stats strong{font-size:13px;font-weight:500;font-variant-numeric:tabular-nums}
 .launch-hero .game-stats[hidden]{display:none}
-
-.launch-hero .skip-game-row{display:flex;justify-content:flex-end;margin-top:10px}
-.launch-hero .skip-game-row .text-button{min-height:34px;padding:5px 15px;font-size:12px;opacity:.78}
-.launch-hero .skip-game-row .text-button:hover{opacity:1}
+.launch-hero .game-controls .skip-game-row{display:flex;margin:0 0 0 auto;flex:none}
+.launch-hero .game-controls .text-button{min-height:44px;padding:8px 2px;border:0;border-radius:0;background:transparent;font-size:12px;opacity:.78}
+.launch-hero .game-controls .text-button:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.launch-hero .game-controls .text-button:focus-visible{outline:2px solid #a98cdd;outline-offset:3px}
+@media(max-width:560px){.launch-hero .game-controls{gap:8px}.launch-hero .game-controls .game-stats{gap:10px;width:auto}.launch-hero .game-controls .game-stats>div{flex:none;gap:4px}.launch-hero .game-controls .game-stats span{font-size:10px}.launch-hero .game-controls .game-stats strong{font-size:12px}.launch-hero .game-controls .text-button{font-size:11px}}
+@media(max-width:360px){.launch-hero .game-controls .game-stats{gap:7px}.launch-hero .game-controls .game-stats>div{gap:3px}.launch-hero .game-controls .game-stats strong{font-size:11px}}
 .manifesto .research-cube-scene:after{content:"";position:absolute;z-index:0;left:50%;bottom:13%;width:44%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(18,12,44,.36) 0,rgba(32,21,72,.18) 42%,transparent 75%);filter:blur(13px);transform:translate(-50%,28px);pointer-events:none}
 .manifesto .research-cube{z-index:1}
 [data-theme="light"] .manifesto .research-cube-scene:after{background:radial-gradient(ellipse,rgba(57,43,88,.2) 0,rgba(74,55,112,.1) 44%,transparent 75%)}
