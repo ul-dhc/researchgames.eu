@@ -253,3 +253,37 @@ HTML was read back and matched the committed template exactly. All 100 dashboard
 snapshot, riddle and plant-game checks passed. Bundled GoatCounter visit and plant
 fallbacks were refreshed from successful post-change collections, with the last
 reporting day verified as 2026-11-04 in Riga.
+
+
+## Overview tabs and data freshness — 2026-11-04
+
+The main `/stats/` dashboard defaults to **Game analytics**; **Page visits** is a
+separate tab. `?view=gameplay` and `?view=visits` are shareable; old `#visits`
+links activate the visits tab. The period selector is shared and remains 7 days
+by default. Tabs use proper tab/tabpanel semantics with arrow/Home/End navigation.
+Game dashboards and gameplay methodology stay under Game analytics; the audience
+report stays under Page visits. The shared chart style and series colors remain.
+
+Each chart explicitly labels its selected day and measure. Card sections explicitly
+label totals for the whole selected period. Visit and session counts describe
+different events and must not be presented as expected to match.
+
+`report-meta.js` shows each chart's actual oldest/newest source update time in Riga,
+with expandable individual source times, missing-source and stale-data states.
+Gameplay uses each summary's `generatedAt`; visits use successful per-path
+`fetchedAt`. Re-downloading an old snapshot does not make its underlying data fresh.
+
+Gameplay snapshot URLs now include a cache-busting query, like visits. A cold page
+loads its bundled snapshot concurrently with the public snapshot; per-source merge
+rules prevent a late fallback from replacing newer data. Gameplay can recover
+stale sources directly from the game endpoints. Visits require the scheduled
+GoatCounter collection; Refresh checks the latest published snapshot and does not
+force a new GoatCounter collection. GitHub scheduling can be delayed: the audit
+on 2026-11-04 found schedule runs hours apart. The UI must show the original
+successful collection time and stale notice instead of promising synchronized or
+real-time data. Publication triggers a fresh collection through the existing job.
+
+For gameplay charts, dates after a source's last known data day are unknown, not
+zero; line gaps and unavailable readouts preserve that distinction. Known days
+without sessions remain zero. The timeline renderer accepts an optional unit label;
+other dashboards keep their own event definitions.
