@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {makeDeck,createGame,selectCard,resolveMismatch,scoreFor,sampleMeadow,timeBonusFor,shareResultFor} from '../game-model.mjs';
+import {makeDeck,createGame,selectCard,resolveMismatch,scoreFor,sampleMeadow,prepareMeadowNames,timeBonusFor,shareResultFor} from '../game-model.mjs';
 const plants = Array.from({length:8},(_,i)=>({id:`plant-${i}`}));
 const ordered = () => plants.flatMap(plant => ['image','name'].map(kind=>({plant,kind})));
 
@@ -117,4 +117,42 @@ test('plant list joins the last two names with i without a comma', () => {
  assert.equal(shareResultFor(meadow),'Munā teirumā aug peliejs, naktineica i dzeļne.');
  assert.equal(shareResultFor(meadow.slice(1)),'Munā teirumā aug naktineica i dzeļne.');
  assert.equal(shareResultFor(meadow.slice(2)),'Munā teirumā aug dzeļne.');
+});
+
+
+test('each source variant can be selected without changing the source order', () => {
+ const source = [{id:'plant',namesLtg:Object.freeze(['celine','dzeisline','dzeislopa'])}];
+ const original = JSON.stringify(source);
+ assert.deepEqual([.1,.5,.9].map(value => prepareMeadowNames(source,()=>value)[0].cardName), source[0].namesLtg);
+ assert.equal(JSON.stringify(source),original);
+ for (const value of [.1,.5,.9]) {
+  const round = prepareMeadowNames(source,()=>value);
+  assert.deepEqual([...round[0].galleryNames].sort(),[...source[0].namesLtg].sort());
+ }
+});
+
+test('gallery order is independent of the card name and stays fixed through play', () => {
+ const source = [{id:'plant',namesLtg:['first','second','third']}];
+ const randomValues = [.1,.1,.1];
+ const round = prepareMeadowNames(source,()=>randomValues.shift());
+ assert.equal(round[0].cardName,'first');
+ assert.notEqual(round[0].galleryNames[0],round[0].cardName);
+ const order = [...round[0].galleryNames];
+ const deck = makeDeck(round,()=>.5);
+ assert.equal(deck[0].plant.cardName,deck[1].plant.cardName);
+ const game = createGame(deck);
+ selectCard(game,0);selectCard(game,1);
+ assert.deepEqual(round[0].galleryNames,order);
+ assert.equal(round[0].cardName,'first');
+});
+
+test('copied result uses the encountered names instead of the first source variants', () => {
+ const meadow = [{namesLtg:['source first','encountered'],cardName:'encountered'}, {namesLtg:['other first','also encountered'],cardName:'also encountered'}];
+ assert.equal(shareResultFor(meadow),'Munā teirumā aug encountered i also encountered.');
+});
+
+test('a plant with only one name keeps that name in both contexts', () => {
+ const [plant] = prepareMeadowNames([{id:'single',namesLtg:['only name']}],()=>.9);
+ assert.equal(plant.cardName,'only name');
+ assert.deepEqual(plant.galleryNames,['only name']);
 });

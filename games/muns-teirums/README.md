@@ -1,5 +1,7 @@
 # Muns teirums – pilots
 
+Priekšskatījumu pagaidām aizsargā paroles ekrāns un `noindex, nofollow` norāde. Pirms publiskās palaišanas izpildīt [publicēšanas kontrolsarakstu](PUBLICATION_CHECKLIST.md).
+
 Atsevišķa HTML/CSS/JavaScript spēle ar 6, 8 vai 10 pāriem (noklusējumā 8). Nav Astro atkarības; gatavais `index.html` un `bundle.js` ir iekļauti mapē.
 
 Visas 16 parauga kārtis ir iepriekš ģenerētas HTML, tāpēc to redzamība nav atkarīga no JavaScript. Pārlūks ielādē vienu parasto `defer` skriptu; nav ES moduļu pieprasījumu. Pēc izmaiņām avotos palaist `node scripts/build.mjs`. Pārnēsājamai versijai izmantot `node scripts/package.mjs /absolūts/izvades/ceļš`.
