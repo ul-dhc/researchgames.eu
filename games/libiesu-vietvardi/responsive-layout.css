@@ -1,0 +1,320 @@
+/* Landing layout follows available space rather than a fixed map offset. */
+body:has(#screen-start:not(.hidden)):not(.about-open){display:flex;flex-direction:column;height:auto;min-height:100dvh;}
+body #screen-start{display:flex;flex-direction:column;flex:1 0 auto;height:auto;min-height:0;}
+body #screen-start .start-main{flex:1 0 auto;min-height:0;height:auto;}
+.screen-start .how-title,.screen-start .step-cards{display:none!important;}
+#mode-picker .mode-option{min-width:0;}
+#mode-picker .mode-option>:is(strong,span){min-width:0;overflow-wrap:anywhere;}
+.screen-start .mode-description{min-height:0;}
+@media(min-width:820px){
+  body:has(#screen-start:not(.hidden)):not(.about-open){height:100dvh;}
+  body #screen-start{flex:1 0 auto;min-height:0;}
+  body #screen-start .start-main{flex:1 0 auto;display:flex;flex-direction:row;align-items:safe center;padding:clamp(16px,3vh,30px) clamp(24px,5vw,80px);gap:0;}
+  body #screen-start .start-left{flex:0 0 clamp(320px,34vw,430px);width:clamp(320px,34vw,430px);max-width:430px;justify-content:center;gap:clamp(12px,1.8vh,18px);}
+  body #screen-start .start-right{position:absolute;inset:0;display:block;min-height:0;height:auto;width:100%;margin:0;}
+  body #screen-start .constellation-wrap{position:absolute;inset:0;height:100%;min-height:0;width:100%;}
+  body #screen-start .start-main::after{display:block;background:linear-gradient(90deg,rgba(var(--landing-veil-rgb),.97),rgba(var(--landing-veil-rgb),.93) 30%,rgba(var(--landing-veil-rgb),.6) 43%,transparent 64%);mask-image:linear-gradient(90deg,#000 0%,#000 37%,transparent 66%);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 37%,transparent 66%);}
+  .screen-start .hero-title{font-size:clamp(32px,3.2vw,44px);}
+  body #screen-start .mode-option{min-height:74px;padding:12px;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .site-footer.footbar{flex:0 0 auto;padding:10px 24px;min-height:64px;margin-top:0;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .footer-brand img{max-height:44px;width:auto;max-width:160px;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .topbar{flex:0 0 auto;min-height:68px;padding-block:10px;}
+}
+@media(max-width:819px){
+  body #screen-start .start-main{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;padding:24px 20px 0;gap:24px;}
+  body #screen-start .start-left{position:relative;flex:0 0 auto;width:100%;max-width:680px;margin-inline:auto;justify-content:flex-start;gap:18px;}
+  body #screen-start .start-main::after{display:none;}
+  body #screen-start .start-right{position:relative;inset:auto;flex:0 0 auto;display:block;height:clamp(300px,55vw,420px);min-height:0;width:calc(100% + 40px);margin:0 -20px;}
+  body #screen-start .constellation-wrap{position:absolute;inset:0;min-height:0;height:100%;width:100%;}
+  body #screen-start .start-right::before{content:"";position:absolute;inset:0 0 auto;height:48px;background:linear-gradient(var(--bg),transparent);z-index:420;pointer-events:none;}
+  .screen-start .hero-title{font-size:clamp(30px,5.5vw,38px);}
+  .screen-start .hero-sub{margin-top:0;}
+  .screen-start .start-actions{order:5;}
+  .screen-start .start-actions .btn{min-height:48px;}
+  .site-footer.footbar{flex:0 0 auto;}
+  #screen-game .word-chip .txt{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;}
+  #screen-game .word-chip{min-height:48px;line-height:1.4;}
+}
+@media(max-width:480px){
+  .topbar{padding:12px 16px;gap:8px;}
+  .topbar .brand{flex:1 1 210px;min-width:0;}
+  .topbar .brand-title{font-size:18px;line-height:1.3;}
+  .topbar>.header-settings{width:auto;flex:0 0 auto;justify-content:flex-end;margin-top:0;}
+  .topbar .game-header-controls{margin-left:auto;}
+  #screen-game .stats-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:6px;}
+  #screen-game .stat-pill{min-width:0;padding:6px;font-size:11px;justify-content:center;gap:4px;}
+  #screen-game .stat-pill.pill-round{min-width:0;}
+  #screen-game .pill-round .pill-round-top{white-space:normal;gap:4px;font-size:11px;}
+  #screen-game .match-panel{padding:18px 16px;}
+  #screen-game .match-panel-head{margin-bottom:16px;}
+  #screen-game .match-title{line-height:1.5;}
+  #mode-picker .mode-option{grid-template-columns:23px minmax(0,1fr);column-gap:8px;padding:12px 10px;min-height:88px;}
+  #mode-picker .mode-symbol{width:23px;height:23px;}
+  #mode-picker .mode-option>strong{font-size:14px;}
+  #mode-picker .mode-option>span{font-size:11px;}
+  .winter-credit{right:8px;bottom:6px;gap:4px;font-size:10px;}
+  .winter-credit>a,.winter-credit span{padding:2px 3px;}
+}
+/* Short windows and enlarged text keep natural vertical scrolling instead of clipping. */
+@media(min-width:820px) and (max-height:679px){
+  body:has(#screen-start:not(.hidden)):not(.about-open){height:auto;}
+  body #screen-start .start-main{min-height:520px;}
+}
+html:is([data-text-size="large"],[data-text-size="xlarge"]) #mode-picker .mode-option>strong{font-size:calc(16px * var(--text-step-scale,1));}
+html:is([data-text-size="large"],[data-text-size="xlarge"]) #mode-picker .mode-option>span{font-size:calc(12.5px * var(--text-step-scale,1));}
+/* Let the page, rather than a nested panel, accommodate large text. */
+body:has(#screen-game:not(.hidden)):not(.about-open){display:flex;flex-direction:column;min-height:100dvh;height:auto;}
+body #screen-game{height:auto;min-height:0;flex:1 0 auto;}
+html:is([data-mode="five"],[data-mode="ten"]) #screen-game .game-main{flex:0 0 auto;margin:24px auto;}
+html:is([data-mode="five"],[data-mode="ten"]) #screen-game .match-panel{min-height:470px;}
+@media(min-width:820px){
+  body:not(.about-open) .site-footer.footbar{padding:10px 24px;min-height:64px;margin-top:0;}
+  body:not(.about-open) .footer-brand img{max-height:44px;width:auto;max-width:160px;}
+}
+@media(max-width:480px){
+  #screen-game .word-chip{padding:10px 8px;gap:5px;}
+  #screen-game .word-chip .grip{display:none;}
+  #screen-game .match-rows{gap:10px;padding-right:0;overflow:visible;}
+}
+body:has(:is(#screen-round,#screen-final):not(.hidden)):not(.about-open){display:flex;flex-direction:column;min-height:100dvh;height:auto;}
+body :is(#screen-round,#screen-final){min-height:0;flex:1 0 auto;}
+@media(min-width:981px) and (max-height:800px){
+  #screen-final .result-main{padding:16px 24px;gap:18px;}
+  #screen-final .result-card{padding:20px;}
+  #screen-final .stat-grid{margin-top:12px;}
+  #screen-final .stat-card{padding:10px 12px;gap:8px;}
+  #screen-final .trophy{width:48px;height:48px;}
+  #screen-final .short-result-actions{margin-top:14px;}
+  #screen-final .short-final-fact{margin-top:14px;}
+  #screen-final .btn{min-height:44px;padding-block:10px;}
+  #screen-final .final-more-actions{margin-top:10px;padding-top:10px;gap:0;}
+  #screen-final .share-status:empty{display:none;}
+}
+/* Keep the geographical setting visible while matching in the short modes. */
+html:is([data-mode="five"],[data-mode="ten"]) #screen-game{position:relative;isolation:isolate;}
+#screen-game .short-game-backdrop{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
+#screen-game .short-game-backdrop .constellation-wrap{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:0;}
+#screen-game .short-game-backdrop::after{content:"";position:absolute;inset:0;pointer-events:none;background:rgba(var(--landing-veil-rgb),.22);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:410;}
+#screen-game .short-game-backdrop .winter-credit{pointer-events:auto;}
+#screen-game:has(.short-game-backdrop) .topbar{background:var(--panel);}
+#screen-game:has(.short-game-backdrop) .game-main{position:relative;z-index:1;}
+#screen-game .short-game-backdrop{height:auto;min-height:0;width:100%;max-width:none;margin:0;border:0;border-radius:0;box-shadow:none;align-self:stretch;}
+#screen-game .short-game-backdrop .constellation-wrap{min-height:0;max-height:none;margin:0;box-shadow:none;}
+#screen-game .short-game-backdrop{display:block;}
+/* Continue the landing map behind the introduction on phones and tablets. */
+@media(max-width:819px){
+  body #screen-start .start-main{padding-bottom:calc(clamp(300px,55vw,420px) + 24px);}
+  body #screen-start .start-right{position:absolute;inset:0;width:100%;height:100%;min-height:0;margin:0;}
+  body #screen-start .start-right::before{display:none;}
+  body #screen-start .start-main::after{
+    display:block;
+    background:linear-gradient(180deg,rgba(var(--landing-veil-rgb),.68) 0%,rgba(var(--landing-veil-rgb),.78) 52%,rgba(var(--landing-veil-rgb),.5) 70%,transparent 91%);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    mask-image:linear-gradient(180deg,#000 0%,#000 65%,transparent 91%);
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 65%,transparent 91%);
+  }
+}
+/* A translucent reading surface keeps the map present during matching. */
+#screen-game:has(.short-game-backdrop) .match-panel{
+  background:rgba(9,35,68,.66);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+html[data-theme="light"] #screen-game:has(.short-game-backdrop) .match-panel{background:rgba(255,255,255,.74);}
+/* The long game uses a floating, content-sized panel over a continuous map. */
+html[data-mode="full"] #screen-game .game-main{
+  position:relative;display:flex;align-items:flex-start;gap:0;
+  padding:24px;min-height:calc(100dvh - 137px);
+}
+html[data-mode="full"] #screen-game .map-wrap{position:absolute;inset:0;min-height:0;width:100%;height:100%;}
+html[data-mode="full"] #screen-game .match-panel{
+  position:relative;z-index:2;flex:0 0 auto;align-self:flex-start;
+  width:clamp(340px,30vw,420px);max-width:100%;min-height:0;
+  padding:24px;border:1px solid var(--border);border-radius:24px;
+  background:rgba(9,35,68,.66);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 8px 30px rgba(0,0,0,.08);overflow:visible;
+}
+html[data-theme="light"][data-mode="full"] #screen-game .match-panel{background:rgba(255,255,255,.74);}
+html[data-mode="full"] #screen-game .match-rows{flex:0 0 auto;overflow:visible;}
+html[data-mode="full"] #screen-game .word-chip .txt{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;}
+@media(max-width:980px){
+  html[data-mode="full"] #screen-game .game-main{padding:16px 16px 360px;}
+  html[data-mode="full"] #screen-game .match-panel{width:100%;padding:20px;}
+}
+html[data-mode="full"] #screen-game .map-wrap{z-index:0;}
+/* Found places need a brighter green than the forest beneath them. */
+:root{--discovered-point:#9BEA8C;--discovered-point-rgb:155,234,140;--correct-ink:#F2FFF0;}
+html[data-theme="light"]{--discovered-point:#087548;--discovered-point-rgb:8,117,72;--correct-ink:#075431;}
+.geo-dot.lit{fill:var(--discovered-point);fill-opacity:.97;stroke:none;stroke-width:0;filter:drop-shadow(0 0 5px rgba(var(--discovered-point-rgb),.55));}
+.geo-dot.lit.current{fill-opacity:1;filter:drop-shadow(0 0 7px rgba(var(--discovered-point-rgb),.65));}
+.word-chip.correct{color:var(--correct-ink);}
+.word-chip.correct .dot{background:var(--discovered-point);}
+.word-chip.correct .radio::after{border-color:var(--discovered-point);}
+.map-legend .li:last-child .sw-dot{background:var(--discovered-point)!important;border:0;box-shadow:0 0 5px rgba(var(--discovered-point-rgb),.4);}
+/* Floating map names share the translucent treatment of the game panels. */
+:root{--map-name-glass:rgba(9,35,68,.58);--map-label-muted:#D6E6F0;}
+html[data-theme="light"]{--map-name-glass:rgba(18,63,88,.76);--map-label-muted:#E0EDF4;}
+.place-tooltip{
+  background:var(--map-name-glass)!important;
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  box-shadow:0 3px 12px rgba(0,0,0,.14);
+}
+/* Shell bars share the page background; only a hairline separates them. */
+body .topbar,body .site-footer.footbar{
+  background:var(--bg)!important;
+  box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+body .topbar{border-bottom:1px solid color-mix(in srgb,var(--ink) 14%,transparent);}
+body .site-footer.footbar{border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent);}
+/* Make the map answer confirmation easy to read at a glance. */
+#map-answer-feedback.is-correct{
+  font-size:calc(22px * var(--text-step-scale,1));
+  font-weight:700;line-height:1.5;overflow-wrap:anywhere;
+}
+/* Continue the map beneath the shell instead of painting separate colour bars. */
+:root{--shell-top:72px;--shell-bottom:65px;}
+body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) .topbar,
+body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) .site-footer.footbar{background:transparent!important;}
+body .site-footer.footbar{position:relative;z-index:5;}
+body:not(.about-open) #screen-start .start-right,
+body:not(.about-open) #screen-start .start-main::after{
+  top:calc(-1 * var(--shell-top));bottom:calc(-1 * var(--shell-bottom));height:auto;
+}
+body:not(.about-open) #screen-game .short-game-backdrop{bottom:calc(-1 * var(--shell-bottom));height:auto;}
+html[data-mode="full"] body:not(.about-open) #screen-game .map-wrap{
+  top:calc(-1 * var(--shell-top));bottom:calc(-1 * var(--shell-bottom));height:auto;
+}
+body:not(.about-open) :is(#screen-start,#screen-game) .winter-credit{bottom:calc(var(--shell-bottom) + 8px);}
+html[data-mode="full"] #screen-game .leaflet-bottom{bottom:var(--shell-bottom);}
+html[data-mode="full"] #screen-game .map-legend{bottom:calc(var(--shell-bottom) + 16px);}
+html[data-theme="dark"] body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) .site-footer.footbar{mix-blend-mode:screen;}
+html[data-mode="map"] #screen-game .map-wrap{overflow:visible;}
+html[data-mode="map"] #game-map{position:absolute;top:calc(-1 * var(--shell-top));bottom:calc(-1 * var(--shell-bottom));height:auto;}
+html[data-mode="map"] #screen-game .leaflet-bottom{bottom:var(--shell-bottom);}
+body:not(.about-open) :is(#screen-start,#screen-game) .winter-status{top:calc(var(--shell-top) + 16px);}
+html[data-mode="full"] #screen-game .map-controls{bottom:calc(var(--shell-bottom) + 104px);}
+/* Quiet glass beneath the shell keeps the map from competing with navigation. */
+body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) :is(.topbar,.site-footer.footbar){
+  background:rgba(6,23,47,.18)!important;
+  backdrop-filter:blur(14px) saturate(.65);-webkit-backdrop-filter:blur(14px) saturate(.65);
+}
+html[data-theme="light"] body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) :is(.topbar,.site-footer.footbar){background:rgba(255,255,255,.32)!important;}
+.winter-credit .maptiler-on-dark{display:block;}
+.winter-credit .maptiler-on-light{display:none;}
+html[data-theme="light"] .winter-credit .maptiler-on-dark{display:none;}
+html[data-theme="light"] .winter-credit .maptiler-on-light{display:block;}
+html[data-theme="dark"] .winter-credit{color:#B9CCE4;gap:6px;}
+html[data-theme="dark"] .winter-credit>a,
+html[data-theme="dark"] .winter-credit span{background:rgba(6,23,47,.55);border-radius:4px;}
+html[data-theme="dark"] .winter-credit span a{color:inherit;}
+html[data-theme="dark"] .leaflet-control-attribution{background:rgba(6,23,47,.55)!important;color:#B9CCE4;}
+/* The light shell needs a little more diffusion over fine map lines. */
+html[data-theme="light"] body:not(.about-open):has(:is(#screen-start,#screen-game):not(.hidden)) :is(.topbar,.site-footer.footbar){
+  background:rgba(255,255,255,.38)!important;
+  backdrop-filter:blur(18px) saturate(.65);-webkit-backdrop-filter:blur(18px) saturate(.65);
+}
+/* In-game confirmation, with native dialog focus and Escape handling. */
+.game-confirm{
+  width:min(440px,calc(100% - 32px));max-height:calc(100dvh - 32px);
+  margin:auto;padding:30px;border:1px solid var(--border);border-radius:24px;
+  background:rgba(9,35,68,.93);color:var(--ink);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 20px 80px rgba(0,0,0,.22);overflow:auto;
+}
+html[data-theme="light"] .game-confirm{background:rgba(255,255,255,.95);}
+.game-confirm::backdrop{background:rgba(6,23,47,.4);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);}
+.game-confirm form{display:flex;flex-direction:column;gap:16px;}
+.game-confirm h2{font-size:calc(25px * var(--text-step-scale,1));line-height:1.25;margin:0;padding-right:12px;}
+.game-confirm p{font-size:calc(15px * var(--text-step-scale,1));line-height:1.6;color:var(--ink-muted);margin:0;}
+.game-confirm-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:rgba(var(--accent-rgb),.1);color:var(--accent);}
+.game-confirm-close{position:absolute;top:14px;right:14px;width:36px;height:36px;padding:8px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--ink-muted);cursor:pointer;}
+.game-confirm-close:hover{background:rgba(var(--accent-rgb),.1);color:var(--accent);}
+.game-confirm-actions{display:flex;gap:10px;margin-top:8px;}
+.game-confirm-actions .btn{flex:1;min-width:0;min-height:48px;padding:12px;font-size:calc(14px * var(--text-step-scale,1));white-space:normal;line-height:1.4;justify-content:center;}
+.game-confirm :is(button):focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+@media(max-width:430px){.game-confirm{padding:24px;}.game-confirm-actions{flex-direction:column;}}
+/* Restore the long-game instructions and its five difficulty levels. */
+.long-game-guide{display:none;}
+html[data-mode="full"] #screen-start .long-game-guide{position:relative;z-index:2;display:grid;grid-template-columns:minmax(300px,430px) minmax(0,1fr);gap:24px;width:100%;min-width:0;grid-column:1/-1;}
+#screen-start .long-game-guide .how-title{display:block!important;font-size:17px;margin:0 0 10px;}
+#screen-start .long-game-guide .step-cards{display:flex!important;gap:8px;}
+#screen-start .long-game-guide .step-card{grid-template-columns:32px minmax(0,1fr);gap:10px;padding:0;border:0;background:none;}
+#screen-start .long-game-guide .step-icon{width:32px;height:32px;border:0;border-radius:10px;background:rgba(var(--accent-rgb),.08);}
+#screen-start .long-game-guide .step-icon svg{width:22px;height:22px;}
+#screen-start .long-game-guide .step-card h3{font-size:13px;margin:0 0 2px;}
+#screen-start .long-game-guide .step-card p{font-size:12px;line-height:1.4;}
+#screen-start .long-game-guide :is(.long-game-steps,.difficulty-ladder){padding:18px;border:1px solid var(--border);border-radius:20px;background:rgba(9,35,68,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+html[data-theme="light"] #screen-start .long-game-guide :is(.long-game-steps,.difficulty-ladder){background:rgba(255,255,255,.82);}
+#screen-start .long-game-guide .difficulty-ladder{display:block;margin:0;overflow:visible;}
+#screen-start .long-game-guide .ladder-title{display:block;line-height:1.5;margin-bottom:12px;}
+#screen-start .long-game-guide .ladder-title svg{vertical-align:middle;margin-right:6px;}
+#screen-start .long-game-guide .ladder-row{gap:8px;}
+#screen-start .long-game-guide .ladder-icon{width:44px;height:44px;margin-bottom:23px;box-shadow:none;}
+#screen-start .long-game-guide .ladder-row::before{top:24px;height:1px;}
+#screen-start .long-game-guide .ladder-num{font-size:14px;bottom:-20px;}
+@media(min-width:981px){
+  html[data-mode="full"] body #screen-start .start-main{display:grid;grid-template-columns:clamp(320px,34vw,430px) minmax(0,1fr);grid-template-rows:1fr auto;gap:24px;align-items:center;}
+  html[data-mode="full"] body #screen-start .start-left{grid-column:1;}
+}
+@media(max-width:980px){
+  html[data-mode="full"] #screen-start .long-game-guide{grid-template-columns:minmax(0,1fr);}
+}
+@media(max-width:600px){
+  #screen-start .long-game-guide .ladder-row{display:flex;flex-direction:column;gap:14px;padding:0;}
+  #screen-start .long-game-guide .ladder-row::before{display:none;}
+  #screen-start .long-game-guide .ladder-item{display:grid;grid-template-columns:44px 80px minmax(0,1fr);gap:10px;text-align:left;align-items:center;width:100%;}
+  #screen-start .long-game-guide .ladder-icon{margin:0;}
+  #screen-start .long-game-guide .ladder-num{left:-6px;top:-4px;bottom:auto;transform:none;background:var(--panel);padding:2px 4px;border-radius:6px;}
+  #screen-start .long-game-guide .ladder-name{margin:0;}
+  #screen-start .long-game-guide .ladder-desc{max-width:none;}
+}
+#screen-start .long-game-guide .how-title{font-size:calc(17px * var(--text-step-scale,1));}
+#screen-start .long-game-guide .step-card h3{font-size:calc(13px * var(--text-step-scale,1));}
+#screen-start .long-game-guide .step-card p{font-size:calc(12px * var(--text-step-scale,1));}
+#screen-start .long-game-guide .ladder-title{font-size:calc(12.5px * var(--text-step-scale,1));}
+#screen-start .long-game-guide .ladder-name{font-size:calc(12px * var(--text-step-scale,1));}
+#screen-start .long-game-guide .ladder-desc{font-size:calc(11px * var(--text-step-scale,1));}
+@media(min-width:820px) and (max-width:980px){
+  html[data-mode="full"] body #screen-start .start-main{display:flex;flex-direction:column;align-items:stretch;gap:24px;}
+  html[data-mode="full"] body #screen-start .start-left{flex:0 0 auto;width:100%;max-width:680px;margin-inline:auto;}
+}
+html[data-mode="full"] #screen-start .long-game-guide{display:block;}
+.long-game-guide>summary{display:none;}
+.long-guide-content{display:grid;grid-template-columns:minmax(300px,430px) minmax(0,1fr);gap:24px;}
+@media(max-width:980px){.long-guide-content{grid-template-columns:minmax(0,1fr);}}
+@media(max-width:600px){
+  #screen-start .long-game-guide>summary{display:list-item;list-style-position:inside;cursor:pointer;padding:14px 16px;border:1px solid var(--border);border-radius:16px;color:var(--ink);background:rgba(9,35,68,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:calc(14px * var(--text-step-scale,1));font-weight:700;line-height:1.5;}
+  html[data-theme="light"] #screen-start .long-game-guide>summary{background:rgba(255,255,255,.82);}
+  .long-game-guide:not([open])>.long-guide-content{display:none;}
+  .long-game-guide[open]>.long-guide-content{margin-top:12px;gap:12px;}
+  .long-game-guide>summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+}
+#screen-start .long-game-guide .ladder-title{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;}
+#screen-start .long-game-guide .ladder-title .ladder-heading-icon{flex:0 0 24px;width:24px;height:24px;margin:0;color:var(--accent);}
+#screen-start .long-game-guide .ladder-title h2{font-size:calc(17px * var(--text-step-scale,1));line-height:1.25;margin:0 0 5px;color:var(--ink);}
+#screen-start .long-game-guide .ladder-title p{font-size:calc(12px * var(--text-step-scale,1));line-height:1.5;margin:0;color:var(--ink-muted);}
+/* Keep the complete long-game landing screen within shorter desktop windows. */
+@media(min-width:981px) and (max-height:900px){
+  html[data-mode="full"] body #screen-start .start-main{padding-block:12px;row-gap:12px;}
+  html[data-mode="full"] body #screen-start .start-left{gap:8px;}
+  html[data-mode="full"] #screen-start .hero-title{font-size:clamp(30px,2.3vw,36px);}
+  html[data-mode="full"] #screen-start .hero-sub{font-size:calc(15px * var(--text-step-scale,1));line-height:1.5;}
+  html[data-mode="full"] #screen-start .mode-description{font-size:calc(13px * var(--text-step-scale,1));line-height:1.5;}
+  html[data-mode="full"] body #screen-start .mode-option{min-height:60px;padding:9px 12px;}
+  html[data-mode="full"] #screen-start .start-actions .btn{min-height:44px;padding-block:10px;}
+  #screen-start .long-game-guide :is(.long-game-steps,.difficulty-ladder){padding:12px 16px;}
+  #screen-start .long-game-guide .how-title,
+  #screen-start .long-game-guide .ladder-title h2{font-size:calc(15px * var(--text-step-scale,1));}
+  #screen-start .long-game-guide .ladder-title{margin-bottom:10px;}
+  #screen-start .long-game-guide .ladder-title p{font-size:calc(11px * var(--text-step-scale,1));line-height:1.4;}
+  #screen-start .long-game-guide .ladder-icon{width:36px;height:36px;margin-bottom:21px;}
+  #screen-start .long-game-guide .ladder-icon>svg{width:21px;height:21px;}
+  #screen-start .long-game-guide .ladder-row::before{top:20px;}
+  #screen-start .long-game-guide .ladder-desc{font-size:calc(10.5px * var(--text-step-scale,1));}
+}
+@media(min-width:981px) and (max-height:800px){
+  html[data-mode="full"] body #screen-start .start-main{padding-block:8px;row-gap:8px;}
+  #screen-start .long-game-guide :is(.long-game-steps,.difficulty-ladder){padding-block:8px;}
+}
+@media(min-width:981px){
+  html[data-mode="full"] body #screen-start .winter-credit{bottom:var(--landing-credit-bottom,calc(var(--shell-bottom) + 8px));}
+}

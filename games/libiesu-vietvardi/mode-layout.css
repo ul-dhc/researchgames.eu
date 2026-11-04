@@ -1,0 +1,19 @@
+/* Shared local preview: restrained Lucide mode marks. */
+#mode-picker .mode-option{display:grid;grid-template-columns:26px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;row-gap:4px;align-content:center;}
+#mode-picker .mode-symbol{grid-column:1;grid-row:1/3;align-self:center;width:25px;height:25px;color:var(--accent);stroke-width:1.8;}
+#mode-picker .mode-option>strong{grid-column:2;grid-row:1;}
+#mode-picker .mode-option>span{grid-column:2;grid-row:2;}
+@media(min-width:981px){
+  body:has(#screen-start:not(.hidden)):not(.about-open){display:grid;grid-template-rows:minmax(0,1fr) auto;height:100dvh;min-height:100dvh;}
+  body #screen-start{display:grid;grid-template-rows:auto minmax(0,1fr);height:100%;min-height:0;}
+  body #screen-start .start-main{min-height:0;height:auto;padding-block:clamp(16px,3vh,30px);}
+  body #screen-start .start-left{gap:clamp(10px,1.8vh,18px);}
+  body #screen-start .mode-description{min-height:0;}
+  body #screen-start .mode-option{min-height:74px;padding:12px;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .site-footer.footbar{padding:10px 24px;min-height:64px;margin-top:0;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .footer-brand img{max-height:44px;width:auto;max-width:160px;}
+  body:has(#screen-start:not(.hidden)):not(.about-open) .topbar{min-height:68px;padding-block:10px;}
+}
+@media(min-width:981px){
+  .screen-start .how-title,.screen-start .step-cards{display:none;}
+}

@@ -10,6 +10,8 @@
   <link rel="icon" type="image/svg+xml" href="../../assets/brand/researchgames-icon-color.svg">
   <link rel="stylesheet" href="style.css?v=20261104-languages">
 <link rel="stylesheet" href="shell.css?v=20261104-shell">
+<link rel="stylesheet" href="palette.css?v=5">
+<link rel="stylesheet" href="responsive-layout.css?v=20">
 </head>
 <body class="about-page">
 <header class="topbar">
@@ -157,19 +159,19 @@
     <a data-about-link class="footer-about" href="about.html"><span data-lv="Par spēli" data-en="About the game">Par spēli</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
     <span class="footer-brands">
       <a class="footer-brand footer-brand-researchgames" href="https://researchgames.eu/" target="_blank" rel="noopener noreferrer" aria-label="ResearchGames.eu"><img src="assets/researchgames-logo-white.svg" alt="ResearchGames.eu" width="138"></a>
-      <a class="footer-brand footer-brand-liv" data-livonian-footer-link href="https://www.livonian.lv/lv/sakums/" target="_blank" rel="noopener noreferrer" aria-label="LU Lībiešu institūts" data-aria-lv="LU Lībiešu institūts" data-aria-en="University of Latvia Livonian Institute"><img src="assets/ulli.png" alt="LU Lībiešu institūts" width="120"></a>
       <a class="footer-brand footer-brand-dhc" href="https://dhc.lu.lv/" target="_blank" rel="noopener noreferrer" aria-label="LU Digitālo humanitāro zinātņu centrs" data-aria-lv="LU Digitālo humanitāro zinātņu centrs" data-aria-en="University of Latvia Digital Humanities Centre">
         <img class="partner-logo-light" data-logo-lang="lv" src="assets/dhc-lv-light.png" alt="LU Digitālo humanitāro zinātņu centrs" width="120">
         <img class="partner-logo-dark" data-logo-lang="lv" src="assets/dhc-lv-dark.png" alt="LU Digitālo humanitāro zinātņu centrs" width="120">
         <img class="partner-logo-light" data-logo-lang="en" src="assets/dhc-en-light.png" alt="University of Latvia Digital Humanities Centre" width="120" hidden>
         <img class="partner-logo-dark" data-logo-lang="en" src="assets/dhc-en-dark.png" alt="University of Latvia Digital Humanities Centre" width="120" hidden>
       </a>
+      <a class="footer-brand footer-brand-liv" data-livonian-footer-link href="https://www.livonian.lv/lv/sakums/" target="_blank" rel="noopener noreferrer" aria-label="LU Lībiešu institūts" data-aria-lv="LU Lībiešu institūts" data-aria-en="University of Latvia Livonian Institute"><img src="assets/ulli.png" alt="LU Lībiešu institūts" width="120"></a>
     </span>
   </nav>
 </footer>
 <script>
 (() => {
-  const LS_THEME = "liv-game-theme";
+  const LS_THEME = "liv-game-map-preview-theme";
   const isEn = () => location.hash.toLowerCase() === "#en";
   function applyLanguage() {
     const en = isEn();
@@ -201,7 +203,7 @@
     if (button.dataset.lang === "en") location.hash = "en";
     else location.href = location.href.split("#")[0];
   }));
-  const theme = localStorage.getItem(LS_THEME) || "dark";
+  const theme = localStorage.getItem(LS_THEME) || "light";
   document.documentElement.dataset.theme = theme;
   document.querySelector("#about-theme").addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";

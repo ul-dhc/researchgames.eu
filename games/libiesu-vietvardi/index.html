@@ -30,6 +30,11 @@
 <link rel="stylesheet" href="style.css?v=20261104-languages">
 <link rel="icon" type="image/svg+xml" href="../../assets/brand/researchgames-icon-color.svg">
 <link rel="stylesheet" href="shell.css?v=20261104-shell">
+<link rel="stylesheet" href="map-background.css?v=3">
+<link rel="stylesheet" href="mode-layout.css?v=3">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="palette.css?v=5">
+<link rel="stylesheet" href="responsive-layout.css?v=20">
 </head>
 <body>
 
@@ -184,7 +189,18 @@
         <button id="btn-start" class="btn btn-primary btn-large">Sākt spēli <svg width="17" height="17"><use href="vendor/lucide-icons.svg#i-arrow-right"/></svg></button>
       </div>
 
-      <h2 class="how-title">Kā tas darbojas?</h2>
+
+    </div>
+
+    <div class="start-right" aria-label="Lībiešu vietvārdi kartē">
+      <div class="constellation-wrap">
+        <div id="constellation-map" class="leaflet-holder"></div>
+      </div>
+      <div class="winter-credit"><a href="https://www.maptiler.com/" target="_blank" rel="noopener"><img class="maptiler-on-light" src="assets/maptiler-logo-monochrome.png" alt="MapTiler" width="76"><img class="maptiler-on-dark" src="assets/maptiler-logo-white.png" alt="MapTiler" width="76"></a><span>© <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></span></div>
+      <p class="winter-status" role="status">Karte ielādējas…</p>
+
+    </div>
+    <details class="long-game-guide" open><summary data-lv="Kā spēlēt un grūtības līmeņi" data-en="How to play and difficulty levels">Kā spēlēt un grūtības līmeņi</summary><div class="long-guide-content"><div class="long-game-steps">      <h2 class="how-title">Kā tas darbojas?</h2>
       <div class="step-cards">
         <div class="step-card">
           <div class="step-icon"><svg width="30" height="30"><use href="vendor/lucide-icons.svg#i-checkbox-single"/></svg></div>
@@ -198,15 +214,8 @@
           <div class="step-icon"><svg width="26" height="26"><use href="vendor/lucide-icons.svg#i-pin"/></svg></div>
           <div class="step-copy"><h3>Atklāj vietu kartē</h3><p>Pareizi savienojot, vietvārds iedegas kartē, un Tu iegūsti punktus!</p></div>
         </div>
-      </div>
-    </div>
-
-    <div class="start-right">
-      <div class="constellation-wrap">
-        <div id="constellation-map" class="leaflet-holder"></div>
-      </div>
-      <div class="difficulty-ladder">
-        <div class="ladder-title"><svg width="14" height="14"><use href="vendor/lucide-icons.svg#i-info"/></svg> <b>Šīs spēles kārtas</b>&nbsp;ved no latviešu valodai līdzīgākiem līdz grūtāk atpazīstamiem vietvārdiem lībiešu valodā</div>
+      </div></div>      <div class="difficulty-ladder">
+        <div class="ladder-title"><svg class="ladder-heading-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h6v-6h6V8h6V3"/></svg><div><h2 data-lv="Spēles grūtības līmeņi" data-en="Game difficulty levels">Spēles grūtības līmeņi</h2><p data-lv="No latviešu valodai līdzīgiem līdz grūtāk atpazīstamiem lībiešu vietvārdiem." data-en="From names resembling Latvian to Livonian place names that are harder to recognise.">No latviešu valodai līdzīgiem līdz grūtāk atpazīstamiem lībiešu vietvārdiem.</p></div></div>
         <div class="ladder-row">
           <div class="ladder-item">
             <div class="ladder-icon"><svg width="19" height="19"><use href="#i-similar"/></svg><span class="ladder-num">1</span></div>
@@ -234,8 +243,7 @@
             <span class="ladder-desc">To spēs zinātāji un apsviedīgie</span>
           </div>
         </div>
-      </div>
-    </div>
+      </div></div></details>
   </div>
 
   <div id="how-panel" class="how-panel hidden">
@@ -503,18 +511,22 @@
     <a data-about-link class="footer-about" href="about.html"><span data-lv="Par spēli" data-en="About the game">Par spēli</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
     <span class="footer-brands">
       <a class="footer-brand footer-brand-researchgames" href="https://researchgames.eu/" target="_blank" rel="noopener noreferrer" aria-label="ResearchGames.eu"><img src="assets/researchgames-logo-white.svg" alt="ResearchGames.eu" width="138"></a>
-      <a class="footer-brand footer-brand-liv" data-livonian-footer-link href="https://www.livonian.lv/lv/sakums/" target="_blank" rel="noopener noreferrer" aria-label="LU Lībiešu institūts" data-aria-lv="LU Lībiešu institūts" data-aria-en="University of Latvia Livonian Institute"><img src="assets/ulli.png" alt="LU Lībiešu institūts" width="120"></a>
       <a class="footer-brand footer-brand-dhc" href="https://dhc.lu.lv/" target="_blank" rel="noopener noreferrer" aria-label="LU Digitālo humanitāro zinātņu centrs" data-aria-lv="LU Digitālo humanitāro zinātņu centrs" data-aria-en="University of Latvia Digital Humanities Centre">
         <img class="partner-logo-light" data-logo-lang="lv" src="assets/dhc-lv-light.png" alt="LU Digitālo humanitāro zinātņu centrs" width="120">
         <img class="partner-logo-dark" data-logo-lang="lv" src="assets/dhc-lv-dark.png" alt="LU Digitālo humanitāro zinātņu centrs" width="120">
         <img class="partner-logo-light" data-logo-lang="en" src="assets/dhc-en-light.png" alt="University of Latvia Digital Humanities Centre" width="120" hidden>
         <img class="partner-logo-dark" data-logo-lang="en" src="assets/dhc-en-dark.png" alt="University of Latvia Digital Humanities Centre" width="120" hidden>
       </a>
+      <a class="footer-brand footer-brand-liv" data-livonian-footer-link href="https://www.livonian.lv/lv/sakums/" target="_blank" rel="noopener noreferrer" aria-label="LU Lībiešu institūts" data-aria-lv="LU Lībiešu institūts" data-aria-en="University of Latvia Livonian Institute"><img src="assets/ulli.png" alt="LU Lībiešu institūts" width="120"></a>
     </span>
   </nav>
 </footer>
 
 <script src="vendor/leaflet.js"></script>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="vendor/leaflet-maplibre-gl.js"></script>
+<script src="map-config.js?v=20261104-release"></script>
+<script src="winter-basemap.js?v=8"></script>
 <script src="data.js"></script>
 <script src="mode-plans.js?v=20261103"></script>
 <script src="coast-roads.js?v=20261103"></script>
@@ -522,8 +534,12 @@
 <script src="map-basemaps.js?v=20261103"></script>
 <script src="map-label-layout.js?v=20261103"></script>
 <script src="score-rules.js?v=20261103"></script>
-<script src="app.js?v=20261104-shell"></script>
+<script src="game-confirm.js?v=1"></script>
+<script src="app.js?v=12"></script>
 <script src="shell.js?v=20261104-contact"></script>
 <script src="navigation.js?v=20261104-nav"></script>
+<script src="mode-icons.js?v=1"></script>
+<script src="shell-map-background.js?v=1"></script>
+<script src="guide-disclosure.js?v=1"></script>
 </body>
 </html>
