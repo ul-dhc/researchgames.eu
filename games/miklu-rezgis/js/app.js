@@ -1916,6 +1916,10 @@ function wireEvents() {
     link.addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
   });
   document.getElementById('about-back-btn').addEventListener('click', hideAbout);
+  document.getElementById('about-bottom-close-btn').addEventListener('click', () => {
+    hideAbout();
+    window.scrollTo({top: 0, behavior: 'instant'});
+  });
 
   document.getElementById('hint-btn').addEventListener('click', giveHint);
   document.getElementById('next-btn').addEventListener('click', nextRiddle);
