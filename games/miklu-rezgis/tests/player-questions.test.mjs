@@ -73,7 +73,7 @@ test('delivery is confirmed only after server acknowledgement; failure retains q
     await new Promise(resolve => setImmediate(resolve));
     assert.equal(g.run('state.playerQuestionDelivered'), ok);
     assert.equal(JSON.parse(g.storage.get('lmg_analytics_queue')).length, ok ? 0 : 1);
-    assert.equal(g.el('player-question-submit').textContent, ok ? 'Nosūtīts ✓' : 'Nosūtīt');
+    assert.equal(g.el('player-question-submit').textContent, ok ? 'Nosūtīts' : 'Nosūtīt');
   }
 });
 

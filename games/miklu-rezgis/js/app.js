@@ -731,7 +731,7 @@ function getLevelRating(level, levelScore, riddlesPerLevel) {
 
 function getLevelMsg(level, rating) {
   const m = LEVEL_MSGS[level];
-  if (rating === 'excellent') return { badge: 'Izcili ✦', msg: m.excellent };
+  if (rating === 'excellent') return { badge: 'Izcili', msg: m.excellent };
   if (rating === 'good') return { badge: 'Labi', msg: m.good };
   return { badge: 'Mēģini vēl', msg: m.try };
 }
@@ -742,14 +742,14 @@ function modeLabel(mode) {
 }
 
 function generateShareText(score, maxScore, title, mode) {
-  return `Minēju mīklas.\nMans tituls: ${title}\n\n⭐ ${score.toLocaleString('lv-LV')} / ${maxScore.toLocaleString('lv-LV')} punkti\nSpēles versija: ${modeLabel(mode)}\n\nVai Tu vari labāk?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis`;
+  return `Minēju mīklas.\nMans tituls: ${title}\n\n${score.toLocaleString('lv-LV')} / ${maxScore.toLocaleString('lv-LV')} punkti\nSpēles versija: ${modeLabel(mode)}\n\nVai Tu vari labāk?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis`;
 }
 
 function generateDailyShareText() {
-  const solvedLine = state.dailySolved ? '✅ Atminēju dienas mīklu' : 'Apskatīju dienas mīklas atminējumu';
+  const solvedLine = state.dailySolved ? 'Atminēju dienas mīklu' : 'Apskatīju dienas mīklas atminējumu';
   const hintsUsed = state.hintLimit - state.hintsLeft;
   const attemptsUsed = MAX_LIVES - state.livesLeft + (state.dailySolved ? 1 : 0);
-  return `${solvedLine}\n⭐ ${state.totalScore} / 115 punkti\nĀtruma bonuss: +${state.totalTimeBonus}\nUzvednes: ${hintsUsed} · Mēģinājumi: ${Math.max(1, attemptsUsed)}\nLaiks: ${formatDuration(state.timerSeconds)}\n\nCik raiti Tev izdosies atminēt šodienas mīklu?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis #dienasmīkla`;
+  return `${solvedLine}\n${state.totalScore} / 115 punkti\nĀtruma bonuss: +${state.totalTimeBonus}\nUzvednes: ${hintsUsed} · Mēģinājumi: ${Math.max(1, attemptsUsed)}\nLaiks: ${formatDuration(state.timerSeconds)}\n\nCik raiti Tev izdosies atminēt šodienas mīklu?\nhttps://researchgames.eu/games/miklu-rezgis/\n\n#mīklurežģis #dienasmīkla`;
 }
 
 // ==== dataLoader.js ====
@@ -798,7 +798,7 @@ function renderTopBar() {
   } else {
     badge.textContent = state.gameMode === 'daily'
       ? 'Dienas mīkla'
-      : state.isBonus ? '⭐ Bonusa kārta' : `${state.currentLevel}. līmenis`;
+      : state.isBonus ? 'Bonusa kārta' : `${state.currentLevel}. līmenis`;
   }
   document.getElementById('score-display').textContent = state.totalScore.toLocaleString('lv-LV');
   document.getElementById('score-max').textContent = `/ ${state.maxScore.toLocaleString('lv-LV')}`;
@@ -1005,8 +1005,11 @@ const FONT_SIZES = ['small', 'medium', 'large', 'extra-large'];
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  document.querySelectorAll('.theme-switch .sw').forEach(sw => {
+  document.querySelectorAll('.header-theme-toggle').forEach(sw => {
     sw.setAttribute('aria-checked', theme === 'light' ? 'true' : 'false');
+    const label = theme === 'light' ? 'Ieslēgt tumšo režīmu' : 'Ieslēgt gaišo režīmu';
+    sw.setAttribute('aria-label', label);
+    sw.setAttribute('title', label);
   });
   try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* ignore */ }
 }
@@ -1028,14 +1031,9 @@ function initTheme() {
     applyTheme('light');
   }
 
-  document.querySelectorAll('.theme-switch .sw').forEach(sw => {
+  document.querySelectorAll('.header-theme-toggle').forEach(sw => {
     sw.addEventListener('click', toggleTheme);
-    sw.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleTheme();
-      }
-    });
+
   });
 }
 
@@ -1046,7 +1044,12 @@ function applyFontSize(size) {
   const decrease = document.getElementById('font-decrease-btn');
   const increase = document.getElementById('font-increase-btn');
   if (decrease) decrease.disabled = index === 0;
-  if (increase) increase.disabled = index === FONT_SIZES.length - 1;
+  if (increase) {
+    increase.disabled = false;
+    const labels = ['mazs', 'vidējs', 'liels', 'ļoti liels'];
+    increase.setAttribute('aria-label', `Mainīt teksta izmēru (pašlaik: ${labels[index]})`);
+    increase.setAttribute('title', `Teksta izmērs: ${labels[index]}. Nospied, lai mainītu.`);
+  }
   try { localStorage.setItem(FONT_SIZE_KEY, safeSize); } catch (e) { /* ignore */ }
 }
 
@@ -1055,13 +1058,9 @@ function initFontSizeControls() {
   try { saved = localStorage.getItem(FONT_SIZE_KEY) || 'medium'; } catch (e) { /* ignore */ }
   applyFontSize(saved);
 
-  document.getElementById('font-decrease-btn').addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-font-size') || 'medium';
-    applyFontSize(FONT_SIZES[Math.max(0, FONT_SIZES.indexOf(current) - 1)]);
-  });
   document.getElementById('font-increase-btn').addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-font-size') || 'medium';
-    applyFontSize(FONT_SIZES[Math.min(FONT_SIZES.length - 1, FONT_SIZES.indexOf(current) + 1)]);
+    applyFontSize(FONT_SIZES[(FONT_SIZES.indexOf(current) + 1) % FONT_SIZES.length]);
   });
 }
 
@@ -1154,7 +1153,7 @@ function updatePlayerQuestionForm() {
   const confirmation = document.getElementById('player-question-confirm');
   input.disabled = state.playerQuestionSubmitted;
   button.disabled = state.playerQuestionSubmitted || !input.value.trim();
-  button.textContent = state.playerQuestionDelivered ? 'Nosūtīts ✓' : 'Nosūtīt';
+  button.textContent = state.playerQuestionDelivered ? 'Nosūtīts' : 'Nosūtīt';
   confirmation.textContent = state.playerQuestionDelivered
     ? 'Paldies! Tavs jautājums ir nosūtīts pētniekiem.'
     : state.playerQuestionSubmitted
@@ -1214,7 +1213,7 @@ function submitGameFeedback() {
     player_comment: state.survey.comment
   });
   state.feedbackSubmitted = true;
-  document.getElementById('open-feedback-btn').textContent = 'Atsauksme nosūtīta ✓';
+  document.getElementById('open-feedback-btn').textContent = 'Atsauksme nosūtīta';
   document.getElementById('open-feedback-btn').disabled = true;
   document.getElementById('feedback-confirm').textContent = 'Paldies par atsauksmi!';
   setTimeout(hideFeedbackOverlay, 700);
@@ -1314,7 +1313,7 @@ function completeRiddle() {
   }
   renderTopBar();
   const bonusText = state.currentTimeBonus > 0 ? ` · ātruma bonuss +${state.currentTimeBonus}` : '';
-  setStatus(`Pareizi! +${awardedPoints} punkti${bonusText} ✓`, 'win');
+  setStatus(`Pareizi! +${awardedPoints} punkti${bonusText}`, 'win');
   document.getElementById('give-up-btn').disabled = true;
   document.getElementById('hint-btn').disabled = true;
   document.getElementById('shuffle-btn').disabled = true;
@@ -1473,7 +1472,7 @@ function showLevelComplete() {
   }
 
   const btn = document.getElementById('lo-btn');
-  btn.textContent = `Uz ${state.currentLevel + 1}. līmeni →`;
+  btn.innerHTML = `Uz ${state.currentLevel + 1}. līmeni <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>`;
   btn.onclick = () => { hideLevelOverlay(); state.currentLevel++; startLevel(); };
   document.getElementById('level-overlay').classList.add('show');
 }
@@ -1505,7 +1504,7 @@ function showFinalResults() {
     state.gameMode === 'party' || state.participationMode !== 'research';
   const feedbackBtn = document.getElementById('open-feedback-btn');
   feedbackBtn.disabled = state.feedbackSubmitted;
-  feedbackBtn.textContent = state.feedbackSubmitted ? 'Atsauksme nosūtīta ✓' : 'Novērtēt spēli';
+  feedbackBtn.textContent = state.feedbackSubmitted ? 'Atsauksme nosūtīta' : 'Novērtēt spēli';
   ['level-overlay', 'bonus-overlay', 'restart-overlay'].forEach(id => {
     document.getElementById(id)?.classList.remove('show');
   });
@@ -1514,12 +1513,12 @@ function showFinalResults() {
     const p = state.party;
     const winner = p.scores[0] === p.scores[1] ? -1 : (p.scores[0] > p.scores[1] ? 0 : 1);
     document.getElementById('fo-score').textContent = `${p.names[0]} ${p.scores[0].toLocaleString('lv-LV')} · ${p.names[1]} ${p.scores[1].toLocaleString('lv-LV')}`;
-    document.getElementById('fo-title').textContent = winner < 0 ? 'Neizšķirts! ✨' : `${p.names[winner]} uzvar! ✨`;
+    document.getElementById('fo-title').textContent = winner < 0 ? 'Neizšķirts!' : `${p.names[winner]} uzvar!`;
     document.getElementById('fo-msg').textContent = `${p.riddlesPerPlayer} mīklas katram · ātruma bonuss ${p.names[0]} +${p.timeBonuses[0]}, ${p.names[1]} +${p.timeBonuses[1]} · laiks ${formatDuration(p.totalTimes[0])} un ${formatDuration(p.totalTimes[1])}`;
     const resultLines = winner < 0
       ? [`${p.names[0]} – ${p.scores[0]} punkti`, `${p.names[1]} – ${p.scores[1]} punkti`]
-      : [`🏆 ${p.names[winner]} – ${p.scores[winner]} punkti`, `🥈 ${p.names[1 - winner]} – ${p.scores[1 - winner]} punkti`];
-    state.shareText = [`Mīklu režģis – Ballītes versija 🎉`, ...resultLines, `${p.riddlesPerPlayer} mīklas katram`, `Ātruma bonuss: ${p.names[0]} +${p.timeBonuses[0]} · ${p.names[1]} +${p.timeBonuses[1]}`, '#mīklurežģis'].join('\n');
+      : [`1. vieta: ${p.names[winner]} – ${p.scores[winner]} punkti`, `2. vieta: ${p.names[1 - winner]} – ${p.scores[1 - winner]} punkti`];
+    state.shareText = [`Mīklu režģis – Ballītes versija`, ...resultLines, `${p.riddlesPerPlayer} mīklas katram`, `Ātruma bonuss: ${p.names[0]} +${p.timeBonuses[0]} · ${p.names[1]} +${p.timeBonuses[1]}`, '#mīklurežģis'].join('\n');
     document.getElementById('share-box').textContent = state.shareText;
     document.getElementById('copy-confirm').textContent = '';
     document.getElementById('final-overlay').classList.add('show');
@@ -1554,7 +1553,7 @@ function showFinalResults() {
 function copyShare() {
   const confirmEl = document.getElementById('copy-confirm');
   const announce = () => {
-    confirmEl.textContent = '✓ Nokopēts!';
+    confirmEl.textContent = 'Nokopēts!';
     setTimeout(() => { confirmEl.textContent = ''; }, 2500);
   };
 

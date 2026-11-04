@@ -281,7 +281,7 @@ function updateCompletedRiddleState() {
   const button = el('next-button');
   const arrow = document.createElement('span');
   arrow.setAttribute('aria-hidden', 'true');
-  arrow.textContent = '→';
+  arrow.innerHTML = '<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>';
   button.replaceChildren(
     document.createTextNode(state.index === GAME_LENGTH - 1 ? 'Pabeigt spēli ' : 'Nākamā mīkla '),
     arrow

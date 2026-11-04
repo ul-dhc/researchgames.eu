@@ -881,3 +881,6 @@ footer a:hover {
   }
   .riddle-complete { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
 }
+
+/* Interface icons use the vendored Lucide sprite. */
+.ui-icon{display:inline-block;vertical-align:-.15em;flex-shrink:0;fill:none;stroke:currentColor;}
