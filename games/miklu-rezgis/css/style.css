@@ -1345,3 +1345,34 @@ html[data-theme="light"] .theme-icon-moon{display:block;}
 
 /* Interface icons use the vendored Lucide sprite. */
 .ui-icon{display:inline-block;vertical-align:-.15em;flex-shrink:0;fill:none;stroke:currentColor;}
+
+/* Give footer marks and the bottom edge more breathing room on large displays. */
+@media(min-width:1100px){
+  .site-footer{padding-top:18px;padding-bottom:30px;}
+  .footer-brand-researchgames img{width:176px;height:auto;}
+  .footer-brand-garamantas img{width:144px;height:auto;}
+  .footer-links{column-gap:56px;}
+  .footer-brands{gap:52px;}
+  body:not(.game-active):not(.about-open){min-height:100dvh;}
+  body:not(.game-active):not(.about-open) .start-screen{min-height:0;}
+}
+@media(min-width:1600px){
+  .site-footer{padding-top:22px;padding-bottom:36px;}
+  .footer-brand-researchgames img{width:198px;}
+  .footer-brand-garamantas img{width:160px;}
+  .footer-links{column-gap:64px;}
+  .footer-brands{gap:60px;}
+}
+
+/* Partner order: ResearchGames, the DHC, and Garamantas on the right. */
+.footer-brand-dhc img{height:auto;}
+.footer-brand .theme-light-logo{display:none;}
+html[data-theme="light"] .footer-brand .theme-dark-logo{display:none;}
+html[data-theme="light"] .footer-brand .theme-light-logo{display:block;}
+@media(min-width:1100px){.footer-brand-dhc img{width:148px;}}
+@media(min-width:1600px){.footer-brand-dhc img{width:168px;}}
+@media(max-width:600px){
+  .footer-brands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(100%,420px);}
+  .footer-brand{min-width:0;justify-content:center;}
+  .footer-brand img{max-width:100%;height:auto;}
+}
