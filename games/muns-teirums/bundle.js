@@ -741,12 +741,16 @@ const interfaceStrings = {
     "lv": "Parastā deviņvīruspēka apraksts; avotā dots vispārīgais nosaukums.",
     "ltg": ""
   },
+  "05.10": {
+    "lv": "Vienam augam var būt vairāki līdzvērtīgi nosaukumi.",
+    "ltg": ""
+  },
   "06.01": {
     "lv": "ResearchGames.eu · pilots",
     "ltg": ""
   },
   "06.02": {
-    "lv": "Atmiņas spēle ar augu zīmējumiem un latgaliskajiem nosaukumiem. Viena pāra kārtī ir zīmējums, otrā – šī auga nosaukums un avotā norādītie varianti.",
+    "lv": "Atmiņas spēle ar augu zīmējumiem un latgaliskajiem nosaukumiem. Vienā pāra kārtī ir zīmējums, otrā – viens nejauši izvēlēts šī auga nosaukums. Tas saglabājas nemainīgs visu spēli. Galerijā redzami visi avotā norādītie varianti vienādā noformējumā un nejaušā secībā.",
     "ltg": ""
   },
   "06.03": {
@@ -794,7 +798,7 @@ const interfaceStrings = {
     "ltg": ""
   },
   "08.04": {
-    "lv": "Avots: topošā grāmata “Augu nosaukumi latgaliešu valodā”, sastādītāja Edeite Laime.\nSpēlē izmantota nodaļa “Teiruma augi”.\nAugu nosaukumu secība saglabāta kā avotā.",
+    "lv": "Avots: topošā grāmata “Augu nosaukumi latgaliešu valodā”, sastādītāja Edeite Laime.\nSpēlē izmantota nodaļa “Teiruma augi”.\nAugu nosaukumu varianti saglabāti kā avotā. To secība galerijā ir nejauša.",
     "ltg": ""
   },
   "08.05": {
@@ -906,6 +910,20 @@ function sampleMeadow(plants, count = 8, previousIds = [], random = Math.random)
   return selected;
 }
 
+// Keep source names intact. Each round has one card name and an independent gallery order.
+function prepareMeadowNames(plants, random = Math.random) {
+  return plants.map(plant => {
+    const names = plant.namesLtg;
+    const cardName = names[Math.floor(random() * names.length)];
+    const galleryNames = [...names];
+    for (let i = galleryNames.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [galleryNames[i], galleryNames[j]] = [galleryNames[j], galleryNames[i]];
+    }
+    return { ...plant, cardName, galleryNames };
+  });
+}
+
 function makeDeck(plants, random = Math.random) {
   const cards = plants.flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind, key: `${plant.id}-${kind}` })));
   for (let i = cards.length - 1; i > 0; i--) {
@@ -947,7 +965,7 @@ function resolveMismatch(state) {
 
 // Only selected optional metrics appear in the copied result.
 function shareResultFor(meadow, { time = false, points = false, seconds = 0, score = 0 } = {}) {
-  const plantNames = meadow.map(plant => plant.namesLtg[0]);
+  const plantNames = meadow.map(plant => plant.cardName ?? plant.namesLtg[0]);
   const names = plantNames.length > 1 ? `${plantNames.slice(0, -1).join(', ')} i ${plantNames.at(-1)}` : plantNames.join('');
   const sentences = [t('04.01', { augu_saraksts: names })];
   const minutes = Math.floor(seconds / 60), rest = seconds % 60;
@@ -1059,7 +1077,7 @@ function startTimer() {
 }
 
 function faceLabel(item) {
-  return item.kind === 'image' ? t('09.09') : item.plant.namesLtg.join('; ');
+  return item.kind === 'image' ? t('09.09') : (item.plant.cardName ?? item.plant.namesLtg[0]);
 }
 
 function buildCard(item, index, preview = false) {
@@ -1078,14 +1096,10 @@ function buildCard(item, index, preview = false) {
   } else {
     front.classList.add('name-face');
     const name = document.createElement('span'); name.className = 'plant-name'; name.lang = 'ltg';
-    name.textContent = item.plant.namesLtg[0];
+    name.textContent = item.plant.cardName ?? item.plant.namesLtg[0];
     if (name.textContent.length > 19) name.classList.add('long-name');
     if (name.textContent.split(/\s+/).some(word => word.length >= 9)) name.classList.add('long-word');
     front.append(name);
-    if (item.plant.namesLtg.length > 1) {
-      const variants = document.createElement('span'); variants.className = 'plant-variants'; variants.lang = 'ltg';
-      variants.textContent = item.plant.namesLtg.slice(1).join(' · '); front.append(variants);
-    }
   }
   const check = document.createElement('span'); check.className = 'match-check'; check.innerHTML = icons.check; front.append(check);
   inner.append(back, front); card.append(inner);
@@ -1136,7 +1150,7 @@ function setFace(index, open, matched = false) {
   card.classList.toggle('flipped', open);
   card.classList.toggle('matched', matched);
   card.setAttribute('aria-pressed', String(open));
-  card.setAttribute('aria-label', matched ? t('09.13', { latgaliskie_nosaukumi: item.plant.namesLtg.join('; '), latviskais_nosaukums: item.plant.nameLv }) : open ? t('09.12', { saturs: faceLabel(item), numurs: index + 1 }) : t('09.11', { numurs: index + 1 }));
+  card.setAttribute('aria-label', matched ? t('09.13', { latgaliskie_nosaukumi: (item.plant.cardName ?? item.plant.namesLtg[0]), latviskais_nosaukums: item.plant.nameLv }) : open ? t('09.12', { saturs: faceLabel(item), numurs: index + 1 }) : t('09.11', { numurs: index + 1 }));
   if (matched) card.setAttribute('aria-disabled', 'true');
 }
 
@@ -1153,7 +1167,7 @@ function flip(index) {
   updateStats();
   if (event.type === 'match') {
     event.indices.forEach(i => setFace(i, true, true));
-    $('game-status').textContent = `${settings.points ? '+100 · ' : ''}${t('02.06', { latgaliskais_nosaukums: event.plant.namesLtg[0], latviskais_nosaukums: event.plant.nameLv })}`;
+    $('game-status').textContent = `${settings.points ? '+100 · ' : ''}${t('02.06', { latgaliskais_nosaukums: event.plant.cardName, latviskais_nosaukums: event.plant.nameLv })}`;
     if (event.complete) {
       analytics.complete();
       mode = 'finishing'; pauseTimer();
@@ -1177,7 +1191,7 @@ function startGame() {
   document.body.classList.remove('is-gallery-transition');
   clearTimeout(mismatchTimeout); clearTimeout(finishTimeout); pauseTimer();
   elapsed = 0; runningSince = null; mode = 'playing';
-  meadow = sampleMeadow(plants, pairCount, previousMeadow);
+  meadow = prepareMeadowNames(sampleMeadow(plants, pairCount, previousMeadow));
   previousMeadow = meadow.map(p => p.id);
   try { localStorage.setItem('rg-plant-last-meadow', JSON.stringify(previousMeadow)); } catch { /* Optional persistence. */ }
   game = createGame(makeDeck(meadow));
@@ -1267,7 +1281,7 @@ function returnToStart() {
 function preview() {
   updateSizeInfo();
   grid.classList.add('preview');
-  const deck = plants.slice(0, pairCount).flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind })));
+  const deck = prepareMeadowNames(plants.slice(0, pairCount)).flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind })));
   grid.replaceChildren(...deck.map((item, index) => buildCard(item, index, true)));
   $('pairs').textContent = `0 / ${pairCount}`;
 }
@@ -1276,12 +1290,21 @@ function buildGallery() {
   $('plant-gallery').replaceChildren(...meadow.map(plant => {
     const article = document.createElement('article'); article.className = 'gallery-plant';
     const image = document.createElement('img'); image.src = plant.image; image.alt = plant.nameLv;
-    const title = document.createElement('h3'); title.textContent = plant.namesLtg[0]; title.lang = 'ltg';
-    const variants = document.createElement('p'); variants.textContent = plant.namesLtg.slice(1).join(' · '); variants.lang = 'ltg';
+    const title = document.createElement('h3'); title.className = 'plant-names'; title.lang = 'ltg';
+    plant.galleryNames.forEach((name, index) => {
+      if (index) { const separator = document.createElement('span'); separator.className = 'name-separator'; separator.textContent = ' · '; title.append(separator); }
+      const variant = document.createElement('span'); variant.className = 'plant-name-variant'; variant.textContent = name; title.append(variant);
+    });
     const lv = document.createElement('p'); lv.className = 'lv-name'; lv.textContent = t('05.01', { nosaukums: plant.nameLv });
     const link = document.createElement('a'); link.href = `https://tezaurs.lv/${encodeURIComponent(plant.nameLv)}`; link.target = '_blank'; link.rel = 'noopener'; link.textContent = t('05.06') + ' ';
     const linkIcon = document.createElement('span'); linkIcon.innerHTML = icons['arrow-up-right']; link.append(linkIcon);
-    article.append(image, title, variants, lv);
+    article.append(image, title);
+    if (plant.scientificName) {
+      const latin = document.createElement('p'); latin.className = 'scientific-name'; latin.lang = 'la';
+      const scientificName = document.createElement('i'); scientificName.textContent = plant.scientificName;
+      latin.append(scientificName); article.append(latin);
+    }
+    article.append(lv);
     if (plant.namesOther) {
       for (const [lang, label] of [['en', '05.02'], ['de', '05.03'], ['pl', '05.04']]) {
         const row = document.createElement('p'); row.className = 'other-name';

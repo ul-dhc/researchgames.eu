@@ -224,12 +224,16 @@ export const interfaceStrings = {
     "lv": "Parastā deviņvīruspēka apraksts; avotā dots vispārīgais nosaukums.",
     "ltg": ""
   },
+  "05.10": {
+    "lv": "Vienam augam var būt vairāki līdzvērtīgi nosaukumi.",
+    "ltg": ""
+  },
   "06.01": {
     "lv": "ResearchGames.eu · pilots",
     "ltg": ""
   },
   "06.02": {
-    "lv": "Atmiņas spēle ar augu zīmējumiem un latgaliskajiem nosaukumiem. Viena pāra kārtī ir zīmējums, otrā – šī auga nosaukums un avotā norādītie varianti.",
+    "lv": "Atmiņas spēle ar augu zīmējumiem un latgaliskajiem nosaukumiem. Vienā pāra kārtī ir zīmējums, otrā – viens nejauši izvēlēts šī auga nosaukums. Tas saglabājas nemainīgs visu spēli. Galerijā redzami visi avotā norādītie varianti vienādā noformējumā un nejaušā secībā.",
     "ltg": ""
   },
   "06.03": {
@@ -277,7 +281,7 @@ export const interfaceStrings = {
     "ltg": ""
   },
   "08.04": {
-    "lv": "Avots: topošā grāmata “Augu nosaukumi latgaliešu valodā”, sastādītāja Edeite Laime.\nSpēlē izmantota nodaļa “Teiruma augi”.\nAugu nosaukumu secība saglabāta kā avotā.",
+    "lv": "Avots: topošā grāmata “Augu nosaukumi latgaliešu valodā”, sastādītāja Edeite Laime.\nSpēlē izmantota nodaļa “Teiruma augi”.\nAugu nosaukumu varianti saglabāti kā avotā. To secība galerijā ir nejauša.",
     "ltg": ""
   },
   "08.05": {

@@ -20,6 +20,20 @@ export function sampleMeadow(plants, count = 8, previousIds = [], random = Math.
   return selected;
 }
 
+// Keep source names intact. Each round has one card name and an independent gallery order.
+export function prepareMeadowNames(plants, random = Math.random) {
+  return plants.map(plant => {
+    const names = plant.namesLtg;
+    const cardName = names[Math.floor(random() * names.length)];
+    const galleryNames = [...names];
+    for (let i = galleryNames.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [galleryNames[i], galleryNames[j]] = [galleryNames[j], galleryNames[i]];
+    }
+    return { ...plant, cardName, galleryNames };
+  });
+}
+
 export function makeDeck(plants, random = Math.random) {
   const cards = plants.flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind, key: `${plant.id}-${kind}` })));
   for (let i = cards.length - 1; i > 0; i--) {
@@ -61,7 +75,7 @@ export function resolveMismatch(state) {
 
 // Only selected optional metrics appear in the copied result.
 export function shareResultFor(meadow, { time = false, points = false, seconds = 0, score = 0 } = {}) {
-  const plantNames = meadow.map(plant => plant.namesLtg[0]);
+  const plantNames = meadow.map(plant => plant.cardName ?? plant.namesLtg[0]);
   const names = plantNames.length > 1 ? `${plantNames.slice(0, -1).join(', ')} i ${plantNames.at(-1)}` : plantNames.join('');
   const sentences = [t('04.01', { augu_saraksts: names })];
   const minutes = Math.floor(seconds / 60), rest = seconds % 60;
