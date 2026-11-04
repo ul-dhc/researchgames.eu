@@ -85,7 +85,7 @@
     revealTimer=setTimeout(()=>{
       buildLivingField();grid.classList.add('grid-resolving');
       const transitionDelay=reduced?20:3800;
-      transitionTimer=setTimeout(()=>{grid.hidden=true;complete.hidden=false;complete.style.minHeight=`${livingDots.offsetHeight}px`;shell.classList.remove('is-resolving');shell.classList.add('is-complete');shell.removeAttribute('aria-busy');status.textContent=isLatvian?`Pabeigts ${moves} gājienos un ${time(seconds)}. ResearchGames.eu ļauj pētījumus izspēlēt.`:`Complete in ${moves} moves and ${time(seconds)}. ResearchGames.eu makes research playable.`;complete.querySelector('button').focus();},transitionDelay);
+      transitionTimer=setTimeout(()=>{grid.hidden=true;complete.hidden=false;complete.style.minHeight=`${livingDots.offsetHeight}px`;shell.classList.remove('is-resolving');shell.classList.add('is-complete');shell.removeAttribute('aria-busy');status.textContent=isLatvian?`Pabeigts ${moves} gājienos un ${time(seconds)}. ResearchGames.eu`:`Complete in ${moves} moves and ${time(seconds)}. ResearchGames.eu`;complete.querySelector('button').focus();},transitionDelay);
     },readingPause);
   }
   document.querySelector('#restart-game').addEventListener('click',reset);document.querySelector('#skip-game').addEventListener('click',()=>finish(true));reset();
