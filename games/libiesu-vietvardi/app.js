@@ -473,6 +473,7 @@
     return LivonianWinter.createLayer(document.documentElement.dataset.theme || "light");
   }
   function addThemedTiles(map) {
+    if (map.attributionControl) map.attributionControl.setPrefix(false);
     const layer = makeLayerForMap(map);
     layer.addTo(map);
     tileLayersByMap.set(map, layer);
@@ -1086,7 +1087,7 @@
     if (gameMap && currentRoundBounds && !$("#screen-game").classList.contains("hidden")) {
       gameMap.invalidateSize({ pan: false });
       gameMap.fitBounds(currentRoundBounds, mode === "map"
-        ? { paddingTopLeft: [32, 40 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-top")) || 0)], paddingBottomRight: [48, 90 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-bottom")) || 0)], maxZoom: 10, animate: false }
+        ? { ...longGameMapPadding(), maxZoom: 10, animate: false }
         : { ...longGameMapPadding(), maxZoom: 12, animate: false });
     }
   }));
@@ -1236,7 +1237,7 @@
     requestAnimationFrame(() => {
       gameMap.invalidateSize();
       currentRoundBounds = L.latLngBounds(choices.map(pair => [pair.lat, pair.lon])).pad(.15);
-      gameMap.fitBounds(currentRoundBounds, { paddingTopLeft: [32, 40 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-top")) || 0)], paddingBottomRight: [48, 90 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-bottom")) || 0)], maxZoom: 10, animate: false });
+      gameMap.fitBounds(currentRoundBounds, { ...longGameMapPadding(), maxZoom: 10, animate: false });
     });
   }
 
