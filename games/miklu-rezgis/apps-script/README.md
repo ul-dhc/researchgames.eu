@@ -1,4 +1,4 @@
-# Player questions — 2026-10-29
+# Player questions – 2026-10-29
 
 The final results screen asks all main-game participants what they would like to
 learn about riddles. It is optional and independent of the game-rating survey and
@@ -102,7 +102,7 @@ link, comment/rating badges and removable filters. Brand logos and chart marks
 retain their own artwork. Attribution is embedded in the HTML and included in
 `LUCIDE-LICENSE.txt`. Published as dashboard deployment version 30.
 
-## Static delivery — JSON migration
+## Static delivery – JSON migration
 
 The public `../stats/` URL now serves the dashboard directly from the website,
 without an Apps Script iframe. Its filters run locally against a periodically

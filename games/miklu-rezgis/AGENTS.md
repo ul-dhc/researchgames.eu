@@ -13,3 +13,7 @@
 - Run `node games/miklu-rezgis/scripts/build-icons.mjs`, then
   `node games/miklu-rezgis/scripts/build-dashboard.mjs` to regenerate the sprites
   and dashboard. Verify with the game tests before delivering changes.
+
+# Typography
+
+Use en dashes (–), never em dashes, in interface copy and authored documentation.
