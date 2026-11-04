@@ -201,47 +201,21 @@
           else location.href = location.href.split("#")[0];
         });
       });
-      const textSizeSwitcher = document.createElement("div");
-      textSizeSwitcher.className = "text-size-switch";
-      textSizeSwitcher.setAttribute("role", "group");
-      textSizeSwitcher.setAttribute("aria-label", IS_EN ? "Text size" : "Teksta izmērs");
-      textSizeSwitcher.innerHTML = `
-        <button type="button" class="text-size-option" data-size="normal" aria-label="${IS_EN ? "Standard text size" : "Standarta teksta izmērs"}">A</button>
-        <span aria-hidden="true"></span>
-        <button type="button" class="text-size-option text-size-option-large" data-size="large" aria-label="${IS_EN ? "Larger text" : "Lielāks teksts"}">A+</button>
-        <span aria-hidden="true"></span>
-        <button type="button" class="text-size-option text-size-option-large" data-size="xlarge" aria-label="${IS_EN ? "Largest text" : "Vislielākais teksts"}">A++</button>`;
-      const updateTextSizeControls = () => {
-        const current = document.documentElement.dataset.textSize;
-        document.querySelectorAll(".text-size-option").forEach(button => {
-          const active = button.dataset.size === current;
-          button.classList.toggle("active", active);
-          button.setAttribute("aria-pressed", String(active));
-        });
-      };
-      textSizeSwitcher.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", () => {
-          const next = button.dataset.size;
-          document.documentElement.dataset.textSize = next;
-          localStorage.setItem(LS_TEXT_SIZE, next);
-          updateTextSizeControls();
-          requestAnimationFrame(() => {
-            [gameMap, roundMap, finalMap].forEach(map => { if (map) { map.invalidateSize({ pan: false }); map._summaryRelayout?.(); } });
-          });
-        });
-      });
+      const textSizeSwitcher = document.createElement("button");
+      textSizeSwitcher.type = "button";
+      textSizeSwitcher.className = "header-control font-increase";
+      textSizeSwitcher.textContent = "A+";
       const parent = themeSwitch.parentElement;
       if (parent.classList.contains("game-header-controls")) {
-        parent.insertBefore(aboutLink, themeSwitch);
         parent.insertBefore(switcher, themeSwitch);
         parent.insertBefore(textSizeSwitcher, themeSwitch);
+        themeSwitch.after(aboutLink);
       } else {
         const settings = document.createElement("div");
         settings.className = "header-settings";
         parent.insertBefore(settings, themeSwitch);
-        settings.append(aboutLink, switcher, textSizeSwitcher, themeSwitch);
+        settings.append(switcher, textSizeSwitcher, themeSwitch, aboutLink);
       }
-      updateTextSizeControls();
     });
   }
   installLanguageSwitches();
@@ -436,6 +410,25 @@
     timerRaf = null;
     renderActiveTimer();
   }
+  document.addEventListener("livonian:text-size", () => {
+    requestAnimationFrame(() => {
+      [gameMap, roundMap, finalMap].forEach(map => {
+        if (map) { map.invalidateSize({ pan: false }); map._summaryRelayout?.(); }
+      });
+    });
+  });
+  let resumeAfterAbout = false;
+  document.addEventListener("livonian:about-open", () => {
+    resumeAfterAbout = activeStartedAt !== null;
+    pauseActiveTimer();
+  });
+  document.addEventListener("livonian:about-close", () => {
+    if (resumeAfterAbout) resumeActiveTimer();
+    resumeAfterAbout = false;
+    requestAnimationFrame(() => {
+      [gameMap, roundMap, finalMap].forEach(map => map?.invalidateSize({ pan: false }));
+    });
+  });
   function resetActiveTimer() {
     activeElapsedMs = 0;
     activeStartedAt = null;
