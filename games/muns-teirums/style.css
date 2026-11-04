@@ -433,3 +433,44 @@ footer,.site-header~footer{padding-block:16px;flex-direction:row;justify-content
 .footer-mark::after{content:"";position:absolute;inset:0;background:var(--cream);mask-position:center;mask-size:100% auto;mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:100% auto;-webkit-mask-repeat:no-repeat;pointer-events:none}
 .footer-rg::after{mask-image:url('assets/partners/researchgames.svg');-webkit-mask-image:url('assets/partners/researchgames.svg')}
 .footer-voluda::after{mask-image:url('assets/partners/voluda.png');-webkit-mask-image:url('assets/partners/voluda.png')}
+
+/* Every Latgalian variant has equal visual weight in the gallery. */
+.gallery-plant .plant-names{line-height:1.18}
+.plant-name-variant,.name-separator{font:inherit;color:inherit}
+.gallery-plant .scientific-name{font-size:calc(14px * var(--text-scale,1));line-height:1.45;margin:0 0 14px;color:var(--ink)}
+.variant-note{font-size:calc(14px * var(--text-scale,1));line-height:1.55;color:var(--muted);margin:0 0 20px}
+
+/* Temporary preview gate; remove at public launch (PUBLICATION_CHECKLIST.md). */
+.preview-locked{overflow:hidden}
+.preview-locked body>[data-preview-background]{filter:blur(9px);opacity:.65;pointer-events:none;user-select:none}
+.preview-locked .botanical-shadows{filter:blur(4px);opacity:.45}
+.preview-access{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow-y:auto;padding:28px;background:radial-gradient(ellipse at 50% 45%,#0b302017,#02150f80)}
+.preview-access-panel{position:relative;width:100%;max-width:460px;padding:34px 38px 20px;border:1px solid #fff7e65c;border-radius:22px;color:var(--ink);background:radial-gradient(ellipse at 15% 0%,#fff9e8,transparent 70%),#f4ecd8;box-shadow:0 24px 100px #01150b80}
+.preview-access-label{font-size:11px;letter-spacing:.1em;color:#58634f;margin:0 0 18px}
+.preview-access-panel h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(46px,12vw,66px);font-weight:400;font-style:italic;line-height:1.05;letter-spacing:-.03em;white-space:nowrap;margin:0 0 17px;color:var(--ink)}
+.preview-progress{font-size:17px;line-height:1.4;margin:0 0 16px;color:#6e487b}
+.preview-description{font-size:14px;line-height:1.65;margin:0 0 24px;color:#405342}
+.preview-description a{text-underline-offset:3px}
+#preview-access-form{display:grid;gap:8px}
+#preview-password::placeholder{color:#28453488;opacity:1}
+#preview-password{font:inherit;font-size:18px;width:100%;min-height:48px;padding:10px 14px;border-radius:9px;border:1px solid #28453440;background:#fffaf078;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+#preview-password:focus{outline:2px solid #9b75ac;outline-offset:3px}
+#preview-password[aria-invalid="true"]{border-color:#89536a}
+#preview-unlock{justify-self:stretch;margin-top:10px;min-height:48px;padding:12px 22px;font-size:16px;gap:24px;box-shadow:none}
+#preview-access-message{min-height:20px;margin:4px 0 0;font-size:13px;color:#794151;line-height:1.45}
+.preview-access-logos{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:16px;padding-top:12px;border-top:1px solid #183c2e21}
+.preview-access-logos .footer-mark::after{background:var(--ink)}
+.preview-access-logos .footer-rg img{width:145px}
+.preview-access-logos .footer-voluda img{width:100px}
+.preview-access-logos .footer-mark:focus-visible{outline-color:var(--ink)}
+@media(max-width:520px){
+ .preview-access{padding:20px;align-items:safe center}
+ .preview-access-panel{padding:28px 26px 16px;border-radius:18px}
+ .preview-access-panel h1{font-size:clamp(40px,11.7vw,56px)}
+ .preview-access-label{font-size:10px;letter-spacing:.08em}
+ .preview-description{font-size:14px}
+ .preview-access-logos{gap:20px}
+ .preview-access-logos .footer-rg img{width:130px}
+ .preview-access-logos .footer-voluda img{width:88px}
+}
+@media(max-width:350px){.preview-access{padding:14px}.preview-access-panel{padding-inline:20px}.preview-access-logos .footer-rg img{width:118px}.preview-access-logos .footer-voluda img{width:78px}}

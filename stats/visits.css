@@ -10,3 +10,5 @@
 
 [data-rg-visits] .rg-visits-heading{font-size:calc(20px * var(--rg-text-scale,1));font-weight:650;letter-spacing:-.3px;margin:0 0 16px}
 [data-rg-visits] .rg-visits-card-title{font-size:calc(14px * var(--rg-text-scale,1));font-weight:600;margin:0 0 8px}
+
+.report-freshness{margin:0 0 22px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:calc(12px * var(--rg-text-scale,1));line-height:1.6;color:var(--muted)}.report-updated{margin:0;font-weight:650;color:var(--text)}.report-freshness-note{margin:6px 0 0}.report-freshness details{margin-top:8px}.report-freshness summary{cursor:pointer;color:var(--accent)}.report-freshness dl{display:grid;gap:8px;margin:14px 0 0}.report-freshness dl>div{display:flex;flex-wrap:wrap;gap:6px 14px}.report-freshness dt{font-weight:600}.report-freshness dd{margin:0}.rg-visits-period{font-weight:650}.metric-kind{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:5px 10px;margin:0 0 12px;background:var(--soft);color:var(--accent);font-size:calc(11px * var(--rg-text-scale,1));font-weight:650}
