@@ -39,3 +39,30 @@
 .home-catalog #muns-teirums-preview .plant-cover .teirums-card-shadows img{position:absolute;object-fit:contain;width:65%;height:120%;max-width:none;max-height:none;margin:0;filter:brightness(0) invert(83%) sepia(16%) saturate(560%) hue-rotate(17deg)}
 .home-catalog #muns-teirums-preview .plant-cover .teirums-card-stem{left:-25%;top:-28%;opacity:.14;transform:rotate(-20deg)}
 .home-catalog #muns-teirums-preview .plant-cover .teirums-card-flowers{right:-24%;top:0;opacity:.15;transform:rotate(15deg);display:block}
+
+/* Phones: only the image and heading share columns; all detail uses the card width. */
+@media(max-width:700px){
+ .home-catalog{padding:44px 16px 52px}
+ .home-catalog-heading{gap:18px;margin-bottom:24px}
+ .home-catalog-heading h2{font-size:32px}
+ .home-catalog-heading p:last-child{font-size:15px;line-height:1.6}
+ .home-catalog .catalog-row{grid-template-columns:88px minmax(0,1fr);gap:12px 16px;padding:18px;align-items:start}
+ .home-catalog .catalog-cover,.home-catalog .home-dna .dna-environment{grid-column:1;grid-row:1/3;align-self:start;width:88px;height:104px;min-height:0;aspect-ratio:auto;border-radius:7px}
+ .home-catalog .catalog-copy{display:contents}
+ .home-catalog .catalog-label{grid-column:2;grid-row:1;align-self:end;gap:8px 12px;margin:0;min-width:0}
+ .home-catalog .availability{font-size:10px;line-height:1.4;letter-spacing:.055em}
+ .home-catalog .catalog-copy h3,.home-catalog .home-dna .catalog-copy h3{grid-column:2;grid-row:2;font-size:24px;line-height:1.18;margin:0;overflow-wrap:anywhere}
+ .home-catalog .catalog-description{grid-column:1/-1;font-size:15px;line-height:1.6;margin:4px 0 0;max-width:none}
+ .home-catalog .catalog-meta{grid-column:1/-1;font-size:12px;line-height:1.5;gap:8px 12px;margin:0}
+ .home-catalog .catalog-meta>span+span{padding-left:12px}
+ .home-catalog .rg-topics{grid-column:1/-1;gap:7px;margin:0}
+ .home-catalog .rg-topics>span,.home-catalog .rg-topics>a{font-size:12px;line-height:1.4;min-height:30px;padding:5px 10px;max-width:100%}
+ .home-catalog .rg-topics>a{min-height:44px}
+ .home-catalog .access-note{grid-column:1/-1;font-size:13px;line-height:1.6;margin:0}
+ .home-catalog .catalog-cta{grid-column:1/-1;margin:4px 0 0;justify-self:start}
+ .home-catalog .catalog-action{font-size:14px;min-height:48px;padding:12px 18px;gap:22px;white-space:normal;text-align:left}
+ .home-catalog .plant-cover{padding:6px}
+ .home-catalog .plant-cover>img{height:86px;width:48%;margin-left:-10px}
+ .home-catalog .plant-cover>img:nth-child(2){height:96px}
+ .home-catalog .plant-cover>img:nth-child(3){display:none}
+}

@@ -312,3 +312,38 @@
 
 /* Preserve the approved published Livonian light thumbnail. */
 [data-theme="light"] :is(.home-catalog,.catalog-unified) #livonian-preview .catalog-cover>img.actual-game-shot.shot-light{filter:invert(.96) hue-rotate(180deg) contrast(1.12) brightness(1.03) saturate(.85)}
+
+/* Mobile catalog: one readable column, clear touch targets and full-width text. */
+@media(max-width:700px){
+ .catalog{padding-inline:16px}
+ .catalog-heading{padding:34px 0 26px}
+ .catalog-heading h1{font-size:clamp(50px,12vw,72px)}
+ .catalog-heading>p:last-child{font-size:16px;line-height:1.6}
+ .catalog-toolbar{margin-bottom:28px}
+ .catalog-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px}
+ .catalog-filters button{min-height:46px;font-size:13px;justify-content:space-between;padding:10px 12px}
+ .catalog-filters button span{font-size:12px;opacity:1}
+ .catalog-unified .catalog-group[data-category]{grid-template-columns:minmax(0,1fr);gap:18px;margin-bottom:40px}
+ .section-intro h2,[data-theme="light"] .section-intro h2{font-size:25px;line-height:1.25}
+ .section-intro p{font-size:14px;line-height:1.6}
+ .catalog-unified .unified-card>.catalog-cover,.catalog-unified :is(#cell-intro-preview,#muns-teirums-preview,#dna-preview)>.catalog-cover{aspect-ratio:1.7}
+ .catalog-unified .unified-card>.catalog-copy{padding:22px 20px!important}
+ .catalog-unified .unified-card h3{font-size:28px!important;line-height:1.2;overflow-wrap:anywhere}
+ .catalog-unified .unified-card .catalog-description{font-size:16px!important;line-height:1.6;margin-bottom:16px}
+ .catalog-unified .unified-card .catalog-meta,[data-theme="light"] .catalog-unified .unified-card .catalog-meta{font-size:13px;gap:8px 12px}
+ .catalog-unified .unified-card .catalog-label{gap:8px 14px}
+ .catalog-unified .availability{font-size:11px;line-height:1.4}
+ .catalog-unified .unified-card .catalog-cta{margin:18px 0!important}
+ .catalog-unified .catalog-action{font-size:15px;min-height:48px;white-space:normal;max-width:100%;text-align:left}
+ .catalog-unified .unified-card .rg-topics{gap:7px}
+ .catalog-unified .unified-card .rg-topics>span,.catalog-unified .unified-card .rg-topics>a{font-size:12px;line-height:1.4;min-height:30px;padding:5px 10px;max-width:100%}
+ .catalog-unified .unified-card .rg-topics>a{min-height:44px}
+ .catalog-unified .access-note{font-size:13px;line-height:1.6}
+ .catalog-unified .unified-card>.research-origin{margin:0 20px;padding:18px 0 22px}
+ .catalog-unified .research-origin .facts,.catalog-unified .research-origin p,[data-theme="light"] .catalog-unified .research-origin .facts{font-size:14px;line-height:1.6}
+ .catalog-unified .research-origin .source-type{font-size:11px}
+ .teirums-preview-dialog{width:calc(100% - 24px);max-height:calc(100svh - 24px)}
+ .teirums-preview-dialog>header{padding:16px 18px;gap:12px}
+ .teirums-preview-dialog>header h2{font-size:26px}
+ .teirums-preview-dialog .teirums-art{padding:18px 14px}
+}
