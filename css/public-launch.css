@@ -250,3 +250,72 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-games .exhibit.cell-intro .button:hover{background:transparent;border-color:rgba(157,132,210,.65);transform:none;box-shadow:none}
 .launch-games .exhibit.cell-intro .button:focus-visible{outline:2px solid #d0b6ff;outline-offset:3px}
 .launch-games .exhibit.cell-intro .button .lucide{width:18px;height:18px}
+/* A botanical introduction sits between playable games and future journeys. */
+.launch-games .exhibit.teirums{grid-column:1/-1;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-rows:auto}
+.launch-games .teirums .exhibit-content{grid-column:2;grid-row:1;min-height:0;padding:30px 34px}
+.launch-games .teirums :is(h3,.description,.facts,.game-collections){height:auto;min-height:0}
+.launch-games .teirums h3{margin:16px 0 14px;font-size:40px}
+.launch-games .teirums .facts{margin:18px 0}
+.launch-games .teirums .game-collections{margin:0 0 12px}
+.teirums-art{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:28px;background:radial-gradient(ellipse at 50% 20%,#244632,#092c25 85%);color:#f4ecd8}
+.teirums-art-label{align-self:flex-start;margin:0;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#69715e}
+.teirums-access{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.launch-games .teirums .teirums-access .button{width:auto;align-self:flex-start;justify-content:center;gap:14px;min-height:48px;margin:0;padding:11px 18px;background:transparent;border-color:rgba(157,132,210,.48);font-size:15px;font-weight:600;color:#f1edf8}
+.launch-games .teirums .teirums-access .button:hover{background:#7e64b92e;transform:none}
+.teirums-access p{display:flex;align-items:center;gap:7px;max-width:25ch;margin:0;color:#b2adbf;font-size:12px;line-height:1.45}
+.teirums-access p .lucide{width:14px;height:14px}
+@media(max-width:820px){.launch-games .exhibit.teirums{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto}.teirums-art{grid-column:1;grid-row:1;padding:22px}.teirums-art .teirums-specimen{height:220px}.launch-games .teirums .exhibit-content{grid-column:1;grid-row:2;padding:24px 20px}.launch-games .teirums h3{font-size:36px}.teirums-art figcaption strong{font-size:26px}.teirums-access{align-items:flex-start;gap:12px}}
+
+/* Card faces and flip styling reused from Muns teirums; scoped to this miniature. */
+:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;perspective:1000px}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card{aspect-ratio:1/1.11;min-width:0;border:0;padding:0;background:none;perspective:900px;position:relative;border-radius:14px;transition:transform .2s}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card:not(.flipped):not(:disabled):hover{transform:translateY(-3px)}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.3,1)}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card.flipped .card-inner{transform:rotateY(180deg)}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-front,:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid #d9dfb978;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-back{background:radial-gradient(ellipse at 50% 25%,#31543b80,transparent 85%),linear-gradient(140deg,#1a402d,#0b2a23);box-shadow:inset 0 0 25px #89ac7310,0 5px 12px #00000014}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-back:after{content:'';position:absolute;inset:5px;border:1px solid #d2daba12;border-radius:10px}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-back img{width:43%;max-width:62px;opacity:.95;transition:transform .25s}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card:hover .card-back img{transform:scale(1.06)}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-front{transform:rotateY(180deg);background:radial-gradient(ellipse at 24% 12%,#fff8e7,transparent 80%),linear-gradient(150deg,#f4e9ca,#ebdcba);border-color:#f2e6c8;color:var(--ink);padding:10px;text-align:center;box-shadow:inset 0 0 22px #b0974a16}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-front img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .name-face{flex-direction:column;gap:9px;padding:10px 8px}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .plant-name{font-size:calc(clamp(16px,1.65vw,25px) * var(--text-scale,1));font-weight:700;line-height:1.13;letter-spacing:-.6px;overflow-wrap:normal;hyphens:manual}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .plant-name.long-name{font-size:calc(clamp(15px,1.4vw,21px) * var(--text-scale,1))}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .plant-variants{font-size:calc(clamp(11px,1.08vw,16px) * var(--text-scale,1));font-weight:400;font-style:italic;line-height:1.3;display:block}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card.matched .card-front{border:2px solid var(--accent);box-shadow:0 0 0 1px #d4b2e430;animation:match-settle .6s ease-out}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .match-check{position:absolute;right:6px;top:5px;width:17px;height:17px;line-height:17px;font-size:calc(11px * var(--text-scale,1));border-radius:50%;background:var(--forest);color:var(--accent);display:none}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .matched .match-check{display:block}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card.mismatch .card-front{border-color:#a77560}
+.teirums-mini{--ink:#183c2e;--forest:#092c25;--accent:#d4b2e4;--text-scale:1}
+.teirums-mini .teirums-art-label{color:#d4b2e4;margin:0 0 10px}
+.teirums-help{max-width:38ch;font-size:13px;line-height:1.5;text-align:center;margin:0 0 20px;color:#d0d6c8}
+:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-grid{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:340px;gap:10px}
+:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card{cursor:pointer;transition:transform .65s cubic-bezier(.22,.61,.36,1)}
+:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-inner{transition:transform .55s cubic-bezier(.22,.61,.36,1)}
+:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card:focus-visible{outline:2px solid #d4b2e4;outline-offset:4px}
+.teirums-mini-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;max-width:340px;min-height:52px;color:#e2e5d5;font-size:12px}
+.teirums-mini-foot p{margin:8px 0;line-height:1.4}.teirums-mini-foot>span{white-space:nowrap;color:#d4b2e4}
+.teirums-replay{border:1px solid #d4b2e466;border-radius:7px;padding:9px 16px;background:transparent;color:#f4ecd8;font:inherit;font-size:13px;cursor:pointer}
+.teirums-replay:hover{background:#d4b2e418}.teirums-replay:focus-visible{outline:2px solid #d4b2e4;outline-offset:3px}
+.teirums-art-credit{margin:16px 0 0;font-size:11px;color:#bec6b8}
+@keyframes match-settle{50%{box-shadow:0 0 22px #d4b2e475}100%{box-shadow:0 0 0 1px #d4b2e430}}
+@media(max-width:820px){.teirums-mini{padding:24px 20px}.teirums-mini .teirums-help{max-width:38ch}}
+@media(prefers-reduced-motion:reduce){:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .card-inner,:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .memory-card{transition:none}:is(#muns-teirums-preview,#teirums-mini-dialog) .teirums-mini .matched .card-front{animation:none}}
+
+/* End with the full game's botanical gallery of the plants just matched. */
+.teirums-mini [hidden]{display:none!important}
+.teirums-mini .memory-grid{transition:opacity 1.5s ease,transform 1.5s ease}
+.teirums-mini.teirums-finishing .memory-grid{opacity:0;transform:translateY(12px)}
+.teirums-herbarium{width:100%;max-width:420px;animation:teirums-gallery-in 1.5s ease-out}
+.teirums-herbarium>h4{font-family:Georgia,serif;font-size:40px;font-weight:400;font-style:italic;line-height:1;margin:0 0 12px;letter-spacing:-.03em}
+.teirums-meadow-count{font-size:13px;color:#bec6b8;margin:0 0 22px}
+.teirums-mini .plant-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px;align-items:stretch}
+.teirums-mini .gallery-plant{display:flex;flex-direction:column;background:#f2e6c8;color:var(--ink);padding:16px;border-radius:18px;min-width:0}
+.teirums-mini .gallery-plant>img{height:170px;width:100%;object-fit:contain;mix-blend-mode:multiply;margin-bottom:20px;flex-shrink:0}
+.teirums-mini .gallery-plant h5{font-family:Georgia,serif;font-weight:400;font-size:25px;line-height:1.18;margin:0 0 12px;overflow-wrap:anywhere}
+.teirums-mini .gallery-plant p{font-size:12px;line-height:1.6;margin:0 0 10px;color:var(--ink)}
+.teirums-mini .gallery-plant .scientific-name{font-size:14px;line-height:1.45;margin:0 0 14px}
+.teirums-mini .gallery-plant .lv-name{padding-top:12px;border-top:1px solid #183c2e30}
+.teirums-mini .plant-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:auto;padding-top:14px}
+.teirums-mini .plant-links a{font-size:11px;line-height:1.5;color:#183c2e;text-decoration:underline;text-underline-offset:3px}
+@keyframes teirums-gallery-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:380px){.teirums-mini .plant-gallery{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.teirums-herbarium{animation:none}.teirums-mini .memory-grid{transition:none}}
+
+/* Original plant artwork casts the same soft botanical silhouettes as the game. */
+.teirums-mini{position:relative;isolation:isolate;overflow:hidden}
+.teirums-mini>.teirums-botanical-shadows{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.teirums-botanical-shadows img{position:absolute;display:block;max-width:none;object-fit:contain;filter:brightness(0) invert(83%) sepia(16%) saturate(560%) hue-rotate(17deg)}
+.teirums-shadow-stem{width:70%;height:75%;left:-28%;top:-12%;opacity:.14;transform:rotate(-22deg)}
+.teirums-shadow-flowers{width:70%;height:85%;right:-31%;top:15%;opacity:.15;transform:rotate(16deg)}
+.teirums-shadow-leaf{width:58%;height:52%;left:-22%;bottom:-17%;opacity:.10;transform:rotate(28deg)}
+@media(max-width:820px){.teirums-shadow-stem{left:-24%;opacity:.12}.teirums-shadow-flowers{right:-26%;opacity:.13}}
+
+/* Game titles are a second, familiar way to open each playable experience. */
+.launch-games .exhibit h3 .game-title-link{color:inherit;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.16em;transition:color .18s ease,text-decoration-color .18s ease}
+.launch-games .exhibit h3 .game-title-link:hover{color:#d4b9f2;text-decoration-color:currentColor}
+.launch-games .exhibit h3 .game-title-link:focus-visible{color:#d4b9f2;text-decoration-color:currentColor;outline:2px solid currentColor;outline-offset:5px;border-radius:2px}
+[data-theme="light"] .launch-games .exhibit h3 .game-title-link:hover,[data-theme="light"] .launch-games .exhibit h3 .game-title-link:focus-visible{color:#d4b9f2}
+@media(prefers-reduced-motion:reduce){.launch-games .exhibit h3 .game-title-link{transition:none}}
