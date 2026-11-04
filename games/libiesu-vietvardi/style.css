@@ -1322,3 +1322,12 @@ html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-option strong{
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-option span{font-size:calc(12.5px * var(--text-step-scale,1));}
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-description,
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .short-final-fact{font-size:calc(16px * var(--text-step-scale,1));}
+
+
+/* Shared page navigation, clear of the footer and map-question action. */
+.back-to-top{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:1100;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--accent);border-radius:50%;background:var(--panel-glass);color:var(--accent);box-shadow:0 3px 18px rgba(var(--accent-rgb),.14);cursor:pointer;}
+.back-to-top[hidden]{display:none;}
+.back-to-top:hover{background:var(--accent-soft);}
+.back-to-top:focus-visible,.about-close:focus-visible{outline:3px solid var(--accent);outline-offset:4px;}
+.about-close-top{width:36px;height:36px;text-decoration:none;}
+.about-close-bottom{justify-self:center;min-width:180px;}

@@ -8,7 +8,7 @@
   <title>Par šo spēli – Lībiešu vietvārdu spēle</title>
   <link rel="canonical" href="https://researchgames.eu/games/libiesu-vietvardi/about.html">
   <link rel="icon" type="image/svg+xml" href="../../assets/brand/researchgames-icon-color.svg">
-  <link rel="stylesheet" href="style.css?v=20261104">
+  <link rel="stylesheet" href="style.css?v=20261104-nav">
   <style>
     .about-page{min-height:100vh;background:var(--bg);color:var(--ink)}
     .about-brand{color:var(--ink);text-decoration:none}
@@ -78,6 +78,7 @@
       <button class="sw" id="about-theme" type="button" aria-label="Mainīt krāsu režīmu"><span class="knob"></span></button>
       <svg width="14" height="14" aria-hidden="true"><use href="vendor/lucide-icons.svg#i-moon"/></svg>
     </div>
+    <a class="icon-btn about-close about-close-top" href="index.html" aria-label="Aizvērt un atgriezties spēlē" data-aria-lv="Aizvērt un atgriezties spēlē" data-aria-en="Close and return to the game"><svg width="20" height="20" aria-hidden="true"><use href="vendor/lucide-icons.svg#i-close"/></svg></a>
   </div>
 </header>
 <main class="about-main">
@@ -193,6 +194,7 @@
       <img class="partner-logo-dark" data-logo-lang="en" src="assets/hzf-en-dark.png" alt="University of Latvia Faculty of Humanities" hidden>
     </a>
   </section>
+  <a class="btn btn-ghost about-close about-close-bottom" href="index.html" aria-label="Aizvērt un atgriezties spēlē" data-aria-lv="Aizvērt un atgriezties spēlē" data-aria-en="Close and return to the game"><svg width="18" height="18" aria-hidden="true"><use href="vendor/lucide-icons.svg#i-close"/></svg><span data-lv="Aizvērt" data-en="Close">Aizvērt</span></a>
 </main>
 <footer class="footbar about-footer">
   <nav class="footer-links" aria-label="Papildu saites" data-aria-lv="Papildu saites" data-aria-en="Additional links">
@@ -224,7 +226,8 @@
     const mode = new URLSearchParams(location.search).get("mode");
     const query = ["five", "ten", "map", "full", "long"].includes(mode) ? `?mode=${mode}` : "";
     const suffix = en ? "#en" : "";
-    document.querySelectorAll("#game-back,#brand-back").forEach(link => { link.href = "index.html" + query + suffix; });
+    document.querySelectorAll("#game-back,#brand-back,.about-close").forEach(link => { link.href = "index.html" + query + suffix; });
+    document.querySelectorAll(".about-close").forEach(link => { link.title = link.getAttribute("aria-label"); });
     document.querySelector(".about-more").href = en
       ? "https://fennougria.ee/en/peoples/baltic-finnic-peoples/livonians/"
       : "https://livones.net";
@@ -247,5 +250,6 @@
   applyLanguage();
 })();
 </script>
+<script src="navigation.js?v=20261104-nav"></script>
 </body>
 </html>
