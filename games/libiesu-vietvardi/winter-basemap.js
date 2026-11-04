@@ -74,7 +74,7 @@
       const layer = L.maplibreGL({
         style: { version: 8, sources: {}, layers: [{ id: 'pending', type: 'background', paint: { 'background-color': '#D7E9ED' } }] },
         interactive: false, padding: 0,
-        attribution: '© <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+        attribution: '<a class="maptiler-attribution-logo" href="https://www.maptiler.com/" target="_blank" rel="noopener"><img class="maptiler-on-light" src="assets/maptiler-logo-monochrome.png" alt="MapTiler" width="64"><img class="maptiler-on-dark" src="assets/maptiler-logo-white.png" alt="MapTiler" width="64"></a> © <a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
         transformRequest(url) {
           const target = new URL(url, location.href);
           if (target.hostname === 'api.maptiler.com' && !target.searchParams.has('key')) target.searchParams.set('key', apiKey);
