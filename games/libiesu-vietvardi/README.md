@@ -80,3 +80,11 @@ Browser checks for both quick and long start screens: all three levels retained 
 The About footer keeps the Livonian Institute, Faculty of Humanities, Digital Humanities Centre and ResearchGames logos in two rows: ResearchGames centred above the Livonian Institute, Digital Humanities Centre and Faculty of Humanities, with reduced institute/RG widths. The faculty logo switches between native Latvian and English artwork and the light/dark versions. Faculty assets are from the existing local HZF logo bundle; official source: https://www.hzf.lu.lv/en/about-us/the-faculty-of-humanities-brand/.
 
 The Digital Humanities Centre logo also switches between Latvian/English and black/white native artwork. Assets are copied from the existing local ludhc.lu.lv project. Both languages and both themes were checked in the browser; all four logos load in the two-row arrangement.
+
+## Winter map and responsive shell (2026-11-04)
+
+The public entry point now defaults to the long game. MapTiler Winter and Winter Dark replace the CARTO layers in the running app; the legacy basemap helper and tests remain for reference. Place-name symbols and transport layers are hidden in both Winter styles. The browser token in `map-config.js` is intentionally public and must be restricted to the website origins in the MapTiler console.
+
+The continuous map extends beneath the translucent header and footer. Correct-answer text and discovered markers have separate contrast tokens. Long-game instructions and all five difficulty levels remain visible on desktop; phones initially collapse them into one native disclosure. The landing camera reserves the space above that guide. Restart and exit actions use a native HTML dialog styled for both themes, with Escape, focus restoration and a paused active timer.
+
+The running assets are `map-background.css`, `mode-layout.css`, `palette.css`, `responsive-layout.css`, `winter-basemap.js`, `game-confirm.js`, `mode-icons.js`, `shell-map-background.js` and `guide-disclosure.js`. Prototype and QA pages are excluded from publication.

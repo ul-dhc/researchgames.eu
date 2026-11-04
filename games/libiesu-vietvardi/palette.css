@@ -1,0 +1,79 @@
+/* Sea blue, Livonian green and white. Red remains reserved for incorrect answers. */
+:root{
+  --landing-veil-rgb:8,26,40;
+  --bg:#081A28;--bg-2:#0B2030;--panel:#102635;--panel-2:#153141;
+  --panel-glass:rgba(16,38,53,.97);
+  --border:#35515F;--border-strong:#7297AA;--control-border:#7297AA;
+  --ink:#F4FAFD;--ink-muted:#ABC1CC;--ink-dim:#ABC1CC;
+  --accent:#87C5ED;--accent-rgb:135,197,237;--accent-soft:#163F59;
+  --action-fill:#176C9A;--action-hover:#155C82;--on-action:#FFFFFF;
+  --success:#61D3A5;--success-rgb:97,211,165;--success-soft:#153E32;--on-success:#0A2C23;
+  --map-label-bg:#102A3C;--map-label-ink:#F4FAFD;--map-label-muted:#B8CDD8;
+  --marker-outline:#081A28;
+  --language-liv:var(--success);--language-lv:var(--accent);
+}
+html[data-theme="light"]{
+  --landing-veil-rgb:255,255,255;
+  --bg:#FFFFFF;--bg-2:#F4F9FB;--panel:#FFFFFF;--panel-2:#F4F9FB;
+  --panel-glass:rgba(255,255,255,.97);
+  --border:#B4C9D2;--border-strong:#527F94;--control-border:#527F94;
+  --ink:#173C50;--ink-muted:#456371;--ink-dim:#4D6A78;
+  --accent:#056795;--accent-rgb:5,103,149;--accent-soft:#E8F4FA;
+  --action-fill:#056795;--action-hover:#04577E;--on-action:#FFFFFF;
+  --success:#087548;--success-rgb:8,117,72;--success-soft:#E8F5EE;--on-success:#FFFFFF;
+  --map-label-bg:#123F58;--map-label-ink:#F4FAFD;--map-label-muted:#C4DCE8;
+  --marker-outline:#FFFFFF;
+  --shadow:0 14px 38px -20px rgba(23,60,80,.2);
+}
+/* Colour identifies the language consistently in instructions and headings. */
+.hero-title .grad{color:var(--success);}
+html[data-theme="light"] .screen-start .hero-title{color:var(--ink);}
+html[data-theme="light"] .screen-start :is(.hero-sub,.mode-description){color:var(--ink-muted);}
+html[data-theme="light"] .screen-start .mode-option{
+  background:rgba(255,255,255,.96);border-color:var(--control-border);
+  box-shadow:0 3px 16px rgba(23,60,80,.025);
+}
+html[data-theme="light"] .screen-start .mode-option[aria-pressed="true"]{
+  background:linear-gradient(125deg,#E8F4FA,#F7FBFD);border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(var(--accent-rgb),.13),0 4px 18px rgba(var(--accent-rgb),.07);
+}
+#mode-picker .mode-symbol{color:var(--accent);}
+html[data-theme="light"] .screen-start .btn-primary,.btn-primary{
+  color:var(--accent);border:1px solid rgba(var(--accent-rgb),.62);
+  background:linear-gradient(125deg,rgba(var(--accent-rgb),.11),rgba(var(--accent-rgb),.025));
+  box-shadow:0 4px 18px rgba(var(--accent-rgb),.09);
+}
+html[data-theme="light"] .screen-start .btn-primary:hover,.btn-primary:hover{
+  color:var(--accent);background:rgba(var(--accent-rgb),.14);border-color:var(--accent);
+}
+.geo-dot.dim{fill:var(--accent);fill-opacity:.6;filter:drop-shadow(0 0 3px rgba(var(--accent-rgb),.16));}
+.geo-dot.dim:hover{fill-opacity:.8;filter:drop-shadow(0 0 5px rgba(var(--accent-rgb),.28));}
+.geo-dot.lit{fill:var(--success);fill-opacity:.65;}
+.geo-dot.current{fill-opacity:.85;}
+.topbar .lang-option.active{color:var(--accent);}
+html[data-theme="light"] .winter-credit{color:var(--ink-muted);}
+
+html[data-theme="dark"] .screen-start .mode-option{background:rgba(16,38,53,.96);border-color:var(--control-border);}
+html[data-theme="dark"] .screen-start .mode-option[aria-pressed="true"]{background:linear-gradient(125deg,#143B53,#112F42);border-color:var(--accent);}
+/* Keep footer partner marks legible and show one theme variant at a time. */
+.footer-brand .partner-logo-light{display:none;}
+html[data-theme="light"] .footer-brand .partner-logo-dark{display:none;}
+html[data-theme="light"] .footer-brand .partner-logo-light{display:block;}
+html[data-theme="dark"] .footer-brand-liv{mix-blend-mode:screen;}
+/* Dark refinement only: stronger flag-inspired blue and green, with pure white type. */
+html[data-theme="dark"]{
+  --landing-veil-rgb:6,23,47;
+  --bg:#06172F;--bg-2:#08203D;--panel:#092344;--panel-2:#0D2D50;
+  --panel-glass:rgba(9,35,68,.97);
+  --border:#2D4B72;--border-strong:#7EA6D1;--control-border:#7EA6D1;
+  --ink:#FFFFFF;--ink-muted:#B9CCE4;--ink-dim:#B9CCE4;
+  --accent:#67AAFF;--accent-rgb:103,170,255;--accent-soft:#0D3769;
+  --action-fill:#146CB3;--action-hover:#075796;--on-action:#FFFFFF;
+  --success:#50AA57;--success-rgb:80,170,87;--success-soft:#102D19;--on-success:#061C0A;
+  --livonian-flag-green:#16711E;
+  --map-label-bg:#092B50;--map-label-ink:#FFFFFF;--map-label-muted:#C0D7F0;
+  --marker-outline:#06172F;
+}
+html[data-theme="dark"] .screen-start .mode-option{background:rgba(9,35,68,.94);border-color:#5079A5;}
+html[data-theme="dark"] .screen-start .mode-option[aria-pressed="true"]{background:linear-gradient(125deg,#124277,#0D2D52);border-color:var(--accent);}
+html[data-theme="dark"] .screen-start .hero-title .grad{color:#309338;}

@@ -22,10 +22,12 @@
   const isShortGame = () => mode === "five" || mode === "ten";
   const shortPlaceCount = () => mode === "ten" ? 10 : 5;
   const bestKey = () => mode === "full" ? `${LS_BEST}-long` : `${LS_BEST}-${mode}`;
-  const LS_THEME = "liv-game-theme";
+  const LS_THEME = "liv-game-map-preview-theme";
+  const previewTheme = new URLSearchParams(location.search).get("theme");
   const LS_TEXT_SIZE = "liv-game-text-size";
   const textSizes = ["normal", "large", "xlarge"];
-  const savedTextSize = textSizes.includes(localStorage.getItem(LS_TEXT_SIZE)) ? localStorage.getItem(LS_TEXT_SIZE) : "normal";
+  const previewTextSize = new URLSearchParams(location.search).get("text");
+  const savedTextSize = textSizes.includes(previewTextSize) ? previewTextSize : textSizes.includes(localStorage.getItem(LS_TEXT_SIZE)) ? localStorage.getItem(LS_TEXT_SIZE) : "normal";
   document.documentElement.dataset.textSize = savedTextSize;
 
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZJv4C-LK3cMy-ejINa4Di-Orr37jfLYed2pxw8CnZOneu8H72wJ3okuyd72Xu07FzAg/exec";
@@ -191,11 +193,11 @@
         <span aria-hidden="true"></span>
         <button type="button" class="lang-option${LANG === "en" ? " active" : ""}" data-lang="en" aria-pressed="${LANG === "en"}">EN</button>`;
       switcher.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", async () => {
           const next = button.dataset.lang;
           if (next === LANG) return;
           const gameInProgress = screens && screens.game && !screens.game.classList.contains("hidden");
-          if (gameInProgress && !confirm(UI.exitConfirm)) return;
+          if (gameInProgress && !await confirmGameAction("language")) return;
           if (gameInProgress) markCurrentSessionAbandoned();
           if (next === "en") location.hash = "en";
           else location.href = location.href.split("#")[0];
@@ -253,9 +255,15 @@
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }
+  const ambientMap = $(".start-right");
+  const ambientMapHome = ambientMap.parentElement;
   function showScreen(name) {
     Object.values(screens).forEach(s => s.classList.add("hidden"));
     screens[name].classList.remove("hidden");
+    const useGameBackdrop = name === "game" && isShortGame();
+    ambientMap.classList.toggle("short-game-backdrop", useGameBackdrop);
+    (useGameBackdrop ? screens.game : ambientMapHome).appendChild(ambientMap);
+    if (name === "start" || useGameBackdrop) requestAnimationFrame(fitConstellation);
     resetPageScroll();
     requestAnimationFrame(resetPageScroll);
   }
@@ -271,12 +279,12 @@
       setTheme(cur === "dark" ? "light" : "dark");
     });
   });
-  document.documentElement.setAttribute("data-theme", localStorage.getItem(LS_THEME) || "dark");
+  document.documentElement.setAttribute("data-theme", ["light", "dark"].includes(previewTheme) ? previewTheme : localStorage.getItem(LS_THEME) || "light");
 
   $$(".brand").forEach(b => {
-    b.addEventListener("click", () => {
+    b.addEventListener("click", async () => {
       if (!screens.start.classList.contains("hidden")) return;
-      if (confirm(UI.exitConfirm)) {
+      if (await confirmGameAction("exit")) {
         markCurrentSessionAbandoned();
         resetAll();
         showScreen("start");
@@ -386,6 +394,7 @@
     return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
   }
 
+  let confirmationOpen = false;
   let activeElapsedMs = 0;
   let activeStartedAt = null;
   let timerRaf = null;
@@ -398,7 +407,7 @@
     if (activeStartedAt !== null) timerRaf = requestAnimationFrame(renderActiveTimer);
   }
   function resumeActiveTimer() {
-    if (activeStartedAt !== null) return;
+    if (confirmationOpen || activeStartedAt !== null) return;
     activeStartedAt = performance.now();
     cancelAnimationFrame(timerRaf);
     renderActiveTimer();
@@ -410,11 +419,30 @@
     timerRaf = null;
     renderActiveTimer();
   }
+  async function confirmGameAction(kind) {
+    if (confirmationOpen) return false;
+    const wasRunning = activeStartedAt !== null;
+    confirmationOpen = true;
+    pauseActiveTimer();
+    const accepted = await LivonianConfirm.ask({
+      title: kind === "restart" ? UI.restartConfirm : (IS_EN ? "Leave this game?" : "Pārtraukt spēli?"),
+      description: IS_EN ? "Your current progress will be lost." : "Pašreizējais spēles progress tiks zaudēts.",
+      accept: kind === "restart" ? (IS_EN ? "Start again" : "Sākt no jauna")
+        : kind === "language" ? (IS_EN ? "Change language" : "Mainīt valodu")
+        : (IS_EN ? "Back to start" : "Atgriezties sākumā"),
+      cancel: IS_EN ? "Keep playing" : "Turpināt spēli",
+      close: IS_EN ? "Close" : "Aizvērt",
+    });
+    confirmationOpen = false;
+    if (!accepted && wasRunning && !screens.game.classList.contains("hidden") && !(mode === "map" && mapQuestion?.solved)) resumeActiveTimer();
+    return accepted;
+  }
   document.addEventListener("livonian:text-size", () => {
     requestAnimationFrame(() => {
       [gameMap, roundMap, finalMap].forEach(map => {
         if (map) { map.invalidateSize({ pan: false }); map._summaryRelayout?.(); }
       });
+      if (mode === "full" && gameMap && !screens.game.classList.contains("hidden")) fitToRoundBounds(currentRoundPairs, false);
     });
   });
   let resumeAfterAbout = false;
@@ -440,18 +468,12 @@
     return `<span class="pt-main">${esc(p.liv)}</span><span class="pt-sep"> · </span><span class="pt-sub">${esc(p.lv)}</span>`;
   }
 
-  const CARTO_TILE_KEY = "cb1_2duh_1_3b490eae277cfe5b0f255e34";
-  const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
-  function currentTileUrl() {
-    const style = LivonianBasemaps.style(document.documentElement.getAttribute("data-theme"), mode);
-    return `https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png?key=${CARTO_TILE_KEY}`;
-  }
-  function makeTileLayer() {
-    return L.tileLayer(currentTileUrl(), { attribution: TILE_ATTR, subdomains: "abcd", maxZoom: 18 });
-  }
   const tileLayersByMap = new Map();
+  function makeLayerForMap(map) {
+    return LivonianWinter.createLayer(document.documentElement.dataset.theme || "light");
+  }
   function addThemedTiles(map) {
-    const layer = makeTileLayer();
+    const layer = makeLayerForMap(map);
     layer.addTo(map);
     tileLayersByMap.set(map, layer);
     return layer;
@@ -459,7 +481,7 @@
   function refreshAllMapTiles() {
     tileLayersByMap.forEach((layer, map) => {
       map.removeLayer(layer);
-      const fresh = makeTileLayer();
+      const fresh = makeLayerForMap(map);
       fresh.addTo(map);
       fresh.bringToBack();
       tileLayersByMap.set(map, fresh);
@@ -505,9 +527,33 @@
     return mode === "coast" ? LivonianModes.createPlan(ALL_PAIRS, "coast").flat() : ALL_PAIRS;
   }
   function fitConstellation() {
-    if (!constellationMap) return;
+    if (!constellationMap || !constellationMap.getContainer().clientWidth || !constellationMap.getContainer().clientHeight) return;
     constellationMap.invalidateSize({ pan: false });
-    constellationMap.fitBounds(L.latLngBounds(constellationPairs().map(mapCoordinate)).pad(.2), { maxZoom: 11, animate: false });
+    const size = constellationMap.getSize();
+    const container = constellationMap.getContainer();
+    const mapBox = container.getBoundingClientRect();
+    const scale = mapBox.width / container.clientWidth || 1;
+    const onStart = !screens.start.classList.contains("hidden");
+    let paddingTopLeft = [24, 24], paddingBottomRight = [24, 28];
+    const backdrop = container.closest(".start-right");
+    backdrop.style.removeProperty("--landing-credit-bottom");
+    if (onStart && window.innerWidth >= 981) {
+      const readingBox = $(".start-left").getBoundingClientRect();
+      paddingTopLeft = [Math.min((readingBox.right - mapBox.left) / scale + 48, size.x * .55), $("#screen-start .topbar").offsetHeight + 24];
+      const guide = $(".long-game-guide");
+      if (mode === "full" && guide.offsetHeight) {
+        const guideTop = (guide.getBoundingClientRect().top - mapBox.top) / scale;
+        paddingBottomRight = [32, Math.max(28, size.y - guideTop + 40)];
+        backdrop.style.setProperty("--landing-credit-bottom", `${size.y - guideTop + 8}px`);
+      } else {
+        paddingBottomRight = [24, $(".site-footer").offsetHeight + 24];
+      }
+    } else if (onStart) {
+      paddingTopLeft = [24, Math.max(24, size.y - 400)];
+    }
+    constellationMap.fitBounds(L.latLngBounds(constellationPairs().map(mapCoordinate)).pad(.1), {
+      maxZoom: 11, animate: false, paddingTopLeft, paddingBottomRight,
+    });
   }
   function refreshConstellationPlaces() {
     if (!constellationMap || !constellationPlaces) return;
@@ -533,6 +579,8 @@
     if (window.ResizeObserver) {
       const observer = new ResizeObserver(() => requestAnimationFrame(fitConstellation));
       observer.observe(container);
+      observer.observe($(".start-left"));
+      observer.observe($(".long-game-guide"));
       constellationMap._sizeObserver = observer;
     }
   }
@@ -548,7 +596,7 @@
   function initGameMap() {
     if (gameMap) return;
     const container = $("#game-map");
-    gameMap = L.map(container, { zoomControl: true, attributionControl: true, minZoom: 6, maxZoom: 15 });
+    gameMap = L.map(container, { zoomControl: true, attributionControl: true, minZoom: 4, maxZoom: 15 });
     gameMap.zoomControl.setPosition("bottomright");
     addThemedTiles(gameMap);
     routeLayer = L.layerGroup().addTo(gameMap);
@@ -564,12 +612,21 @@
     return mode === "coast" ? LivonianJourney.coordinate(pair.lv) : [pair.lat, pair.lon];
   }
 
+  function longGameMapPadding() {
+    const panel = $("#screen-game .match-panel").getBoundingClientRect();
+    const mapBox = gameMap.getContainer().getBoundingClientRect();
+    const shellTop = $("#screen-game .topbar").offsetHeight;
+    const shellBottom = $(".site-footer").offsetHeight;
+    return window.innerWidth > 980
+      ? { paddingTopLeft: [Math.min(panel.right - mapBox.left + 24, mapBox.width * .55), shellTop + 24], paddingBottomRight: [24, shellBottom + 40] }
+      : { paddingTopLeft: [24, Math.min(panel.bottom - mapBox.top + 24, mapBox.height * .7)], paddingBottomRight: [24, shellBottom + 48] };
+  }
   function fitToRoundBounds(pairs, animate) {
     if (!gameMap || !pairs.length) return;
     const bounds = L.latLngBounds(pairs.map(mapCoordinate)).pad(0.35);
     currentRoundBounds = bounds;
-    if (animate) gameMap.flyToBounds(bounds, { duration: 1, maxZoom: 12 });
-    else gameMap.fitBounds(bounds, { maxZoom: 12 });
+    if (animate) gameMap.flyToBounds(bounds, { ...longGameMapPadding(), duration: 1, maxZoom: 12 });
+    else gameMap.fitBounds(bounds, { ...longGameMapPadding(), maxZoom: 12 });
   }
 
   function resetGameMapMarkers() {
@@ -933,6 +990,12 @@
       });
     };
     map._summaryHide = hideAnnotations;
+    map._summaryRefit = () => {
+      map.invalidateSize({ pan: false });
+      map.fitBounds(L.latLngBounds(latlngs).pad(0.25), { animate: false });
+      map._summaryOverviewZoom = map.getZoom();
+      map._summaryRelayout();
+    };
     map.on("zoomend moveend resize", map._summaryRelayout);
     map.on("zoomstart movestart", map._summaryHide);
     if (document.fonts) document.fonts.ready.then(() => map._summaryRelayout?.());
@@ -1016,7 +1079,17 @@
   }
   function clearConnector() { redrawAllConnectors(); }
   function updateConnector() { redrawAllConnectors(); }
-  window.addEventListener("resize", () => redrawAllConnectors());
+  window.addEventListener("resize", () => requestAnimationFrame(() => {
+    redrawAllConnectors();
+    if (!$("#screen-round").classList.contains("hidden")) roundMap?._summaryRefit?.();
+    if (!$("#screen-final").classList.contains("hidden")) finalMap?._summaryRefit?.();
+    if (gameMap && currentRoundBounds && !$("#screen-game").classList.contains("hidden")) {
+      gameMap.invalidateSize({ pan: false });
+      gameMap.fitBounds(currentRoundBounds, mode === "map"
+        ? { paddingTopLeft: [32, 40 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-top")) || 0)], paddingBottomRight: [48, 90 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-bottom")) || 0)], maxZoom: 10, animate: false }
+        : { ...longGameMapPadding(), maxZoom: 12, animate: false });
+    }
+  }));
   matchRows.addEventListener("scroll", redrawAllConnectors, { passive: true });
 
   function onChipClick(chipEl, pair, side) {
@@ -1163,7 +1236,7 @@
     requestAnimationFrame(() => {
       gameMap.invalidateSize();
       currentRoundBounds = L.latLngBounds(choices.map(pair => [pair.lat, pair.lon])).pad(.15);
-      gameMap.fitBounds(currentRoundBounds, { paddingTopLeft: [32, 40], paddingBottomRight: [48, 90], maxZoom: 10, animate: false });
+      gameMap.fitBounds(currentRoundBounds, { paddingTopLeft: [32, 40 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-top")) || 0)], paddingBottomRight: [48, 90 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--shell-bottom")) || 0)], maxZoom: 10, animate: false });
     });
   }
 
@@ -1722,8 +1795,8 @@
     beginNewSession();
   });
   $("#btn-share").addEventListener("click", shareResult);
-  $("#btn-restart").addEventListener("click", () => {
-    if (confirm(UI.restartConfirm)) beginNewSession();
+  $("#btn-restart").addEventListener("click", async () => {
+    if (await confirmGameAction("restart")) beginNewSession();
   });
 
   updateModeUI();
