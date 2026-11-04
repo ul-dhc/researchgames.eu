@@ -1,3 +1,4 @@
+import {visitRefreshOutcome} from '../visit-refresh-state.js';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
@@ -78,7 +79,7 @@ test('browser refresh requests the public snapshot with a cache-busting URL',asy
  const source=(await readFile(new URL('../visits-ui.js',import.meta.url),'utf8'))
    .replace(/^import .*;\n/gm,'').replace('export function renderVisits','function renderVisits')
    .replaceAll('import.meta.url',JSON.stringify('https://researchgames.eu/stats/visits-ui.js'));
- const context={URL,Date,Intl,AbortSignal,normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS:['all','90d','30d','7d'],
+ const context={URL,Date,Intl,AbortSignal,normalizeVisits,mergeVisits,visitRefreshOutcome,VISIT_PAGES,VISIT_PERIODS:['all','90d','30d','7d'],
    localStorage:{getItem:()=>null,setItem(){}},setInterval(){},
    document:{hidden:false,documentElement:{lang:'lv'},querySelectorAll:()=>[],getElementById:id=>id==='refresh'?{addEventListener:(event,listener)=>{if(event==='click')clickRefresh=listener;}}:null,addEventListener(){}},
    MutationObserver:class{observe(){}},

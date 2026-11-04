@@ -1,3 +1,4 @@
+import {visitRefreshOutcome} from './visit-refresh-state.js?v=20261104-refresh-1';
 import {renderFreshness} from './report-meta.js?v=20261104-tabs-1';
 import {formatTimestamp} from './time.js?v=20261104-riga-1';
 import {buildVisitTimeline} from './visit-timeline.js?v=20261103-latgalian-1';
@@ -5,7 +6,7 @@ import {renderTimeline} from './timeline.js?v=20261104-tabs-1';
 import {normalizeVisits,mergeVisits,VISIT_PAGES,VISIT_PERIODS} from './visits.js?v=20261103-timeline-1';
 const SNAPSHOT_URL='https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/visits.json';
 const KEY='rg-visits-v1';
-let model,visitsLoading=false;
+let model,visitsLoading=false,lastVisitCheck=null;
 try {model=normalizeVisits(JSON.parse(localStorage.getItem(KEY)));} catch {}
 const names={lv:{'miklu-rezgis':'Mīklu režģis','libiesu-vietvardi':'Lībiešu vietvārdi','muns-teirums':'Muns teirums','cell-intro':'Pasaule šūnā',landing:'ResearchGames.eu sākumlapa'},en:{'miklu-rezgis':'Riddle Grid','libiesu-vietvardi':'Livonian place names','muns-teirums':'Muns teirums','cell-intro':'A world inside a cell',landing:'ResearchGames.eu landing page'}};
 const copy={
@@ -27,6 +28,24 @@ export function renderVisits() {
     const headingLevel=root.dataset.headingLevel==='3'?3:2;
     const heading=append('h'+headingLevel,title);heading.className='rg-visits-heading';
     append('p',`${t.selectedPeriod}: ${t[{all:'all','90d':'quarter','30d':'month','7d':'week'}[period]]} · ${t.periodTotals}`).className='rg-visits-period';
+    const check=append('p','');check.className='rg-visits-refresh-status';check.setAttribute('role','status');
+    const checkCopy=lang==='lv'?{
+      loading:'Pārbaudu jaunāko publicēto datu failu…',
+      newer:'Saņemti jaunāki apmeklējumu dati.',
+      unchanged:'Pārbaude pabeigta. Jaunāki apmeklējumu dati vēl nav publicēti.',
+      failed:'Datu failu pašlaik neizdevās pārbaudīt. Redzami pēdējie saglabātie dati.',
+      unavailable:'Apmeklējumu dati vēl nav pieejami.',
+      explanation:'Poga pārlasa publicētos datus. Jaunu datu ievākšana notiek atsevišķi fonā; piecu minūšu grafiks var kavēties.'
+    }:{
+      loading:'Checking the latest published data file…',
+      newer:'Newer page-visit data received.',
+      unchanged:'Check complete. No newer page-visit data has been published yet.',
+      failed:'Could not check the data file. Showing the last saved data.',
+      unavailable:'Page-visit data is not available yet.',
+      explanation:'Refresh reloads published data. Collection runs separately in the background; the five-minute schedule may be delayed.'
+    };
+    check.textContent=visitsLoading?checkCopy.loading:lastVisitCheck?`${checkCopy[lastVisitCheck.outcome]} ${lang==='lv'?'Pārbaudīts':'Checked'}: ${formatTimestamp(lastVisitCheck.at,lang)}.`:checkCopy.explanation;
+    if(lastVisitCheck&&!visitsLoading&&lastVisitCheck.outcome!=='newer')append('p',checkCopy.explanation).className='rg-visits-refresh-note';
     let cards=append('div','');cards.className='rg-visits-cards';
     for(const id of ids){
       if(site && id!=='landing' && ids.indexOf(id)===1){const heading=append('h'+headingLevel,t.gameTitle);heading.className='rg-visits-heading';cards=append('div','');cards.className='rg-visits-cards';}
@@ -85,6 +104,7 @@ async function readFallback(){
 }
 async function refresh(){
   if(document.hidden||visitsLoading)return;
+  const previous=model;
   visitsLoading=true;setVisitLoading();renderVisits();
   const needsHistory=document.querySelectorAll('[data-rg-visit-timeline]').length>0;
   const incomplete=()=>VISIT_PERIODS.some(period=>Object.keys(VISIT_PAGES).some(id=>!model?.periods[period]?.[id]||(needsHistory&&!Array.isArray(model?.periods[period]?.[id]?.timeline))));
@@ -96,6 +116,7 @@ async function refresh(){
   catch{failed=true;}
   if(failed||incomplete())await(initialFallback||readFallback());
   else if(initialFallback)await initialFallback;
+  lastVisitCheck={at:new Date().toISOString(),outcome:visitRefreshOutcome(previous,model,failed)};
   visitsLoading=false;setVisitLoading();renderVisits();
 }
 function setVisitLoading(){

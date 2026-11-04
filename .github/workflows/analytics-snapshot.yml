@@ -1,7 +1,7 @@
 name: Update analytics snapshot
 on:
   schedule:
-    - cron: '2-57/5 * * * *'
+    - cron: '3-58/5 * * * *'
   workflow_dispatch:
     inputs:
       refresh_riddles:
@@ -15,10 +15,12 @@ permissions:
   contents: write
 concurrency:
   group: analytics-snapshot
-  cancel-in-progress: false
+  # An explicit refresh or relevant code update must not sit behind an old queued run.
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # Use the standard ARM pool rather than the currently congested x64 queue.
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4

@@ -1,6 +1,6 @@
 # ResearchGames.eu overview
 
-Static LV/EN overview at `/stats/`, linked from both homepage footers. It reads one precomputed public JSON file containing all three games and all three periods. The browser immediately displays the already loaded snapshot. If sources are older than 15 minutes, missing, or failed, it refreshes only those sources for the selected period in the background.
+Static LV/EN overview at `/stats/`. The public homepage footer links have been removed; collection remains enabled. It reads one precomputed public JSON file containing all three games and all three periods. The browser immediately displays the already loaded snapshot. If sources are older than 15 minutes, missing, or failed, it refreshes only those sources for the selected period in the background.
 
 ## Data contract
 
@@ -287,3 +287,9 @@ For gameplay charts, dates after a source's last known data day are unknown, not
 zero; line gaps and unavailable readouts preserve that distinction. Known days
 without sessions remain zero. The timeline renderer accepts an optional unit label;
 other dashboards keep their own event definitions.
+
+## Visit refresh recovery (2026-11-04)
+
+The visits collector now uses the standard public Ubuntu 24.04 ARM runner pool. An explicit manual refresh or relevant push supersedes an older queued analytics run; scheduled runs do not cancel a running collection. The five-minute schedule was re-registered at minutes 3, 8, …, 58. GitHub scheduling remains best-effort, not a five-minute delivery guarantee.
+
+The public Refresh button reloads the latest published visits file; it does not dispatch an authenticated collector job. The visits UI now reports when that check happened and whether the source timestamps actually advanced. Re-downloading old data cannot be reported as a new collection, and a failed request is not hidden by a saved fallback. Per-source timestamps and stale notices remain intact. Repository administrators can force a collection using **Update analytics snapshot → Run workflow**; leave `refresh_riddles` off when only refreshing analytics. No token is exposed in the public browser.

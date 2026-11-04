@@ -309,3 +309,6 @@
  :is(.home-catalog,.catalog-unified) .catalog-cover>img,:is(.home-catalog,.catalog-unified) .catalog-cover>.plant-cover{transition:none!important}
  :is(.home-catalog,.catalog-unified) .catalog-cover:hover>img,:is(.home-catalog,.catalog-unified) .catalog-cover:hover>.plant-cover{transform:none!important}
 }
+
+/* Preserve the approved published Livonian light thumbnail. */
+[data-theme="light"] :is(.home-catalog,.catalog-unified) #livonian-preview .catalog-cover>img.actual-game-shot.shot-light{filter:invert(.96) hue-rotate(180deg) contrast(1.12) brightness(1.03) saturate(.85)}
