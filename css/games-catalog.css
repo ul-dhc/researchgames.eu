@@ -347,3 +347,19 @@
  .teirums-preview-dialog>header h2{font-size:26px}
  .teirums-preview-dialog .teirums-art{padding:18px 14px}
 }
+
+@media(max-width:700px){
+ .mobile-card-details{min-width:0;border-top:1px solid var(--line)}
+ .mobile-card-details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;padding:12px 0;list-style:none;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer}
+ .mobile-card-details>summary::-webkit-details-marker{display:none}
+ .mobile-card-details>summary:after{content:'+';font-size:22px;font-weight:400;line-height:1;color:var(--ink)}
+ .mobile-card-details[open]>summary:after{content:'−'}
+ .mobile-card-details>summary:focus-visible{outline:2px solid #a98cdd;outline-offset:3px;border-radius:3px}
+ .mobile-card-details-body{padding:4px 0 18px}
+ .mobile-card-details-body>.rg-topics{margin:0}
+ .mobile-card-details-body>.access-note{margin-top:14px}
+ .home-catalog .mobile-card-details{grid-column:1/-1;margin-top:2px}
+ .home-catalog .mobile-card-details-body{padding-bottom:2px}
+ .catalog-unified .unified-card>.mobile-card-details{margin:0 20px}
+ .catalog-unified .mobile-card-details .research-origin{margin:18px 0 0;padding:18px 0 0;border-top:1px solid var(--line)}
+}
