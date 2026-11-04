@@ -310,8 +310,6 @@
  :is(.home-catalog,.catalog-unified) .catalog-cover:hover>img,:is(.home-catalog,.catalog-unified) .catalog-cover:hover>.plant-cover{transform:none!important}
 }
 
-/* Preserve the approved published Livonian light thumbnail. */
-[data-theme="light"] :is(.home-catalog,.catalog-unified) #livonian-preview .catalog-cover>img.actual-game-shot.shot-light{filter:invert(.96) hue-rotate(180deg) contrast(1.12) brightness(1.03) saturate(.85)}
 
 /* Mobile catalog: one readable column, clear touch targets and full-width text. */
 @media(max-width:700px){
