@@ -21,7 +21,7 @@ for (const preview of document.querySelectorAll('[data-teirums-preview]')) {
   finishTimer=setTimeout(()=>{
    preview.classList.remove('teirums-finishing');
    const heading=document.createElement('h4');heading.id='teirums-meadow-title';heading.lang='ltg';heading.textContent='Muns teirums';heading.tabIndex=-1;
-   const count=document.createElement('p');count.className='teirums-meadow-count';count.lang='ltg';count.textContent=`Munā teirumā aug ${meadow.map(plant=>plant.cardName).join(' un ')}.`;
+   const count=document.createElement('p');count.className='teirums-meadow-count';count.lang='ltg';count.textContent=`Munā teirumā aug ${meadow.map(plant=>plant.cardName).join(' i ')}.`;
    const collection=document.createElement('div');collection.className='plant-gallery';
    collection.append(...meadow.map(plant=>{
     const article=document.createElement('article');article.className='gallery-plant';
