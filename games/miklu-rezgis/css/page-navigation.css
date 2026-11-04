@@ -1,0 +1,7 @@
+.scroll-top-button{position:fixed;right:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:1200;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #466179;border-radius:50%;background:#102343;color:#e5f4ff;box-shadow:0 3px 14px #0003;cursor:pointer;transition:color .15s,border-color .15s;}
+.scroll-top-button[hidden]{display:none;}
+.scroll-top-button:hover{color:#52dbb8;border-color:#52dbb8;}
+.scroll-top-button:focus-visible{outline:2px solid #20b99a;outline-offset:4px;}
+.scroll-top-button svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+html[data-theme="light"] .scroll-top-button{background:#fff;color:#173047;border-color:#b0c4cc;}
+@media(max-width:600px){.scroll-top-button{right:12px;bottom:calc(88px + env(safe-area-inset-bottom,0px));}}

@@ -16,6 +16,8 @@
 
   /* Violet is for actions, focus, selection and progress. */
   --accent:#8B6BFF;
+  --language-liv:var(--success);
+  --language-lv:var(--accent);
   --accent-rgb:139,107,255;
   --accent-soft:#2B2448;
   --action-fill:#6D5CE8;
@@ -533,8 +535,8 @@ body:has(#screen-start:not(.hidden)) .persistent-footer{
   color:var(--violet); flex-shrink:0;
 }
 .match-title{ font-weight:700; font-size:15px; line-height:1.35; }
-.match-title .lang-liv{ color:var(--violet); }
-.match-title .lang-lv{ color:var(--blue); }
+.match-title .lang-liv{ color:var(--language-liv); }
+.match-title .lang-lv{ color:var(--language-lv); }
 .match-title-sub{ font-weight:700; font-size:15px; line-height:1.35; }
 
 .match-cols-head{
@@ -544,8 +546,8 @@ body:has(#screen-start:not(.hidden)) .persistent-footer{
   border-bottom:1px solid var(--border);
   margin-bottom:10px;
 }
-.match-cols-head span:first-child{ color:var(--violet); }
-.match-cols-head span:last-child{ color:var(--blue); }
+.match-cols-head span:first-child{ color:var(--language-liv); }
+.match-cols-head span:last-child{ color:var(--language-lv); }
 
 .match-rows{
   flex:1; overflow-y:auto;
@@ -1322,3 +1324,12 @@ html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-option strong{
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-option span{font-size:calc(12.5px * var(--text-step-scale,1));}
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .mode-description,
 html:is([data-text-size="large"],[data-text-size="xlarge"]) .short-final-fact{font-size:calc(16px * var(--text-step-scale,1));}
+
+
+/* Shared page navigation, clear of the footer and map-question action. */
+.back-to-top{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:1100;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--accent);border-radius:50%;background:var(--panel-glass);color:var(--accent);box-shadow:0 3px 18px rgba(var(--accent-rgb),.14);cursor:pointer;}
+.back-to-top[hidden]{display:none;}
+.back-to-top:hover{background:var(--accent-soft);}
+.back-to-top:focus-visible,.about-close:focus-visible{outline:3px solid var(--accent);outline-offset:4px;}
+.about-close-top{width:36px;height:36px;text-decoration:none;}
+.about-close-bottom{justify-self:center;min-width:180px;}
