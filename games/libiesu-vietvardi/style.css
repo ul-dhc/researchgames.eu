@@ -458,7 +458,7 @@ body:has(#screen-start:not(.hidden)) .persistent-footer{
 @media(min-width:981px){
   .screen.screen-start{ height:auto; min-height:calc(100dvh - 122px); }
   .start-right{
-    height:clamp(560px, calc(100dvh - 180px), 640px);
+    height:auto;
     align-self:center;
   }
   html[lang="en"] .hero-title{
