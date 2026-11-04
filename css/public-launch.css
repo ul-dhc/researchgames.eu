@@ -37,6 +37,11 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-hero__cta span{font-size:20px}
 .launch-hero .memory-shell{width:min(100%,830px)}
 .launch-hero .game-note{display:none}
+/* Keep progress below the cards and reveal it only after the player begins. */
+.launch-hero .game-stats{margin:14px 0 0;justify-content:stretch}
+.launch-hero .game-stats>div{flex:1;min-width:0}
+.launch-hero .game-stats[hidden]{display:none}
+
 .launch-hero .skip-game-row{display:flex;justify-content:flex-end;margin-top:10px}
 .launch-hero .skip-game-row .text-button{min-height:34px;padding:5px 15px;font-size:12px;opacity:.78}
 .launch-hero .skip-game-row .text-button:hover{opacity:1}

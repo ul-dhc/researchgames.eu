@@ -33,12 +33,12 @@
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
   <link rel="stylesheet" href="css/full-landing.css?v=20260918-card-labels1">
   <link rel="stylesheet" href="css/styles.css?v=20260828-memory-original">
-  <link rel="stylesheet" href="css/public-launch.css?v=20261104-teirums6">
+  <link rel="stylesheet" href="css/public-launch.css?v=20261104-bottom-stats">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('researchgames-theme')||'dark'}catch(e){}</script>
   <script data-goatcounter="https://researchgames.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <script src="https://unpkg.com/lucide@1.34.0" defer></script>
   <script src="js/main.js?v=20260830-scroll-performance1" defer></script>
-  <script src="js/memory-game.js?v=20261104-brand-only" defer></script>
+  <script src="js/memory-game.js?v=20261104-bottom-stats" defer></script>
   <script src="js/research-cube.js?v=20260830-scroll-performance1" defer></script>
 <link rel="stylesheet" href="/css/games-catalog.css?v=23"><link rel="stylesheet" href="/css/home-catalog.css?v=7">
 <script src="/js/catalog-details.js?v=1" defer></script></head>
@@ -69,13 +69,7 @@
         <a class="launch-hero__cta" href="#games">Explore the games <i data-lucide="arrow-down" aria-hidden="true"></i></a>
       </div>
 
-      <section class="memory-shell" aria-label="Play a quick matching game">
-        <div class="game-topline">
-          <p class="game-kicker"><span class="game-symbol" aria-hidden="true"><i data-lucide="gamepad-2"></i></span>Play a quick game</p>
-          <div class="game-stats" aria-label="Game statistics">
-            <div><span>Moves</span><strong id="moves">0</strong></div><div><span>Pairs</span><strong id="pairs">0 / 8</strong></div><div><span>Time</span><strong id="timer">00:00</strong></div>
-          </div>
-        </div>
+      <section class="memory-shell" aria-label="Matching game">
         <div class="memory-grid" id="memory-grid" aria-label="Matching cards"></div>
         <div class="living-dots" id="living-dots" aria-hidden="true"></div>
         <div class="game-complete" id="game-complete" hidden>
@@ -83,6 +77,9 @@
           <h3><strong class="inline-brand">Research<span>Games</span>.eu</strong></h3>
           <button class="button secondary" id="restart-game" type="button">Play again <i data-lucide="rotate-ccw" aria-hidden="true"></i></button>
         </div>
+          <div class="game-stats" hidden aria-label="Game statistics">
+            <div><span>Moves</span><strong id="moves">0</strong></div><div><span>Pairs</span><strong id="pairs">0 / 8</strong></div><div><span>Time</span><strong id="timer">00:00</strong></div>
+          </div>
         <div class="skip-game-row"><button class="text-button" id="skip-game" type="button">Skip game</button></div>
         <p class="game-note" id="game-note">Match all pairs to reveal the message</p>
         <div class="sr-only" id="game-status" aria-live="polite"></div>
