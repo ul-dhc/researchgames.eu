@@ -6,9 +6,10 @@ export function reportView(search,hash=''){
 export function initReportTabs(root,onChange=()=>{}){
  const tabs=[...root.querySelectorAll('[role="tab"]')];
  const select=(view,{focus=false,write=true}={})=>{
+  const returnToStart=write&&root.previousElementSibling?.getBoundingClientRect().bottom<0;
   for(const tab of tabs){const active=tab.dataset.view===view;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!active;if(active&&focus)tab.focus();}
   if(write){const url=new URL(location.href);url.searchParams.set('view',view);if(document.getElementById(url.hash.slice(1))?.closest('[role="tabpanel"]')?.hidden)url.hash='';history.replaceState(null,'',url);}
-  if(write&&window.scrollY>root.offsetTop)document.getElementById('panel-'+view)?.scrollIntoView({block:'start'});
+  if(returnToStart)document.getElementById('panel-'+view)?.scrollIntoView({block:'start'});
   onChange(view);
  };
  tabs.forEach((tab,index)=>{

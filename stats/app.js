@@ -1,5 +1,5 @@
 import {renderFreshness} from './report-meta.js?v=20261104-tabs-1';
-import {initReportTabs} from './overview-tabs.js?v=20261104-tabs-1';
+import {initReportTabs} from './overview-tabs.js?v=20261104-tabs-2';
 import {formatTimestamp} from './time.js?v=20261104-riga-1';
 import { buildTimelineSeries, renderTimeline } from './timeline.js?v=20261104-tabs-1';
 import { SOURCES } from './config.js?v=20260922-1';

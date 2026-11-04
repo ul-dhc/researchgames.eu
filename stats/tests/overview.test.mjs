@@ -29,3 +29,15 @@ test('gameplay snapshot refresh bypasses old browser/CDN URLs and keeps the requ
  await context.readSnapshot('https://raw.githubusercontent.com/ul-dhc/researchgames.eu/analytics-data/stats.json',signal);
  assert.ok(new URL(requests[0].url).searchParams.has('t'));assert.equal(requests[0].options.signal,signal);assert.equal(requests[0].options.cache,'no-store');
 });
+test('switching a sticky tab opens the new panel at its start and keeps keyboard focus usable',async()=>{
+ const source=(await readFile(new URL('../overview-tabs.js',import.meta.url),'utf8')).replaceAll('export function','function');
+ const panels={'panel-gameplay':{hidden:false,scrollIntoView(){scrolls.push('gameplay');}},'panel-visits':{hidden:true,scrollIntoView(){scrolls.push('visits');}}},scrolls=[];
+ const tabs=['gameplay','visits'].map(view=>({dataset:{view},attributes:{},handlers:{},setAttribute(k,v){this.attributes[k]=v;},getAttribute(){return 'panel-'+view;},addEventListener(k,v){this.handlers[k]=v;},focus(){this.focused=true;}}));
+ const context={URL,URLSearchParams,location:{search:'',hash:'',href:'https://researchgames.eu/stats/'},history:{replaceState(){}},window:{scrollY:600,addEventListener(){}},document:{getElementById:id=>panels[id]}};
+ vm.runInNewContext(source,context);
+ const root={querySelectorAll:()=>tabs,offsetTop:608,previousElementSibling:{getBoundingClientRect:()=>({bottom:-100})}};
+ context.initReportTabs(root);
+ assert.deepEqual(scrolls,[]);assert.equal(panels['panel-gameplay'].hidden,false);
+ tabs[1].handlers.click();assert.equal(panels['panel-visits'].hidden,false);assert.equal(panels['panel-gameplay'].hidden,true);assert.deepEqual(scrolls,['visits']);
+ tabs[1].handlers.keydown({key:'Home',preventDefault(){}});assert.equal(tabs[0].focused,true);assert.equal(tabs[0].attributes['aria-selected'],'true');
+});
