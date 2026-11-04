@@ -295,3 +295,17 @@
 [data-theme="light"] :is(.home-catalog,.catalog-unified) .catalog-cover>.actual-game-shot.shot-light{display:block}
 :is(.home-catalog,.catalog-unified) #riddle-preview .catalog-cover>img.actual-game-shot{object-fit:contain;padding:10px;background:#0b1225}
 [data-theme="light"] :is(.home-catalog,.catalog-unified) #riddle-preview .catalog-cover>img.actual-game-shot{background:#f7fafb}
+
+/* Unavailable games use the same action geometry with a neutral disabled outline. */
+:is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border:1px solid #6b708078;border-radius:7px;background:transparent;color:#9095a2;box-shadow:none;cursor:default;font-size:14px;font-weight:500;line-height:1.4;text-align:center}
+:is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action:hover{background:transparent;border-color:#6b708078;color:#9095a2;box-shadow:none;transform:none}
+[data-theme="light"] :is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action{color:#68707e;border-color:#969ca7;background:transparent}
+/* One quiet image-hover treatment across both catalogs, using the full plant composition. */
+:is(.home-catalog,.catalog-unified) .catalog-cover>img,:is(.home-catalog,.catalog-unified) .catalog-cover>.plant-cover{transition:transform .8s cubic-bezier(.22,.61,.36,1);transform-origin:center}
+@media(hover:hover) and (pointer:fine){
+ :is(.home-catalog,.catalog-unified) .catalog-cover:hover>img,:is(.home-catalog,.catalog-unified) .catalog-cover:hover>.plant-cover{transform:scale(1.045)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ :is(.home-catalog,.catalog-unified) .catalog-cover>img,:is(.home-catalog,.catalog-unified) .catalog-cover>.plant-cover{transition:none!important}
+ :is(.home-catalog,.catalog-unified) .catalog-cover:hover>img,:is(.home-catalog,.catalog-unified) .catalog-cover:hover>.plant-cover{transform:none!important}
+}
