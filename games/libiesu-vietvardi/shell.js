@@ -100,6 +100,22 @@
       pendingAbout = null;
     }
   }
+  // The brand closes About before the game's restart handler can run.
+  document.addEventListener('click', event => {
+    if (!aboutFrame || !event.target.closest('.topbar .brand')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeAbout();
+  }, true);
+  document.querySelectorAll('.topbar .brand:not(a)').forEach(brand => {
+    brand.setAttribute('role', 'button');
+    brand.tabIndex = 0;
+    brand.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      brand.click();
+    });
+  });
   document.addEventListener('click', event => {
     const font = event.target.closest('.font-increase');
     if (font) {
