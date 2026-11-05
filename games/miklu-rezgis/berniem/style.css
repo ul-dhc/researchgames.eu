@@ -884,3 +884,6 @@ footer a:hover {
 
 /* Interface icons use the vendored Lucide sprite. */
 .ui-icon{display:inline-block;vertical-align:-.15em;flex-shrink:0;fill:none;stroke:currentColor;}
+
+/* Leave breathing room above the next riddle when positioning it on screen. */
+.riddle-card{scroll-margin-top:16px;}

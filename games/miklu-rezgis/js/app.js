@@ -1745,10 +1745,12 @@ function renderRiddleMetadata(riddle) {
 
 function scrollToRiddleOnMobile() {
   if (!window.matchMedia('(max-width: 900px)').matches) return;
-  requestAnimationFrame(() => {
-    const card = document.getElementById('riddle-text').closest('.mikla-card');
-    window.scrollTo({ top: Math.max(0, window.scrollY + card.getBoundingClientRect().top - 16), behavior: 'instant' });
-  });
+  // Wait for the completed-riddle controls and grid to finish changing layout.
+  // scrollIntoView also handles a scrolling body or nested container on phones.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.getElementById('riddle-text').closest('.mikla-card')
+      .scrollIntoView({block: 'start', inline: 'nearest', behavior: 'instant'});
+  }));
 }
 
 function loadRiddle() {

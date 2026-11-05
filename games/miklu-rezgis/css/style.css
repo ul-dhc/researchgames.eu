@@ -1381,3 +1381,6 @@ html[data-theme="light"] .footer-brand .theme-light-logo{display:block;}
 #about-screen #about-back-btn{position:absolute;top:12px;right:12px;z-index:21;}
 .about-actions{display:flex;justify-content:center;padding-top:12px;}
 .about-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;min-width:160px;}
+
+/* Leave breathing room above the next riddle when positioning it on screen. */
+.mikla-card{scroll-margin-top:16px;}
