@@ -4,7 +4,7 @@ import { createPlantAnalytics } from './analytics.mjs';
 import { t } from './translations.mjs';
 import { plants } from './plants.js';
 import { icons } from './icons.js';
-import { makeDeck, createGame, selectCard, resolveMismatch, scoreFor, sampleMeadow, prepareMeadowNames, timeBonusFor, shareResultFor } from './game-model.mjs';
+import { makeDeck, createGame, selectCard, resolveMismatch, scoreFor, sampleMeadow, prepareMeadowNames, timeBonusFor, shareResultFor, fitBoardLayout } from './game-model.mjs';
 
 // Keep a small in-memory queue while the existing GoatCounter script loads.
 const plantEvents=[];
@@ -17,17 +17,9 @@ const analyticsWait=setInterval(flushPlantEvents,1000);
 setTimeout(()=>clearInterval(analyticsWait),30000);
 const $ = id => document.getElementById(id);
 const grid = $('memory-grid');
-// Move the existing controls, preserving their state and keyboard behavior.
+// Keep settings in the header, leaving a stable playing area below them.
 const boardTools = document.querySelector('.board-tools');
-const boardToolsHome = document.createComment('board tools');
-boardTools.before(boardToolsHome);
-const mobileLayout = matchMedia('(max-width: 760px)');
-function placeBoardTools() {
-  if (mobileLayout.matches) document.querySelector('.site-header').append(boardTools);
-  else boardToolsHome.after(boardTools);
-}
-mobileLayout.addEventListener('change', placeBoardTools);
-placeBoardTools();
+document.querySelector('.site-header').append(boardTools);
 for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 8 });
 for (const node of document.querySelectorAll('[data-i18n-text]')) node.firstChild.textContent = t(node.dataset.i18nText) + ' ';
 for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
@@ -403,4 +395,21 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) pauseTimer();
   else if (mode === 'playing' && (game.moves > 0 || game.first !== null) && !$('about-dialog').open) startTimer();
 });
+const desktopBoard = matchMedia('(min-width: 1000px) and (min-height: 600px)');
+let boardFitFrame;
+function scheduleBoardFit() {
+  cancelAnimationFrame(boardFitFrame);
+  boardFitFrame = requestAnimationFrame(() => {
+    if (!desktopBoard.matches || document.body.classList.contains('is-complete')) return;
+    const fitted = fitBoardLayout(grid.children.length, grid.clientWidth, grid.clientHeight);
+    grid.style.setProperty('--fit-columns', fitted.columns);
+    grid.style.setProperty('--fit-rows', fitted.rows);
+    grid.style.setProperty('--fit-card-width', `${fitted.cardWidth}px`);
+  });
+}
+new ResizeObserver(scheduleBoardFit).observe(grid);
+new MutationObserver(scheduleBoardFit).observe(grid, { childList: true });
+desktopBoard.addEventListener('change', scheduleBoardFit);
+window.addEventListener('resize', scheduleBoardFit);
+document.fonts.ready.then(scheduleBoardFit);
 preview();

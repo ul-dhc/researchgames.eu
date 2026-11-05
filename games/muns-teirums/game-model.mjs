@@ -34,6 +34,20 @@ export function prepareMeadowNames(plants, random = Math.random) {
   });
 }
 
+// Fit portrait cards to the available playing area, maximizing artwork size.
+// Phone/tablet column counts stay in CSS; this is only the desktop layout.
+export function fitBoardLayout(count, width, height, gap = 10) {
+  let best = { columns: 4, rows: Math.ceil(count / 4), cardWidth: 0 };
+  for (let columns = 3; columns <= Math.min(8, count); columns++) {
+    if (count % columns !== 0) continue;
+    const rows = Math.ceil(count / columns);
+    const cardWidth = Math.min(220, (width - (columns - 1) * gap) / columns,
+      (height - (rows - 1) * gap) / rows * .9);
+    if (cardWidth > best.cardWidth + .5) best = { columns, rows, cardWidth };
+  }
+  return { ...best, cardWidth: Math.max(1, Math.floor(best.cardWidth)) };
+}
+
 export function makeDeck(plants, random = Math.random) {
   const cards = plants.flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind, key: `${plant.id}-${kind}` })));
   for (let i = cards.length - 1; i > 0; i--) {

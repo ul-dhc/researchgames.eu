@@ -1,8 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {makeDeck,createGame,selectCard,resolveMismatch,scoreFor,sampleMeadow,prepareMeadowNames,timeBonusFor,shareResultFor} from '../game-model.mjs';
+import {makeDeck,createGame,selectCard,resolveMismatch,scoreFor,sampleMeadow,prepareMeadowNames,timeBonusFor,shareResultFor,fitBoardLayout} from '../game-model.mjs';
 const plants = Array.from({length:8},(_,i)=>({id:`plant-${i}`}));
 const ordered = () => plants.flatMap(plant => ['image','name'].map(kind=>({plant,kind})));
+
+test('portrait desktop cards fit both available dimensions for every game size',()=>{
+  for(const count of [12,16,20]) for(const [width,height] of [[540,270],[870,377],[900,550],[1100,900]]) {
+    const fitted=fitBoardLayout(count,width,height);
+    assert.ok(fitted.columns*fitted.rows>=count);
+    assert.equal(fitted.columns*fitted.rows,count);
+    assert.ok(fitted.cardWidth*fitted.columns+(fitted.columns-1)*10<=width);
+    assert.ok(fitted.cardWidth/.9*fitted.rows+(fitted.rows-1)*10<=height);
+  }
+});
+
+test('a short desktop window adds columns rather than flattening the cards',()=>{
+  const short=fitBoardLayout(16,870,377);
+  const tall=fitBoardLayout(16,870,760);
+  assert.ok(short.columns>tall.columns);
+  assert.ok(short.cardWidth>90);
+  assert.ok(tall.cardWidth>short.cardWidth);
+});
 
 test('a meadow samples eight distinct plants from 37 without changing the source',()=>{
   const pool=Array.from({length:37},(_,i)=>({id:`plant-${i}`}));

@@ -924,6 +924,20 @@ function prepareMeadowNames(plants, random = Math.random) {
   });
 }
 
+// Fit portrait cards to the available playing area, maximizing artwork size.
+// Phone/tablet column counts stay in CSS; this is only the desktop layout.
+function fitBoardLayout(count, width, height, gap = 10) {
+  let best = { columns: 4, rows: Math.ceil(count / 4), cardWidth: 0 };
+  for (let columns = 3; columns <= Math.min(8, count); columns++) {
+    if (count % columns !== 0) continue;
+    const rows = Math.ceil(count / columns);
+    const cardWidth = Math.min(220, (width - (columns - 1) * gap) / columns,
+      (height - (rows - 1) * gap) / rows * .9);
+    if (cardWidth > best.cardWidth + .5) best = { columns, rows, cardWidth };
+  }
+  return { ...best, cardWidth: Math.max(1, Math.floor(best.cardWidth)) };
+}
+
 function makeDeck(plants, random = Math.random) {
   const cards = plants.flatMap(plant => ['image', 'name'].map(kind => ({ plant, kind, key: `${plant.id}-${kind}` })));
   for (let i = cards.length - 1; i > 0; i--) {
@@ -1014,17 +1028,9 @@ const analyticsWait=setInterval(flushPlantEvents,1000);
 setTimeout(()=>clearInterval(analyticsWait),30000);
 const $ = id => document.getElementById(id);
 const grid = $('memory-grid');
-// Move the existing controls, preserving their state and keyboard behavior.
+// Keep settings in the header, leaving a stable playing area below them.
 const boardTools = document.querySelector('.board-tools');
-const boardToolsHome = document.createComment('board tools');
-boardTools.before(boardToolsHome);
-const mobileLayout = matchMedia('(max-width: 760px)');
-function placeBoardTools() {
-  if (mobileLayout.matches) document.querySelector('.site-header').append(boardTools);
-  else boardToolsHome.after(boardTools);
-}
-mobileLayout.addEventListener('change', placeBoardTools);
-placeBoardTools();
+document.querySelector('.site-header').append(boardTools);
 for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 8 });
 for (const node of document.querySelectorAll('[data-i18n-text]')) node.firstChild.textContent = t(node.dataset.i18nText) + ' ';
 for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
@@ -1400,6 +1406,23 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) pauseTimer();
   else if (mode === 'playing' && (game.moves > 0 || game.first !== null) && !$('about-dialog').open) startTimer();
 });
+const desktopBoard = matchMedia('(min-width: 1000px) and (min-height: 600px)');
+let boardFitFrame;
+function scheduleBoardFit() {
+  cancelAnimationFrame(boardFitFrame);
+  boardFitFrame = requestAnimationFrame(() => {
+    if (!desktopBoard.matches || document.body.classList.contains('is-complete')) return;
+    const fitted = fitBoardLayout(grid.children.length, grid.clientWidth, grid.clientHeight);
+    grid.style.setProperty('--fit-columns', fitted.columns);
+    grid.style.setProperty('--fit-rows', fitted.rows);
+    grid.style.setProperty('--fit-card-width', `${fitted.cardWidth}px`);
+  });
+}
+new ResizeObserver(scheduleBoardFit).observe(grid);
+new MutationObserver(scheduleBoardFit).observe(grid, { childList: true });
+desktopBoard.addEventListener('change', scheduleBoardFit);
+window.addEventListener('resize', scheduleBoardFit);
+document.fonts.ready.then(scheduleBoardFit);
 preview();
 
 })();
