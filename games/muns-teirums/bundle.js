@@ -1122,6 +1122,8 @@ function updateSizeInfo() {
   });
   grid.dataset.pairCount = pairCount;
   grid.style.setProperty('--board-rows', Math.ceil(pairCount * 2 / 4));
+  // Let responsive CSS scale the whole board while preserving portrait cards.
+  grid.closest('.memory-shell').dataset.pairCount = pairCount;
   $('meadow-note').textContent = t('01.05', { augu_skaits: pairCount });
   updateSettingsUI();
 }

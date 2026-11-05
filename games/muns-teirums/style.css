@@ -206,11 +206,7 @@ body.is-complete .meadow-note{display:none}
 .pair-picker button[aria-pressed="true"]:hover{background:var(--accent);color:var(--forest-deep)}
 .pair-picker>span{font-size:calc(10px * var(--text-scale,1));color:var(--muted);padding:0 9px 0 5px}
 @media(min-width:1000px) and (min-height:600px){
-  body:not(.is-complete) .memory-grid{grid-template-rows:repeat(var(--board-rows,4),minmax(0,1fr))}
-  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}
-  body:not(.is-complete) .memory-grid[data-pair-count="10"] .name-face{padding:5px;gap:4px}
-  body:not(.is-complete) .memory-grid[data-pair-count="10"] .plant-name{font-size:calc(clamp(13px,2svh,21px) * var(--text-scale,1))}
-  body:not(.is-complete) .memory-grid[data-pair-count="10"] .plant-variants{font-size:calc(clamp(10px,1.5svh,13px) * var(--text-scale,1))}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(5,minmax(0,1fr))}
 }
 @media(max-width:760px){.pair-picker{gap:1px;padding:3px}.pair-picker button{width:26px;height:26px;font-size:calc(11px * var(--text-scale,1))}.pair-picker>span{font-size:calc(9px * var(--text-scale,1));padding-right:5px}.game-topline{gap:9px}.game-topline h2{font-size:calc(18px * var(--text-scale,1))}}
 /* Optional clock and points, next to the meadow size. */
@@ -439,6 +435,58 @@ footer,.site-header~footer{padding-block:16px;flex-direction:row;justify-content
 .plant-name-variant,.name-separator{font:inherit;color:inherit}
 .gallery-plant .scientific-name{font-size:calc(14px * var(--text-scale,1));line-height:1.45;margin:0 0 14px;color:var(--ink)}
 .variant-note{font-size:calc(14px * var(--text-scale,1));line-height:1.55;color:var(--muted);margin:0 0 20px}
+
+/* Keep botanical cards in portrait format instead of flattening them to fit a window.
+   Short windows may scroll once the minimum useful artwork size is reached. */
+body:not(.is-complete) .hero{grid-template-rows:auto;align-items:start}
+body:not(.is-complete) .memory-shell{height:auto;min-height:0}
+body:not(.is-complete) .memory-grid{flex:none;grid-template-rows:none;grid-auto-rows:auto}
+body:not(.is-complete) .memory-card{aspect-ratio:9/10;min-height:0;container-type:inline-size}
+.memory-card .plant-name{display:block;max-width:100%;overflow-wrap:anywhere;font-size:calc(clamp(17px,13cqi,25px) * var(--text-scale))}
+.memory-card .plant-name.long-name,.memory-card .plant-name.long-word{font-size:calc(clamp(15px,11cqi,22px) * var(--text-scale))}
+.memory-card .card-front:not(.name-face){padding:5px}
+.memory-card .card-front>img{width:100%;height:100%;object-fit:contain}
+@media(min-width:1280px){
+  body:not(.is-complete) .memory-shell{
+    --layout-columns:4;--layout-rows:4;
+    --card-height:clamp(160px,calc((100svh - 360px - (var(--layout-rows) - 1)*10px)/var(--layout-rows)),210px);
+    width:100%;max-width:calc(var(--card-height)*.9*var(--layout-columns) + (var(--layout-columns) - 1)*10px);
+  }
+  body:not(.is-complete) .memory-shell[data-pair-count="6"]{--layout-rows:3}
+  body:not(.is-complete) .memory-shell[data-pair-count="10"]{--layout-rows:5}
+  body:not(.is-complete) .memory-grid{gap:10px}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .game-topline{flex-wrap:wrap;gap:10px}
+  .board-tools{margin-left:auto}
+  .hero-copy{height:auto}
+  .hero-copy .botanical-corner{flex:none;height:clamp(160px,26svh,280px)}
+}
+@media(min-width:1600px){
+  body:not(.is-complete) .memory-shell[data-pair-count="10"]{--layout-columns:5;--layout-rows:4}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(min-width:761px) and (max-width:1279px){
+  body:not(.is-complete) .hero{grid-template-columns:1fr;gap:28px;padding-top:12px;min-height:0}
+  body:not(.is-complete) .hero-copy{display:block;height:auto;padding-top:0}
+  #title,body.is-playing #title{font-size:clamp(64px,10vw,90px);margin:0 0 16px}
+  .hero-intro,body.is-playing .hero-intro{max-width:36ch;font-size:18px}
+  .hero-copy>.meadow-note{margin:16px 0 24px}
+  .hero-copy .botanical-corner,.hero-stem{display:none}
+  body:not(.is-complete) .memory-shell{width:100%;max-width:720px;justify-self:center;padding-top:0}
+  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none}
+  .plant-name,.plant-name.long-name,.plant-name.long-word{font-size:calc(21px * var(--text-scale));overflow-wrap:anywhere}
+}
+@media(max-width:479px){
+  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .plant-name{font-size:calc(20px * var(--text-scale))}
+  .plant-name.long-name,.plant-name.long-word{font-size:calc(17px * var(--text-scale))}
+}
+@media(min-width:480px) and (max-width:760px){
+  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .plant-name{font-size:calc(20px * var(--text-scale))}
+  .plant-name.long-name,.plant-name.long-word{font-size:calc(17px * var(--text-scale))}
+}
 
 /* Temporary preview gate; remove at public launch (PUBLICATION_CHECKLIST.md). */
 .preview-locked{overflow:hidden}
