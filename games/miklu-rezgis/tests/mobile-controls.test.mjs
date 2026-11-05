@@ -85,3 +85,16 @@ test('last riddle labels match level, game, bonus and party completion without s
  state.gameMode='party';state.party={round:2,riddlesPerPlayer:3,currentPlayer:0};assert.equal(label(),'Turpināt');
  state.party.currentPlayer=1;assert.equal(label(),'Pabeigt spēli');state.party.round=1;assert.equal(label(),'Turpināt');
 });
+
+
+test('archive references show exactly one LFK prefix, including imported hashtag prefixes',()=>{
+ const elements=Object.fromEntries(['riddle-meta','riddle-meta-text','riddle-unit-number'].map(id=>[id,{}]));
+ const ctx=vm.createContext({document:{getElementById:id=>elements[id]},datasetSourceMetadata:r=>r});
+ vm.runInContext(extract(main,'renderRiddleMetadata'),ctx);
+ for(const value of ['LFK 49, 1917','#LFK 49, 1917','49, 1917','LFK #LFK 49, 1917']){
+  ctx.riddle={unitNumber:value};vm.runInContext('renderRiddleMetadata(riddle)',ctx);
+  assert.equal(elements['riddle-unit-number'].textContent,'LFK 49, 1917');
+ }
+ ctx.riddle={unitNumber:''};vm.runInContext('renderRiddleMetadata(riddle)',ctx);
+ assert.equal(elements['riddle-unit-number'].hidden,true);
+});

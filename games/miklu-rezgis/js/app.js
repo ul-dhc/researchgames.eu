@@ -1734,13 +1734,12 @@ function renderRiddleMetadata(riddle) {
   const meta = document.getElementById('riddle-meta');
   const text = document.getElementById('riddle-meta-text');
   const unitNumberText = document.getElementById('riddle-unit-number');
-  const formattedUnitNumber = unitNumber
-    ? (/^LFK\b/i.test(unitNumber) ? unitNumber : `LFK ${unitNumber}`)
-    : '';
+  const reference = unitNumber.replace(/^(?:\s*#\s*|\s*LFK\b\s*)+/i, '').trim();
+  const formattedUnitNumber = reference ? `LFK ${reference}` : '';
   text.textContent = details.join(' ');
-  unitNumberText.hidden = !unitNumber;
+  unitNumberText.hidden = !formattedUnitNumber;
   unitNumberText.textContent = formattedUnitNumber;
-  meta.hidden = details.length === 0 && !unitNumber;
+  meta.hidden = details.length === 0 && !formattedUnitNumber;
 }
 
 function scrollToRiddleOnMobile() {
