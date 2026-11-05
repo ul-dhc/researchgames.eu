@@ -886,9 +886,9 @@ function renderWordTags() {
 
     for (let i = 0; i < wn.length; i++) {
       const box = document.createElement('div');
-      if (wState === 'found') { box.className = 'letter-box found'; box.textContent = w[i]; }
-      else if (wState === 'given-up') { box.className = 'letter-box given-up'; box.textContent = w[i]; }
-      else if (i < revealed) { box.className = 'letter-box hinted'; box.textContent = w[i]; }
+      if (wState === 'found') { box.className = 'letter-box found'; box.textContent = wn[i]; }
+      else if (wState === 'given-up') { box.className = 'letter-box given-up'; box.textContent = wn[i]; }
+      else if (i < revealed) { box.className = 'letter-box hinted'; box.textContent = wn[i]; }
       else { box.className = 'letter-box'; box.textContent = ''; }
       boxes.appendChild(box);
     }
