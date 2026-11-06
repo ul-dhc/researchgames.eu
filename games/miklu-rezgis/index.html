@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261105-riddle-scroll-1">
+  <link rel="stylesheet" href="css/style.css?v=20261106-typed-1">
   <link rel="stylesheet" href="css/page-navigation.css?v=20261104-1">
   <script src="js/page-navigation.js?v=20261104-1" defer></script>
 </head>
@@ -163,6 +163,22 @@
 <path d="m5 12 7-7 7 7" />
   <path d="M12 19V5" />
 </symbol>
+<symbol id="i-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M10 8h.01" />
+  <path d="M12 12h.01" />
+  <path d="M14 8h.01" />
+  <path d="M16 12h.01" />
+  <path d="M18 8h.01" />
+  <path d="M6 8h.01" />
+  <path d="M7 16h10" />
+  <path d="M8 12h.01" />
+  <rect width="20" height="16" x="2" y="4" rx="2" />
+</symbol>
+<symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 3v18" />
+  <path d="M3 12h18" />
+  <rect x="3" y="3" width="18" height="18" rx="2" />
+</symbol>
 </defs></svg>
 
 <header class="site-header">
@@ -209,6 +225,11 @@
         <button class="mode-card landing-mode-card" data-mode="100" type="button">
           <span class="landing-mode-icon"><svg width="22" height="22"><use href="#i-hourglass"/></svg></span>
           <span class="landing-mode-copy"><span class="mode-title">Garā spēle</span><span class="mode-sub">100 mīklas · tas būs ilgi</span></span>
+          <span class="mode-radio"></span>
+        </button>
+        <button class="mode-card landing-mode-card" data-mode="typed" type="button">
+          <span class="landing-mode-icon"><svg width="22" height="22"><use href="#i-keyboard"/></svg></span>
+          <span class="landing-mode-copy"><span class="mode-title">Bez režģa</span><span class="mode-sub">10 mīklas · ieraksti atminējumu pats</span></span>
           <span class="mode-radio"></span>
         </button>
         <button class="mode-card landing-mode-card" data-mode="daily" type="button">
@@ -323,7 +344,17 @@
 
         <div id="words-row" class="words-row"></div>
 
-        <div id="status" class="status-line"></div>
+        <form id="typed-answer-form" class="typed-answer-form" hidden>
+          <label for="typed-answer">Tavs atminējums</label>
+          <p id="typed-answer-note" class="typed-answer-note"></p>
+          <div class="typed-answer-entry">
+            <input id="typed-answer" type="text" maxlength="200" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" aria-describedby="typed-answer-note status">
+            <button id="typed-check-btn" class="btn btn-primary" type="submit">Pārbaudīt</button>
+          </div>
+          <p class="typed-answer-help">Vari izmantot trīs uzvednes. Pēc tam, ja vajag, meklē atbildi režģī.</p>
+        </form>
+        <div id="status" class="status-line" role="status" aria-live="polite"></div>
+        <button id="typed-grid-btn" class="btn typed-grid-btn" type="button" hidden><svg width="18" height="18" aria-hidden="true"><use href="#i-grid"/></svg> Meklēt burtu režģī</button>
 
         <div class="grid-stage">
           <div class="controls-row">
@@ -334,7 +365,7 @@
               <svg width="15" height="15"><use href="#i-refresh"/></svg> Jaukt burtus
             </button>
             <button id="give-up-btn" class="btn btn-danger" disabled>
-              <svg width="15" height="15"><use href="#i-flag"/></svg> Padodos
+              <svg width="15" height="15"><use href="#i-flag"/></svg> <span id="give-up-label">Padodos</span>
             </button>
             <button id="next-btn" class="btn btn-primary" disabled>
               Nākamā <svg width="15" height="15"><use href="#i-arrow-right"/></svg>
@@ -428,6 +459,7 @@
     <section class="about-card">
       <p class="about-card-label">Spēles versijas</p>
       <h3>Izvēlies sev piemērotāko spēles variantu</h3>
+      <div class="about-version"><strong>Bez režģa</strong><p>Atmini 10 mīklas, ierakstot atbildi. Burtu lodziņi rāda atbildes garumu un vārdu dalījumu; katra no trim uzvednēm atklāj vienu burtu. Nepareizu atbildi vari labot un pārbaudīt vēlreiz. Kad visas uzvednes izmantotas, vari turpināt to pašu mīklu burtu režģī. Par nepareizu mēģinājumu atņem 15 punktus, par uzvedni – 25 punktus.</p></div>
       <div class="about-version">
         <strong>Parastā spēle</strong>
         <p>Spēlē individuāli un virzies no vieglākām mīklām uz grūtākām. Vari izvēlēties <strong>Ātro spēli</strong> ar 10 mīklām, <strong>Vidējo spēli</strong> ar 50 mīklām vai <strong>Garo spēli</strong> ar 100 mīklām. Visās trīs iespējās darbojas vienāda punktu, uzvedņu un ātruma bonusu sistēma.</p>
@@ -458,7 +490,7 @@
       </ul>
       <p class="about-note">Pēc 90 sekundēm papildu bonuss netiek piešķirts, taču punkti par lēnāku minēšanu netiek atņemti. Laiks tiek skaitīts tikai tad, kad spēles cilne ir aktīva. Dienas mīklā iespējams iegūt līdz 115 punktiem.</p>
       <h3>Noslēguma tituli parastajā spēlē</h3>
-      <p class="about-note">Šos titulus piešķir <strong>Ātrās spēles (10 mīklas), Vidējās spēles (50 mīklas) un Garās spēles (100 mīklas)</strong> noslēgumā – gan spēlētājiem, gan pētījuma dalībniekiem. Titulu nosaka iegūto punktu attiecība pret izvēlētajā spēles variantā maksimāli iespējamo rezultātu.</p>
+      <p class="about-note">Šos titulus piešķir <strong>Ātrās spēles (10 mīklas), Vidējās spēles (50 mīklas) un Garās spēles (100 mīklas), kā arī varianta “Bez režģa”</strong> noslēgumā – gan spēlētājiem, gan pētījuma dalībniekiem. Titulu nosaka iegūto punktu attiecība pret izvēlētajā spēles variantā maksimāli iespējamo rezultātu.</p>
       <p class="about-note">Dienas mīklā, ballītes versijā un bērnu spēlē šos titulus nepiešķir. Dienas mīklas noslēgumā parāda, vai tā atminēta, ballītes versijā – uzvarētāju vai neizšķirtu, bet bērnu spēlē – iegūtās saulītes un uzmundrinājumu.</p>
       <ul class="about-score-list">
         <li><strong>Pastarītis</strong><span>Mazāk par 20% no maksimālā punktu skaita.</span></li>
@@ -672,6 +704,6 @@
 
 <script src="js/riddleDatasetIds.js?v=20260724-source-meta-2"></script>
   <script src="js/riddle-loader.js?v=20261029-json-1"></script>
-  <script src="js/app.js?v=20261105-lfk-reference-1"></script>
+  <script src="js/app.js?v=20261106-typed-1"></script>
 </body>
 </html>

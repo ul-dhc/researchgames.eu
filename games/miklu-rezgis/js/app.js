@@ -5,10 +5,10 @@ const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZt
 const LEVEL_BASE = [0, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 500];
 const BONUS_RIDDLE_POINTS = 500;
 
-const MODE_MAX = { 10: 3335, 50: 12075, 100: 23000, daily: 115, party: 0 };
-const MODE_RPL = { 10: 1, 50: 5, 100: 10, daily: 1, party: 1 };
+const MODE_MAX = { 10: 3335, 50: 12075, 100: 23000, typed: 3335, daily: 115, party: 0 };
+const MODE_RPL = { 10: 1, 50: 5, 100: 10, typed: 1, daily: 1, party: 1 };
 
-const MODE_NAMES = { 10: 'Ātrā spēle', 50: 'Vidējā spēle', 100: 'Garā spēle', daily: 'Dienas mīkla', party: 'Ballītes versija' };
+const MODE_NAMES = { 10: 'Ātrā spēle', 50: 'Vidējā spēle', 100: 'Garā spēle', typed: 'Bez režģa', daily: 'Dienas mīkla', party: 'Ballītes versija' };
 
 const MAX_LIVES = 3;
 const MAX_HINTS = 3;
@@ -139,6 +139,8 @@ const state = {
   levelsLoaded: false,
 
   gameMode: 10,
+  typedGrid: false,
+  typedWrongAttempts: 0,
   selectedMode: null,
   participationMode: 'player',
   riddlesPerLevel: 10,
@@ -271,6 +273,7 @@ function resetForNewGame() {
 function plannedRiddleCount() {
   if (state.gameMode === 'party' && state.party) return state.party.riddlesPerPlayer * 2;
   if (state.gameMode === 'daily') return 1;
+  if (state.gameMode === 'typed') return 10;
   return Number(state.gameMode) || 0;
 }
 
@@ -337,7 +340,7 @@ function recordCompletedRiddleForSession() {
   if (state.riddleOutcome === 'solved') stats.solved++;
   if (state.riddleOutcome === 'gave_up') stats.givenUp++;
   stats.hintsUsed += state.hintLimit - state.hintsLeft;
-  stats.wrongAttempts += Math.max(0, MAX_LIVES - state.livesLeft);
+  stats.wrongAttempts += Math.max(0, MAX_LIVES - state.livesLeft) + (state.typedWrongAttempts || 0);
   stats.shuffleCount += state.currentShuffleCount;
   stats.lastCompletedRiddle = datasetRiddleId(riddle);
   state.sessionRiddleRecorded = true;
@@ -452,7 +455,7 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
   const riddle = currentRiddle();
   if (!riddle) return;
   const hintsUsed = state.hintLimit - state.hintsLeft;
-  const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft);
+  const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft) + (state.typedWrongAttempts || 0);
   const solutionMethod = researchAnswers.solution_method || '';
   queueAnalyticsRecord({
     record_type: 'evaluation',
@@ -492,7 +495,9 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
 
 function resetRiddleState() {
   state.gameOver = false;
-  state.hintLimit = state.currentLevel >= 6 ? MAX_HINTS_HARD : MAX_HINTS;
+  state.typedGrid = false;
+  state.typedWrongAttempts = 0;
+  state.hintLimit = state.gameMode === 'typed' ? MAX_HINTS : state.currentLevel >= 6 ? MAX_HINTS_HARD : MAX_HINTS;
   state.hintsLeft = state.hintLimit;
   state.livesLeft = MAX_LIVES;
   state.foundCells = new Set();
@@ -737,7 +742,7 @@ function getLevelMsg(level, rating) {
 }
 
 function modeLabel(mode) {
-  const riddleCounts = { 10: 10, 50: 50, 100: 100, daily: 1 };
+  const riddleCounts = { 10: 10, 50: 50, 100: 100, typed: 10, daily: 1 };
   return `${MODE_NAMES[mode]} (${riddleCounts[mode]} mīklas)`;
 }
 
@@ -798,7 +803,7 @@ function renderTopBar() {
   } else {
     badge.textContent = state.gameMode === 'daily'
       ? 'Dienas mīkla'
-      : state.isBonus ? 'Bonusa kārta' : `${state.currentLevel}. līmenis`;
+      : state.isBonus ? 'Bonusa kārta' : `${state.gameMode === 'typed' ? 'Bez režģa · ' : ''}${state.currentLevel}. līmenis`;
   }
   document.getElementById('score-display').textContent = state.totalScore.toLocaleString('lv-LV');
   document.getElementById('score-max').textContent = `/ ${state.maxScore.toLocaleString('lv-LV')}`;
@@ -928,7 +933,79 @@ function setNextEnabled(val) {
     label = state.isBonus || state.currentLevel === 10 ? 'Pabeigt spēli' : 'Pabeigt līmeni';
   }
   if (val && state.participationMode === 'research' && state.gameMode !== 'party') label = 'Novērtēt mīklu';
+  if (typeof syncTypedAnswer === 'function') syncTypedAnswer();
   button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
+}
+
+// ==== typed answers ====
+function normalizeTypedAnswer(value) {
+  return String(value).normalize('NFKC').trim().toLocaleUpperCase('lv-LV')
+    .replace(/[.,!?;:]+$/g, '').trim().replace(/\s+/g, ' ');
+}
+
+function acceptedTypedAnswers(riddle) {
+  const variants = [riddle.a, ...(Array.isArray(riddle.acceptedAnswers) ? riddle.acceptedAnswers : [])];
+  const question = normalizeTypedAnswer(riddle.q);
+  // The archive may contain the same riddle with several recorded atminējumi.
+  for (const item of [...Object.values(state.levels).flat(), ...state.bonusPool]) {
+    if (normalizeTypedAnswer(item.q) === question) variants.push(item.a);
+  }
+  return new Set(variants.map(normalizeTypedAnswer).filter(Boolean));
+}
+
+function syncTypedAnswer() {
+  const typed = state.gameMode === 'typed';
+  document.body.classList.toggle('typed-game', typed);
+  document.body.classList.toggle('typed-grid', typed && state.typedGrid);
+  const form = document.getElementById('typed-answer-form');
+  form.hidden = !typed || state.typedGrid;
+  const giveUpLabel = document.getElementById('give-up-label');
+  if (giveUpLabel) giveUpLabel.textContent = typed ? 'Parādīt atminējumu' : 'Padodos';
+  document.getElementById('typed-answer').disabled = state.gameOver;
+  document.getElementById('typed-check-btn').disabled = state.gameOver;
+  document.getElementById('typed-grid-btn').hidden = !typed || state.typedGrid || state.gameOver || state.hintsLeft > 0;
+}
+
+function resetTypedAnswer() {
+  const input = document.getElementById('typed-answer');
+  input.value = '';
+  const lengths = getWords(currentRiddle().a).map(word => norm(word).length);
+  document.getElementById('typed-answer-note').textContent =
+    `${lengths.length > 1 ? 'Vārdu garums' : 'Burtu skaits'}: ${lengths.join(' · ')}`;
+  syncTypedAnswer();
+}
+
+function checkTypedAnswer(event) {
+  event.preventDefault();
+  if (state.gameMode !== 'typed' || state.typedGrid || state.gameOver) return;
+  const input = document.getElementById('typed-answer');
+  const answer = normalizeTypedAnswer(input.value);
+  if (!answer) { setStatus('Ieraksti savu atminējumu.', ''); return; }
+  if (acceptedTypedAnswers(currentRiddle()).has(answer)) {
+    getWords(currentRiddle().a).forEach((_, wi) => { state.wordState[wi] = 'found'; });
+    state.placedWords.forEach(word => {
+      if (word.cells) word.cells.forEach(([row,col]) => state.foundCells.add(cellKey(row,col)));
+    });
+    renderWordTags();
+    input.blur();
+    completeRiddle();
+  } else {
+    state.typedWrongAttempts++;
+    state.riddleScore = Math.max(0, state.riddleScore - PENALTY_WRONG);
+    renderTopBar();
+    setStatus('Šis nav datu kopā norādītais atminējums. Vari labot atbildi un mēģināt vēlreiz.', 'lose');
+  }
+}
+
+function switchTypedToGrid() {
+  if (state.gameMode !== 'typed' || state.gameOver || state.hintsLeft > 0) return;
+  state.typedGrid = true;
+  document.getElementById('typed-answer').blur();
+  syncTypedAnswer();
+  renderGrid();
+  renderWordTags();
+  setStatus('Atrodi atminējumu burtu režģī. Atklātie burti ir saglabāti.', '');
+  scrollToRiddleOnMobile();
 }
 
 // ==== input.js ====
@@ -1351,6 +1428,7 @@ function giveHint() {
       state.riddleScore = Math.max(0, state.riddleScore - PENALTY_HINT);
       renderPips();
       renderWordTags();
+      if (typeof syncTypedAnswer === 'function') syncTypedAnswer();
       renderTopBar();
       setStatus('Uzvedne: nākamais burts atklāts.', '');
       return;
@@ -1766,7 +1844,7 @@ function loadRiddle() {
   state.fillerCells = fillerCells;
 
   placedWords.forEach((pw, wi) => {
-    if (pw.unplaceable) {
+    if (pw.unplaceable && state.gameMode !== 'typed') {
       state.wordState[wi] = 'found';
       state.foundWords.add(pw.word + ':unplaceable:' + wi);
     }
@@ -1777,6 +1855,7 @@ function loadRiddle() {
   renderPips();
   renderTopBar();
   renderMiklaNum();
+  if (typeof resetTypedAnswer === 'function') resetTypedAnswer();
 
   document.getElementById('give-up-btn').disabled = false;
   document.getElementById('hint-btn').disabled = false;
@@ -1858,7 +1937,7 @@ function setParticipationMode(mode) {
 }
 
 function parseMode(value) {
-  return value === 'daily' || value === 'party' || value === 'child' ? value : Number(value);
+  return value === 'typed' || value === 'daily' || value === 'party' || value === 'child' ? value : Number(value);
 }
 
 function wireModeCards() {
@@ -1922,6 +2001,8 @@ function wireEvents() {
     window.scrollTo({top: 0, behavior: 'instant'});
   });
 
+  document.getElementById('typed-answer-form').addEventListener('submit', checkTypedAnswer);
+  document.getElementById('typed-grid-btn').addEventListener('click', switchTypedToGrid);
   document.getElementById('hint-btn').addEventListener('click', giveHint);
   document.getElementById('next-btn').addEventListener('click', nextRiddle);
   document.getElementById('give-up-btn').addEventListener('click', giveUp);
