@@ -17,3 +17,10 @@
 # Typography
 
 Use en dashes (–), never em dashes, in interface copy and authored documentation.
+
+# Unreleased variant
+
+“Bez režģa” is a local testing variant on branch `codex/bez-rezga-preview`.
+Do not publish or merge it into the public game until the user explicitly
+approves release after testing. General permission to publish other fixes
+does not authorize releasing this variant.
