@@ -7,7 +7,7 @@ var RiddleSnapshot = (function () {
   const bool = v => v === true || ['true','yes','jā','1'].includes(text(v).toLowerCase());
   const round = (v,n=0) => Math.round(v*10**n)/10**n;
   const pct = (a,b) => b ? Math.round(a/b*100) : 0;
-  const versions = {'10':'Ātrā spēle','50':'Vidējā spēle','100':'Garā spēle',typed:'Bez režģa',daily:'Dienas mīkla',child:'Bērnu spēle',party:'Ballītes versija',diagnostic:'Diagnostika'};
+  const versions = {'10':'Ātrā spēle','50':'Vidējā spēle','100':'Garā spēle',daily:'Dienas mīkla',child:'Bērnu spēle',party:'Ballītes versija',diagnostic:'Diagnostika'};
   const participation = {player:'Spēlētājs',research:'Pētījuma dalībnieks',party:'Ballītes versija',diagnostic:'Diagnostika'};
   const label = (map,key) => map[key] || key || 'Nav norādīts';
   function date(value) { const d=new Date(value); return value && !isNaN(d) ? d : null; }

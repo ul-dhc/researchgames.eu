@@ -23,8 +23,6 @@ export function riddlesFromCsv(csv,previous){
   if(!q||!a||!id||!(level==='Bonuss'||/^(10|[1-9])$/.test(level)))throw new Error('Invalid riddle '+id);
   if(ids.has(id))throw new Error('Duplicate riddle '+id);ids.add(id);
   const entry={id,gameId:id,unitNumber:(r.vienibas_nr||r.vienibas_numurs||'').trim(),q,a,loc:r.vieta||'',teller:r.teicejs||'',recorder:r.pierakstitajs||'',year:r.gads||'',kolekcija:r.kolekcija||'',sourceUrl:r.id||''};
-  const aliases = (r.atminejuma_varianti || r.accepted_answers || '').split(/[;|]/).map(value=>value.trim()).filter(Boolean);
-  if(aliases.length)entry.acceptedAnswers=aliases;
   (level==='Bonuss'?bonusPool:levels[level]).push(entry);
  }
  if(Object.values(levels).some(rows=>!rows.length))throw new Error('Each difficulty must have riddles');
