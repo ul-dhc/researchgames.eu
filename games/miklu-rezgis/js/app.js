@@ -993,7 +993,7 @@ function checkTypedAnswer(event) {
     state.typedWrongAttempts++;
     state.riddleScore = Math.max(0, state.riddleScore - PENALTY_WRONG);
     renderTopBar();
-    setStatus('Šis nav datu kopā norādītais atminējums. Vari labot atbildi un mēģināt vēlreiz.', 'lose');
+    setStatus('Šai mīklai paredzēts cits atminējums. Vari labot atbildi un mēģināt vēlreiz.', 'lose');
   }
 }
 
