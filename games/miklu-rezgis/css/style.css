@@ -1405,3 +1405,5 @@ body.typed-game:not(.typed-grid) .controls-row{display:flex;flex-direction:row;f
 body.typed-game:not(.typed-grid) .controls-row .btn{width:auto;flex:1 1 140px;}
 
 body.typed-game #next-btn:disabled{display:none;}
+
+body.typed-game:not(.typed-grid) #research-overlay button[data-value="found_in_grid"]{display:none;}
