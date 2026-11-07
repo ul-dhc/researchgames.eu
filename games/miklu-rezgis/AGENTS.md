@@ -24,3 +24,9 @@ The user explicitly approved publishing “Bez režģa” on 2026-11-07 after lo
 iteration. Publish the tested version with count-based common-letter help,
 missing-letter completion, the new help-based scoring and compact About copy.
 Preserve the existing grid modes and their scoring.
+
+# Points vocabulary
+
+Do not use payment language (such as “bez maksas”, “maksa”, “maksāt”, or
+“nemaksā”) in authored game UI copy. Describe points being awarded or deducted
+explicitly instead.
