@@ -150,3 +150,13 @@ test('Enter checks once, ignores held-key repeats and preserves native next-butt
  send({currentTarget:{id:'next-btn'}});assert.equal(checked,1);assert.equal(prevented,2);
  send({currentTarget:{id:'next-btn'},repeat:true});assert.equal(prevented,3);
 });
+
+
+test('typed level completion focuses the next-level button and activates the following level',()=>{
+ let shown=false,hidden=false,started=0;
+ const elements={};
+ const ctx=vm.createContext({state:{gameMode:'typed',currentLevel:1,totalScore:100},getLevelRating(){return 1;},getLevelMsg(){return {badge:'IZCILI',msg:''};},document:{getElementById(id){return elements[id] ||= {style:{},classList:{add(){shown=true;}},focus(options){this.focusOptions=options;}};}},hideLevelOverlay(){hidden=true;},startLevel(){started++;}});
+ vm.runInContext(extract('showLevelComplete'),ctx);vm.runInContext('showLevelComplete()',ctx);
+ assert.equal(shown,true);assert.equal(elements['lo-btn'].focusOptions.preventScroll,true);
+ elements['lo-btn'].onclick();assert.equal(hidden,true);assert.equal(ctx.state.currentLevel,2);assert.equal(started,1);
+});

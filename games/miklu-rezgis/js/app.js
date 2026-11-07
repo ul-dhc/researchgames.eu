@@ -1649,6 +1649,7 @@ function showLevelComplete() {
   btn.innerHTML = `Uz ${state.currentLevel + 1}. līmeni <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>`;
   btn.onclick = () => { hideLevelOverlay(); state.currentLevel++; startLevel(); };
   document.getElementById('level-overlay').classList.add('show');
+  if (state.gameMode === 'typed') btn.focus({preventScroll: true});
 }
 
 function showBonusChoice() {
@@ -2119,6 +2120,7 @@ function wireEvents() {
   document.getElementById('typed-answer').addEventListener('input', syncTypedAnswer);
   document.getElementById('typed-answer').addEventListener('keydown', handleTypedEnter);
   document.getElementById('next-btn').addEventListener('keydown', handleTypedEnter);
+  document.getElementById('lo-btn').addEventListener('keydown', handleTypedEnter);
   document.getElementById('typed-match-btn').addEventListener('click', revealMatchingTypedLetters);
   document.getElementById('hint-btn').addEventListener('click', giveHint);
   document.getElementById('next-btn').addEventListener('click', nextRiddle);
