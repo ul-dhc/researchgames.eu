@@ -185,6 +185,7 @@ const state = {
   sessionStartedAt: '',
   survey: { rating: '', ageGroup: '', comment: '' },
   feedbackSubmitted: false,
+  feedbackDelivered: false,
   playerQuestionSubmitted: false,
   playerQuestionDelivered: false,
   researchAnswers: {},
@@ -247,6 +248,7 @@ function resetForNewGame() {
   state.sessionStartedAt = new Date().toISOString();
   state.survey = { rating: '', ageGroup: '', comment: '' };
   state.feedbackSubmitted = false;
+  state.feedbackDelivered = false;
   state.playerQuestionSubmitted = false;
   state.playerQuestionDelivered = false;
   document.getElementById('player-question-form').reset();
@@ -412,6 +414,10 @@ function flushAnalyticsQueue() {
       if (!result || result.ok !== true) throw new Error(result?.error || 'Analytics request failed.');
       const latestQueue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
       localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(latestQueue.slice(batch.length)));
+      if (batch.some(record => record.record_type === 'session_feedback' && record.session_id === state.sessionId)) {
+        state.feedbackDelivered = true;
+        updateGameFeedbackStatus();
+      }
       if (batch.some(record => record.record_type === 'session_question' && record.session_id === state.sessionId)) {
         state.playerQuestionDelivered = true;
         updatePlayerQuestionForm();
@@ -1308,7 +1314,8 @@ function returnToLandingFromFinal() {
 
 function showFeedbackOverlay() {
   document.getElementById('feedback-overlay').classList.add('show');
-  document.getElementById('feedback-confirm').textContent = '';
+  updateGameFeedbackStatus();
+  document.getElementById('feedback-comment').focus({preventScroll: true});
 }
 
 function updatePlayerQuestionForm() {
@@ -1359,11 +1366,30 @@ function selectSurveyOption(selector, value, stateKey, dataKey) {
   });
 }
 
-function submitGameFeedback() {
+function updateGameFeedbackStatus() {
+  const submitted = state.feedbackSubmitted;
+  const delivered = state.feedbackDelivered;
+  const open = document.getElementById('open-feedback-btn');
+  open.textContent = delivered ? 'Atsauksme nosūtīta' : submitted ? 'Atsauksme gaida nosūtīšanu' : 'Novērtēt spēli';
+  open.disabled = delivered;
+  const submit = document.getElementById('feedback-submit-btn');
+  submit.disabled = submitted;
+  submit.textContent = delivered ? 'Nosūtīts' : submitted ? 'Gaida nosūtīšanu' : 'Nosūtīt atsauksmi';
+  document.getElementById('feedback-confirm').textContent = delivered
+    ? 'Paldies! Tava atsauksme ir nosūtīta.'
+    : submitted
+      ? 'Atsauksme saglabāta šajā ierīcē. Tā tiks nosūtīta, tiklīdz būs pieejams savienojums. Šo logu vari aizvērt.'
+      : '';
+}
+
+function submitGameFeedback(event) {
+  if (event) event.preventDefault();
+  if (state.feedbackSubmitted) return;
+
   state.survey.comment = document.getElementById('feedback-comment').value.trim();
   const party = state.gameMode === 'party' ? state.party : null;
   const totalPoints = party ? party.scores.reduce((sum, points) => sum + points, 0) : state.totalScore;
-  queueAnalyticsRecord({
+  const queued = queueAnalyticsRecord({
     record_type: 'session_feedback',
     session_id: state.sessionId,
     submitted_at: new Date().toISOString(),
@@ -1376,11 +1402,12 @@ function submitGameFeedback() {
     age_group: state.survey.ageGroup,
     player_comment: state.survey.comment
   });
+  if (!queued) {
+    document.getElementById('feedback-confirm').textContent = 'Neizdevās saglabāt atsauksmi. Tavs teksts palicis šajā logā. Lūdzu, mēģini vēlreiz.';
+    return;
+  }
   state.feedbackSubmitted = true;
-  document.getElementById('open-feedback-btn').textContent = 'Atsauksme nosūtīta';
-  document.getElementById('open-feedback-btn').disabled = true;
-  document.getElementById('feedback-confirm').textContent = 'Paldies par atsauksmi!';
-  setTimeout(hideFeedbackOverlay, 700);
+  updateGameFeedbackStatus();
 }
 
 function hideContinueOverlay() {
@@ -1677,9 +1704,7 @@ function showFinalResults() {
   queueSessionUpdate('completed');
   document.getElementById('research-thanks').hidden =
     state.gameMode === 'party' || state.participationMode !== 'research';
-  const feedbackBtn = document.getElementById('open-feedback-btn');
-  feedbackBtn.disabled = state.feedbackSubmitted;
-  feedbackBtn.textContent = state.feedbackSubmitted ? 'Atsauksme nosūtīta' : 'Novērtēt spēli';
+  updateGameFeedbackStatus();
   ['level-overlay', 'bonus-overlay', 'restart-overlay'].forEach(id => {
     document.getElementById(id)?.classList.remove('show');
   });
@@ -2182,7 +2207,7 @@ function wireEvents() {
   document.getElementById('player-question').addEventListener('input', updatePlayerQuestionForm);
   document.getElementById('feedback-close-btn').addEventListener('click', hideFeedbackOverlay);
   document.getElementById('feedback-skip-btn').addEventListener('click', hideFeedbackOverlay);
-  document.getElementById('feedback-submit-btn').addEventListener('click', submitGameFeedback);
+  document.getElementById('game-feedback-form').addEventListener('submit', submitGameFeedback);
   document.querySelectorAll('.rating-option').forEach(button => {
     button.addEventListener('click', () => selectSurveyOption('.rating-option', button.dataset.rating, 'rating', 'rating'));
   });

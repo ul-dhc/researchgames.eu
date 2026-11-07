@@ -602,7 +602,7 @@
 </div>
 
 <div id="feedback-overlay" class="overlay">
-  <div class="overlay-box feedback-box">
+  <form id="game-feedback-form" class="overlay-box feedback-box">
     <button id="feedback-close-btn" class="feedback-close" type="button" aria-label="Aizvērt"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"></use></svg></button>
     <div class="overlay-title">Novērtē spēli</div>
     <div class="overlay-msg">Atbildes palīdzēs uzlabot Mīklu režģi. Visi jautājumi ir neobligāti.</div>
@@ -633,10 +633,10 @@
 
     <label class="feedback-comment-label" for="feedback-comment">Komentārs</label>
     <textarea id="feedback-comment" class="feedback-comment" maxlength="1000" rows="3" placeholder="Ja vēlies kaut ko piebilst vai ieteikt."></textarea>
-    <button id="feedback-submit-btn" class="overlay-btn-primary">Nosūtīt atsauksmi</button>
-    <button id="feedback-skip-btn" class="overlay-btn-secondary">Izlaist</button>
-    <div id="feedback-confirm" class="feedback-confirm" aria-live="polite"></div>
-  </div>
+    <button id="feedback-submit-btn" class="overlay-btn-primary" type="submit">Nosūtīt atsauksmi</button>
+    <button id="feedback-skip-btn" class="overlay-btn-secondary" type="button">Izlaist</button>
+    <div id="feedback-confirm" class="feedback-confirm" role="status" aria-live="polite"></div>
+  </form>
 </div>
 
 <div id="research-overlay" class="overlay" aria-labelledby="research-question-title">
@@ -744,6 +744,6 @@
 
 <script src="js/riddleDatasetIds.js?v=20260724-source-meta-2"></script>
   <script src="js/riddle-loader.js?v=20261029-json-1"></script>
-  <script src="js/app.js?v=20261107-typed-enter-2"></script>
+  <script src="js/app.js?v=20261107-feedback-1"></script>
 </body>
 </html>
