@@ -111,3 +111,23 @@ adds the collector endpoint; its live `mīklu-dashboard.gs` includes the content
 `SnapshotModel.gs` and `SnapshotExport.gs` appended in that order. Do not duplicate
 them as separate files when copying the concatenated source.
 See `../data/README.md` for publication, privacy, fallback and maintenance details.
+
+
+## Bez režģa (2026-11-06)
+
+The new game uses the existing receiver schema with `game_version: typed`.
+Wrong typed attempts are counted alongside grid attempts in `wrong_attempts`;
+raw typed text is not submitted. The public snapshot model and dashboard include
+its own “Bez režģa” version filter. No additional Sheets columns are required.
+The checked-in legacy Apps Script dashboard labels also include this version.
+
+The optional source column `atminejuma_varianti` (or `accepted_answers`) accepts
+alternative answers separated by semicolons or vertical bars. These are exported
+as `acceptedAnswers` in the riddle JSON. Existing source rows remain valid.
+
+## Bez režģa release (2026-11-07)
+
+The approved version has no grid fallback. Answer checks cost no points; each
+new common letter costs 5 points and each hint costs 10 points. There is no
+speed bonus. Research participants may report `solution_method: common_letters`
+using the existing receiver field; no additional Sheets columns are needed.

@@ -6,6 +6,7 @@ const DASHBOARD_GAME_VERSIONS = [
   { value: '10', label: 'Ātrā spēle' },
   { value: '50', label: 'Vidējā spēle' },
   { value: '100', label: 'Garā spēle' },
+  { value: 'typed', label: 'Bez režģa' },
   { value: 'daily', label: 'Dienas mīkla' },
   { value: 'child', label: 'Bērnu spēle' },
   { value: 'party', label: 'Ballītes versija' }
@@ -276,6 +277,7 @@ function buildSolutionMethods_(rows) {
   return buildNormalizedAnswers_(rows, 'solution_method', {
     knew: 'Zināju uzreiz',
     solved_riddle: 'Atminēju mīklu',
+    common_letters: 'Palīdzēja kopīgie burti',
     found_grid: 'Atradu režģī',
     hint: 'Palīdzēja uzvedne',
     gave_up: 'Padevos',
@@ -470,6 +472,7 @@ function versionLabel_(value) {
     '10': 'Ātrā spēle',
     '50': 'Vidējā spēle',
     '100': 'Garā spēle',
+    typed: 'Bez režģa',
     daily: 'Dienas mīkla',
     child: 'Bērnu spēle',
     party: 'Ballītes versija',

@@ -33,7 +33,9 @@
         "mail": "mail",
         "heart": "heart",
         "check": "check",
-        "arrow-up": "arrow-up"
+        "arrow-up": "arrow-up",
+        "keyboard": "keyboard",
+        "grid": "grid-2x2"
       }
     },
     "berniem/index.html": {
@@ -104,6 +106,8 @@
     "trophy.svg": "bf6061ff01929a9dec05d6f742660ac210d07870ba01f2e865f640f988782cbe",
     "x.svg": "79a0758f01db56a317a9aae0f01f6ad6f921d20b8e522704f55d76eb8556d442",
     "zap.svg": "87817d812777d822b9da52e3fba6f8dabf7d4e863c93ed921eca5a2afff61d12",
-    "arrow-up.svg": "65d07245d3b54b43e3ee83905a202baa57fa4eabaf61d2d81f47099693538a57"
+    "arrow-up.svg": "65d07245d3b54b43e3ee83905a202baa57fa4eabaf61d2d81f47099693538a57",
+    "keyboard.svg": "c9d14e2726d2283e21b17af8542f4f3dfd304088a5d6bd425b80cfe364a6c8d1",
+    "grid-2x2.svg": "629422559d13a2b75f9edbe376920d97d3be77307fadf29715b7eeadb101f05b"
   }
 }

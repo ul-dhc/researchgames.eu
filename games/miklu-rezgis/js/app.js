@@ -5,16 +5,18 @@ const ANALYTICS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAv7G_yZt
 const LEVEL_BASE = [0, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 500];
 const BONUS_RIDDLE_POINTS = 500;
 
-const MODE_MAX = { 10: 3335, 50: 12075, 100: 23000, daily: 115, party: 0 };
-const MODE_RPL = { 10: 1, 50: 5, 100: 10, daily: 1, party: 1 };
+const MODE_MAX = { 10: 3335, 50: 12075, 100: 23000, typed: 2900, daily: 115, party: 0 };
+const MODE_RPL = { 10: 1, 50: 5, 100: 10, typed: 1, daily: 1, party: 1 };
 
-const MODE_NAMES = { 10: 'Ātrā spēle', 50: 'Vidējā spēle', 100: 'Garā spēle', daily: 'Dienas mīkla', party: 'Ballītes versija' };
+const MODE_NAMES = { 10: 'Ātrā spēle', 50: 'Vidējā spēle', 100: 'Garā spēle', typed: 'Bez režģa', daily: 'Dienas mīkla', party: 'Ballītes versija' };
 
 const MAX_LIVES = 3;
 const MAX_HINTS = 3;
 const MAX_HINTS_HARD = 5;
 const PENALTY_WRONG = 15;
 const PENALTY_HINT = 25;
+const TYPED_HINT_COST = 10;
+const TYPED_COMMON_LETTER_COST = 5;
 
 const DIRS = [[0, 1], [1, 0], [1, 1], [1, -1]];
 
@@ -139,6 +141,8 @@ const state = {
   levelsLoaded: false,
 
   gameMode: 10,
+  typedWrongAttempts: 0,
+  typedRevealedLetters: {},
   selectedMode: null,
   participationMode: 'player',
   riddlesPerLevel: 10,
@@ -271,6 +275,7 @@ function resetForNewGame() {
 function plannedRiddleCount() {
   if (state.gameMode === 'party' && state.party) return state.party.riddlesPerPlayer * 2;
   if (state.gameMode === 'daily') return 1;
+  if (state.gameMode === 'typed') return 10;
   return Number(state.gameMode) || 0;
 }
 
@@ -337,7 +342,7 @@ function recordCompletedRiddleForSession() {
   if (state.riddleOutcome === 'solved') stats.solved++;
   if (state.riddleOutcome === 'gave_up') stats.givenUp++;
   stats.hintsUsed += state.hintLimit - state.hintsLeft;
-  stats.wrongAttempts += Math.max(0, MAX_LIVES - state.livesLeft);
+  stats.wrongAttempts += Math.max(0, MAX_LIVES - state.livesLeft) + (state.typedWrongAttempts || 0);
   stats.shuffleCount += state.currentShuffleCount;
   stats.lastCompletedRiddle = datasetRiddleId(riddle);
   state.sessionRiddleRecorded = true;
@@ -452,7 +457,7 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
   const riddle = currentRiddle();
   if (!riddle) return;
   const hintsUsed = state.hintLimit - state.hintsLeft;
-  const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft);
+  const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft) + (state.typedWrongAttempts || 0);
   const solutionMethod = researchAnswers.solution_method || '';
   queueAnalyticsRecord({
     record_type: 'evaluation',
@@ -492,7 +497,9 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
 
 function resetRiddleState() {
   state.gameOver = false;
-  state.hintLimit = state.currentLevel >= 6 ? MAX_HINTS_HARD : MAX_HINTS;
+  state.typedWrongAttempts = 0;
+  state.typedRevealedLetters = {};
+  state.hintLimit = state.gameMode === 'typed' ? MAX_HINTS : state.currentLevel >= 6 ? MAX_HINTS_HARD : MAX_HINTS;
   state.hintsLeft = state.hintLimit;
   state.livesLeft = MAX_LIVES;
   state.foundCells = new Set();
@@ -722,7 +729,7 @@ function getFinalTitle(score, maxScore) {
 }
 
 function getLevelRating(level, levelScore, riddlesPerLevel) {
-  const max = Math.round(LEVEL_BASE[level] * riddlesPerLevel * 1.15);
+  const max = Math.round(LEVEL_BASE[level] * riddlesPerLevel * (state.gameMode === 'typed' ? 1 : 1.15));
   const ratio = max > 0 ? levelScore / max : 0;
   if (ratio >= 0.7) return 'excellent';
   if (ratio >= 0.4) return 'good';
@@ -737,7 +744,7 @@ function getLevelMsg(level, rating) {
 }
 
 function modeLabel(mode) {
-  const riddleCounts = { 10: 10, 50: 50, 100: 100, daily: 1 };
+  const riddleCounts = { 10: 10, 50: 50, 100: 100, typed: 10, daily: 1 };
   return `${MODE_NAMES[mode]} (${riddleCounts[mode]} mīklas)`;
 }
 
@@ -798,7 +805,7 @@ function renderTopBar() {
   } else {
     badge.textContent = state.gameMode === 'daily'
       ? 'Dienas mīkla'
-      : state.isBonus ? 'Bonusa kārta' : `${state.currentLevel}. līmenis`;
+      : state.isBonus ? 'Bonusa kārta' : `${state.gameMode === 'typed' ? 'Bez režģa · ' : ''}${state.currentLevel}. līmenis`;
   }
   document.getElementById('score-display').textContent = state.totalScore.toLocaleString('lv-LV');
   document.getElementById('score-max').textContent = `/ ${state.maxScore.toLocaleString('lv-LV')}`;
@@ -888,7 +895,7 @@ function renderWordTags() {
       const box = document.createElement('div');
       if (wState === 'found') { box.className = 'letter-box found'; box.textContent = wn[i]; }
       else if (wState === 'given-up') { box.className = 'letter-box given-up'; box.textContent = wn[i]; }
-      else if (i < revealed) { box.className = 'letter-box hinted'; box.textContent = wn[i]; }
+      else if (i < revealed || (state.typedRevealedLetters?.[wi] || []).includes(i)) { box.className = 'letter-box hinted'; box.textContent = wn[i]; }
       else { box.className = 'letter-box'; box.textContent = ''; }
       boxes.appendChild(box);
     }
@@ -908,7 +915,10 @@ function renderPips() {
 }
 
 function setStatus(msg, cls) {
-  const el = document.getElementById('status');
+  const typed = state.gameMode === 'typed';
+  const el = document.getElementById(typed ? 'typed-status' : 'status');
+  const other = document.getElementById(typed ? 'status' : 'typed-status');
+  if (other) other.textContent = '';
   el.textContent = msg;
   el.className = 'status-line' + (cls ? ' ' + cls : '');
 }
@@ -928,7 +938,139 @@ function setNextEnabled(val) {
     label = state.isBonus || state.currentLevel === 10 ? 'Pabeigt spēli' : 'Pabeigt līmeni';
   }
   if (val && state.participationMode === 'research' && state.gameMode !== 'party') label = 'Novērtēt mīklu';
+  if (typeof syncTypedAnswer === 'function') syncTypedAnswer();
   button.innerHTML = `${label} <svg width="15" height="15"><use href="#i-arrow-right"/></svg>`;
+}
+
+// ==== typed answers ====
+function normalizeTypedAnswer(value) {
+  return String(value).normalize('NFKC').trim().toLocaleUpperCase('lv-LV')
+    .replace(/[.,!?;:]+$/g, '').trim().replace(/\s+/g, ' ');
+}
+
+function acceptedTypedAnswers(riddle) {
+  const variants = [riddle.a, ...(Array.isArray(riddle.acceptedAnswers) ? riddle.acceptedAnswers : [])];
+  const question = normalizeTypedAnswer(riddle.q);
+  // The archive may contain the same riddle with several recorded atminējumi.
+  for (const item of [...Object.values(state.levels).flat(), ...state.bonusPool]) {
+    if (normalizeTypedAnswer(item.q) === question) variants.push(item.a);
+  }
+  return new Set(variants.map(normalizeTypedAnswer).filter(Boolean));
+}
+
+function syncTypedAnswer() {
+  const typed = state.gameMode === 'typed';
+  document.body.classList.toggle('typed-game', typed);
+  const form = document.getElementById('typed-answer-form');
+  form.hidden = !typed;
+  const giveUpLabel = document.getElementById('give-up-label');
+  if (giveUpLabel) giveUpLabel.textContent = typed ? 'Parādīt atminējumu' : 'Padodos';
+  document.getElementById('typed-answer').disabled = state.gameOver;
+  document.getElementById('typed-check-btn').disabled = state.gameOver;
+  document.getElementById('typed-match-btn').disabled = state.gameOver || !document.getElementById('typed-answer').value.trim();
+  if (typed) updateTypedAnswerNote();
+}
+
+function resetTypedAnswer() {
+  const input = document.getElementById('typed-answer');
+  input.value = '';
+  syncTypedAnswer();
+}
+
+function remainingTypedLetters() {
+  return getWords(currentRiddle().a).map((word, wi) => {
+    if (state.wordState[wi] === 'found') return '';
+    return [...norm(word)].filter((_, i) =>
+      i >= (state.hintedLetters[wi] || 0) && !(state.typedRevealedLetters[wi] || []).includes(i)
+    ).join('');
+  }).join('');
+}
+
+function updateTypedAnswerNote() {
+  const lengths = getWords(currentRiddle().a).map(word => norm(word).length);
+  const remaining = remainingTypedLetters().length;
+  const guidance = remaining === 0 ? 'Visi burti atklāti.' : remaining === 1
+    ? 'Palicis viens burts. Vari ierakstīt to vai visu atminējumu.'
+    : `Neatklātie burti: ${remaining}. Vari ierakstīt visu atminējumu vai tikai trūkstošos burtus to secībā.`;
+  document.getElementById('typed-answer-note').textContent =
+    `${lengths.length > 1 ? 'Vārdu garums' : 'Burtu skaits'}: ${lengths.join(' · ')}. ${guidance}`;
+}
+
+function completeTypedAnswer() {
+  getWords(currentRiddle().a).forEach((_, wi) => { state.wordState[wi] = 'found'; });
+  state.placedWords.forEach(word => {
+    if (word.cells) word.cells.forEach(([row,col]) => state.foundCells.add(cellKey(row,col)));
+  });
+  renderWordTags();
+  document.getElementById('typed-answer').blur();
+  completeRiddle();
+}
+
+function checkTypedAnswer(event) {
+  event.preventDefault();
+  if (state.gameMode !== 'typed' || state.gameOver) return;
+  const input = document.getElementById('typed-answer');
+  const answer = normalizeTypedAnswer(input.value);
+  if (!answer) { setStatus('Ieraksti savu atminējumu.', ''); return; }
+  const missing = remainingTypedLetters();
+  if (acceptedTypedAnswers(currentRiddle()).has(answer) || !missing || norm(answer) === missing) {
+    completeTypedAnswer();
+  } else {
+    state.typedWrongAttempts++;
+    renderTopBar();
+    const entered = norm(answer);
+    const message = missing.length === 1 && entered.length === 1
+      ? 'Šis nav trūkstošais burts. Mēģini vēlreiz.'
+      : entered.length === missing.length && missing.length < norm(currentRiddle().a).length
+        ? 'Trūkstošie burti vēl nesakrīt. Vari tos labot vai ierakstīt visu atminējumu.'
+        : 'Šai mīklai paredzēts cits atminējums. Vari labot atbildi un mēģināt vēlreiz.';
+    setStatus(message, 'lose');
+  }
+}
+
+function matchingTypedLetterPositions(answer, guess) {
+  const counts = new Map();
+  for (const letter of norm(normalizeTypedAnswer(guess))) {
+    counts.set(letter, (counts.get(letter) || 0) + 1);
+  }
+  return getWords(answer).map(word => {
+    const positions = [];
+    [...norm(word)].forEach((letter, i) => {
+      if ((counts.get(letter) || 0) > 0) {
+        counts.set(letter, counts.get(letter) - 1);
+        positions.push(i);
+      }
+    });
+    return positions;
+  });
+}
+
+function revealMatchingTypedLetters() {
+  if (state.gameMode !== 'typed' || state.gameOver) return;
+  const guess = normalizeTypedAnswer(document.getElementById('typed-answer').value);
+  if (!guess) { setStatus('Vispirms ieraksti savu minējumu.', ''); return; }
+  if (acceptedTypedAnswers(currentRiddle()).has(guess) || !remainingTypedLetters() || norm(guess) === remainingTypedLetters()) {
+    checkTypedAnswer({preventDefault() {}});
+    return;
+  }
+  let added = 0;
+  matchingTypedLetterPositions(currentRiddle().a, guess).forEach((positions, wi) => {
+    const known = state.typedRevealedLetters[wi] || [];
+    for (const i of positions) {
+      if (i >= (state.hintedLetters[wi] || 0) && !known.includes(i)) {
+        known.push(i);
+        added++;
+      }
+    }
+    state.typedRevealedLetters[wi] = known;
+  });
+  const cost = Math.min(state.riddleScore, added * TYPED_COMMON_LETTER_COST);
+  state.riddleScore -= cost;
+  renderWordTags();
+  renderTopBar();
+  if (!remainingTypedLetters()) { completeTypedAnswer(); return; }
+  updateTypedAnswerNote();
+  setStatus(added ? `Atklātie kopīgie burti: ${added}. Par palīdzību −${cost} punkti.` : 'Šajā minējumā jaunu kopīgo burtu nav. Punkti netiek atņemti.', '');
 }
 
 // ==== input.js ====
@@ -1296,7 +1438,7 @@ function flashWrong(cells) {
 
 function completeRiddle() {
   state.gameOver = true;
-  state.currentTimeBonus = calculateTimeBonus(basePoints(), state.riddleSeconds);
+  state.currentTimeBonus = state.gameMode === 'typed' ? 0 : calculateTimeBonus(basePoints(), state.riddleSeconds);
   const awardedPoints = state.riddleScore + state.currentTimeBonus;
   state.riddleOutcome = 'solved';
   state.currentAwardedPoints = awardedPoints;
@@ -1345,14 +1487,24 @@ function giveHint() {
     if (state.wordState[wi] === 'found' || state.wordState[wi] === 'given-up') continue;
     const revealed = state.hintedLetters[wi] || 0;
     if (revealed < wn.length) {
-      state.hintedLetters[wi] = revealed + 1;
+      if (state.gameMode === 'typed') {
+        const known = state.typedRevealedLetters[wi] || [];
+        const next = [...wn].findIndex((_, i) => i >= revealed && !known.includes(i));
+        if (next < 0) continue;
+        known.push(next);
+        state.typedRevealedLetters[wi] = known;
+      } else {
+        state.hintedLetters[wi] = revealed + 1;
+      }
       state.wordState[wi] = 'hinted';
       state.hintsLeft--;
-      state.riddleScore = Math.max(0, state.riddleScore - PENALTY_HINT);
+      state.riddleScore = Math.max(0, state.riddleScore - (state.gameMode === 'typed' ? TYPED_HINT_COST : PENALTY_HINT));
       renderPips();
       renderWordTags();
+      if (typeof syncTypedAnswer === 'function') syncTypedAnswer();
       renderTopBar();
-      setStatus('Uzvedne: nākamais burts atklāts.', '');
+      setStatus(state.gameMode === 'typed' ? 'Uzvedne: atklāts viens burts (−10 punkti).' : 'Uzvedne: nākamais burts atklāts.', '');
+      if (state.gameMode === 'typed' && !remainingTypedLetters()) completeTypedAnswer();
       return;
     }
   }
@@ -1542,7 +1694,14 @@ function showFinalResults() {
   document.getElementById('fo-score').textContent =
     `${state.totalScore.toLocaleString('lv-LV')} / ${state.maxScore.toLocaleString('lv-LV')} punkti`;
   document.getElementById('fo-title').textContent = final.title;
-  document.getElementById('fo-msg').textContent = `${final.msg}\nĀtruma bonuss: +${state.totalTimeBonus} punkti. Kopējais laiks: ${formatDuration(state.timerSeconds)}.`;
+  const message = document.getElementById('fo-msg');
+  message.textContent = final.msg;
+  const summary = document.createElement('span');
+  summary.className = 'final-summary';
+  summary.textContent = state.gameMode === 'typed'
+    ? `Kopējais laiks: ${formatDuration(state.timerSeconds)}.`
+    : `Ātruma bonuss: +${state.totalTimeBonus} punkti. Kopējais laiks: ${formatDuration(state.timerSeconds)}.`;
+  message.appendChild(summary);
 
   state.shareText = generateShareText(state.totalScore, state.maxScore, final.title, state.gameMode);
   document.getElementById('share-box').textContent = state.shareText;
@@ -1766,7 +1925,7 @@ function loadRiddle() {
   state.fillerCells = fillerCells;
 
   placedWords.forEach((pw, wi) => {
-    if (pw.unplaceable) {
+    if (pw.unplaceable && state.gameMode !== 'typed') {
       state.wordState[wi] = 'found';
       state.foundWords.add(pw.word + ':unplaceable:' + wi);
     }
@@ -1777,6 +1936,7 @@ function loadRiddle() {
   renderPips();
   renderTopBar();
   renderMiklaNum();
+  if (typeof resetTypedAnswer === 'function') resetTypedAnswer();
 
   document.getElementById('give-up-btn').disabled = false;
   document.getElementById('hint-btn').disabled = false;
@@ -1858,7 +2018,7 @@ function setParticipationMode(mode) {
 }
 
 function parseMode(value) {
-  return value === 'daily' || value === 'party' || value === 'child' ? value : Number(value);
+  return value === 'typed' || value === 'daily' || value === 'party' || value === 'child' ? value : Number(value);
 }
 
 function wireModeCards() {
@@ -1922,6 +2082,9 @@ function wireEvents() {
     window.scrollTo({top: 0, behavior: 'instant'});
   });
 
+  document.getElementById('typed-answer-form').addEventListener('submit', checkTypedAnswer);
+  document.getElementById('typed-answer').addEventListener('input', syncTypedAnswer);
+  document.getElementById('typed-match-btn').addEventListener('click', revealMatchingTypedLetters);
   document.getElementById('hint-btn').addEventListener('click', giveHint);
   document.getElementById('next-btn').addEventListener('click', nextRiddle);
   document.getElementById('give-up-btn').addEventListener('click', giveUp);
