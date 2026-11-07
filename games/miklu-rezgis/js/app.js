@@ -622,7 +622,7 @@ function cellSizePx(size) {
   // On desktop the grid must fit between its current top edge and the footer.
   // Using the flex container's height here was circular: the existing grid made
   // that container taller, so the next calculation kept the grid oversized.
-  const desktopViewportHeight = Math.max(180, window.innerHeight - gridWrapTop - footerHeight - 58);
+  const desktopViewportHeight = Math.max(180, window.innerHeight - gridWrapTop - footerHeight - 94);
   const gridHeight = window.innerWidth >= 1100
     ? desktopViewportHeight
     : (gridStageHeight > 120 ? gridStageHeight - 76 : window.innerHeight * 0.62);

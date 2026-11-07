@@ -1233,9 +1233,8 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
   flex:0 0 76px;
 }
 
-/* A puzzle must never be trapped behind the footer. Keep the compact desktop
-   composition, but allow vertical scrolling whenever zoom, font size, or a
-   short laptop viewport makes the content taller than the available space. */
+/* Use the actual header and footer heights rather than a fixed subtraction.
+   Keep natural overflow for long riddles, larger text and short viewports. */
 @media (min-width:1100px) and (min-height:700px){
   body.game-active{
     height:auto;
@@ -1250,7 +1249,7 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
   body.game-active .app-shell{
     flex:1 0 auto;
     height:auto;
-    min-height:calc(100vh - 122px);
+    min-height:0;
     overflow:visible;
   }
   body.game-active .sidebar,
@@ -1259,7 +1258,10 @@ body:not(.game-active):not(.about-open) .start-screen{flex:1 0 auto;}
     min-height:0;
     overflow:visible;
   }
+  body.game-active .main-col{padding-bottom:20px;}
   body.game-active #game{height:auto;min-height:0;}
+  body.game-active.typed-game .main-col{display:flex;align-items:center;}
+  body.game-active.typed-game #game{width:100%;}
   body.game-active .puzzle-area{min-height:max-content;}
   body.game-active .grid-stage{min-height:max-content;}
   body.game-active #grid-wrap{min-height:max-content;}
