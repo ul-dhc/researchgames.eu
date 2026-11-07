@@ -388,9 +388,12 @@ function queueAnalyticsRecord(record) {
 }
 
 let analyticsFlushInProgress = false;
+let analyticsRetryDelayMs = 1200;
+let analyticsNextAttemptAt = 0;
 
 function flushAnalyticsQueue() {
   if (analyticsFlushInProgress || !ANALYTICS_SCRIPT_URL || !navigator.onLine) return;
+  if (Date.now() < analyticsNextAttemptAt) return;
 
   let queuedRecords;
   try {
@@ -401,7 +404,7 @@ function flushAnalyticsQueue() {
   if (!queuedRecords.length) return;
 
   analyticsFlushInProgress = true;
-  const batch = queuedRecords.slice(0, 50);
+  const batch = queuedRecords.slice(0, 10);
 
   fetch(ANALYTICS_SCRIPT_URL, {
     method: 'POST',
@@ -412,6 +415,8 @@ function flushAnalyticsQueue() {
     .then(response => response.json())
     .then(result => {
       if (!result || result.ok !== true) throw new Error(result?.error || 'Analytics request failed.');
+      analyticsRetryDelayMs = 1200;
+      analyticsNextAttemptAt = 0;
       const latestQueue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
       localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(latestQueue.slice(batch.length)));
       if (batch.some(record => record.record_type === 'session_feedback' && record.session_id === state.sessionId)) {
@@ -423,12 +428,16 @@ function flushAnalyticsQueue() {
         updatePlayerQuestionForm();
       }
     })
-    .catch(error => console.warn('Analītikas dati palika lokālajā rindā:', error))
+    .catch(error => {
+      analyticsRetryDelayMs = Math.min(Math.max(5000, analyticsRetryDelayMs * 2), 60000);
+      analyticsNextAttemptAt = Date.now() + analyticsRetryDelayMs;
+      console.warn('Analītikas dati palika lokālajā rindā:', error);
+    })
     .finally(() => {
       analyticsFlushInProgress = false;
       try {
         const remaining = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
-        if (remaining.length) setTimeout(flushAnalyticsQueue, 1200);
+        if (remaining.length) setTimeout(flushAnalyticsQueue, analyticsRetryDelayMs);
       } catch (e) { /* ignore */ }
     });
 }

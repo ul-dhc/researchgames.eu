@@ -34,8 +34,18 @@ test('receiver acknowledgement updates feedback delivery and removes the acknowl
  const records=[{record_type:'session_feedback',session_id:'test-session'}];
  let queue=JSON.stringify(records),updates=0;
  const state={sessionId:'test-session',feedbackDelivered:false};
- const ctx=vm.createContext({state,ANALYTICS_SCRIPT_URL:'https://example.invalid',ANALYTICS_QUEUE_KEY:'queue',analyticsFlushInProgress:false,navigator:{onLine:true},localStorage:{getItem(){return queue;},setItem(k,v){queue=v;}},fetch:async()=>({json:async()=>({ok:true})}),updateGameFeedbackStatus(){updates++;},console,setTimeout(){}});
+ const ctx=vm.createContext({state,ANALYTICS_SCRIPT_URL:'https://example.invalid',ANALYTICS_QUEUE_KEY:'queue',analyticsFlushInProgress:false,analyticsRetryDelayMs:1200,analyticsNextAttemptAt:0,navigator:{onLine:true},localStorage:{getItem(){return queue;},setItem(k,v){queue=v;}},fetch:async()=>({json:async()=>({ok:true})}),updateGameFeedbackStatus(){updates++;},console,setTimeout(){}});
  vm.runInContext(extract('flushAnalyticsQueue'),ctx);vm.runInContext('flushAnalyticsQueue()',ctx);
  await new Promise(resolve=>setImmediate(resolve));
  assert.equal(state.feedbackDelivered,true);assert.equal(updates,1);assert.deepEqual(JSON.parse(queue),[]);
+});
+
+test('failed delivery retains the queue and backs off instead of retrying every new event',async()=>{
+ const queue=JSON.stringify([{record_type:'session_question',session_id:'test-session'}]);
+ let requests=0,delay=0;
+ const ctx=vm.createContext({state:{},ANALYTICS_SCRIPT_URL:'https://example.invalid',ANALYTICS_QUEUE_KEY:'queue',analyticsFlushInProgress:false,analyticsRetryDelayMs:1200,analyticsNextAttemptAt:0,navigator:{onLine:true},localStorage:{getItem(){return queue;},setItem(){throw Error('must retain records');}},fetch:async()=>{requests++;return {json:async()=>({ok:false,error:'Busy'})};},console:{warn(){}},setTimeout(fn,ms){delay=ms;}});
+ vm.runInContext(extract('flushAnalyticsQueue'),ctx);vm.runInContext('flushAnalyticsQueue()',ctx);
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(delay,5000);assert.equal(ctx.analyticsFlushInProgress,false);
+ vm.runInContext('flushAnalyticsQueue()',ctx);assert.equal(requests,1);
 });

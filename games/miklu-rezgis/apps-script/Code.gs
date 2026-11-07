@@ -64,7 +64,8 @@ function doPost(event) {
 
   try {
     lock.waitLock(20000);
-    initializeSheets();
+    const spreadsheet = getSpreadsheet_();
+    if (!spreadsheet.getSheetByName(SESSIONS_SHEET) || !spreadsheet.getSheetByName(EVALUATIONS_SHEET)) initializeSheets();
 
     const body = parseRequest_(event);
     const records = Array.isArray(body.records) ? body.records : [body];

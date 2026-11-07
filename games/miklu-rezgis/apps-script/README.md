@@ -131,3 +131,13 @@ The approved version has no grid fallback. Answer checks cost no points; each
 new common letter costs 5 points and each hint costs 10 points. There is no
 speed bonus. Research participants may report `solution_method: common_letters`
 using the existing receiver field; no additional Sheets columns are needed.
+
+
+## Feedback queue repair – 2026-11-07
+
+The receiver no longer reformats the sessions and evaluations sheets on each
+POST. Missing sheets still initialize normally. Player questions also accept
+`typed` as a game version. Existing record IDs and deployment URL are retained.
+The browser sends batches of ten and backs off after failed requests while
+keeping all pending records locally. Google deployment authorization must finish
+before the saved receiver changes become live.

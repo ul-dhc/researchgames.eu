@@ -16,7 +16,7 @@ function upsertPlayerQuestion_(record) {
     throw new Error('Invalid question_id or session_id.');
   }
   if (!question || question.length > 1000) throw new Error('Question must contain 1–1000 characters.');
-  if (['10', '50', '100', 'daily', 'party'].indexOf(version) < 0) throw new Error('Invalid game_version.');
+  if (['10', '50', '100', 'typed', 'daily', 'party'].indexOf(version) < 0) throw new Error('Invalid game_version.');
   if (['player', 'research', 'party'].indexOf(participation) < 0) throw new Error('Invalid participation_type.');
   const submittedAt = new Date(record.submitted_at);
   if (isNaN(submittedAt.getTime())) throw new Error('Invalid submitted_at.');
