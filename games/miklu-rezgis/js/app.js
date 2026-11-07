@@ -968,7 +968,6 @@ function syncTypedAnswer() {
   document.getElementById('typed-answer').disabled = state.gameOver;
   document.getElementById('typed-check-btn').disabled = state.gameOver;
   document.getElementById('typed-match-btn').disabled = state.gameOver || !document.getElementById('typed-answer').value.trim();
-  if (typed) updateTypedAnswerNote();
 }
 
 function resetTypedAnswer() {
@@ -984,16 +983,6 @@ function remainingTypedLetters() {
       i >= (state.hintedLetters[wi] || 0) && !(state.typedRevealedLetters[wi] || []).includes(i)
     ).join('');
   }).join('');
-}
-
-function updateTypedAnswerNote() {
-  const lengths = getWords(currentRiddle().a).map(word => norm(word).length);
-  const remaining = remainingTypedLetters().length;
-  const guidance = remaining === 0 ? 'Visi burti atklāti.' : remaining === 1
-    ? 'Palicis viens burts. Vari ierakstīt to vai visu atminējumu.'
-    : `Neatklātie burti: ${remaining}. Vari ierakstīt visu atminējumu vai tikai trūkstošos burtus to secībā.`;
-  document.getElementById('typed-answer-note').textContent =
-    `${lengths.length > 1 ? 'Vārdu garums' : 'Burtu skaits'}: ${lengths.join(' · ')}. ${guidance}`;
 }
 
 function completeTypedAnswer() {
@@ -1069,7 +1058,6 @@ function revealMatchingTypedLetters() {
   renderWordTags();
   renderTopBar();
   if (!remainingTypedLetters()) { completeTypedAnswer(); return; }
-  updateTypedAnswerNote();
   setStatus(added ? `Atklātie kopīgie burti: ${added}. Par palīdzību −${cost} punkti.` : 'Šajā minējumā jaunu kopīgo burtu nav. Punkti netiek atņemti.', '');
 }
 

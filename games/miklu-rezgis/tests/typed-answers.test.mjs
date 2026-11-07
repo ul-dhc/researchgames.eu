@@ -6,11 +6,11 @@ import {riddlesFromCsv} from '../scripts/update-data.mjs';
 const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8');
 const extract=name=>source.match(new RegExp('function '+name+'\\([^]*?^}', 'm'))[0];
 function setup(){
- const elements=Object.fromEntries(['typed-answer','typed-answer-form','typed-check-btn','typed-answer-note','typed-match-btn'].map(id=>[id,{value:'',blur(){}}]));
+ const elements=Object.fromEntries(['typed-answer','typed-answer-form','typed-check-btn','typed-match-btn'].map(id=>[id,{value:'',blur(){}}]));
  const state={gameMode:'typed',typedWrongAttempts:0,typedRevealedLetters:{},hintedLetters:{},gameOver:false,hintsLeft:3,riddleScore:100,wordState:{},placedWords:[{cells:[[0,0]]}],foundCells:new Set(),levels:{1:[{q:'Kas?',a:'Āķis'}]},bonusPool:[]};
  let completed=0,grids=0,status='';
  const ctx=vm.createContext({state,document:{getElementById:id=>elements[id],body:{classList:{toggle(){}}}},currentRiddle:()=>({q:'Kas?',a:'Āķis',acceptedAnswers:['Āķītis']}),getWords:s=>s.split(/\s+/),norm:s=>s.toUpperCase(),cellKey:(r,c)=>`${r},${c}`,PENALTY_WRONG:15,PENALTY_HINT:25,TYPED_HINT_COST:10,TYPED_COMMON_LETTER_COST:5,renderPips(){},renderWordTags(){},renderTopBar(){},renderGrid(){grids++;},scrollToRiddleOnMobile(){},setStatus:s=>status=s,completeRiddle(){completed++;state.gameOver=true;},event:{preventDefault(){}}});
- vm.runInContext(['normalizeTypedAnswer','acceptedTypedAnswers','syncTypedAnswer','resetTypedAnswer','remainingTypedLetters','updateTypedAnswerNote','completeTypedAnswer','checkTypedAnswer','matchingTypedLetterPositions','revealMatchingTypedLetters','giveHint'].map(extract).join('\n'),ctx);
+ vm.runInContext(['normalizeTypedAnswer','acceptedTypedAnswers','syncTypedAnswer','resetTypedAnswer','remainingTypedLetters','completeTypedAnswer','checkTypedAnswer','matchingTypedLetterPositions','revealMatchingTypedLetters','giveHint'].map(extract).join('\n'),ctx);
  return {state,elements,run:s=>vm.runInContext(s,ctx),get completed(){return completed;},get grids(){return grids;},get status(){return status;}};
 }
 test('typed answer accepts case, surrounding whitespace, punctuation and explicit aliases, preserving Latvian diacritics',()=>{
@@ -109,8 +109,8 @@ test('only missing letters may complete an answer in order; wrong missing letter
  const c=setup();c.state.typedRevealedLetters={0:[0,2]};c.elements['typed-answer'].value='ķs';c.run('checkTypedAnswer(event)');assert.equal(c.completed,1);
  const wrong=setup();wrong.state.typedRevealedLetters={0:[0,1,2]};wrong.elements['typed-answer'].value='z';wrong.run('checkTypedAnswer(event)');assert.equal(wrong.completed,0);assert.equal(wrong.state.gameOver,false);assert.match(wrong.status,/Šis nav trūkstošais burts/);
 });
-test('a final hint automatically completes the riddle and guidance identifies the last missing letter',()=>{
- const c=setup();c.state.typedRevealedLetters={0:[0,1,2]};c.run('syncTypedAnswer()');assert.match(c.elements['typed-answer-note'].textContent,/Palicis viens burts/);
+test('a final hint automatically completes the riddle',()=>{
+ const c=setup();c.state.typedRevealedLetters={0:[0,1,2]};c.run('syncTypedAnswer()');
  c.run('giveHint()');assert.equal(c.completed,1);assert.equal(c.state.hintsLeft,2);
 });
 
