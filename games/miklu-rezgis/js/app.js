@@ -391,20 +391,50 @@ let analyticsFlushInProgress = false;
 let analyticsRetryDelayMs = 1200;
 let analyticsNextAttemptAt = 0;
 
+function removeAcknowledgedRecords(queue, batch) {
+  const pending = [...batch];
+  return queue.filter(record => {
+    const key = JSON.stringify(record);
+    const index = pending.findIndex(sent => JSON.stringify(sent) === key);
+    if (index < 0) return true;
+    pending.splice(index, 1);
+    return false;
+  });
+}
+
+function isolateUnlinkedEvaluations(queue) {
+  const unlinked = queue.filter(record =>
+    ['evaluation', 'riddle_evaluation'].includes(record.record_type) && (!record.session_id || !record.response_id)
+  );
+  if (!unlinked.length) return queue;
+  // Preserve legacy records locally; never invent a session or send them as research data.
+  const key = ANALYTICS_QUEUE_KEY + '_unlinked';
+  const saved = JSON.parse(localStorage.getItem(key) || '[]');
+  const keys = new Set(saved.map(record => JSON.stringify(record)));
+  for (const record of unlinked) {
+    if (!keys.has(JSON.stringify(record))) { saved.push(record); keys.add(JSON.stringify(record)); }
+  }
+  localStorage.setItem(key, JSON.stringify(saved));
+  const sendable = queue.filter(record => !unlinked.includes(record));
+  localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(sendable));
+  return sendable;
+}
+
 function flushAnalyticsQueue() {
   if (analyticsFlushInProgress || !ANALYTICS_SCRIPT_URL || !navigator.onLine) return;
   if (Date.now() < analyticsNextAttemptAt) return;
 
   let queuedRecords;
   try {
-    queuedRecords = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
+    queuedRecords = isolateUnlinkedEvaluations(JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]'));
   } catch (e) {
     return;
   }
   if (!queuedRecords.length) return;
 
   analyticsFlushInProgress = true;
-  const batch = queuedRecords.slice(0, 10);
+  const feedback = queuedRecords.find(record => ['session_question', 'session_feedback'].includes(record.record_type));
+  const batch = feedback ? [feedback] : queuedRecords.slice(0, 10);
 
   fetch(ANALYTICS_SCRIPT_URL, {
     method: 'POST',
@@ -418,7 +448,7 @@ function flushAnalyticsQueue() {
       analyticsRetryDelayMs = 1200;
       analyticsNextAttemptAt = 0;
       const latestQueue = JSON.parse(localStorage.getItem(ANALYTICS_QUEUE_KEY) || '[]');
-      localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(latestQueue.slice(batch.length)));
+      localStorage.setItem(ANALYTICS_QUEUE_KEY, JSON.stringify(removeAcknowledgedRecords(latestQueue, batch)));
       if (batch.some(record => record.record_type === 'session_feedback' && record.session_id === state.sessionId)) {
         state.feedbackDelivered = true;
         updateGameFeedbackStatus();
@@ -491,7 +521,7 @@ function currentResponseId() {
 }
 
 function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
-  if (state.evaluationSaved) return;
+  if (state.evaluationSaved || !state.sessionId) return;
   const riddle = currentRiddle();
   if (!riddle) return;
   const hintsUsed = state.hintLimit - state.hintsLeft;
