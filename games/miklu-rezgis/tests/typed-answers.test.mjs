@@ -6,7 +6,7 @@ import {riddlesFromCsv} from '../scripts/update-data.mjs';
 const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8');
 const extract=name=>source.match(new RegExp('function '+name+'\\([^]*?^}', 'm'))[0];
 function setup(){
- const elements=Object.fromEntries(['typed-answer','typed-answer-form','typed-check-btn','typed-match-btn'].map(id=>[id,{value:'',blur(){}}]));
+ const elements=Object.fromEntries(['typed-answer','typed-answer-form','typed-check-btn','typed-match-btn','next-btn'].map(id=>[id,{value:'',blur(){},focus(options){this.focusOptions=options;}}]));
  const state={gameMode:'typed',typedWrongAttempts:0,typedRevealedLetters:{},hintedLetters:{},gameOver:false,hintsLeft:3,riddleScore:100,wordState:{},placedWords:[{cells:[[0,0]]}],foundCells:new Set(),levels:{1:[{q:'Kas?',a:'Āķis'}]},bonusPool:[]};
  let completed=0,grids=0,status='';
  const ctx=vm.createContext({state,document:{getElementById:id=>elements[id],body:{classList:{toggle(){}}}},currentRiddle:()=>({q:'Kas?',a:'Āķis',acceptedAnswers:['Āķītis']}),getWords:s=>s.split(/\s+/),norm:s=>s.toUpperCase(),cellKey:(r,c)=>`${r},${c}`,PENALTY_WRONG:15,PENALTY_HINT:25,TYPED_HINT_COST:10,TYPED_COMMON_LETTER_COST:5,renderPips(){},renderWordTags(){},renderTopBar(){},renderGrid(){grids++;},scrollToRiddleOnMobile(){},setStatus:s=>status=s,completeRiddle(){completed++;state.gameOver=true;},event:{preventDefault(){}}});
@@ -132,4 +132,21 @@ test('typed completion awards the remaining score without a speed bonus; grid sc
   vm.runInContext(extract('completeRiddle'),ctx);vm.runInContext('completeRiddle()',ctx);
   assert.equal(state.currentAwardedPoints,expected);assert.equal(state.currentTimeBonus,bonus);assert.equal(state.totalScore,expected);
  }
+});
+
+
+test('correct typed answer moves focus to the next action without scrolling',()=>{
+ const c=setup();c.elements['typed-answer'].value='Āķis';c.run('checkTypedAnswer(event)');
+ assert.equal(c.completed,1);assert.equal(c.elements['next-btn'].focusOptions.preventScroll,true);
+});
+test('Enter checks once, ignores held-key repeats and preserves native next-button activation',()=>{
+ let checked=0,prevented=0;
+ const ctx=vm.createContext({state:{gameMode:'typed'},checkTypedAnswer(){checked++;}});
+ vm.runInContext(extract('handleTypedEnter'),ctx);
+ const send=(overrides={})=>{ctx.keyEvent={key:'Enter',repeat:false,isComposing:false,currentTarget:{id:'typed-answer'},preventDefault(){prevented++;},...overrides};vm.runInContext('handleTypedEnter(keyEvent)',ctx);};
+ send();assert.equal(checked,1);assert.equal(prevented,1);
+ send({repeat:true});assert.equal(checked,1);assert.equal(prevented,2);
+ send({isComposing:true});assert.equal(checked,1);assert.equal(prevented,2);
+ send({currentTarget:{id:'next-btn'}});assert.equal(checked,1);assert.equal(prevented,2);
+ send({currentTarget:{id:'next-btn'},repeat:true});assert.equal(prevented,3);
 });

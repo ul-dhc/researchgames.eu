@@ -1017,6 +1017,16 @@ function completeTypedAnswer() {
   renderWordTags();
   document.getElementById('typed-answer').blur();
   completeRiddle();
+  document.getElementById('next-btn').focus({preventScroll: true});
+}
+
+function handleTypedEnter(event) {
+  if (state.gameMode !== 'typed' || event.key !== 'Enter' || event.isComposing) return;
+  if (event.repeat) { event.preventDefault(); return; }
+  if (event.currentTarget.id === 'typed-answer') {
+    event.preventDefault();
+    checkTypedAnswer(event);
+  }
 }
 
 function checkTypedAnswer(event) {
@@ -2107,6 +2117,8 @@ function wireEvents() {
 
   document.getElementById('typed-answer-form').addEventListener('submit', checkTypedAnswer);
   document.getElementById('typed-answer').addEventListener('input', syncTypedAnswer);
+  document.getElementById('typed-answer').addEventListener('keydown', handleTypedEnter);
+  document.getElementById('next-btn').addEventListener('keydown', handleTypedEnter);
   document.getElementById('typed-match-btn').addEventListener('click', revealMatchingTypedLetters);
   document.getElementById('hint-btn').addEventListener('click', giveHint);
   document.getElementById('next-btn').addEventListener('click', nextRiddle);
