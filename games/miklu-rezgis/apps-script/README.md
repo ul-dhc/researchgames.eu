@@ -139,5 +139,6 @@ The receiver no longer reformats the sessions and evaluations sheets on each
 POST. Missing sheets still initialize normally. Player questions also accept
 `typed` as a game version. Existing record IDs and deployment URL are retained.
 The browser sends batches of ten and backs off after failed requests while
-keeping all pending records locally. Google deployment authorization must finish
-before the saved receiver changes become live.
+keeping all pending records locally. Receiver version **37** was deployed to the existing URL on 2026-11-07
+using the authorized sanita.reinsone@gmail.com account. No additional access
+was granted to the unrelated Reinsoni family account.
