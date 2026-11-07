@@ -144,6 +144,7 @@ const state = {
   typedWrongAttempts: 0,
   typedRevealedLetters: {},
   selectedMode: null,
+  typedRiddleCount: 10,
   participationMode: 'player',
   riddlesPerLevel: 10,
   maxScore: 20000,
@@ -272,10 +273,32 @@ function resetForNewGame() {
   state.bonusRiddles = [];
 }
 
+function validTypedCount(value) {
+  const count = Number(value);
+  return [10, 25, 50, 100].includes(count) ? count : 10;
+}
+
+function typedRiddlesInLevel(level, count = state.typedRiddleCount) {
+  const total = validTypedCount(count);
+  return Math.floor(total * level / 10) - Math.floor(total * (level - 1) / 10);
+}
+
+function typedMaxScore(count = state.typedRiddleCount) {
+  let maximum = BONUS_RIDDLE_POINTS * 2;
+  for (let level = 1; level <= 10; level++) maximum += LEVEL_BASE[level] * typedRiddlesInLevel(level, count);
+  return maximum;
+}
+
+function updateTypedCountSelection() {
+  document.querySelectorAll('[data-typed-count]').forEach(button => {
+    button.setAttribute('aria-pressed', String(Number(button.dataset.typedCount) === validTypedCount(state.typedRiddleCount)));
+  });
+}
+
 function plannedRiddleCount() {
   if (state.gameMode === 'party' && state.party) return state.party.riddlesPerPlayer * 2;
   if (state.gameMode === 'daily') return 1;
-  if (state.gameMode === 'typed') return 10;
+  if (state.gameMode === 'typed') return validTypedCount(state.typedRiddleCount);
   return Number(state.gameMode) || 0;
 }
 
@@ -524,6 +547,7 @@ function saveProgress() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       gameMode: state.gameMode,
+      typedRiddleCount: validTypedCount(state.typedRiddleCount),
       participationMode: state.participationMode,
       currentLevel: state.currentLevel,
       riddleIdx: state.riddleIdx,
@@ -744,7 +768,7 @@ function getLevelMsg(level, rating) {
 }
 
 function modeLabel(mode) {
-  const riddleCounts = { 10: 10, 50: 50, 100: 100, typed: 10, daily: 1 };
+  const riddleCounts = { 10: 10, 50: 50, 100: 100, typed: validTypedCount(state.typedRiddleCount), daily: 1 };
   return `${MODE_NAMES[mode]} (${riddleCounts[mode]} mīklas)`;
 }
 
@@ -1726,8 +1750,9 @@ function startMode(mode, repeatDaily = false) {
   startBtn.disabled = true;
   researchStartBtn.disabled = true;
   state.gameMode = mode;
-  state.riddlesPerLevel = MODE_RPL[mode];
-  state.maxScore = MODE_MAX[mode];
+  state.typedRiddleCount = validTypedCount(state.typedRiddleCount);
+  state.riddlesPerLevel = mode === 'typed' ? typedRiddlesInLevel(1) : MODE_RPL[mode];
+  state.maxScore = mode === 'typed' ? typedMaxScore() : MODE_MAX[mode];
   resetForNewGame();
   state.dailyReplay = mode === 'daily' && repeatDaily;
   resetTimer();
@@ -1864,6 +1889,7 @@ function startDailyGame() {
 }
 
 function startLevel() {
+  if (state.gameMode === 'typed') state.riddlesPerLevel = typedRiddlesInLevel(state.currentLevel);
   state.shuffledLevel = shuffle([...state.levels[state.currentLevel]]).slice(0, state.riddlesPerLevel);
   state.riddleIdx = 0;
   state.levelScore = 0;
@@ -1941,9 +1967,10 @@ function loadSavedProgress() {
     showGameScreen();
     state.gameMode = data.gameMode || 10;
     setParticipationMode(data.participationMode === 'research' ? 'research' : 'player');
-    state.riddlesPerLevel = MODE_RPL[state.gameMode];
-    state.maxScore = MODE_MAX[state.gameMode];
+    state.typedRiddleCount = validTypedCount(data.typedRiddleCount);
     state.currentLevel = data.currentLevel || 1;
+    state.riddlesPerLevel = state.gameMode === 'typed' ? typedRiddlesInLevel(state.currentLevel) : MODE_RPL[state.gameMode];
+    state.maxScore = state.gameMode === 'typed' ? typedMaxScore() : MODE_MAX[state.gameMode];
     state.totalScore = data.totalScore || 0;
     state.levelScore = data.levelScore || 0;
     state.totalTimeBonus = data.totalTimeBonus || 0;
@@ -1985,6 +2012,8 @@ function updateStartPaths(mode) {
   const participationLabel = document.getElementById('participation-label');
   const regularBtn = document.getElementById('start-btn');
   const researchBtn = document.getElementById('research-start-btn');
+  document.getElementById('typed-count-picker').hidden = mode !== 'typed';
+  updateTypedCountSelection();
   actions.hidden = mode === null || mode === undefined;
   modeList.classList.toggle('has-selection', !actions.hidden);
   if (actions.hidden) {
@@ -2010,6 +2039,12 @@ function parseMode(value) {
 }
 
 function wireModeCards() {
+  document.querySelectorAll('[data-typed-count]').forEach(button => {
+    button.addEventListener('click', () => {
+      state.typedRiddleCount = validTypedCount(button.dataset.typedCount);
+      updateTypedCountSelection();
+    });
+  });
   document.querySelectorAll('.mode-card[data-mode]').forEach(card => {
     card.addEventListener('click', () => {
       const mode = parseMode(card.dataset.mode);
@@ -2194,7 +2229,7 @@ function checkContinuePrompt() {
   const desc = document.getElementById('co-desc');
   if (desc) {
     desc.textContent =
-      `${MODE_NAMES[data.gameMode] || ''} · ${data.currentLevel || 1}. līmenis · ${(data.totalScore || 0).toLocaleString('lv-LV')} punkti`;
+      `${MODE_NAMES[data.gameMode] || ''}${data.gameMode === 'typed' ? ' (' + validTypedCount(data.typedRiddleCount) + ' mīklas)' : ''} · ${data.currentLevel || 1}. līmenis · ${(data.totalScore || 0).toLocaleString('lv-LV')} punkti`;
   }
   document.getElementById('continue-overlay').classList.add('show');
 }

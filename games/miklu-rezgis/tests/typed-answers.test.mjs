@@ -45,7 +45,7 @@ test('CSV optional answer variants are carried into static JSON',()=>{
 
 
 test('typed analytics plans ten riddles and the public dashboard exposes a separate version filter',async()=>{
- const ctx=vm.createContext({state:{gameMode:'typed'}});vm.runInContext(extract('plannedRiddleCount'),ctx);
+ const ctx=vm.createContext({state:{gameMode:'typed'}});vm.runInContext(extract('validTypedCount')+'\n'+extract('plannedRiddleCount'),ctx);
  assert.equal(vm.runInContext('plannedRiddleCount()',ctx),10);
  const {createRequire}=await import('node:module');const model=createRequire(import.meta.url)('../stats/snapshot-model.js');
  const result=model.query(model.build([],[],[]),{});
