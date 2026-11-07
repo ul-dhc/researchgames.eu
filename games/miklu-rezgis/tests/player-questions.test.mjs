@@ -10,7 +10,7 @@ const receiverCode = readFileSync(new URL('../apps-script/Code.gs', import.meta.
 function game({ online = false, failStorage = false, response = { ok: true } } = {}) {
   const elements = new Map();
   const el = id => {
-    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', disabled: false });
+    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', disabled: false, classes:new Set(), attributes:{}, classList:{toggle(name,value){const item=elements.get(id);if(value)item.classes.add(name);else item.classes.delete(name);}}, setAttribute(name,value){this.attributes[name]=value;}, insertAdjacentHTML(position,html){this.spinner=html;} });
     return elements.get(id);
   };
   el('player-question-form').reset = () => { el('player-question').value = ''; };
@@ -48,7 +48,7 @@ test('both participation types and party can send independently from game feedba
     assert.equal(records[0].question_text, 'Kāpēc mīklām ir vairāki varianti?');
     assert.equal(g.run('state.feedbackSubmitted'), false);
     assert.equal(g.el('player-question').disabled, true);
-    assert.match(g.el('player-question-confirm').textContent, /saglabāts/);
+    assert.match(g.el('player-question-confirm').textContent, /Nosūta jautājumu/);
     g.run('resetForNewGame()');
     assert.equal(g.el('player-question').value, '');
     assert.equal(g.el('player-question').disabled, false);
@@ -73,7 +73,7 @@ test('delivery is confirmed only after server acknowledgement; failure retains q
     await new Promise(resolve => setImmediate(resolve));
     assert.equal(g.run('state.playerQuestionDelivered'), ok);
     assert.equal(JSON.parse(g.storage.get('lmg_analytics_queue')).length, ok ? 0 : 1);
-    assert.equal(g.el('player-question-submit').textContent, ok ? 'Nosūtīts' : 'Nosūtīt');
+    assert.equal(g.el('player-question-submit').textContent, ok ? 'Nosūtīts' : 'Nosūta…');
   }
 });
 
@@ -131,4 +131,16 @@ test('dashboard count respects session filters and submission dates without retu
   r.rows.push({...valid, question_id:'old-question',submitted_at:'2001-01-01T00:00:00Z'});
   r.rows[0].submitted_at = new Date().toISOString();
   assert.equal(vm.runInContext("countPlayerQuestions_(spreadsheet,[{session_id:'s'}],7)", r.ctx), 1);
+});
+
+
+test('pending questions show a neutral Lucide spinner and green confirmation requires acknowledgement',async()=>{
+ const g=game();g.el('player-question').value='Kas?';g.submit();
+ const status=g.el('player-question-confirm');
+ assert.equal(status.classes.has('is-pending'),true);assert.equal(status.classes.has('is-delivered'),false);
+ assert.equal(status.attributes['aria-busy'],'true');assert.match(status.spinner,/#i-refresh/);
+ assert.equal(g.el('player-question-submit').textContent,'Nosūta…');
+ g.run('state.playerQuestionDelivered=true;updatePlayerQuestionForm()');
+ assert.equal(status.classes.has('is-pending'),false);assert.equal(status.classes.has('is-delivered'),true);
+ assert.equal(status.attributes['aria-busy'],'false');assert.match(status.textContent,/ir nosūtīts/);
 });

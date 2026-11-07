@@ -5,18 +5,18 @@ import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../js/app.js',import.meta.url),'utf8');
 const extract=name=>source.match(new RegExp('function '+name+'\\([^]*?^}', 'm'))[0];
 function setup(queued=true){
- const elements=Object.fromEntries(['feedback-comment','feedback-confirm','open-feedback-btn','feedback-submit-btn'].map(id=>[id,{value:'Mana atsauksme'}]));
+ const elements=Object.fromEntries(['feedback-comment','feedback-confirm','open-feedback-btn','feedback-submit-btn'].map(id=>[id,{value:'Mana atsauksme',classList:{toggle(){}},setAttribute(){},insertAdjacentHTML(){}}]));
  const state={survey:{rating:'5',ageGroup:'35_44'},feedbackSubmitted:false,feedbackDelivered:false,sessionId:'test-session',gameMode:'typed',totalScore:100,timerSeconds:20};
  const records=[];
  const ctx=vm.createContext({state,document:{getElementById:id=>elements[id]},queueAnalyticsRecord(r){records.push(r);return queued;}});
- vm.runInContext(extract('updateGameFeedbackStatus')+'\n'+extract('submitGameFeedback'),ctx);
+ vm.runInContext(extract('renderSubmissionStatus')+'\n'+extract('updateGameFeedbackStatus')+'\n'+extract('submitGameFeedback'),ctx);
  return {state,elements,records,run:s=>vm.runInContext(s,ctx)};
 }
 test('feedback submission keeps its text, queues once, and confirms only acknowledged delivery',()=>{
  const c=setup();c.run('submitGameFeedback()');
  assert.equal(c.records.length,1);assert.equal(c.records[0].player_comment,'Mana atsauksme');
  assert.equal(c.state.feedbackSubmitted,true);assert.equal(c.elements['feedback-submit-btn'].disabled,true);
- assert.match(c.elements['feedback-confirm'].textContent,/saglabāta šajā ierīcē/);
+ assert.match(c.elements['feedback-confirm'].textContent,/Nosūta atsauksmi/);
  assert.equal(c.elements['open-feedback-btn'].disabled,false);
  c.run('submitGameFeedback()');assert.equal(c.records.length,1);
  c.state.feedbackDelivered=true;c.run('updateGameFeedbackStatus()');

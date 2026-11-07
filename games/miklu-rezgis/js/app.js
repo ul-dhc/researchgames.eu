@@ -1357,18 +1357,27 @@ function showFeedbackOverlay() {
   document.getElementById('feedback-comment').focus({preventScroll: true});
 }
 
+function renderSubmissionStatus(id, message, pending = false, delivered = false) {
+  const element = document.getElementById(id);
+  element.textContent = message;
+  element.classList.toggle('is-pending', pending);
+  element.classList.toggle('is-delivered', delivered);
+  element.setAttribute('aria-busy', String(pending));
+  if (pending) element.insertAdjacentHTML('afterbegin', '<svg class="ui-icon delivery-spinner" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-refresh"></use></svg>');
+}
+
 function updatePlayerQuestionForm() {
   const input = document.getElementById('player-question');
   const button = document.getElementById('player-question-submit');
-  const confirmation = document.getElementById('player-question-confirm');
   input.disabled = state.playerQuestionSubmitted;
   button.disabled = state.playerQuestionSubmitted || !input.value.trim();
-  button.textContent = state.playerQuestionDelivered ? 'Nosūtīts' : 'Nosūtīt';
-  confirmation.textContent = state.playerQuestionDelivered
+  const pending = state.playerQuestionSubmitted && !state.playerQuestionDelivered;
+  button.textContent = state.playerQuestionDelivered ? 'Nosūtīts' : pending ? 'Nosūta…' : 'Nosūtīt';
+  renderSubmissionStatus('player-question-confirm', state.playerQuestionDelivered
     ? 'Paldies! Tavs jautājums ir nosūtīts pētniekiem.'
     : state.playerQuestionSubmitted
-      ? 'Jautājums saglabāts šajā ierīcē. Tas tiks nosūtīts, tiklīdz būs pieejams savienojums.'
-      : '';
+      ? 'Nosūta jautājumu… Uzgaidi nosūtīšanas apstiprinājumu.'
+      : '', pending, state.playerQuestionDelivered);
 }
 
 function submitPlayerQuestion(event) {
@@ -1414,11 +1423,11 @@ function updateGameFeedbackStatus() {
   const submit = document.getElementById('feedback-submit-btn');
   submit.disabled = submitted;
   submit.textContent = delivered ? 'Nosūtīts' : submitted ? 'Gaida nosūtīšanu' : 'Nosūtīt atsauksmi';
-  document.getElementById('feedback-confirm').textContent = delivered
+  renderSubmissionStatus('feedback-confirm', delivered
     ? 'Paldies! Tava atsauksme ir nosūtīta.'
     : submitted
-      ? 'Atsauksme saglabāta šajā ierīcē. Tā tiks nosūtīta, tiklīdz būs pieejams savienojums. Šo logu vari aizvērt.'
-      : '';
+      ? 'Nosūta atsauksmi… Uzgaidi nosūtīšanas apstiprinājumu.'
+      : '', submitted && !delivered, delivered);
 }
 
 function submitGameFeedback(event) {

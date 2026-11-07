@@ -276,7 +276,7 @@ html[data-theme="light"] .overlay{background:rgba(20,20,40,.4);}
 .player-question-note{margin:0 0 12px;color:var(--ink-muted);font-size:12px;line-height:1.5;}
 .player-question-form .overlay-btn-secondary{width:auto;min-width:110px;margin:0;padding:10px 20px;}
 .player-question-form button:disabled{opacity:.55;cursor:default;}
-.player-question-confirm{margin:9px 0 0;color:var(--accent);font-size:12px;line-height:1.5;}
+.player-question-confirm{margin:9px 0 0;color:var(--ink-muted);font-size:12px;line-height:1.5;}
 .player-question-confirm:empty{display:none;}
 .feedback-box>.overlay-title,.feedback-box>.overlay-msg{text-align:center;}
 .feedback-close{
@@ -301,7 +301,7 @@ html[data-theme="light"] .overlay{background:rgba(20,20,40,.4);}
   border-radius:10px;background:var(--panel-2);color:var(--ink);font:500 14px/1.5 var(--font-body);outline:none;
 }
 .feedback-comment:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(53,214,173,.1);}
-.feedback-confirm{min-height:20px;margin-top:7px;text-align:center;color:var(--accent);font-size:12px;font-weight:700;}
+.feedback-confirm{min-height:20px;margin-top:7px;text-align:center;color:var(--ink-muted);font-size:12px;font-weight:700;}
 html[data-theme="light"] .rating-option,html[data-theme="light"] .age-option,html[data-theme="light"] .feedback-comment{background:#f5f8f9;}
 .research-question-box{max-width:660px;}
 .research-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
@@ -1433,3 +1433,10 @@ body.typed-game .research-common-choice{display:inline-flex;}
 .typed-count-option{justify-content:center;min-height:48px;font-size:18px;}
 .typed-count-option[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);}
 .typed-count-option:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+/* Delivery stays neutral until the receiver acknowledges the submission. */
+.player-question-confirm.is-pending,.feedback-confirm.is-pending{color:var(--ink-muted);}
+.player-question-confirm.is-delivered,.feedback-confirm.is-delivered{color:var(--accent);}
+.delivery-spinner{display:inline-block;vertical-align:-3px;margin-right:8px;animation:delivery-spin 1s linear infinite;}
+@keyframes delivery-spin{to{transform:rotate(360deg);}}
+@media(prefers-reduced-motion:reduce){.delivery-spinner{animation:none;}}
