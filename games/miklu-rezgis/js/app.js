@@ -561,6 +561,7 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
     research_questions_skipped: skipped
   });
   state.evaluationSaved = true;
+  saveProgress();
 }
 
 function resetRiddleState() {
@@ -588,9 +589,37 @@ function resetRiddleState() {
   state.riddleSeconds = 0;
 }
 
+function captureRiddleProgress() {
+  const keys = ['gameOver', 'riddleOutcome', 'riddleScore', 'currentAwardedPoints', 'currentTimeBonus',
+    'hintLimit', 'hintsLeft', 'livesLeft', 'hintedLetters', 'wordState', 'typedRevealedLetters',
+    'typedWrongAttempts', 'riddleSeconds', 'currentShuffleCount', 'evaluationSaved', 'sessionRiddleRecorded'];
+  return Object.fromEntries(keys.filter(key => state[key] !== undefined).map(key => [key, state[key]]));
+}
+
+function restoreRiddleProgress(progress) {
+  if (!progress) return;
+  for (const key of Object.keys(captureRiddleProgress())) {
+    if (Object.prototype.hasOwnProperty.call(progress, key)) state[key] = progress[key];
+  }
+  state.placedWords.forEach((word, wi) => {
+    if (!['found', 'given-up'].includes(state.wordState[wi])) return;
+    if (state.wordState[wi] === 'found') state.foundWords.add(word.word);
+    (word.cells || []).forEach(([r, c]) => state.foundCells.add(cellKey(r, c)));
+  });
+}
+
 function saveProgress() {
+  if (state.gameMode === 'daily' || state.gameMode === 'party' || state.sessionFinishedAt) return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      progressVersion: 2,
+      sessionId: state.sessionId,
+      sessionStartedAt: state.sessionStartedAt,
+      sessionStats: state.sessionStats,
+      timerSeconds: state.timerSeconds,
+      shuffledLevel: state.shuffledLevel,
+      bonusRiddles: state.bonusRiddles,
+      riddleProgress: captureRiddleProgress(),
       gameMode: state.gameMode,
       typedRiddleCount: validTypedCount(state.typedRiddleCount),
       participationMode: state.participationMode,
@@ -1055,6 +1084,7 @@ function remainingTypedLetters() {
 }
 
 function completeTypedAnswer() {
+  if (state.gameOver) return;
   getWords(currentRiddle().a).forEach((_, wi) => { state.wordState[wi] = 'found'; });
   state.placedWords.forEach(word => {
     if (word.cells) word.cells.forEach(([row,col]) => state.foundCells.add(cellKey(row,col)));
@@ -1289,7 +1319,7 @@ function lockGame() {
 function unlockGame() {
   document.body.classList.add('game-active');
   document.getElementById('lock-overlay').classList.add('hidden');
-  CONTROL_IDS.forEach(id => { document.getElementById(id).disabled = false; });
+  CONTROL_IDS.forEach(id => { document.getElementById(id).disabled = state.gameOver; });
   // The first grid render happens while the landing screen is still changing
   // into the game layout. Measure once more after that layout is visible.
   requestAnimationFrame(() => {
@@ -1534,6 +1564,7 @@ function flashWrong(cells) {
 }
 
 function completeRiddle() {
+  if (state.gameOver) return;
   state.gameOver = true;
   state.currentTimeBonus = state.gameMode === 'typed' ? 0 : calculateTimeBonus(basePoints(), state.riddleSeconds);
   const awardedPoints = state.riddleScore + state.currentTimeBonus;
@@ -1557,8 +1588,8 @@ function completeRiddle() {
   document.getElementById('hint-btn').disabled = true;
   document.getElementById('shuffle-btn').disabled = true;
   setNextEnabled(true);
-  if (state.gameMode !== 'daily' && state.gameMode !== 'party') saveProgress();
   recordCompletedRiddleForSession();
+  saveProgress();
 }
 
 function recordPartyTurn(solved, awardedPoints) {
@@ -1638,6 +1669,7 @@ function giveUp() {
     markDailyPlayed(false);
   }
   recordCompletedRiddleForSession();
+  saveProgress();
 }
 
 function shuffleLetters() {
@@ -1738,6 +1770,7 @@ function showBonusChoice() {
 }
 
 function startBonusRound() {
+  if (state.isBonus) return;
   state.isBonus = true;
   state.bonusRiddles = shuffle([...state.bonusPool]).slice(0, 2);
   state.riddleIdx = 0;
@@ -2009,7 +2042,7 @@ function scrollToRiddleOnMobile() {
   }));
 }
 
-function loadRiddle() {
+function loadRiddle(progress = null) {
   resetRiddleState();
   setStatus('', '');
   const riddle = currentRiddle();
@@ -2029,6 +2062,7 @@ function loadRiddle() {
     }
   });
 
+  restoreRiddleProgress(progress);
   renderGrid();
   renderWordTags();
   renderPips();
@@ -2036,10 +2070,18 @@ function loadRiddle() {
   renderMiklaNum();
   if (typeof resetTypedAnswer === 'function') resetTypedAnswer();
 
-  document.getElementById('give-up-btn').disabled = false;
-  document.getElementById('hint-btn').disabled = false;
-  document.getElementById('shuffle-btn').disabled = false;
-  setNextEnabled(false);
+  document.getElementById('give-up-btn').disabled = state.gameOver;
+  document.getElementById('hint-btn').disabled = state.gameOver || state.hintsLeft <= 0;
+  document.getElementById('shuffle-btn').disabled = state.gameOver;
+  setNextEnabled(state.gameOver);
+  if (state.gameOver) {
+    setStatus(state.riddleOutcome === 'solved'
+      ? `Pareizi! +${state.currentAwardedPoints} punkti`
+      : state.riddleOutcome === 'given-up' || state.riddleOutcome === 'gave_up'
+        ? 'Atminējums atklāts. 0 punkti.'
+        : 'Mīkla jau pabeigta. Iepriekš iegūtie punkti ir saglabāti.', state.riddleOutcome === 'solved' ? 'win' : '');
+  }
+  saveProgress();
   scrollToRiddleOnMobile();
 }
 
@@ -2050,6 +2092,7 @@ function loadSavedProgress() {
   try {
     showGameScreen();
     state.gameMode = data.gameMode || 10;
+    resetForNewGame();
     setParticipationMode(data.participationMode === 'research' ? 'research' : 'player');
     state.typedRiddleCount = validTypedCount(data.typedRiddleCount);
     state.currentLevel = data.currentLevel || 1;
@@ -2061,16 +2104,27 @@ function loadSavedProgress() {
     state.isBonus = data.isBonus || false;
 
     resetTimer();
+    state.timerSeconds = data.timerSeconds || 0;
+    if (data.sessionId) {
+      state.sessionId = data.sessionId;
+      state.sessionStartedAt = data.sessionStartedAt || new Date().toISOString();
+      state.sessionStats = data.sessionStats || state.sessionStats;
+    }
 
     loadRiddlesFromSheets(() => {
       if (state.isBonus) {
-        state.bonusRiddles = shuffle([...state.bonusPool]).slice(0, 2);
-        state.riddleIdx = 0;
+        state.bonusRiddles = Array.isArray(data.bonusRiddles) && data.bonusRiddles.length ? data.bonusRiddles : shuffle([...state.bonusPool]).slice(0, 2);
+        state.riddleIdx = Math.min(data.riddleIdx || 0, state.bonusRiddles.length - 1);
       } else {
-        state.shuffledLevel = shuffle([...state.levels[state.currentLevel]]).slice(0, state.riddlesPerLevel);
+        state.shuffledLevel = Array.isArray(data.shuffledLevel) && data.shuffledLevel.length ? data.shuffledLevel : shuffle([...state.levels[state.currentLevel]]).slice(0, state.riddlesPerLevel);
         state.riddleIdx = Math.min(data.riddleIdx || 0, state.shuffledLevel.length - 1);
       }
-      loadRiddle();
+      const progress = data.progressVersion === 2 ? data.riddleProgress : {
+        gameOver: true, riddleOutcome: 'restored', currentAwardedPoints: 0,
+        evaluationSaved: true, sessionRiddleRecorded: true,
+        wordState: Object.fromEntries(getWords(currentRiddle().a).map((_, wi) => [wi, 'found']))
+      };
+      loadRiddle(progress);
       unlockGame();
       startTimer();
     });
@@ -2334,6 +2388,9 @@ function init() {
   flushAnalyticsQueue();
   setInterval(renderTimer, 1000);
   window.addEventListener('online', flushAnalyticsQueue);
+  window.addEventListener('pagehide', () => {
+    if (document.body.classList.contains('game-active')) saveProgress();
+  });
   window.addEventListener('resize', () => {
     const grid = document.getElementById('grid');
     if (grid) delete grid.dataset.cellSize;

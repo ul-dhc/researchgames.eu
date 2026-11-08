@@ -24,9 +24,9 @@ test('all four typed lengths play the requested number across ten levels with co
 });
 test('saved research game restores the chosen length, current level allocation and score maximum',()=>{
  const c=setup(25),storage=new Map();
- Object.assign(c.ctx,{STORAGE_KEY:'progress',PROGRESS_MAX_AGE_MS:604800000,MODE_RPL:{typed:1},MODE_MAX:{typed:2900},localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)},console,showGameScreen(){},setParticipationMode:mode=>c.state.participationMode=mode,resetTimer(){},loadRiddlesFromSheets:fn=>fn(),unlockGame(){},startTimer(){}});
+ Object.assign(c.ctx,{STORAGE_KEY:'progress',PROGRESS_MAX_AGE_MS:604800000,MODE_RPL:{typed:1},MODE_MAX:{typed:2900},localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)},console,showGameScreen(){},setParticipationMode:mode=>c.state.participationMode=mode,resetTimer(){},resetForNewGame(){},loadRiddlesFromSheets:fn=>fn(),unlockGame(){},startTimer(){}});
  Object.assign(c.state,{currentLevel:4,riddleIdx:1,participationMode:'research',totalScore:500,levelScore:100,totalTimeBonus:0,isBonus:false});
- vm.runInContext(['saveProgress','readSavedProgress','loadSavedProgress'].map(extract).join('\n'),c.ctx);
+ vm.runInContext(['captureRiddleProgress','saveProgress','readSavedProgress','loadSavedProgress'].map(extract).join('\n'),c.ctx);
  c.run('saveProgress()');assert.equal(JSON.parse(storage.get('progress')).typedRiddleCount,25);
  c.state.typedRiddleCount=10;c.state.currentLevel=1;c.state.participationMode='player';c.run('loadSavedProgress()');
  assert.equal(c.state.typedRiddleCount,25);assert.equal(c.state.currentLevel,4);assert.equal(c.state.riddlesPerLevel,3);assert.equal(c.state.shuffledLevel.length,3);assert.equal(c.state.riddleIdx,1);assert.equal(c.state.maxScore,5800);assert.equal(c.state.participationMode,'research');

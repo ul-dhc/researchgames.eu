@@ -9,7 +9,7 @@ const extract=(source,name)=>source.match(new RegExp('function '+name+'\\([^]*?^
 test('main game disables all riddle controls on solving and restores shuffling for a new riddle',()=>{
  const buttons=Object.fromEntries(['give-up-btn','hint-btn','shuffle-btn','riddle-text'].map(id=>[id,{disabled:false}]));
  const state={gameMode:10,riddleScore:100,riddleSeconds:1,totalTimeBonus:0,totalScore:0,levelScore:0,foundWords:new Set()};
- const ctx=vm.createContext({state,document:{getElementById:id=>buttons[id]},calculateTimeBonus:()=>15,basePoints:()=>100,renderTopBar(){},setStatus(){},setNextEnabled(){},saveProgress(){},recordCompletedRiddleForSession(){},resetRiddleState(){state.gameOver=false;},currentRiddle:()=>({q:'Mīkla',a:'Muša'}),renderRiddleMetadata(){},resolveGridSize:()=>7,buildGrid:()=>({grid:[],placedWords:[],fillerCells:new Set()}),renderGrid(){},renderWordTags(){},renderPips(){},renderMiklaNum(){},scrollToRiddleOnMobile(){}});
+ const ctx=vm.createContext({state,document:{getElementById:id=>buttons[id]},calculateTimeBonus:()=>15,basePoints:()=>100,renderTopBar(){},setStatus(){},setNextEnabled(){},saveProgress(){},restoreRiddleProgress(){},recordCompletedRiddleForSession(){},resetRiddleState(){state.gameOver=false;},currentRiddle:()=>({q:'Mīkla',a:'Muša'}),renderRiddleMetadata(){},resolveGridSize:()=>7,buildGrid:()=>({grid:[],placedWords:[],fillerCells:new Set()}),renderGrid(){},renderWordTags(){},renderPips(){},renderMiklaNum(){},scrollToRiddleOnMobile(){}});
  vm.runInContext(extract(main,'completeRiddle')+'\n'+extract(main,'loadRiddle'),ctx);
  vm.runInContext('completeRiddle()',ctx);
  for(const id of ['give-up-btn','hint-btn','shuffle-btn'])assert.equal(buttons[id].disabled,true,id);
