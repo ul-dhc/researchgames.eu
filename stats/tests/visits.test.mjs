@@ -86,10 +86,10 @@ test('browser refresh requests the public snapshot with a cache-busting URL',asy
    fetch:async url=>{requests.push(String(url));return {ok:true,json:async()=>snapshot};}};
  vm.runInNewContext(source,context);
  await new Promise(resolve=>setImmediate(resolve));
- assert.equal(requests.length,1);
- const url=new URL(requests[0]);
+ assert.equal(requests.length,2); // Same-origin data and the live check start together.
+ const url=new URL(requests.find(url=>new URL(url).origin==='https://raw.githubusercontent.com'));
  assert.equal(url.origin,'https://raw.githubusercontent.com');
  assert.ok(url.searchParams.has('t'));
  await clickRefresh();
- assert.equal(requests.length,2);
+ assert.equal(requests.filter(url=>new URL(url).origin==='https://raw.githubusercontent.com').length,2);
 });

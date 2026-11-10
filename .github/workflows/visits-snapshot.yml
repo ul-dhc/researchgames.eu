@@ -1,0 +1,53 @@
+name: Update page visits
+on:
+  schedule:
+    - cron: '1-56/5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['stats/**', '.github/workflows/visits-snapshot.yml']
+permissions:
+  contents: write
+concurrency:
+  group: visits-snapshot
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
+jobs:
+  visits:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test visits handling
+        run: node --test stats/tests/visits.test.mjs stats/tests/visit-*.test.mjs
+      - name: Read previous visits
+        run: |
+          if git ls-remote --exit-code --heads origin analytics-data; then
+            git fetch --depth=1 origin analytics-data:refs/remotes/origin/analytics-data
+            if git cat-file -e origin/analytics-data:visits.json; then
+              git show origin/analytics-data:visits.json > stats/visits.json
+            fi
+          fi
+      - name: Collect page visits independently
+        env:
+          GOATCOUNTER_API_TOKEN: ${{ secrets.GOATCOUNTER_API_TOKEN }}
+        run: node stats/scripts/update-visits.mjs
+      - name: Publish visits immediately
+        run: |
+          cp stats/visits.json "$RUNNER_TEMP/visits.json"
+          cp stats/scripts/push-analytics.sh "$RUNNER_TEMP/push-analytics.sh"
+          git restore stats/visits.json
+          if git show-ref --verify --quiet refs/remotes/origin/analytics-data; then
+            git switch --force-create analytics-data origin/analytics-data
+          else
+            git switch --orphan analytics-data
+          fi
+          cp "$RUNNER_TEMP/visits.json" visits.json
+          git add visits.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update page visits snapshot'
+          bash "$RUNNER_TEMP/push-analytics.sh"

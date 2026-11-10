@@ -90,7 +90,7 @@ pages; dashboard, about and other website pages are excluded. These are summed
 page visits, not unique people across pages, gameplay starts, or conversions.
 Visit counts respond only to the period selector, not research/session filters.
 
-The existing snapshot workflow calls `scripts/update-visits.mjs` using the repository
+The independent `.github/workflows/visits-snapshot.yml` workflow calls `stats/scripts/update-visits.mjs` using the repository
 Actions secret `GOATCOUNTER_API_TOKEN`. Configure a GoatCounter token with only
 Read statistics permission for researchgames.goatcounter.com. Never put the token
 in source, public JSON, frontend JavaScript, URLs, or logs. Email verification is
@@ -108,7 +108,7 @@ flag. Missing data displays a dash, never a fabricated zero. Counts older than
 replaces a newer game/period with an older fallback.
 
 Run `node stats/scripts/update-visits.mjs` with the token supplied through the
-environment to refresh the bundled fallback. The scheduled collector automatically
+environment to refresh the bundled fallback. The independent visits workflow automatically
 publishes the separate visits file without rebuilding the website. The visits
 collector is independent of gameplay analytics, so one source failing does not
 prevent the other from refreshing. Verify exact allowlisted paths against GoatCounter
@@ -293,3 +293,31 @@ other dashboards keep their own event definitions.
 The visits collector now uses the standard public Ubuntu 24.04 ARM runner pool. An explicit manual refresh or relevant push supersedes an older queued analytics run; scheduled runs do not cancel a running collection. The five-minute schedule was re-registered at minutes 3, 8, …, 58. GitHub scheduling remains best-effort, not a five-minute delivery guarantee.
 
 The public Refresh button reloads the latest published visits file; it does not dispatch an authenticated collector job. The visits UI now reports when that check happened and whether the source timestamps actually advanced. Re-downloading old data cannot be reported as a new collection, and a failed request is not hidden by a saved fallback. Per-source timestamps and stale notices remain intact. Repository administrators can force a collection using **Update analytics snapshot → Run workflow**; leave `refresh_riddles` off when only refreshing analytics. No token is exposed in the public browser.
+
+## Visit loading and publication (2026-11-10)
+
+Page visits for the homepage and game pages have their own five-minute workflow,
+`visits-snapshot.yml`. They no longer wait for audience, gameplay or riddle collection.
+The other workflow does not write `visits.json`. Both publishers use
+`stats/scripts/push-analytics.sh` to rebase a rejected push and preserve the other
+collector's files; neither force-pushes. Visits reserve one API request per second,
+and the other GoatCounter collectors use 400 ms spacing to allow overlap within
+the account's four-requests-per-second budget.
+
+On a cold visit, the bundled fallback and published file load concurrently,
+including dashboards without a visit timeline. Each valid response renders as
+soon as it arrives. The live check finishes independently of a slow fallback;
+merging still compares actual source timestamps per page and period. Saved
+browser data is displayed before either request finishes.
+
+Visit charts and cards show “Dati līdz / Data as of” in Riga time, separately
+from “Pēdējā pārbaude / Last checked”. Every visit panel has a “Pārbaudīt jaunākos
+datus / Check for newer data” button. It only checks the published file. The UI
+states that collection and visible-tab checks target five minutes, and warns
+when displayed data exceeds 20 minutes. A successful download of unchanged data
+never moves the source time forward. Check results compare each displayed page
+and period, so another game's update cannot masquerade as this game's update.
+
+GitHub may delay scheduled jobs; this implementation exposes that delay rather
+than promising a fixed refresh deadline. Local checks cannot verify execution of
+a new scheduled workflow until it has been published to the default branch.

@@ -52,7 +52,7 @@ export async function collectAudience(previous,request,now=new Date()){
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const path=process.argv[2]||'stats/audience.json';let previous;
  try{previous=normalizeAudience(JSON.parse(await readFile(path,'utf8')));}catch{}
- const spaced=async(url,options)=>{await new Promise(resolve=>setTimeout(resolve,300));return fetch(url,options);};
+ const spaced=async(url,options)=>{await new Promise(resolve=>setTimeout(resolve,400));return fetch(url,options);};
  const {snapshot,failures}=await collectAudience(previous,(dimension,range)=>requestAudience(dimension,range,process.env.GOATCOUNTER_API_TOKEN,spaced));
  await writeFile(path+'.tmp',JSON.stringify(snapshot)+'\n');await rename(path+'.tmp',path);
  console.log(`Saved audience aggregates; ${failures} unavailable dimension/period pairs`);

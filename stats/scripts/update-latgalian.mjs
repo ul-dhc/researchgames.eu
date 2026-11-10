@@ -24,7 +24,7 @@ export async function collectPlants(previous,request,now=new Date()){
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const file=process.argv[2]||'stats/latgalian.json';let previous;
  try{previous=normalizePlants(JSON.parse(await readFile(file,'utf8')));}catch{}
- const fetcher=async(...args)=>{await new Promise(r=>setTimeout(r,300));return fetch(...args);};
+ const fetcher=async(...args)=>{await new Promise(r=>setTimeout(r,400));return fetch(...args);};
  const {snapshot,failures}=await collectPlants(previous,(path,range)=>requestVisitSeries([path],range,process.env.GOATCOUNTER_API_TOKEN,fetcher,true));
  await writeFile(file+'.tmp',JSON.stringify(snapshot)+'\n');await rename(file+'.tmp',file);
  console.log(`Saved Latgalian aggregates; ${failures} unavailable periods`);

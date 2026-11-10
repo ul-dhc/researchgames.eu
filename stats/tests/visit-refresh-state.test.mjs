@@ -17,3 +17,12 @@ test('missing source dates remain unavailable and a cold initial source is newer
  assert.equal(visitRefreshOutcome(null,{periods:{}}),'unavailable');
  assert.equal(visitRefreshOutcome(null,snapshot('2026-11-04T16:00:00Z')),'newer');
 });
+
+test('each source is compared independently, rather than only the newest timestamp',()=>{
+ const previous={periods:{all:{landing:{fetchedAt:'2026-11-04T16:00:00Z'},'miklu-rezgis':{fetchedAt:'2026-11-04T12:00:00Z'}}}};
+ const incoming={periods:{all:{landing:{fetchedAt:'2026-11-04T16:00:00Z'},'miklu-rezgis':{fetchedAt:'2026-11-04T15:00:00Z'}}}};
+ assert.equal(visitRefreshOutcome(previous,incoming),'newer');
+ assert.equal(visitRefreshOutcome(previous,incoming,false,'all',['landing']),'unchanged');
+ assert.equal(visitRefreshOutcome(previous,incoming,false,'all',['miklu-rezgis']),'newer');
+ assert.equal(visitRefreshOutcome(previous,incoming,false,'7d',['landing']),'unavailable');
+});

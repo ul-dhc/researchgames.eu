@@ -83,8 +83,8 @@ if (process.argv[1] && import.meta.url===pathToFileURL(process.argv[1]).href) {
   const path=process.argv[2]||'stats/visits.json';
   let previous;
   try {previous=normalizeVisits(JSON.parse(await readFile(path,'utf8')));} catch {}
-  // Space calls below GoatCounter's four-requests/second limit.
-  const request=async(url,options)=>{await new Promise(resolve=>setTimeout(resolve,300));return fetch(url,options);};
+  // Reserve one request/second; the independent gameplay/audience job may overlap.
+  const request=async(url,options)=>{await new Promise(resolve=>setTimeout(resolve,1000));return fetch(url,options);};
   const {snapshot,failures}=await collectVisits(previous,(paths,range)=>requestVisitSeries(paths,range,process.env.GOATCOUNTER_API_TOKEN,request));
   await writeFile(path+'.tmp',JSON.stringify(snapshot)+'\n');await rename(path+'.tmp',path);
   console.log(`Saved visits aggregates; ${failures} unavailable game/period pairs`);

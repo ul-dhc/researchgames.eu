@@ -54,7 +54,7 @@ function positionTextMenu(){
 }
 function updateRefreshButton(){
  const busy=activeView==='visits'?document.querySelector('[data-rg-visit-timeline="site"]')?.dataset.loading==='true':loading;
- $('refresh').disabled=busy;$('refresh').textContent=t(busy?'refreshing':'refresh');
+ $('refresh').disabled=busy;$('refresh').textContent=activeView==='visits'?(language==='lv'?(busy?'Pārbaudu…':'Pārbaudīt jaunākos datus'):(busy?'Checking…':'Check for newer data')):t(busy?'refreshing':'refresh');
 }
 function render() {
  updateThemeButton();
@@ -146,9 +146,9 @@ $('text-size-menu')?.addEventListener('toggle',event=>{
 });
 window.addEventListener('resize',positionTextMenu);
 window.addEventListener('scroll',()=>{const menu=$('text-size-menu');if(menu?.matches(':popover-open'))menu.hidePopover();},{passive:true});
-$('period').addEventListener('change',load);
-$('refresh').addEventListener('click',load);
-setInterval(()=>{if (!document.hidden && !loading) load();},5*60000);
+$('period').addEventListener('change',()=>{if(activeView==='gameplay')load();else applySnapshot();});
+$('refresh').addEventListener('click',()=>{if(activeView==='gameplay')load();});
+setInterval(()=>{if (!document.hidden && !loading && activeView==='gameplay') load();},5*60000);
 document.querySelectorAll('[data-lang]').forEach(el => el.addEventListener('click',()=>{
  language=el.dataset.lang;
  const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);render();
@@ -160,5 +160,8 @@ $('theme').addEventListener('click',()=>{
  try {localStorage.setItem('researchgames-theme',theme);}catch{}
 });
 document.addEventListener('rg-visits-state',updateRefreshButton);
-initReportTabs($('report-tabs'),view=>{activeView=view;updateRefreshButton();});
-load();
+initReportTabs($('report-tabs'),view=>{
+ activeView=view;
+ if(view==='gameplay')load();else applySnapshot();
+ updateRefreshButton();
+});
