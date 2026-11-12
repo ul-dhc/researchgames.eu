@@ -304,6 +304,7 @@ html[data-theme="light"] .overlay{background:rgba(20,20,40,.4);}
 .feedback-confirm{min-height:20px;margin-top:7px;text-align:center;color:var(--ink-muted);font-size:12px;font-weight:700;}
 html[data-theme="light"] .rating-option,html[data-theme="light"] .age-option,html[data-theme="light"] .feedback-comment{background:#f5f8f9;}
 .research-question-box{max-width:660px;}
+.research-selection-note{margin:4px 0 10px;color:var(--ink-muted);font-size:13px;line-height:1.5;}
 .research-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
 .research-options-wide{grid-template-columns:repeat(2,minmax(0,1fr));}
 .research-options button{

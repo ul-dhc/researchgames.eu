@@ -526,7 +526,10 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
   if (!riddle) return;
   const hintsUsed = state.hintLimit - state.hintsLeft;
   const wrongAttempts = Math.max(0, MAX_LIVES - state.livesLeft) + (state.typedWrongAttempts || 0);
-  const solutionMethod = researchAnswers.solution_method || '';
+  const rawMethods = researchAnswers.solution_method || [];
+  const solutionMethods = [...new Set((Array.isArray(rawMethods) ? rawMethods : [rawMethods])
+    .filter(Boolean).map(value => ({found_in_grid: 'found_grid', used_hint: 'hint'})[value] || value))].sort();
+  const solutionMethod = solutionMethods.join('|');
   queueAnalyticsRecord({
     record_type: 'evaluation',
     response_id: currentResponseId(),
@@ -552,7 +555,7 @@ function queueCurrentEvaluation(researchAnswers = {}, skipped = false) {
     wrong_attempts: wrongAttempts,
     shuffle_count: state.currentShuffleCount,
     heard_before: researchAnswers.heard_before || '',
-    knew_answer_before_search: solutionMethod === 'knew' ? 'yes' : (solutionMethod ? 'no' : ''),
+    knew_answer_before_search: solutionMethods.includes('knew') ? 'yes' : (solutionMethod ? 'no' : ''),
     solution_method: solutionMethod,
     difficulty_rating: researchAnswers.difficulty_rating || '',
     knows_similar_variant: researchAnswers.knows_similar_variant || '',
@@ -1697,9 +1700,31 @@ function shuffleLetters() {
   setStatus('Burti sajaukti.', '');
 }
 
+function selectResearchOption(fieldset, button) {
+  const question = fieldset.dataset.question;
+  if (fieldset.dataset.multiple === 'true') {
+    const selected = new Set(state.researchAnswers[question] || []);
+    if (selected.has(button.dataset.value)) selected.delete(button.dataset.value);
+    else selected.add(button.dataset.value);
+    state.researchAnswers[question] = [...selected];
+  } else {
+    state.researchAnswers[question] = button.dataset.value;
+  }
+  fieldset.querySelectorAll('.research-options button').forEach(option => {
+    const selected = fieldset.dataset.multiple === 'true'
+      ? state.researchAnswers[question].includes(option.dataset.value)
+      : option === button;
+    option.classList.toggle('selected', selected);
+    option.setAttribute('aria-pressed', String(selected));
+  });
+}
+
 function showResearchQuestions() {
   state.researchAnswers = {};
-  document.querySelectorAll('#research-overlay .research-options button').forEach(button => button.classList.remove('selected'));
+  document.querySelectorAll('#research-overlay .research-options button').forEach(button => {
+    button.classList.remove('selected');
+    button.setAttribute('aria-pressed', 'false');
+  });
   const solutionMethodField = document.querySelector('#research-overlay [data-question="solution_method"]');
   const gaveUp = state.riddleOutcome === 'gave_up';
   solutionMethodField.hidden = gaveUp;
@@ -2319,10 +2344,7 @@ function wireEvents() {
   document.querySelectorAll('#research-overlay .research-fieldset').forEach(fieldset => {
     fieldset.querySelectorAll('.research-options button').forEach(button => {
       button.addEventListener('click', () => {
-        state.researchAnswers[fieldset.dataset.question] = button.dataset.value;
-        fieldset.querySelectorAll('.research-options button').forEach(option => {
-          option.classList.toggle('selected', option === button);
-        });
+        selectResearchOption(fieldset, button);
       });
     });
   });

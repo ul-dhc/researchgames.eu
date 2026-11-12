@@ -28,10 +28,15 @@ var RiddleSnapshot = (function () {
   }
   function normalized(v) {
     const s=text(v).toLowerCase();
-    return ({'jā':'yes',ja:'yes','nē':'no',ne:'no',neatceros:'unsure','i do not remember':'unsure','zināju uzreiz':'knew','atminēju mīklu':'solved_riddle','atradu režģī':'found_grid','palīdzēja uzvedne':'hint',used_hint:'hint',padevos:'gave_up'})[s] || s || 'unknown';
+    return ({'jā':'yes',ja:'yes','nē':'no',ne:'no',neatceros:'unsure','i do not remember':'unsure','zināju uzreiz':'knew','atminēju mīklu':'solved_riddle','atradu režģī':'found_grid','palīdzēja uzvedne':'hint',found_in_grid:'found_grid',used_hint:'hint',padevos:'gave_up'})[s] || s || 'unknown';
+  }
+  function solutionMethods(value) {
+    const values=Array.isArray(value)?value:text(value).split('|');
+    const methods=[...new Set(values.map(normalized).filter(v=>v!=='unknown'))].sort();
+    return methods.length?methods:['unknown'];
   }
   function completed(r) {return text(r.session_status).toLowerCase()==='completed' || (num(r.planned_riddle_count)>0 && num(r.completed_riddle_count)>=num(r.planned_riddle_count));}
-  function dimensions(r) { return {outcome:bool(r.solved)?'solved':bool(r.gave_up)?'gave_up':'other',heardBefore:normalized(r.heard_before),solutionMethod:normalized(r.solution_method),difficulty:text(r.difficulty_rating)}; }
+  function dimensions(r) { return {outcome:bool(r.solved)?'solved':bool(r.gave_up)?'gave_up':'other',heardBefore:normalized(r.heard_before),solutionMethod:solutionMethods(r.solution_method).join('|'),difficulty:text(r.difficulty_rating)}; }
   function sum(rows,field) {return rows.reduce((s,r)=>s+num(r[field]),0);}
   // Only aggregate cohorts, riddle statistics and already-public text are returned.
   // Original session/response/question IDs, devices and raw per-session timings never leave this function.
@@ -99,7 +104,7 @@ var RiddleSnapshot = (function () {
     const period=model.cohorts.map((c,i)=>({...c,index:i})).filter(c=>inPeriod(c.day));
     let candidates=period.filter(c=>(!filters.version||c.version===filters.version)&&(!filters.participation||c.participation===filters.participation)&&(!filters.sessionStatus||c.status===filters.sessionStatus));
     const ids=new Set(candidates.map(c=>c.index));
-    let evaluations=model.evaluations.filter(e=>ids.has(e.cohort)&&inPeriod(e.day)&&facetNames.every(k=>!filters[k]||e[k]===filters[k]));
+    let evaluations=model.evaluations.filter(e=>ids.has(e.cohort)&&inPeriod(e.day)&&facetNames.every(k=>!filters[k]||(k==='solutionMethod'?solutionMethods(e[k]).includes(normalized(filters[k])):e[k]===filters[k])));
     if(hasFacets){const matched=new Set(evaluations.map(e=>e.cohort));candidates=candidates.filter(c=>matched.has(c.index));}
     const sessions=candidates.filter(c=>!filters.ageGroup||c.age===filters.ageGroup);
     const selected=new Set(sessions.map(c=>c.index));evaluations=evaluations.filter(e=>selected.has(e.cohort));
@@ -118,7 +123,7 @@ var RiddleSnapshot = (function () {
     const heard={yes:'Jā',no:'Nē',unsure:'Neatceros',unknown:'Nav atbildes'},methods={knew:'Zināju uzreiz',solved_riddle:'Atminēju mīklu',found_grid:'Atradu režģī',hint:'Palīdzēja uzvedne',common_letters:'Palīdzēja kopīgie burti',gave_up:'Padevos',unknown:'Nav atbildes'};
     return {generatedAt:displayDate(model.generatedAt),filters:{days,...Object.fromEntries(['version','participation','ageGroup','sessionStatus',...facetNames].map(k=>[k,filters[k]||''])),versions:Object.entries(versions).filter(([v])=>v!=='diagnostic').map(([value,label])=>({value,label})),participationTypes:[...new Set(period.map(c=>c.participation).filter(Boolean))].sort().map(value=>({value,label:label(participation,value)}))},
       metrics:{sessions:count,completed:done,completionRate:pct(done,count),averageScore:sum(sessions,'scoreCount')?round(sum(sessions,'scoreTotal')/sum(sessions,'scoreCount')):0,averageTimeMs:sum(sessions,'timeCount')?round(sum(sessions,'timeTotal')/sum(sessions,'timeCount')):0,averageRating:ratingCount?round(ratingCounts.reduce((s,n,i)=>s+n*(i+1),0)/ratingCount,1):0,evaluatedRiddles:evaluated,solvedRate:pct(sum(evaluations.filter(e=>e.outcome==='solved'),'count'),evaluated),researchSessions:sum(sessions.filter(c=>c.participation==='research'),'count'),playerQuestions:questions.length},
-      timeline:breakdown(sessions,'day').filter(r=>r.key!=='Nav norādīts').map(r=>({date:r.key,sessions:r.value})),versions:breakdown(sessions,'version',v=>label(versions,v)),participation:breakdown(sessions,'participation',v=>label(participation,v)),completion:[{key:'completed',label:'Pabeigta',value:done},{key:'in_progress',label:'Pārtraukta',value:sum(sessions.filter(c=>c.status==='in_progress'),'count')}],ratings:ratingCounts.map((value,i)=>({rating:i+1,value})),ages:breakdown(candidates,'age'),outcomes:zeroBreak('outcome',{solved:'Atminēta',gave_up:'Padodos',other:'Nav atbildes'}),heardBefore:breakdown(evaluations,'heardBefore',v=>heard[v]||v).sort((a,b)=>b.value-a.value),solutionMethods:breakdown(evaluations,'solutionMethod',v=>methods[v]||v).sort((a,b)=>b.value-a.value),difficulties:breakdown(evaluations,'difficulty',v=>v==='Nav norādīts'?'Nav atbildes':v+' / 5').map(r=>({...r,key:r.key==='Nav norādīts'?'Nav atbildes':r.key})).sort((a,b)=>num(a.key)-num(b.key)),riddlePerformance,comments:sortedText(model.comments,12),playerQuestions:questions,variants:sortedText(model.variants,12)};
+      timeline:breakdown(sessions,'day').filter(r=>r.key!=='Nav norādīts').map(r=>({date:r.key,sessions:r.value})),versions:breakdown(sessions,'version',v=>label(versions,v)),participation:breakdown(sessions,'participation',v=>label(participation,v)),completion:[{key:'completed',label:'Pabeigta',value:done},{key:'in_progress',label:'Pārtraukta',value:sum(sessions.filter(c=>c.status==='in_progress'),'count')}],ratings:ratingCounts.map((value,i)=>({rating:i+1,value})),ages:breakdown(candidates,'age'),outcomes:zeroBreak('outcome',{solved:'Atminēta',gave_up:'Padodos',other:'Nav atbildes'}),heardBefore:breakdown(evaluations,'heardBefore',v=>heard[v]||v).sort((a,b)=>b.value-a.value),solutionMethods:breakdown(evaluations.flatMap(e=>solutionMethods(e.solutionMethod).map(solutionMethod=>({...e,solutionMethod}))),'solutionMethod',v=>methods[v]||v).sort((a,b)=>b.value-a.value),difficulties:breakdown(evaluations,'difficulty',v=>v==='Nav norādīts'?'Nav atbildes':v+' / 5').map(r=>({...r,key:r.key==='Nav norādīts'?'Nav atbildes':r.key})).sort((a,b)=>num(a.key)-num(b.key)),riddlePerformance,comments:sortedText(model.comments,12),playerQuestions:questions,variants:sortedText(model.variants,12)};
   }
   return {build,validate,query};
 })();

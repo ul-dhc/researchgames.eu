@@ -56,7 +56,7 @@ function getDashboardData(filters) {
     return Boolean(sessionIdsBeforeAge[text_(row.session_id)]) &&
       (!outcome || outcomeKey_(row) === outcome) &&
       (!heardBefore || normalizeAnswer_(row.heard_before) === heardBefore) &&
-      (!solutionMethod || normalizeAnswer_(row.solution_method) === solutionMethod) &&
+      (!solutionMethod || solutionMethods_(row.solution_method).indexOf(normalizeAnswer_(solutionMethod)) !== -1) &&
       (!difficulty || text_(row.difficulty_rating) === difficulty);
   });
 
@@ -301,8 +301,8 @@ function buildDifficulties_(rows) {
 function buildNormalizedAnswers_(rows, field, labels) {
   const counts = {};
   rows.forEach(function(row) {
-    const key = normalizeAnswer_(row[field]);
-    counts[key] = (counts[key] || 0) + 1;
+    const keys = field === 'solution_method' ? solutionMethods_(row[field]) : [normalizeAnswer_(row[field])];
+    keys.forEach(function(key) { counts[key] = (counts[key] || 0) + 1; });
   });
   return Object.keys(counts).map(function(key) {
     return { key: key, label: labels[key] || key, value: counts[key] };
@@ -451,6 +451,12 @@ function isCompleted_(row) {
     );
 }
 
+function solutionMethods_(value) {
+  const values = Array.isArray(value) ? value : text_(value).split('|');
+  const methods = Array.from(new Set(values.map(normalizeAnswer_).filter(function(v) { return v !== 'unknown'; }))).sort();
+  return methods.length ? methods : ['unknown'];
+}
+
 function normalizeAnswer_(value) {
   const normalized = text_(value).toLowerCase();
   if (!normalized) return 'unknown';
@@ -460,7 +466,7 @@ function normalizeAnswer_(value) {
     'neatceros': 'unsure', 'i do not remember': 'unsure',
     'zināju uzreiz': 'knew', 'knew': 'knew',
     'atminēju mīklu': 'solved_riddle', 'solved_riddle': 'solved_riddle',
-    'atradu režģī': 'found_grid', 'found_grid': 'found_grid',
+    'atradu režģī': 'found_grid', 'found_grid': 'found_grid', 'found_in_grid': 'found_grid',
     'palīdzēja uzvedne': 'hint', 'hint': 'hint', 'used_hint': 'hint',
     'padevos': 'gave_up', 'gave_up': 'gave_up'
   };

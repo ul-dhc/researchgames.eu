@@ -142,3 +142,15 @@ The browser sends batches of ten and backs off after failed requests while
 keeping all pending records locally. Receiver version **37** was deployed to the existing URL on 2026-11-07
 using the authorized sanita.reinsone@gmail.com account. No additional access
 was granted to the unrelated Reinsoni family account.
+
+### Multiple solution methods (2026-11-12)
+
+The research question allows multiple selections. The existing `solution_method`
+text column stores canonical, unique codes separated by `|`, for example
+`found_grid|hint`. No new columns or receiver deployment are needed: the existing
+receiver stores text unchanged, and its snapshot exporter retains the combined
+value. The static dashboard splits both old and new exported values, counts each
+method once per evaluation, and filters by membership without duplicating sessions
+or evaluations. Earlier single selections remain valid; `found_in_grid` and
+`used_hint` are read as aliases of `found_grid` and `hint`. The source Apps Script
+dashboard and snapshot model are also updated for the next dashboard deployment.
