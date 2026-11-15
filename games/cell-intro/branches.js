@@ -1,9 +1,9 @@
-import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=20261103-action-nav12';
-import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=20261103-action-nav12';
+import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=cell-intro-20261115-r1';
+import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=cell-intro-20261115-r1';
 /* Local checkpoint: cell choice, visual continuity and initial inspection only. */
 export function createCellBranches(api){
  const {scene,$}=api,host=$('cell-branches');
- const custom=['chooser','plant','human','bacterial'],plantSteps=['onion','scales','skin','field','establish','invite','approach','boundary','inside','nucleolus','model','explore','assemble','dna-focus','gene','message','export','protein','roles'];
+ const custom=['chooser','plant','human','bacterial'],plantSteps=['onion','skin','field','establish','invite','approach','boundary','inside','nucleolus','model','explore','assemble','dna-focus','gene','message','export','protein','roles'];
  const cells={
   plant:{title:'Plant cell',subtitle:'Onion bulb epidermis',copy:'A firm wall supports this cell. The large vacuole fills most of its interior.',facts:['wall','vacuole','nucleus','p-cytoplasm']},
   human:{title:'Human cheek cell',subtitle:'From the lining inside your cheek',copy:'A flexible boundary surrounds this flattened cell and its nucleus.',facts:['h-membrane','h-nucleus','h-mitochondria','h-cytoplasm']},
@@ -20,14 +20,14 @@ export function createCellBranches(api){
  'b-nucleoid':{name:'Nucleoid DNA',text:`E. coli has no nucleus. ${DNA_INSTRUCTIONS} Its DNA lies in an area called the nucleoid, with no membrane around it.`},
  'b-ribosomes':cellFacts.ribosomes
  };
- let current='idle',snapshots={},completions={plant:false,bacterial:false},snapshot=null,completed=false,flight=[],flightVersion=0,warm=false,returnFocus='plant';
+ let current='idle',snapshots={},completions={plant:false,human:false,bacterial:false},snapshot=null,completed=false,flight=[],flightVersion=0,warm=false,returnFocus='plant';
  const visited={plant:new Set(),human:new Set(),bacterial:new Set()};
  const art=(key,width=960)=>key==='plant'?`assets/onion-cell-detailed-cutout-${width}.webp`:`assets/cell-${key}-alpha-${width}.webp`;
  const srcset=key=>[480,960,1536].map(w=>`${art(key,w)} ${w}w`).join(', ');
  host.innerHTML=`<div id="cell-choices">${Object.entries(cells).map(([key,c])=>{
-  const playable=key!=='human',tag=playable?'button':'article';
+  const playable=true,tag='button';
   return `<${tag} ${playable?'type="button"':'aria-disabled="true" tabindex="0"'} class="cell-choice${playable?'':' is-upcoming'}" data-cell="${key}" ${playable?`aria-label="Explore ${c.title} · Playable now"`:`aria-labelledby="choice-title-${key}" aria-describedby="upcoming-${key}"`}>${chooserArtMarkup(key)}<span class="choice-copy"><strong id="choice-title-${key}">${c.title}${key==='bacterial'?' <small>(E. coli)</small>':''}</strong><span>${c.subtitle}</span><span class="choice-status" ${playable?'':`id="upcoming-${key}"`} data-status="${key}">${playable?'Playable now':'Upcoming'}</span></span></${tag}>`;
- }).join('')}</div><p id="chooser-scale-note">Cells are not shown to scale.</p>
+ }).join('')}</div>
  <div id="cell-inspection" hidden><div class="inspection-visual"><img id="inspection-art" alt="" width="1536" height="1024" decoding="async"><svg id="inspection-active-halo" viewBox="0 0 1000 666.667" aria-hidden="true" hidden><ellipse id="inspection-halo-region"/></svg><div id="inspection-hotspots"></div></div><div id="inspection-actions"><p id="inspection-hint">Select a structure to learn about it.</p><div id="inspection-labels"></div><p id="plant-origin-hint" hidden>Let’s see where this cell comes from, then follow its instructions at work.</p><button id="plant-visit" type="button" class="primary" hidden>Visit the onion specimen</button><p id="inspection-progress" aria-live="polite"></p></div></div>`;
  const image=$('inspection-art'),chooserDepth=initializeChooserDepth(host,api);
  function loadCards(){if(warm)return;warm=true;for(const image of host.querySelectorAll('[data-choice-art]')){const key=image.dataset.choiceArt,width=innerWidth>1600&&devicePixelRatio>1.5?1536:960;image.setAttribute('href',art(key,width));}}
@@ -35,8 +35,8 @@ export function createCellBranches(api){
  function stopFlight(){flightVersion++;for(const a of flight)a.cancel();flight=[];document.querySelectorAll('.cell-flight').forEach(n=>n.remove());image.style.visibility='';}
  function drawnRect(img){const r=img.getBoundingClientRect(),ratio=1.5,w=Math.min(r.width,r.height*ratio),h=w/ratio;return {left:r.left+(r.width-w)/2,top:r.top+(r.height-h)/2,width:w,height:h};}
  function open(key){
-  if(!cells[key])return;if(key==='human'){$('status').textContent=cells[key].title+' journey is upcoming.';return;}
-  api.beginSession();returnFocus=key;stopFlight();api.selectOrganism(key);snapshot=snapshots[key]||null;if(snapshot){api.holdScene(snapshot.phase);api.restoreSnapshot(snapshot);}else{api.resetRoute?.();if(key==='plant')api.enterPlant('onion');else api.enterBacterial();}
+  if(!cells[key])return;
+  api.beginSession();returnFocus=key;stopFlight();api.selectOrganism(key);snapshot=snapshots[key]||null;if(snapshot){api.holdScene(snapshot.phase);api.restoreSnapshot(snapshot);}else{api.resetRoute?.();if(key==='plant')api.enterPlant('onion');else if(key==='human')api.enterHuman();else api.enterBacterial();}
  }
 
  function returnToCells(){stopFlight();api.setPhase('chooser');api.revealFull();host.querySelector(`[data-cell="${returnFocus}"]`)?.focus({preventScroll:true});}
@@ -62,13 +62,13 @@ export function createCellBranches(api){
   if(index>=0){const r=regions[current][index],ellipse=$('inspection-halo-region');ellipse.setAttribute('cx',r[0]*1000);ellipse.setAttribute('cy',r[1]*666.667);ellipse.setAttribute('rx',r[2]*1000);ellipse.setAttribute('ry',r[3]*666.667);const angle=(current==='human'&&key==='h-nucleus')?-25:(current==='bacterial'&&key==='b-nucleoid')?-18:0;ellipse.setAttribute('transform',`rotate(${angle} ${r[0]*1000} ${r[1]*666.667})`);}
  }
  function render(phase){
-  const changed=current!==phase;current=phase;$('chooser-scale-note').hidden=phase!=='chooser';const isCustom=custom.includes(phase);host.hidden=!isCustom;host.inert=!isCustom;scene.dataset.cellBranch=isCustom?phase:'plant-lesson';
+  const changed=current!==phase;current=phase;const isCustom=custom.includes(phase);host.hidden=!isCustom;host.inert=!isCustom;scene.dataset.cellBranch=isCustom?phase:'plant-lesson';
   if(!isCustom)return;
   $('guide-toggle').hidden=phase==='chooser';$('nucleus-model').hidden=true;$('nucleus-model').inert=true;
   if(!changed&&host.dataset.rendered===phase){renderProgress();syncActive();return;}
   host.dataset.rendered=phase;loadCards();$('cell-choices').hidden=phase!=='chooser';$('cell-inspection').hidden=phase==='chooser';
   if(phase==='chooser'){
-   for(const [key,set]of Object.entries(visited))host.querySelector(`[data-status="${key}"]`).textContent=key==='human'?'Upcoming':completions[key]?'Visit complete':snapshots[key]?(snapshots[key].reviewMode?'Review visit':'Visit in progress'):'Playable now';
+   for(const [key,set]of Object.entries(visited))host.querySelector(`[data-status="${key}"]`).textContent=completions[key]?'Visit complete':snapshots[key]?(snapshots[key].reviewMode?'Review visit':'Visit in progress'):'Playable now';
    return;
   }
   image.srcset=srcset(phase);image.sizes='(max-width:650px) 100vw, 70vw';image.src=art(phase,1536);image.alt=cells[phase].title+' scientific cutaway';
@@ -81,11 +81,11 @@ export function createCellBranches(api){
   $('plant-origin-hint').hidden=phase!=='plant'||Boolean(snapshot);$('plant-visit').hidden=phase!=='plant';$('plant-visit').textContent=snapshot?'Resume plant visit':'Visit the onion specimen';renderProgress();syncActive();
  }
  return {facts,open,render,warmCards:loadCards,isCustom:key=>custom.includes(key),isInspection:key=>['plant','human','bacterial'].includes(key),
- beforePhase(from,to){if((plantSteps.includes(from)||from.startsWith('b-'))&&custom.includes(to)){const route=api.organism();snapshots[route]=api.getSnapshot();snapshot=snapshots[route];returnFocus=route;}if(!custom.includes(to))stopFlight();},
- resetVisits(){stopFlight();snapshots={};snapshot=null;completions={plant:false,bacterial:false};for(const set of Object.values(visited))set.clear();},
- plantReward(value){if(value&&!api.isReview?.())completions[api.organism()]=true;completed=completions.plant;scene.dataset.plantComplete=String(completed);scene.dataset.bacterialComplete=String(completions.bacterial);},
+ beforePhase(from,to){if((plantSteps.includes(from)||from.startsWith('b-')||from.startsWith('h-'))&&custom.includes(to)){const route=api.organism();snapshots[route]=api.getSnapshot();snapshot=snapshots[route];returnFocus=route;}if(!custom.includes(to))stopFlight();},
+ resetVisits(){stopFlight();snapshots={};snapshot=null;completions={plant:false,human:false,bacterial:false};for(const set of Object.values(visited))set.clear();},
+ plantReward(value){if(value&&!api.isReview?.())completions[api.organism()]=true;completed=completions.plant;scene.dataset.plantComplete=String(completed);scene.dataset.bacterialComplete=String(completions.bacterial);scene.dataset.humanComplete=String(completions.human);},
  navigate(phase,direction){if(phase==='chooser'){if(direction<0)api.navigateTo('people');return true;}if(['plant','human','bacterial'].includes(phase)){if(direction<0)returnToCells();return true;}if(phase==='onion'&&direction<0){returnToCells();return true;}if(phase==='roles'&&direction>0)return true;return false;},
- guide(phase){return phase==='chooser'?'Choose Plant or E. coli to explore. Each visit keeps its own progress. The human cell journey is upcoming.':cells[phase]?`Select a structure label or a small marker on the illustration to read about it. Return to cells keeps what you have inspected.${phase==='plant'?' Visit the onion specimen to follow the plant learning route.':''}`:'';},
+ guide(phase){return phase==='chooser'?'Choose a cell to explore. Each of the three visits keeps its own progress.':cells[phase]?`Select a structure label or a small marker on the illustration to read about it. Return to cells keeps what you have inspected.${phase==='plant'?' Visit the onion specimen to follow the plant learning route.':''}`:'';},
  pause(value){if(value)chooserDepth.reset();for(const a of flight)value?a.pause():a.play();},reduceMotion(value){if(value){stopFlight();chooserDepth.reset();}}
  };
 }

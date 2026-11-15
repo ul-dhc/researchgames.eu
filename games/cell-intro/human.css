@@ -1,0 +1,58 @@
+/* The human journey shares the existing art, information labels and actions. */
+#human-tour{position:relative;z-index:3;width:calc(100% - 48px);max-width:1120px;margin:14px auto 24px}
+#human-tour[hidden],#human-field[hidden],#h-labels[hidden],#h-leaders[hidden],#h-anatomy[hidden],#h-nucleus-hit[hidden],#h-feedback[hidden]{display:none!important}
+#h-art-frame{position:relative;width:100%;height:420px;overflow:visible}
+#h-cell-art,#h-anatomy,#h-nucleus-hit{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform-origin:50% 50%;pointer-events:none}
+#h-neighbours{position:absolute;inset:0;overflow:visible;pointer-events:none}
+#h-neighbours img{position:absolute;left:calc(50% + var(--hx)*100%);top:calc(50% + var(--hy)*100%);width:55%;height:55%;object-fit:contain;transform:translate(-50%,-50%) rotate(var(--ha))}
+#h-anatomy{pointer-events:none}
+#h-region{fill:#c9a9e24d;stroke:none}
+#h-edge{fill:none;stroke:var(--action);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+#h-labels,#h-leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#h-labels .h-science-label{position:absolute;z-index:2;pointer-events:auto}
+#h-leaders path{fill:none;stroke:var(--progress-text);stroke-width:1;stroke-dasharray:3 5;opacity:var(--structure-line-rest,.30);transition:opacity .16s ease,stroke-width .16s ease}
+#h-leaders path[data-active=true]{opacity:var(--structure-line-active,.88);stroke-width:1.5}
+#h-nucleus-target{fill:transparent;stroke:transparent;stroke-width:24;pointer-events:all;cursor:pointer;outline:none!important;filter:none}
+#h-nucleus-target:is(:hover,:focus-visible){fill:#ead79818;stroke:transparent;outline:none!important}
+#h-feedback{position:absolute;bottom:-20px;left:8%;right:8%;text-align:center;color:var(--progress-text);font-size:14px;line-height:20px;margin:0;pointer-events:none}
+#human-field{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#human-field img{position:absolute;max-width:none;object-fit:fill}
+#scene:not([data-organism=human]) :is(#human-tour,#human-field,#human-action){display:none!important}
+#scene[data-organism=human] :is(.camera,.physical-camera,.nuclear-camera,#cell-game-model,#cell-context-window,#cell-surroundings){visibility:hidden!important}
+#scene[data-organism=human][data-human-early=true] :is(#world,#physical,#nuclear-world){visibility:hidden!important}
+/* The human field owns the context; the default role backdrop belongs to onion. */
+#scene[data-organism=human][data-phase=roles]::before{display:none}
+#scene[data-organism=human] #nucleus-model{isolation:isolate}
+#scene[data-organism=human][data-human-early=true] #story{position:relative}
+#scene[data-organism=human][data-human-early=true] #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}
+#scene[data-organism=human][data-human-early=true] #story-actions{display:flex!important;min-height:48px}
+#scene[data-organism=human] #sugar-substrate,#scene[data-organism=human] :is(#sucrose-info-label,#glucose-info-label,#fructose-info-label,#sugar-task-cue){display:none!important}
+#scene[data-organism=human]:is([data-phase=gene],[data-phase=message]) #select-gene{left:10%;width:80%}
+#scene[data-organism=human] #model-nucleus-info{display:none!important}
+#scene[data-organism=human][data-phase=roles] .role-info{color:var(--progress-text)}
+@media(max-width:650px){
+ #scene[data-organism=human][data-human-early=true]{display:flex;flex-direction:column;height:auto;min-height:100svh;padding:90px 0 100px;overflow:clip}
+ #scene[data-organism=human][data-human-early=true] #story{position:relative;inset:auto;order:1;flex:none;margin:0 24px}
+ #human-tour{order:2;flex:none;width:calc(100% - 24px);margin:12px auto 24px}
+ #h-art-frame{height:360px}
+ #h-labels .information-label{white-space:normal!important;line-height:16px!important;padding:0 6px!important}
+ #scene[data-organism=human][data-human-early=true] #object-info{position:relative;top:auto;left:auto;right:auto;order:3;flex:none;width:calc(100% - 48px);max-height:none;margin:0 24px;overflow:visible}
+ #scene[data-organism=human][data-human-early=true] #interaction-guide{order:4}
+}
+@media(prefers-reduced-motion:reduce){#h-leaders path{transition:none}}
+
+#scene[data-organism=human][data-phase=h-nucleus] #exploration-next{top:calc(var(--story-end) + var(--model-height) + 10px)}
+@media(max-width:650px){#scene[data-organism=human][data-phase=h-nucleus] #exploration-next{position:relative;inset:auto;transform:none;order:3;margin:0 24px 12px;min-height:48px}}
+
+#scene[data-organism=human] #physical{visibility:hidden!important}
+
+#scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}
+/* These two views keep one measured nucleus pose and one narration footprint. */
+#scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #story{top:88px;bottom:auto;max-width:920px;min-height:0}
+#scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #caption{font-size:clamp(32px,2.7vw,46px);line-height:1.12;margin:0 0 20px}
+#scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #detail{font-size:clamp(20px,1.3vw,24px);line-height:1.48;max-width:68ch;min-height:0}
+@media(max-width:650px){
+ #scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #story{position:relative;inset:auto;margin:0 24px;max-width:none;order:1;min-height:0}
+ #scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #caption{font-size:30px;line-height:1.14;margin-bottom:14px}
+ #scene[data-organism=human]:is([data-phase=h-nucleus],[data-phase=explore]) #detail{font-size:18px;line-height:1.48;max-width:none}
+}

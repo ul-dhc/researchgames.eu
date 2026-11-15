@@ -1,0 +1,325 @@
+{
+  "release": "cell-intro-20261115-r1",
+  "routes": [
+    "plant",
+    "human",
+    "bacterial"
+  ],
+  "researchDurationSeconds": 65.3,
+  "filmAudioStreams": 0,
+  "files": {
+    "CREDITS.md": {
+      "bytes": 4603,
+      "sha256": "eb63c63373d6904a009baf9f080a79a55290014a778ae43d81717e84f2cc9d2c"
+    },
+    "README.md": {
+      "bytes": 977,
+      "sha256": "6bbcf224d17ed414efc3161f097bc2ed95e7cde8df9f2dab9a51808448394654"
+    },
+    "ambient-mixer.js": {
+      "bytes": 9764,
+      "sha256": "e7d1602f87d93efe884fc6cb554dad84adcc1f2d0bcc3fe717c080a03cbd3e2f"
+    },
+    "assets/bacterial-folded-chain-card.webp": {
+      "bytes": 46506,
+      "sha256": "d2de096fa9040548529bc73439652081882fe42a3fd122701e297bb94855801b"
+    },
+    "assets/bacterial-folded-chain.webp": {
+      "bytes": 200822,
+      "sha256": "56be38ab7374606882ad06833c767f23fea6f63cb7af44f22d8e4d893c9c6ed6"
+    },
+    "assets/bacterial-messenger-rna-card.webp": {
+      "bytes": 40178,
+      "sha256": "2664a89ebce26a543671351d7aee89154bfd96ad455a2305a84f1a1ff13ad556"
+    },
+    "assets/bacterial-messenger-rna.webp": {
+      "bytes": 77566,
+      "sha256": "bbcbe99c3ffb76e0ee709beb8c0120e589139c2f855fd8d365ffc114f851f482"
+    },
+    "assets/bacterial-ribosome-card.webp": {
+      "bytes": 40000,
+      "sha256": "705d24d7cff22f33746465f9b1e7491bb544d4eaa24c5879e6680ebae026e006"
+    },
+    "assets/bacterial-ribosome.webp": {
+      "bytes": 173984,
+      "sha256": "7dd92d25aa0a8445566cd45842d23a825e53750a000df3299c882e8d1c715778"
+    },
+    "assets/cell-bacterial-alpha-1536.webp": {
+      "bytes": 157658,
+      "sha256": "bbf0dfe6086000cbad79701202dbb4bcb330a82bde87e893be1025ad2e6857c3"
+    },
+    "assets/cell-bacterial-alpha-480.webp": {
+      "bytes": 33868,
+      "sha256": "670d274900b6f8ca4202a8d677a9552ffc55c40852ff552fc9c5a411d2e0f068"
+    },
+    "assets/cell-bacterial-alpha-960.webp": {
+      "bytes": 91750,
+      "sha256": "c8ea847a09c46d6c97ae1b69d775003e825c26b3486865dc34bfd76786e596bb"
+    },
+    "assets/cell-human-alpha-1536.webp": {
+      "bytes": 187824,
+      "sha256": "216c2948c7aa6f49c45fa0b1f969e3015b05732fb8f1892cb7a24ceb0719a0ff"
+    },
+    "assets/cell-human-alpha-480.webp": {
+      "bytes": 34150,
+      "sha256": "e5ba7a7c3fc4dc95d300856f7cad0e1ff0b3d83dcff2c21598b9f5b5e25c177d"
+    },
+    "assets/cell-human-alpha-960.webp": {
+      "bytes": 103450,
+      "sha256": "f79eb6a1b119867c3c3362aef16ca12e4db210a971ee25f4b1fb9556d8509bdc"
+    },
+    "assets/dna-organic-card.webp": {
+      "bytes": 44570,
+      "sha256": "40c4fea71552b776995ec31e7dcca90598a52327f37e278719aa5535b024cf68"
+    },
+    "assets/dna-organic.webp": {
+      "bytes": 326556,
+      "sha256": "de308288ee8c51c0455eff256e1a601375104c48bf42b8472d6c431f7bcd9dbb"
+    },
+    "assets/elodea-leaf-opening.webp": {
+      "bytes": 170708,
+      "sha256": "43a25d368060299dd24cb22da1b7bbbd6ca2316c32fb6a1d4522a8a33efe3dca"
+    },
+    "assets/environment-aqueous-v1.webp": {
+      "bytes": 27166,
+      "sha256": "684973989cb4908f7a743ed9ae1387dd3ab34730d0f10759080c3ec2b0ede873"
+    },
+    "assets/environment-aqueous-v2.webp": {
+      "bytes": 14170,
+      "sha256": "545cf7eee715f8fa0f4f93dec65a3797fa9a36b17a4d0173dfd48f6496e37f56"
+    },
+    "assets/environment-internal-v1.webp": {
+      "bytes": 36822,
+      "sha256": "123c3542b3799b5f31eb57c6a8d251a85cf34885dcabcbf325bc1b201f985e7e"
+    },
+    "assets/folded-enzyme-card.webp": {
+      "bytes": 88366,
+      "sha256": "874d4650c854ae48b8d145e4499939dc48aa60776046d21c2c3db8aec02e2024"
+    },
+    "assets/folded-enzyme.webp": {
+      "bytes": 349860,
+      "sha256": "bb6094dbb7927b703d94d71a435092a7cf2ec98475e00d9fdd5e63b563f477ad"
+    },
+    "assets/forest-mushroom-photo-1920.webp": {
+      "bytes": 244566,
+      "sha256": "96afe6d80cb15e4bcbfface32fc872aa1a2d0c580b16705827f20620f96a6a4c"
+    },
+    "assets/forest-mushroom-photo-3456.webp": {
+      "bytes": 536258,
+      "sha256": "f4638aa0e431ecd6988020ad24c13e534f1b5467bb826769820043b5252b172e"
+    },
+    "assets/forest-mushroom-photo-960.webp": {
+      "bytes": 94440,
+      "sha256": "8a3787246f156586613051b10cf1e02620983a5b186789c7d3bf40c6183eddfa"
+    },
+    "assets/frog-on-hand.webp": {
+      "bytes": 61230,
+      "sha256": "1eb8209b9cd58d4ff0f51ef2a007a0af3689b3d007974515ecc227897ac90dc3"
+    },
+    "assets/human-nucleus-cutaway-v1.webp": {
+      "bytes": 444610,
+      "sha256": "ff328005db3b27f6f9d47960700ba9ec3e5a01d293e626452af9b1cf907e0a91"
+    },
+    "assets/messenger-rna-teal-card.webp": {
+      "bytes": 29608,
+      "sha256": "fe577442c9e123ee158fc6a666c6e7d6de40e402ddfaa44879fa2e5b8215706f"
+    },
+    "assets/messenger-rna-teal.webp": {
+      "bytes": 196042,
+      "sha256": "5e1e5d774b027e9e1ba3547eab05b056953eb899feaaf9ce524375ade2a9fd0f"
+    },
+    "assets/nucleus-empty-foundation.webp": {
+      "bytes": 146064,
+      "sha256": "49adb866c0705aacde598b45e0863e64274ea662bc7437625021adfe4a85f329"
+    },
+    "assets/onion-bulbs.webp": {
+      "bytes": 84160,
+      "sha256": "bababead0053fcda471882f8ec7f7bd27d2cd781e070dc8bfa13cd0b9a4ef24f"
+    },
+    "assets/onion-cell-clean.webp": {
+      "bytes": 316640,
+      "sha256": "8016bde0edcec505ab45cdb7764668aec245460d1a47bd3d47950461368c746d"
+    },
+    "assets/onion-cell-detailed-cutout-1536.webp": {
+      "bytes": 155390,
+      "sha256": "cf83eec1f61de93c7541986b7e28a101e7f4cbd75535d60c628c864991157dcf"
+    },
+    "assets/onion-cell-detailed-cutout-480.webp": {
+      "bytes": 26206,
+      "sha256": "5ce51bd824452ef883dab190ec7be36d4e9bee9eeb770b567aea34fe0bac09c0"
+    },
+    "assets/onion-cell-detailed-cutout-960.webp": {
+      "bytes": 78978,
+      "sha256": "c3faf91998f7ec369d606aad27449d356d7aa7bc3dca55a4a6b2039da9398f5d"
+    },
+    "assets/onion-field-mobile.webp": {
+      "bytes": 164558,
+      "sha256": "1cf7a8505eee2ffc6923d3082a8009f673695a7df9cc5f55c29c9b33e242f2d2"
+    },
+    "assets/onion-field.webp": {
+      "bytes": 96952,
+      "sha256": "3ed7dfd37e7dae730091afcd830011f8294bc61f5a5abcee7c8ed981575277c5"
+    },
+    "assets/onion-nuclear-interior.webp": {
+      "bytes": 186558,
+      "sha256": "b7724320b3558e02383b7e65bf9dcb19e269843521932c1f3c1e71cd1d9464ed"
+    },
+    "assets/onion-yellow-cutaway.webp": {
+      "bytes": 68822,
+      "sha256": "4c884450790d5b9127202301471913e6743b6015d3f3de5d373da8d52e394884"
+    },
+    "assets/organic-nucleus-warm.webp": {
+      "bytes": 492362,
+      "sha256": "1e46026bed203009deb316a0bceea3faa0bb0d226c3ce37600836feea480218f"
+    },
+    "assets/pixabay-sci-fi-ambient-589945.mp3": {
+      "bytes": 4929410,
+      "sha256": "b43359d9646b1a04d25b4dafa45197136e330066d4d18eb7376e818f580b9a57"
+    },
+    "assets/pixabay-tech-soft-246307.mp3": {
+      "bytes": 4458788,
+      "sha256": "9edc6ddfb0fbc77225c4804ac6f3ff90f031076dfc7a025a451993e3e9572b03"
+    },
+    "assets/researchgames-logo-white.svg": {
+      "bytes": 9455,
+      "sha256": "563f00b24922b947eb31f0c137fe08b18f0fe46239f380d29ec1abb289fe4825"
+    },
+    "assets/ribosome-contrast-card.webp": {
+      "bytes": 72268,
+      "sha256": "a6e5c62cbe1e1cfb0e2bc9d66c19d75fc55069f5e7b62bdbb4958a5679edf792"
+    },
+    "assets/ribosome-contrast.webp": {
+      "bytes": 271528,
+      "sha256": "ae1455b5148416a41067bc857573e444591adf7cc61285891ce176713aaa2b63"
+    },
+    "assets/teaser-human-epithelium.webp": {
+      "bytes": 145476,
+      "sha256": "12c55ab97f80fece1fa4ee3591cedf313eff919a2026f79fe69bfc02c0c79ec9"
+    },
+    "bacterial-ribosome-regions.js": {
+      "bytes": 18844,
+      "sha256": "304b3d0474e3e0ed2813aa86a85f53eaf8b778277a2fdcff6f2ffe66b91970ab"
+    },
+    "bacterial.css": {
+      "bytes": 15518,
+      "sha256": "c70fda8c27f6b20000e021365b3fcaf9fa8394d6fc85b55aed60d1f26b1a5262"
+    },
+    "bacterial.js": {
+      "bytes": 25100,
+      "sha256": "3b0e8efb157fcc20170982e3505dfb85f94b3e34b54829f89698ed3448b1ac29"
+    },
+    "branches.css": {
+      "bytes": 8237,
+      "sha256": "d2c05d48c1a5e54120f7c7929a225e403e297149b22e026305be3c9a09c35a74"
+    },
+    "branches.js": {
+      "bytes": 11219,
+      "sha256": "e78cd63972ef8899b5f6ccd58cb7a28003b404cc61d593fa0107e97f43cd9c73"
+    },
+    "buttons.css": {
+      "bytes": 12143,
+      "sha256": "10a12995493a17101f6668976a7d859ecd07dba948b835dd920724e964e28c40"
+    },
+    "cell-facts.js": {
+      "bytes": 1619,
+      "sha256": "650386543b3b3b18c29c56d284edf80212de7e6a232c6bd2e16ad6168e0d3d8c"
+    },
+    "chooser-art.js": {
+      "bytes": 3479,
+      "sha256": "791eadf936db129724485742052eb46239507ce3df5c0aaeff51b7e0ef813304"
+    },
+    "chooser-refinements.css": {
+      "bytes": 1829,
+      "sha256": "c6d485dd6e6a2a76d87136bbb7d4ad8e44fb1ac374daaf7e910f31274d26ae56"
+    },
+    "design.css": {
+      "bytes": 20134,
+      "sha256": "caad9fd5f85ef33fdcde85a40f50442d4a83c6e106ab6618736dc334a92c76b5"
+    },
+    "dna-identity.css": {
+      "bytes": 671,
+      "sha256": "c3506bdfcf41e03be4bc6a05bb73b3a9b9febf1950be639bc4acdf62c26b34e6"
+    },
+    "environment.css": {
+      "bytes": 7159,
+      "sha256": "c0db90aff67ad094cd339aa3767d7dd9ad531d0708553357baa595103ff71d14"
+    },
+    "environment.js": {
+      "bytes": 2119,
+      "sha256": "68a8f5cfd10d5098198ca8e09cbf8dd92c08919cb15aec87065f0954f02db1db"
+    },
+    "human.css": {
+      "bytes": 5734,
+      "sha256": "db76fcf51bed692c7c101a875a6fbea3495a266df6d74c6d4913d4471b3ebc43"
+    },
+    "human.js": {
+      "bytes": 23489,
+      "sha256": "dd6aa98600db8f9c5e770087cdb229d564c2256c736bca887e9852e07a5fd497"
+    },
+    "icons.js": {
+      "bytes": 1557,
+      "sha256": "991014133a08e8a99c73079d82479983704b25fbb4a8e1914534dd197443fa3a"
+    },
+    "index.html": {
+      "bytes": 47080,
+      "sha256": "02046b67ac971b98ce99ca8ac9e1b70a4c6761db6b98034275ceda65f9fc1945"
+    },
+    "information-labels.css": {
+      "bytes": 6166,
+      "sha256": "904df4beea10201ace6273f33836720caa818cc8c1c17a5fa0f6d85fab882d2f"
+    },
+    "interaction-refinements.css": {
+      "bytes": 8823,
+      "sha256": "5ea7833c7cf4601bc1327f1aae6ec197dd68e7e1e3c9e91e7bf634c63f2d36e2"
+    },
+    "journey-refinements.css": {
+      "bytes": 8763,
+      "sha256": "0031e54f576f3c39eac688968f741a1ca626648c180c9f5f87c94243c06fafb4"
+    },
+    "lucide-LICENSE.txt": {
+      "bytes": 3208,
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    "media/research-landscape.mp4": {
+      "bytes": 26902666,
+      "sha256": "6fefb29303ddc7f2ab7569b405105770e4de9da506ff9ac7d4679f02a41ca3d8"
+    },
+    "media/research-portrait.mp4": {
+      "bytes": 25495697,
+      "sha256": "af6492437c12d5abe80bd6ba487e23844196b1d14907832b50e14e395d6193f2"
+    },
+    "media/research-story.json": {
+      "bytes": 1647,
+      "sha256": "8bdfd7470a4b390e55caa2165e7712c25d8f38a9d451c68a46f953ecc6a4bef3"
+    },
+    "onion-model.css": {
+      "bytes": 2395,
+      "sha256": "655835c6fff8d0b670cc268edaa54f58a24e69c33b6f935c087cdd254a9cc4b0"
+    },
+    "onion-model.js": {
+      "bytes": 4461,
+      "sha256": "11a504310e86c4d2184d166c7e3ad9b64c204587b91eecfee274d78ea6847e0c"
+    },
+    "research-scene.css": {
+      "bytes": 2070,
+      "sha256": "62b09fa1e25d33fa737adac7d89073bd4ef5bdead65326e57c3a5aaa3f4858a3"
+    },
+    "scene.css": {
+      "bytes": 64821,
+      "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
+    },
+    "scene.js": {
+      "bytes": 189082,
+      "sha256": "cbc5b7652226c941742257046664a9b76969310c9260dc1b511a97689665fbf0"
+    },
+    "shared-ending.js": {
+      "bytes": 5096,
+      "sha256": "117ba540fa83ef666cd862490c36c5a8c939d3c3edc824e881a1ad6663702622"
+    },
+    "shared-icons.js": {
+      "bytes": 7308,
+      "sha256": "489ea8386fc427eb05f62617cdb55fdff4ca43733291ff59c9c64f2c52b02804"
+    }
+  },
+  "mediaFormat": "H.264 High level4.0, yuv420p,30fps,faststart; no audio stream"
+}

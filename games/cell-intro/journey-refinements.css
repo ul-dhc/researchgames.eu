@@ -1,10 +1,9 @@
 /* Focused local journey refinements; original image files and task mechanics are retained. */
-#scene[data-phase=onion]{height:100svh;min-height:568px;display:block;padding:0;background:#d9d6ca}
+#scene[data-phase=onion]{height:100svh;min-height:568px;display:block;padding:0;background:var(--scene-ground,#222a2e)}
 #scene[data-phase=onion] .physical-camera{position:absolute;inset:0;margin:0;width:100%;height:100%;border-radius:0}
 #scene[data-phase=onion] #specimen-view{inset:0;width:100%;height:100%;margin:0;border-radius:0;transform:none}
 #scene[data-phase=onion] #physical{object-fit:cover;object-position:50% 72%;mask-image:none;filter:none}
 #scene[data-phase=onion] #physical-backdrop{display:none}
-#scene[data-phase=onion] .shade{background:linear-gradient(0deg,#211e2070,transparent 24%)}
 #scene[data-phase=onion] #story{position:absolute;inset:15% 10% auto 36%;margin:0;max-width:620px;color:#332c35}
 #scene[data-phase=onion] :is(#caption,#detail){color:#332c35;text-shadow:none}
 #scene[data-phase=onion] #detail{max-width:30ch}
@@ -46,7 +45,6 @@
 @media(max-width:650px){
  #scene[data-phase=onion] #story{inset:95px 24px auto;margin:0;max-width:none}
  #scene[data-phase=onion] #physical{object-position:55% 100%}
- #scene[data-phase=onion] #story:before{content:'';position:absolute;inset:-25px -24px -28px;z-index:-1;background:radial-gradient(ellipse,#f0ecdfd9,transparent 75%);pointer-events:none}
  #scene[data-phase=invite]{min-height:max(100svh,760px)}
  #scene[data-phase=invite] #story{left:24px;right:24px;bottom:95px;max-width:none}
  #scene #role-selected-cue{min-height:88px}
@@ -81,6 +79,3 @@
 #scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback{position:relative;inset:auto;margin:12px 0 0;min-height:64px;width:100%;max-width:42ch;padding:0}
 #scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback[hidden]{display:block!important;visibility:hidden}
 @media(max-width:650px){#scene:is([data-phase=invite],[data-phase=approach]) #guess-feedback{min-height:76px}}
-/* Recognition uses only the continuous bottom vignette, never a local text card. */
-#scene:is([data-phase=invite],[data-phase=approach]) #story:before{display:none}
-#scene:is([data-phase=invite],[data-phase=approach]) .shade{background:linear-gradient(0deg,#211e20f2 0%,#211e20db 22%,#211e208c 42%,transparent 63%)}

@@ -10,13 +10,11 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 #guide-toggle{right:var(--gutter);background:#30292de6;border-color:#eee1cf80}
 #scene #interaction-guide,#scene #object-info{position:fixed;top:82px;right:var(--gutter);left:auto;width:320px;max-height:calc(100svh - 180px);overflow:auto;z-index:10}
 #scene #object-info p,#interaction-guide p{font-size:18px;line-height:1.5}
-#scene .shade{background:linear-gradient(0deg,#211e20ed,transparent 25%),linear-gradient(90deg,#211e2090,transparent 68%)}
 /* Opening and montage retain the shared full-bleed camera. */
 #scene[data-phase=idle] #story{top:auto;bottom:125px;max-width:760px}
 #scene[data-phase=idle] #caption{font-size:clamp(42px,4.4vw,68px)}
 #scene[data-phase=idle] #detail{font-size:clamp(20px,1.5vw,25px)}
 #scene[data-phase=teaser] #story{top:auto;bottom:125px}
-#scene:is([data-phase=idle],[data-phase=teaser]) .shade{background:linear-gradient(0deg,#211e20f2,#211e2066 38%,transparent 70%),linear-gradient(90deg,#211e2066,transparent 80%)}
 /* Documentary photos use a story column and a generous, safely framed image. */
 #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #story{top:clamp(135px,24svh,290px);right:59%;max-width:650px}
 #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #detail{max-width:31ch}
@@ -24,23 +22,18 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical{object-fit:cover;object-position:center;mask-image:none;filter:none}
 #scene[data-phase=people] #physical{object-position:50% 76%}
 #scene[data-phase=world] #physical{object-position:50% 58%}
-#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical-backdrop{filter:blur(35px) brightness(.68) saturate(.7);opacity:.65}
-#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .shade{background:linear-gradient(90deg,#211e20c4,transparent 60%),linear-gradient(0deg,#211e20b8,transparent 14%)}
+#scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical-backdrop{opacity:.65}
 /* The microscope and cutaways keep their subject unobstructed, with a compact lower story. */
 #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #story{top:auto;bottom:115px;max-width:840px}
 #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #caption{font-size:clamp(32px,2.7vw,46px);margin-bottom:14px}
-#scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) .shade{background:linear-gradient(0deg,#211e20f2,#211e20a6 18%,transparent 53%)}
 /* Models share measured story clearance, rather than unrelated fixed offsets. */
 #scene[data-model-visible=true] #caption,#scene[data-phase=roles] #caption{font-size:clamp(32px,2.7vw,46px)}
 #scene[data-model-visible=true] #detail{font-size:clamp(20px,1.3vw,24px);max-width:68ch}
 #scene[data-model-visible=true] #nucleus-model{top:var(--story-end);width:min(1420px,calc(100% - 2 * var(--gutter)));height:var(--model-height);max-height:none}
-#scene[data-model-visible=true] .shade{background:linear-gradient(180deg,#211e20b3,transparent 40%,#211e2070)}
-#scene[data-learning=true] #story::before{display:none}
 #scene[data-learning=true] #story{max-width:1100px}
 #scene[data-learning=true] #dna-learning{bottom:100px;left:var(--gutter);right:var(--gutter);min-height:48px}
 #scene[data-learning=true] #learning-instruction{font-size:18px}
 #scene[data-learning=true] #learning-info{font-size:15px}
-#scene[data-learning=true] #dna-learning::before{display:none}
 #scene[data-phase=explore] #exploration-next{top:calc(var(--story-end) + var(--model-height) + 10px)}
 #scene[data-phase=explore] #exploration-secondary{bottom:100px;left:var(--gutter)}
 #scene[data-phase=assemble]:not([data-assembly-complete=true]) #nucleus-model{left:var(--gutter);transform:none;width:calc(100% - 2 * var(--gutter) - 440px)}
@@ -64,7 +57,7 @@ nav button{background:#211e20b3;border-color:#ffffff65}
  #scene #caption,#scene:not([data-phase=idle]) #caption{font-size:30px;line-height:1.14;margin-bottom:14px}
  #scene #detail,#scene[data-model-visible=true] #detail,#scene[data-phase=roles] #detail{font-size:18px;line-height:1.48;max-width:none}
  #scene #story,#scene:not([data-phase=idle]) #story{max-width:none;min-height:0}
- #scene nav,#scene[data-model-visible=true] nav,#scene[data-learning=true] nav{position:fixed;bottom:12px;left:12px;right:12px;z-index:9;gap:7px;padding:6px;border:1px solid #a58a9d55;border-radius:32px;background:#282329ed;backdrop-filter:blur(12px)}
+ #scene nav,#scene[data-model-visible=true] nav,#scene[data-learning=true] nav{position:fixed;bottom:12px;left:12px;right:12px;z-index:9;gap:7px;padding:6px;border:1px solid #a58a9d55;border-radius:32px}
  #scene #interaction-guide,#scene #object-info{position:fixed;top:78px;left:16px;right:16px;width:auto;margin:0;max-height:calc(100svh - 165px);z-index:11}
  #scene[data-phase=idle] #story{top:auto;bottom:105px}
  #scene[data-phase=idle] #caption{font-size:38px}
@@ -75,7 +68,6 @@ nav button{background:#211e20b3;border-color:#ffffff65}
  #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .physical-camera{position:relative;inset:auto;order:2;margin:26px 20px 0;height:clamp(300px,50svh,480px);flex:none;border-radius:18px}
  #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #specimen-view{inset:0;width:100%;height:100%;border-radius:18px}
  #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) #physical-backdrop{display:none}
- #scene:is([data-phase=world],[data-phase=people],[data-phase=flowers],[data-phase=onion]) .shade{background:linear-gradient(#211e201a,#211e2000)}
  #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]) #story{top:auto;bottom:105px;max-width:none}
  #scene[data-model-visible=true],#scene[data-learning=true],#scene[data-phase=explore],#scene[data-phase=assemble],#scene[data-phase=roles]{display:flex;flex-direction:column;padding:90px 0 110px;height:auto;min-height:100svh;overflow:clip}
  #scene[data-model-visible=true] #story,#scene[data-phase=roles] #story{position:relative;inset:auto;order:1;margin:0 24px;display:block;min-height:0}
@@ -111,13 +103,9 @@ nav button{background:#211e20b3;border-color:#ffffff65}
  #scene[data-phase=idle] #story{bottom:110px}
  #scene:is([data-phase=scales],[data-phase=skin],[data-phase=field],[data-phase=establish],[data-phase=invite],[data-phase=approach],[data-phase=boundary],[data-phase=inside],[data-phase=nucleolus]){min-height:760px}
 }
-/* Follow-up from the rendered phone and short-screen pass. */
-#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #story::before{display:block;inset:-28px auto -32px -40px;width:min(calc(100% + 80px),calc(68ch + 80px));font-size:clamp(20px,1.3vw,24px);background:radial-gradient(ellipse closest-side at 45% 45%,#211e2099 0%,#211e2066 54%,transparent 100%);filter:blur(20px);z-index:-1}
-#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{z-index:3;background:linear-gradient(180deg,#211e2080,transparent 38%,transparent 82%,#211e2099)}
 @media(max-width:650px){
  #scene nav,#scene[data-model-visible=true] nav,#scene[data-learning=true] nav{position:absolute;bottom:16px}
  #scene[data-phase=protein] nav,#scene[data-phase=assemble] nav,#scene[data-phase=roles] nav{position:absolute}
- #scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{z-index:3;background:linear-gradient(180deg,#211e2070,transparent 38%,transparent 86%,#211e2099)}
 }
 @media(max-width:650px) and (max-height:650px){
  #scene[data-phase=idle]{min-height:100svh}
@@ -134,7 +122,6 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 /* Keep help in the viewport even when a flow layout or focus has scrolled. */
 #scene:is([data-model-visible=true],[data-phase=roles]) #object-info,#scene:is([data-model-visible=true],[data-phase=roles]) #interaction-guide{position:fixed;top:82px;right:var(--gutter);left:auto;width:320px;margin:0;max-height:calc(100svh - 180px);overflow:auto;z-index:11}
 #scene[data-phase=roles][data-role-complete=true]{padding-top:var(--story-end)}
-#scene[data-model-visible=true] .shade{background:linear-gradient(180deg,#211e20e0,transparent 40%,#211e2070)}
 @media(max-width:650px){
  #scene:is([data-model-visible=true],[data-phase=roles]) #object-info,#scene:is([data-model-visible=true],[data-phase=roles]) #interaction-guide{top:78px;left:16px;right:16px;width:auto;max-height:calc(100svh - 165px)}
  #scene[data-phase=roles][data-role-complete=true]{padding-top:90px}
@@ -172,7 +159,6 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 #scene[data-phase=protein] #protein-work-controls{min-height:48px;margin-top:10px}
 @media(max-width:650px){
  #scene[data-phase=protein] #caption{min-height:2.28em}
- #scene[data-phase=protein] #story::before{font-size:18px}
 }
 @media(max-width:650px){#scene[data-phase=protein] #protein-work-controls{min-height:108px}}
 
@@ -238,9 +224,7 @@ nav button{background:#211e20b3;border-color:#ffffff65}
 @media(min-width:651px){#scene[data-phase=world] #story{right:70%}}
 #scene[data-phase=world] #specimen-view{inset:auto 2% auto 32%;top:50%;height:auto;aspect-ratio:1.95;transform:translateY(-50%)}
 #scene[data-phase=world] #physical{object-fit:cover;object-position:50% 50%;filter:brightness(.98) contrast(1.02) saturate(.9)}
-#scene[data-phase=world] .shade{background:linear-gradient(90deg,#211e20b3,transparent 45%)}
 @media(max-width:650px){
  #scene[data-phase=world] .physical-camera{height:auto;aspect-ratio:1.95}
  #scene[data-phase=world] #specimen-view{inset:0;width:100%;height:100%;transform:none}
- #scene[data-phase=world] .shade{background:none}
 }

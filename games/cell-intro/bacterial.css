@@ -15,10 +15,10 @@
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue{min-height:48px;margin:0;max-width:calc(100% - 330px)}
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue>span{padding:6px 0}
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-controls{position:absolute;right:0;top:0;margin:0;min-height:0}
-
-
-
-
+ 
+ 
+ 
+ 
 }
 @media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #nucleus-model{height:440px!important}#b-anatomy-cue{height:auto;aspect-ratio:1.5;top:50%;translate:0 -50%}}
 @media(max-width:650px){
@@ -31,7 +31,6 @@
  #scene[data-organism=bacterial][data-phase=protein] #nucleus-model{height:420px!important;margin-top:12px}
 }
 @media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #detail{min-height:156px}}
-@media(min-width:651px){}
 #scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}
 @media(min-width:651px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #caption{font-size:34px;line-height:1.12}}
 @media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #caption{font-size:30px;line-height:1.14}}
@@ -68,13 +67,11 @@
 @media(min-width:651px){#scene[data-organism=bacterial][data-bacterial-early=true]{overflow:clip}}
 /* A continuous bacterial interior follows the molecular journey behind all UI. */
 #scene[data-organism=bacterial][data-bacterial-molecular=true]{background:var(--bacterial-interior-ground,#34454f)}
-#scene[data-organism=bacterial][data-bacterial-molecular=true] .shade{background:none!important}
-#scene[data-organism=bacterial][data-bacterial-molecular=true] #story::before{display:none!important}
 #scene[data-organism=bacterial][data-phase=roles]::before{display:none}
 #bacterial-field{position:absolute;inset:0;z-index:0;mask-image:none!important;overflow:hidden;width:100%;height:100%}
 #scene[data-organism=bacterial][data-bacterial-molecular=true] :is(#caption,#detail){text-shadow:0 1px 5px #243b4bb3}
-#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{background:#cedde016;border-color:#dce8eb40;backdrop-filter:blur(6px)}
-#scene[data-organism=bacterial][data-bacterial-molecular=true] nav button{background:#2b455052;border-color:#dce8eb77}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{border-color:#dce8eb40}
+#scene[data-organism=bacterial][data-bacterial-molecular=true] nav button{border-color:#dce8eb77}
 #scene[data-organism=bacterial][data-bacterial-molecular=true] #return-cells{background:#31495352}
 #scene[data-organism=bacterial]:not(:is([data-phase=dna-focus],[data-phase=gene],[data-phase=message],[data-phase=export],[data-phase=protein],[data-phase=roles])) #bacterial-field{display:none!important}
 #scene[data-organism=bacterial] #amino-1>span{background:radial-gradient(circle at 30% 22%,#e2ebed,#8cabbc 65%,#456276)}
@@ -98,7 +95,7 @@
 #scene:has(#folded-protein:is(:hover,:focus-visible),#b-enzyme-units:is(:hover,:focus-visible)) #protein-label,
 #scene #protein-label:is(:hover,:focus-visible){background:#e3eeee;color:#214c50;border-color:#9dbdbd}
 #scene #ribosome-target:is(:hover,:focus-visible){filter:none}
-@media(min-width:651px){#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{background:transparent;border:0;backdrop-filter:none}}
+@media(min-width:651px){#scene[data-organism=bacterial][data-bacterial-molecular=true] nav{border:0}}
 #scene[data-organism=bacterial][data-learning-info=messenger-rna] #rna-message>span,
 #scene[data-organism=bacterial][data-learning-info=ribosome] #ribosome-info-label{background:#d8e6e9;color:#244b5b}
 #scene:has(#folded-protein:is(:hover,:focus-visible),#b-enzyme-units:is(:hover,:focus-visible),#protein-label:is(:hover,:focus-visible)) :is(#folded-protein,#b-enzyme-units image){filter:brightness(1.10) contrast(1.035)}
@@ -111,5 +108,18 @@
 #b-dna-hit-art{position:absolute;inset:0;width:100%;height:100%;transform-origin:50% 45%;pointer-events:none;overflow:visible}
 #scene #b-dna-target{pointer-events:all;cursor:pointer;fill:transparent;stroke:transparent;stroke-width:44;stroke-linejoin:round;outline:none!important;box-shadow:none!important}
 #scene #b-dna-target:is(:hover,:focus-visible){fill:#ead79818;stroke:transparent;outline:none!important;box-shadow:none!important;filter:none}
+#b-label-leaders [data-b-leader]{fill:none;stroke:var(--progress-text);stroke-width:1;stroke-dasharray:3 5;stroke-linecap:round;opacity:.34;transition:opacity .16s ease,stroke-width .16s ease}
+#b-label-leaders [data-b-leader][data-active=true]{opacity:.95;stroke-width:1.5}
+#scene[data-organism=bacterial] #amino-pool .amino-acid[data-consumed=true]{opacity:var(--amino-consume-opacity,0)!important}
+@media(max-width:650px){#scene #b-fact-labels .information-label{white-space:normal!important;line-height:16px!important;padding:0 6px!important}}
 #b-dna-feedback{position:absolute;bottom:0;left:8%;right:8%;text-align:center;color:#f3e7c6;font-size:14px;line-height:20px;margin:0;pointer-events:none}
 @media(max-width:650px){#scene[data-organism=bacterial][data-bacterial-early=true] #b-art-frame{height:360px}}
+/* Finished chains use a narrow resting column beside the phone workspace. */
+@media(max-width:650px){#scene[data-organism=bacterial] #protein-label[data-parked=true]{max-width:72px!important;white-space:normal!important;padding:0 6px!important}}
+
+/* Hold one narration/control footprint through every C10 repeat state. */
+#scene[data-organism=bacterial][data-bacterial-chain-workspace=true] #process-copy-reserve{display:grid!important}
+@media(max-width:650px){#scene[data-organism=bacterial][data-bacterial-chain-workspace=true] #protein-work-controls{min-height:48px!important;margin:10px 0 0!important}}
+
+/* Stable chain identity is independent of transient reading activity. */
+#b-chain-progress{position:absolute;margin:0;padding:0;border:0;background:transparent;box-shadow:none;text-shadow:none;color:var(--progress-text);font-size:13px;line-height:20px;white-space:nowrap;pointer-events:none}

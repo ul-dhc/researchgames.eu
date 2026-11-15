@@ -56,7 +56,7 @@
 #navigation-feedback{font-size:15px;line-height:1.4;color:var(--progress-text);max-width:42ch;margin:12px 0 0}
 #review-context{font-size:12px;line-height:1.4;color:#e0d4bc;margin:0 0 10px}
 
-#scene[data-organism=plant]:is([data-phase=gene],[data-phase=message]) #select-gene{left:10%;width:80%}
+#scene:is([data-organism=plant],[data-organism=bacterial]):is([data-phase=gene],[data-phase=message]) #select-gene{left:10%;width:80%}
 
 #amino-pool button[data-next=false]{opacity:.45!important}
 
@@ -88,3 +88,6 @@
 #scene :is(#protein-workbar,#protein-work-controls,#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback){background:transparent!important;border:0!important;box-shadow:none!important}
 #scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback){padding:0!important}
 #scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback)::before,#scene :is(#protein-work-cue,#protein-work-status,#protein-work-cue>span,#ribosome-reading-status,#learning-work-cue,#learning-instruction,#learning-feedback)::after{background:transparent!important;border:0!important;box-shadow:none!important}
+
+/* Completion feedback keeps the shared informational yellow, with no panel. */
+#scene[data-phase=roles][data-role-complete=true] #role-feedback{color:var(--progress-text);background:transparent;border:0;box-shadow:none}

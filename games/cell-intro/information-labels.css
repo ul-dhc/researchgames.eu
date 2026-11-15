@@ -50,3 +50,26 @@
 #scene:not([data-learning-info=enzyme-protein]):has(#folded-protein:is(:hover,:focus-visible),#b-enzyme-units:is(:hover,:focus-visible)) #protein-label{--label-paper:var(--info-paper-lit);--label-edge:var(--info-edge-lit)}
 #scene #rna-message:focus-visible{outline:none;box-shadow:none}
 @media(prefers-reduced-motion:reduce){#scene .information-label{transition:none!important}}
+
+/* Shared dashed leaders: one opacity at the path, independent of SVG scaling. */
+:root{--structure-line-ink:var(--progress-text);--structure-line-rest:.72;--structure-line-active:1;--structure-line-width:1.5;--structure-line-active-width:2}
+#scene :is(.structure-leader,#h-leaders path,#b-label-leaders [data-b-leader],#onion-cell-leaders path){
+ fill:none;stroke:var(--structure-line-ink);stroke-width:var(--structure-line-width);stroke-opacity:1;
+ stroke-dasharray:3 5;stroke-linecap:round;opacity:var(--structure-line-rest);vector-effect:non-scaling-stroke;pointer-events:none;
+ transition:opacity .16s ease,stroke-width .16s ease,stroke .16s ease;
+}
+#scene :is(.structure-leader,#h-leaders path,#b-label-leaders [data-b-leader],#onion-cell-leaders path)[data-active=true],
+#scene #active-part-link-line,
+#scene #cell-game-model[data-structure-preview=cytoplasm]~#onion-cell-leaders #onion-cytoplasm-leader,
+#scene #cell-game-model[data-structure-preview=vacuole]~#onion-cell-leaders #onion-vacuole-leader{
+ fill:none;stroke:var(--interaction-accent);stroke-opacity:1;stroke-width:var(--structure-line-active-width);
+ stroke-dasharray:3 5;stroke-linecap:round;opacity:var(--structure-line-active);vector-effect:non-scaling-stroke;
+}
+#scene :is(#active-part-link-under,#active-part-link-point){display:none}
+@media(prefers-reduced-motion:reduce){#scene :is(.structure-leader,#h-leaders path,#b-label-leaders [data-b-leader],#onion-cell-leaders path){transition:none}}
+/* The existing anatomy cue follows the same active token as its leader. */
+#scene :is(#h-region,#b-active-region){fill:var(--interaction-tint);stroke:none}
+#scene #b-active-region[data-kind=edge]{fill:none;stroke:var(--interaction-accent)}
+#scene :is(#h-edge,#b-active-edge){stroke:var(--interaction-accent)}
+#scene[data-organism=plant] #cell-game-model[data-structure-preview=vacuole] #vacuole-shape,
+#scene[data-organism=plant] #cell-game-model[data-structure-preview=cytoplasm] #cell-cytoplasm-region{fill:var(--interaction-tint);stroke:var(--interaction-accent)}

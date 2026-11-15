@@ -1,13 +1,9 @@
 # A world inside a cell
 
-An interactive introduction to cells and the journey from DNA instructions through messenger RNA to working proteins.
+Interactive introduction with independently selectable plant, human cheek-cell and E.coli journeys. Each route retains its own progress and ends with persistent matching pairs and optional access to a shared research scene.
 
-The shared introduction leads to two playable journeys: an onion bulb epidermal cell and E. coli. The human cheek cell journey is Upcoming. Each playable journey keeps its own visit progress and ends with a matching activity.
+The full-screen research scene uses the same navigation, pause, replay and settings controls as the exploration. It retains the selected music track, mute and volume. Its final choices return to the chooser, return to the introduction while keeping earned progress, or open the existing ResearchGames.eu games catalogue.
 
-The opening Go to scene menu names the shared scenes Intro 1-5, onion scenes A1-A19 and bacterial scenes C1-C12. Guide and named structures provide help. Settings include narration speed, music selection and volume. Keyboard, drag/select, pause and reduced-motion interactions are supported.
+No build is required; serve this directory through an HTTP server. The production path is https://researchgames.eu/games/cell-intro/ . Videos support native HTTP byte-range delivery, use H.264 with fast-start metadata, and carry no audio stream; the existing soundtrack mixer supplies music exactly once.
 
-Serve this directory through a web server; no build or installation is required.
-
-https://researchgames.eu/games/cell-intro/
-
-See [CREDITS.md](CREDITS.md) for artwork, music and icon information.
+See [CREDITS.md](CREDITS.md) for source attribution, licences, adaptations and scientific context.

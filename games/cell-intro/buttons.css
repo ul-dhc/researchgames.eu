@@ -44,6 +44,7 @@
 #scene :is(nav button,.icon-button){min-width:44px;min-height:44px;padding:10px;border:0;background:transparent;color:var(--paper);box-shadow:none}
 #scene :is(nav button,.icon-button) .lucide{width:19px;height:19px;stroke-width:1.8}
 #scene :is(nav button,.icon-button):hover:not(:disabled){background:#f3ecdf12}
+#scene nav button:disabled{opacity:.30;cursor:default}
 #scene #guide-toggle{min-width:44px;min-height:44px;padding:10px;gap:7px;border:0;border-radius:8px;background:transparent;color:var(--paper)}
 #scene #guide-toggle svg{color:var(--progress-text);width:18px;height:18px}
 #scene #guide-toggle:hover{background:#f3ecdf12}
@@ -61,7 +62,7 @@
 #scene .activity-choice[data-feedback=retry]{border-color:var(--progress-text);background:#ead79812;box-shadow:none}
 #scene .activity-choice[data-feedback=retry] .choice-feedback-mark{background:var(--progress-text);color:var(--ink)}
 #scene .role-card[data-matched=true]{border-color:var(--action);background:var(--action-soft)}
-#scene :is(.role-confirm,.role-connection),#scene[data-role-complete=true] #caption,#scene #role-feedback[data-success=true]{color:var(--paper)!important;text-shadow:none;font-weight:500}
+#scene :is(.role-confirm,.role-connection),#scene[data-role-complete=true] #caption{color:var(--paper)!important;text-shadow:none;font-weight:500}
 #scene .role-confirm svg{color:var(--action)}
 #scene .role-job{border-width:1px;box-shadow:none}
 #scene .role-job:hover:not(:disabled){background:#f3ecdf12;border-color:var(--action)}
@@ -83,3 +84,42 @@
 #scene #scene-menu button:hover,#scene #scene-menu button[aria-current=true]{background:var(--action-soft)}
 @media(max-width:380px){#scene .activity-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){#scene button,#scene summary,#settings button{transition:none}}
+
+/* Matching pairs keep the same grid and reserved card content throughout a round. */
+#scene #role-match #role-parts{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:stretch}
+#scene #role-match .role-card{display:flex;flex-direction:column;padding:8px 10px;border:1px solid var(--info-edge)}
+#scene #role-match .role-illustration{position:static;min-height:150px;justify-content:center}
+#scene #role-match .role-paired{display:block;flex:1;visibility:hidden}
+#scene #role-match .role-card[data-matched=true] .role-paired{visibility:visible}
+#scene #role-match .role-confirm{display:flex;margin-top:5px;visibility:hidden}
+#scene #role-match .role-card[data-matched=true] .role-confirm{visibility:visible}
+#scene #role-match .role-connection{display:none}
+#scene #role-match .role-card[data-matched=true]{border-color:var(--action);background:var(--action-soft)}
+#scene #role-match .role-job{position:relative;padding-right:40px;visibility:visible}
+#scene #role-match .role-job[data-matched=true]{opacity:1;border-color:var(--action);background:var(--action-soft)}
+#scene #role-match .role-job:after{content:'✓';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--progress-text);visibility:hidden}
+#scene #role-match .role-job[data-matched=true]:after{visibility:visible}
+#scene #role-match .role-job[data-wrong=true]:after{content:'Try another job';position:static;transform:none;visibility:visible}
+#scene[data-phase=roles][data-role-complete=true] #caption{font-size:clamp(32px,2.7vw,46px)}
+@media(max-width:650px){
+ #scene #role-match #role-parts{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+ #scene #role-match .role-card{padding:6px;min-height:0}
+ #scene #role-match .role-illustration{min-height:115px}
+ #scene #role-match .role-illustration img{height:90px}
+ #scene #role-match #b-enzyme-card{height:90px;width:100%}
+ #scene[data-phase=roles][data-role-complete=true] #caption{font-size:28px}
+}
+#scene #role-match[data-complete=true] .role-confirm{margin-top:5px}
+#scene #role-match #role-feedback{min-height:4.2em}
+#scene #role-match .role-illustration{width:100%;left:auto;top:auto}
+#scene #role-match .role-paired{font-size:14px;line-height:1.4}
+#scene #role-match .role-info{margin:3px auto 0}
+#scene[data-phase=roles] #story{min-height:180px}
+@media(max-width:650px){
+ #scene[data-phase=roles][data-role-complete=true]{padding-top:90px}
+ #scene[data-phase=roles] #story{min-height:220px}
+ #scene #role-match .role-paired{font-size:12px;line-height:1.35}
+}
+@media(max-width:650px){#scene #role-match:is([data-complete=true],[data-complete=false]) #b-enzyme-card{height:90px;width:100%}}
+#scene #role-match .role-illustration{font-size:20px}
+@media(max-width:650px){#scene #role-match .role-illustration{font-size:16px}}

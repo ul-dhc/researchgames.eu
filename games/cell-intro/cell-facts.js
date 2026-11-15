@@ -9,3 +9,6 @@ export const cellFacts={
 
 export const CHROMATIN_DEFINITION=DNA_INSTRUCTIONS+' Inside the nucleus, long DNA molecules are folded and packed together with proteins. This combination of DNA and proteins is called chromatin.';
 export const NUCLEOLUS_FUNCTION='The darker region is the nucleolus. Here, the cell makes ribosomal RNA and assembles the parts of ribosomes.';
+
+export const MRNA_INTRO='The cell copies these instructions into messenger RNA (mRNA).';
+export const MRNA_DEFINITION='Messenger RNA (mRNA) carries a temporary copy of a gene’s instructions from DNA to a ribosome, which uses them to build a protein. RNA stands for ribonucleic acid. Other kinds of RNA have other jobs.';

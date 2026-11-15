@@ -1,0 +1,23 @@
+/* Approved detailed onion artwork; area overlays do not alter its geometry. */
+#scene[data-organism=plant][data-phase=model] :is(.camera,.physical-camera,.nuclear-camera){visibility:hidden!important}
+#scene[data-organism=plant] #onion-model-overlays path{fill:transparent;stroke:none;pointer-events:none;opacity:0}
+#scene[data-organism=plant][data-phase=model] #vacuole-shape{pointer-events:all;cursor:pointer}
+#scene[data-organism=plant] #cell-game-model[data-structure-preview=vacuole] #vacuole-shape{fill:#ead79830;stroke:#ead798b3;stroke-width:3;opacity:1}
+#scene[data-organism=plant] #cell-game-model[data-structure-preview=cytoplasm] #cell-cytoplasm-region{fill:#ead79844;stroke:#ead798b3;stroke-width:3;opacity:1}
+#scene[data-organism=plant] #cell-game-model[data-structure-preview=nucleus] #onion-nucleus-region,#scene[data-organism=plant][data-phase=model][data-nucleus-selected=true] #onion-nucleus-region{fill:#ead79826;stroke:#ead798b3;stroke-width:3;opacity:1}
+#onion-cell-leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#onion-cell-leaders path{fill:none;stroke:var(--progress-text);stroke-width:1;stroke-dasharray:3 5;opacity:.3}
+#onion-cell-leaders path[data-active=true]{opacity:var(--structure-line-active,.88)}
+#scene[data-organism=plant][data-phase=model] #cytoplasm-intro::after{display:none}
+#scene[data-organism=plant][data-phase=model] #model-nucleus-info{display:none!important}
+#scene[data-organism=plant][data-phase=model] #select-model-nucleus{border-radius:0;inset:0}
+#scene[data-organism=plant][data-phase=model] #select-model-nucleus>span{top:calc(100% + 10px)}
+#scene[data-organism=plant][data-phase=model] #nucleus-model{isolation:isolate}
+#scene[data-organism=plant][data-phase=model] #place-nucleus{border-radius:18px;border:1px dashed #d9c9a866;background:#ead79808}
+#scene:not([data-organism=plant]) #onion-cell-leaders{display:none!important}
+
+#cell-game-model[data-structure-preview=cytoplasm]~#onion-cell-leaders #onion-cytoplasm-leader,#cell-game-model[data-structure-preview=vacuole]~#onion-cell-leaders #onion-vacuole-leader{opacity:var(--structure-line-active,.88)}
+
+#scene[data-organism=plant][data-phase=model] #select-model-nucleus[data-cue-active=true]>span{background:var(--action-hover);color:var(--paper)}
+
+#scene[data-organism=plant]:is([data-phase=model],[data-phase=explore]) #nucleus-cutaway{transition:none}

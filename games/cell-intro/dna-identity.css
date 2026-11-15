@@ -1,0 +1,8 @@
+/* Three illustrative examples of the same DNA structure, reused within each route. */
+#scene{--dna-turn:0deg;--dna-accent:none}
+#scene[data-organism=human]{--dna-turn:3deg;--dna-accent:hue-rotate(-28deg)}
+#scene[data-organism=bacterial]{--dna-turn:-3deg;--dna-accent:hue-rotate(145deg) saturate(.88)}
+#dna-specimen{position:absolute;inset:0;transform:rotate(var(--dna-turn));transform-origin:50% 50%;pointer-events:none}
+#scene #dna-specimen #closer-dna{filter:var(--dna-accent)}
+#scene #dna-specimen #select-gene>span{transform:translateX(-50%) rotate(calc(-1 * var(--dna-turn)))}
+#scene #role-select-dna>img{transform:rotate(var(--dna-turn));filter:var(--dna-accent)}

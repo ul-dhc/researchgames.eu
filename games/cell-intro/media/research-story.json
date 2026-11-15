@@ -1,0 +1,44 @@
+[
+  {
+    "start": 0.6,
+    "end": 7.3,
+    "text": "You've explored a cell.\nHow do researchers find out what happens inside it?",
+    "portraitText": "You've explored a cell.\nHow do researchers find out\nwhat happens inside it?"
+  },
+  {
+    "start": 7.8,
+    "end": 15.8,
+    "text": "A microscope lets researchers\nwatch living cells.",
+    "portraitText": "A microscope lets\nresearchers watch\nliving cells."
+  },
+  {
+    "start": 16.9,
+    "end": 23.3,
+    "text": "They can mark a structure with light\nand follow how it changes.",
+    "portraitText": "They can mark a structure\nwith light and follow\nhow it changes."
+  },
+  {
+    "start": 23.8,
+    "end": 30.1,
+    "text": "This is one way cell biologists\nstudy cells.",
+    "portraitText": "This is one way\ncell biologists study cells."
+  },
+  {
+    "start": 31.1,
+    "end": 39.9,
+    "text": "To investigate which genes are active,\nmolecular biologists can examine RNA.",
+    "portraitText": "To investigate which genes\nare active, molecular\nbiologists can examine RNA."
+  },
+  {
+    "start": 44.15,
+    "end": 51.95,
+    "text": "Biochemists can test for particular proteins.\nAn antibody test can reveal an immune response.",
+    "portraitText": "Biochemists can test for\nparticular proteins.\nAn antibody test can reveal\nan immune response."
+  },
+  {
+    "start": 52.45,
+    "end": 61.9,
+    "text": "Together, these approaches help researchers\nexplore many questions. For example,\nhow do cells change during illness?",
+    "portraitText": "Together, these approaches\nhelp researchers explore\nmany questions.\nFor example, how do cells\nchange during illness?"
+  }
+]

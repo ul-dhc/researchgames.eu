@@ -1,0 +1,69 @@
+/* One neutral foundation and local readability scrims. Artwork keeps its own colour. */
+:root{--scene-ground:#222a2e;--scene-haze:rgb(117 135 143 / .09);--scrim-rgb:19 27 32;--story-scrim-alpha:.64;--context-dim:.38;--chromatin-dim:.50;--process-context-light:.48;--reading-shadow:0 1px 3px rgb(12 20 25 / .42)}
+html,body,#scene{background-color:var(--scene-ground)}
+#scene:not([data-phase=idle]){background-image:radial-gradient(ellipse at 48% 60%,var(--scene-haze),transparent 85%)}
+#scene[data-phase=chooser],.specimen-handoff{background-color:var(--scene-ground)}
+#scene .shade{background:none;z-index:1}
+#scene:is([data-phase=idle],[data-phase=teaser]) .shade{background:radial-gradient(ellipse 85% 58% at 25% 85%,rgb(var(--scrim-rgb) / .66),rgb(var(--scrim-rgb) / .22) 54%,transparent 100%)}
+#scene #story::before{content:'';position:absolute;display:block;inset:-42px -48px;pointer-events:none;z-index:-1;width:auto;height:auto;background:radial-gradient(ellipse closest-side at 42% 50%,rgb(var(--scrim-rgb) / var(--story-scrim-alpha)),rgb(var(--scrim-rgb) / .26) 65%,transparent 100%);filter:blur(14px)}
+#scene:is([data-phase=idle],[data-phase=teaser]) #story::before{display:none}
+/* The bright onion photograph intentionally uses dark lettering. */
+#scene[data-phase=onion] #story::before{background:radial-gradient(ellipse closest-side at 45% 50%,rgb(248 243 229 / .52),transparent 100%)}
+#scene #dna-learning::before{display:none}
+#scene :is(#learning-instruction,#learning-feedback,#protein-work-cue,#ribosome-reading-status){background:transparent;text-shadow:var(--reading-shadow)}
+#scene header,#scene nav{background:none!important;box-shadow:none;border-color:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#scene nav .icon-button{background:radial-gradient(ellipse closest-side,rgb(var(--scrim-rgb) / .20),transparent 100%)}
+#scene nav .icon-button svg{filter:drop-shadow(0 1px 2px rgb(12 20 25 / .55))}
+/* Preserve the photographic chooser environment without the old green tint. */
+#choice-environment{background:var(--scene-ground)}
+#choice-environment img{filter:blur(11px) brightness(.62)}
+#choice-environment::after{background:none}
+.choice-copy{position:relative;isolation:isolate}
+.choice-copy::before{content:'';position:absolute;inset:-18px -28px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse closest-side,rgb(var(--scrim-rgb) / .48),transparent 100%);filter:blur(10px)}
+/* Neighbour contours belong to the specimen, never to an inset mask. */
+#h-neighbours{overflow:visible;mask-image:none;-webkit-mask-image:none}
+#h-neighbours img{filter:none}
+@media(max-width:650px){#scene #story::before{inset:-30px -36px;filter:blur(12px)}#scene:is([data-phase=world],[data-phase=people],[data-phase=onion]) #story::before{display:none}}
+
+/* Photography remains photographic, without inherited sepia/desaturation. */
+:root{--photo-context-light:.72}
+#scene #physical-backdrop{filter:blur(28px) brightness(var(--photo-context-light))}
+#scene .camera::before{filter:blur(18px) brightness(var(--photo-context-light))}
+
+/* Shared organic depth: broad external medium, finer close-range interior.
+   Purposeful photo/reconstruction phases retain their original environment. */
+:root{--environment-medium-strength:.64;--environment-interior-strength:.46;--environment-light-strength:.055}
+#scene{isolation:isolate}
+#scene-environment{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:1;transition:opacity .45s ease;background:var(--scene-ground)}
+#scene-environment>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;max-width:none;pointer-events:none}
+#scene-environment .environment-medium{opacity:var(--environment-medium-strength);filter:saturate(.62) brightness(.82);transition:opacity .6s ease}
+#scene-environment .environment-interior{opacity:0;filter:saturate(.62) brightness(.80);transition:opacity .6s ease}
+#scene-environment .environment-light{position:absolute;inset:0;background:linear-gradient(125deg,rgba(149,190,194,var(--environment-light-strength)),transparent 52%,rgba(140,130,170,.025));pointer-events:none}
+#scene[data-environment=preserved] #scene-environment{opacity:0}
+#scene:is([data-environment=interior],[data-environment=molecular]) .environment-medium{opacity:.22}
+#scene[data-environment=interior] .environment-interior{opacity:var(--environment-interior-strength)}
+#scene[data-environment=molecular] .environment-interior{opacity:.58;object-position:54% 48%}
+#scene[data-organism=plant]{--environment-light-strength:.045}
+#scene[data-organism=human]{--environment-light-strength:.055}
+#scene[data-organism=bacterial]{--environment-light-strength:.05}
+@media(max-width:650px){#scene-environment .environment-medium{object-position:35% 50%}#scene-environment .environment-interior{object-position:63% 50%}}
+@media(prefers-reduced-motion:reduce){#scene-environment,#scene-environment>img{transition:none}}
+#scene[data-paused=true] #scene-environment,#scene[data-paused=true] #scene-environment>img{transition:none}
+
+/* Director-accepted external material and context focus, 14 November 2026.
+   Existing internal plate and its broad underlayer remain unchanged. */
+:root{--molecular-context-blur:5px;--molecular-context-opacity:.72}
+#scene-environment .environment-external{opacity:0;filter:saturate(.55) contrast(1.12) brightness(1.04);object-position:50% 50%}
+#scene[data-environment=external] .environment-external{opacity:1}
+#scene[data-environment=external] .environment-medium,#scene[data-environment=external] .environment-light{opacity:0}
+#scene[data-environment=molecular] :is(#bacterial-field,#human-field,#chromatin-environment){filter:blur(var(--molecular-context-blur));opacity:var(--molecular-context-opacity);mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,.5) 40%,#000 72%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,.5) 40%,#000 72%)}
+
+/* Human exterior: defocused neighbouring cell reconstructions at two depths.
+   This is a viewport-sized tissue context, not a texture or a microscope photo. */
+#scene-environment .environment-tissue{position:absolute;inset:0;overflow:visible;opacity:0;transition:opacity .8s ease;background:radial-gradient(ellipse at 60% 60%,#314953,#1e3039 75%)}
+.environment-tissue img{position:absolute;left:var(--tx);top:var(--ty);width:var(--tw);height:auto;max-width:none;transform:translate(-50%,-50%) rotate(var(--ta));filter:blur(var(--tb)) saturate(.28) brightness(.8);opacity:var(--to)}
+.environment-tissue::after{content:'';position:absolute;inset:0;background:#17384966;mix-blend-mode:color;pointer-events:none}
+#scene[data-environment=tissue] .environment-tissue{opacity:1}
+#scene[data-environment=tissue] :is(.environment-medium,.environment-interior,.environment-external,.environment-light){opacity:0}
+#scene[data-organism=human][data-human-early=true] #story::before{inset:-22px -28px;background:radial-gradient(ellipse closest-side at 35% 45%,rgb(17 29 37 / .35),transparent);filter:blur(18px)}
+@media(max-width:650px){.environment-tissue img{width:calc(var(--tw) * 1.65)}}

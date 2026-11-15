@@ -1,5 +1,5 @@
 /* Minimal integration layer. Existing scenes keep the approved 111 visual treatment. */
-#scene[data-phase=chooser]{height:auto;min-height:100svh;background:#282523;padding-bottom:115px}
+#scene[data-phase=chooser]{height:auto;min-height:100svh;background:var(--scene-ground,#222a2e);padding-bottom:115px}
 #scene[data-phase=chooser] :is(.physical-camera,.camera,.nuclear-camera,.shade,#chromatin-environment){display:none}
 #cell-branches{position:relative;z-index:3;margin:calc(var(--story-end) + 12px) var(--gutter) 0}
 #cell-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1600px;margin:auto}
@@ -17,7 +17,7 @@ button.cell-choice{cursor:pointer}.cell-choice:hover,.cell-choice:focus-visible{
 #scene #story #story-actions:has(#return-cells:not([hidden])){display:flex}
 #return-cells,#review-toggle{min-height:44px}#review-toggle{display:inline-flex;align-items:center}#review-navigation{z-index:12}
 #scene[data-intro-transition=true] #outgoing{display:block;z-index:2}#scene[data-intro-transition=true] #outgoing>.physical-camera{display:block}
-#scene[data-specimen-transition=true] #outgoing{display:block;z-index:2}.specimen-handoff{position:absolute;inset:0;background:#282523}.specimen-handoff img{display:block;object-fit:contain}
+#scene[data-specimen-transition=true] #outgoing{display:block;z-index:2}.specimen-handoff{position:absolute;inset:0;background:var(--scene-ground,#222a2e)}.specimen-handoff img{display:block;object-fit:contain}
 @media(min-width:651px){#scene[data-phase=chooser] .cell-choice img{width:100%;height:auto;max-width:calc(clamp(180px,29svh,330px)*1.5);margin:auto}#scene[data-phase=chooser] nav{position:fixed;z-index:9}}
 @media(max-width:650px){
  #scene[data-phase=chooser]{display:flex;flex-direction:column;padding:86px 0 105px}
@@ -38,10 +38,10 @@ button.cell-choice{cursor:pointer}.cell-choice:hover,.cell-choice:focus-visible{
 header #return-cells.journey-return{position:absolute;left:62px;top:-12px;min-height:44px;padding:8px 9px;border-color:transparent;border-radius:12px;font-size:12px;color:#e5ddd3;pointer-events:auto}
 header #return-cells.journey-return:hover{background:#ffffff12}
 /* Continue the microscopic world behind the choice, using the opening image. */
-#choice-environment{display:none;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:#142b25}
+#choice-environment{display:none;position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:var(--scene-ground,#222a2e)}
 #scene[data-phase=chooser] #choice-environment{display:block}
-#choice-environment img{position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;filter:blur(9px) brightness(.40) saturate(.95) hue-rotate(25deg);animation:choice-environment-drift 28s ease-in-out infinite alternate}
-#choice-environment:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#081b19a6,transparent 55%,#081b196b),linear-gradient(90deg,#091c214d,transparent 75%)}
+#choice-environment img{position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;animation:choice-environment-drift 28s ease-in-out infinite alternate}
+#choice-environment:after{content:'';position:absolute;inset:0}
 @keyframes choice-environment-drift{from{transform:scale(1.02) translate(-.6%,0)}to{transform:scale(1.09) translate(.8%,1%)}}
 #scene[data-paused=true] #choice-environment img{animation-play-state:paused}
 #scene[data-still=true] #choice-environment img{animation:none}
@@ -67,10 +67,6 @@ button.cell-choice:active img{transform:scale(1.005);filter:brightness(1.12)}
 
 #scene[data-phase=model] #vacuole-label:is(:hover,[aria-pressed=true]){outline:none;box-shadow:none}
 #scene[data-phase=model] #vacuole-label:focus-visible{outline:2px solid var(--interaction-accent);outline-offset:3px}
-/* Molecular scenes need local text contrast, not a screen-wide opaque veil. */
-#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) .shade{background:none;z-index:1}
-#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #story::before{display:block;inset:-90px auto -28px calc(-1 * var(--gutter));width:100vw;background:linear-gradient(180deg,#211e20e8 0%,#211e20cc calc(100% - 50px),transparent 100%);filter:none;mask-image:none;opacity:1;z-index:-1}
-#scene[data-learning=true]:is([data-phase=export],[data-phase=protein]) #dna-learning::before{display:none}
 #scene:is([data-phase=export],[data-phase=protein]) :is(#detail,#learning-instruction,#learning-feedback,#protein-work-cue){text-shadow:0 1px 4px #17131aaa}
 #role-actions{gap:12px;margin-top:28px;align-items:center;flex-wrap:wrap}
 #role-actions #role-replay{margin:0}
