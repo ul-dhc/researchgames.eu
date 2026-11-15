@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261115-r6",
+  "release": "cell-intro-20261115-r7",
   "routes": [
     "plant",
     "human",
@@ -262,7 +262,7 @@
     },
     "index.html": {
       "bytes": 47058,
-      "sha256": "08a72c3b9d8a9ce6d7d3edfd382e1a8c82c8107b0f64e0290de4a97f052b117f"
+      "sha256": "5740be08e8f33ef3ae59a219f1ab19454105b5d7dbcb4773e3cbbd26c4c93ef3"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -273,8 +273,8 @@
       "sha256": "200b2d4d80de736841c7019a0e1a03bc9549e24fe09839aa30cbbf1a1bcdff0e"
     },
     "journey-refinements.css": {
-      "bytes": 11673,
-      "sha256": "bab5b4de543a1dab9f7e5697b75a1c6cc5d7c9a92508802a679f5143e1c475d1"
+      "bytes": 11778,
+      "sha256": "6368a74a2aadd04777c6e235013f0db3f454b8df4e8726edfb2938415fd319c4"
     },
     "lucide-LICENSE.txt": {
       "bytes": 3208,
@@ -293,8 +293,8 @@
       "sha256": "8bdfd7470a4b390e55caa2165e7712c25d8f38a9d451c68a46f953ecc6a4bef3"
     },
     "mobile-layout.css": {
-      "bytes": 12363,
-      "sha256": "9bea1c68f8d53fcbb4dd1902b2d86d6f3e718761e3f10a693b9fa738b1c5b94e"
+      "bytes": 13763,
+      "sha256": "0fc0a4fa52b86c7dfb301315e28f41850f7541b59c08eb733f6b49adef37df20"
     },
     "onion-model.css": {
       "bytes": 2395,
@@ -313,8 +313,8 @@
       "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
     },
     "scene.js": {
-      "bytes": 196558,
-      "sha256": "80d223bd03ff498905938f8fc26f119b0657e8d78c1406aad0b76cffc68c7a47"
+      "bytes": 198582,
+      "sha256": "f99a7b1ca44ee4570f8fecef46ea4cb32c773f9d1f829cbd67460c98e05c9e32"
     },
     "shared-ending.js": {
       "bytes": 5284,

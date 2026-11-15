@@ -81,6 +81,18 @@ const reviewContext=document.createElement('p');reviewContext.id='review-context
 let organism='plant';
 const isBacterial=()=>organism==='bacterial';
 const isHuman=()=>organism==='human';
+const earlyPlantPhases=['skin','field','establish','invite','approach','boundary','inside','nucleolus'];
+const earlyPlantStage=document.createElement('div');earlyPlantStage.id='early-plant-stage';earlyPlantStage.hidden=true;earlyPlantStage.setAttribute('aria-hidden','true');scene.append(earlyPlantStage);
+function earlyPlantView(key=phase){return organism==='plant'&&mobileLayout()&&earlyPlantPhases.includes(key);}
+function layoutEarlyPlantVisual(){
+ const active=earlyPlantView();scene.dataset.earlyPlant=String(active);earlyPlantStage.hidden=!active;
+ for(const id of ['story-actions','guess-alternative','guess-feedback']){const node=$(id),host=active?scene:$('story');if(node.parentElement!==host)host.append(node);}
+ if(!active)return null;
+ const width=scene.clientWidth,ratio=cell.naturalWidth/cell.naturalHeight||1672/941,height=Math.max(220,width*(phase==='skin'?.70:nuclearPhases.includes(phase)? .67:1/ratio));
+ earlyPlantStage.style.height=height+'px';const top=earlyPlantStage.offsetTop;scene.style.setProperty('--early-art-top',top+'px');scene.style.setProperty('--early-art-height',height+'px');
+ scene.dataset.earlyVisualReady=String(incomingDecoded&&!transitioning);return {top,height};
+}
+
 const bacteria=createBacterialRoute({scene,$,info:openObjectInfo,active:isBacterial,refresh:()=>renderModel(),activeInfo:()=>infoKey,ease:p=>Math.min(1,Math.max(0,p))**2*(3-2*Math.min(1,Math.max(0,p))),advance:()=>{resumeInteractiveMotion();setPhase(bacterialScenes[bacteria.number(phase,proteinStage)].id);}});
 const human=createHumanRoute({scene,$,active:isHuman,info:openObjectInfo,refresh:()=>renderModel(),ease:p=>ease(p),advance:advanceHuman});
 const branches=createCellBranches({scene,$,setPhase,holdScene,navigateTo:key=>holdScene(key,{preservePlayback:true}),revealFull,openObjectInfo,still:()=>still,paused:()=>paused,activeInfo:()=>infoKey,enterPlant:enterPlantRoute,organism:()=>organism,isReview:()=>reviewMode,selectOrganism,resetRoute:resetRouteState,enterBacterial:()=>enterPlantRoute('b-orient'),enterHuman:()=>enterPlantRoute('h-context'),getSnapshot:plantSnapshot,restoreSnapshot:restorePlantSnapshot,beginSession:()=>{hasBegun=true;reconcileAudio();}});
@@ -156,7 +168,7 @@ function setPhase(key,{staticEntry=false}={}){
  renderModel();if(branches.isInspection(key)||key==='chooser'&&chooserInstant)revealFull();renderChooserReveal();syncControls();scrollToSceneHeading();
  musicMixer.setLoopAllowed(key!=='roles'&&!resumeProtein);if(musicFinished&&key!=='roles'&&!resumeProtein){musicFinished=false;musicMixer.reset();}
  if((skinMatch||nuclearMatch)&&!transitionStatic)renderFocusTransition(0);
- if(transitionStatic&&incomingDecoded){cancelShotTransition();syncControls();}
+ if(transitionStatic&&incomingDecoded){cancelShotTransition();syncControls();}geometry();
 }
 function montageHold(speed=narrationSpeed){return Math.max(1600,Math.min(3600,2400/speed));}
 function montageTotal(){return 2*montageHold()+1600;}
@@ -250,6 +262,7 @@ function openGuide(){
 }
 const ease=p=>{const q=Math.min(1,Math.max(0,p));return q*q*(3-2*q);};
 function renderModel(){
+ layoutEarlyPlantVisual();
  const mobileBar=$('protein-workbar'),mobileBarHost=mobileLayout()?scene:$('story');if(mobileBar.parentElement!==mobileBarHost)mobileBarHost.append(mobileBar);
  bacteria.syncPhase(phase);
  const modelFocus=$('nucleus-model').contains(document.activeElement)?document.activeElement:null;
@@ -849,6 +862,8 @@ function exploreNucleusPart(key){if(phase!=='explore'||!modelReady)return;select
 function prepareVisual(key){
  const token=++visualLoadToken,isNuclear=nuclearPhases.includes(key),target=key in physicalSources?physical:isNuclear?$('nuclear-interior'):null;
  incomingDecoded=true;
+ const finish=()=>{if(token!==visualLoadToken)return;incomingDecoded=true;last=0;if(transitionStatic){cancelShotTransition();syncControls();}geometry();};
+ if(!target&&earlyPlantPhases.includes(key)){const images=['field-image','cell'].map($);if(images.every(img=>img.complete&&img.naturalWidth))return;incomingDecoded=false;Promise.all(images.map(img=>img.decode?.().catch(()=>{}))).then(finish);return;}
  if(!target)return;
  const src=isNuclear?'assets/onion-nuclear-interior.webp':physicalSources[key];
  if(!isNuclear){target.alt=key==='world'?'A broad red mushroom cap among grass, moss and forest plants.':'';target.srcset=key==='world'?'assets/forest-mushroom-photo-960.webp 960w, assets/forest-mushroom-photo-1920.webp 1920w, assets/forest-mushroom-photo-3456.webp 2091w':'';target.sizes=key==='world'?'100vw':'';}
@@ -856,7 +871,7 @@ function prepareVisual(key){
  if(target.dataset.source!==src){target.dataset.source=src;target.src=src;if(!isNuclear)$('physical-backdrop').src=key==='world'&&innerWidth<=650?'assets/forest-mushroom-photo-960.webp':src;}
  if(typeof target.decode!=='function')return;
  incomingDecoded=false;
- target.decode().then(()=>{if(token!==visualLoadToken)return;incomingDecoded=true;last=0;if(transitionStatic){cancelShotTransition();syncControls();}}).catch(()=>{if(token!==visualLoadToken)return;incomingDecoded=true;last=0;if(transitionStatic){cancelShotTransition();syncControls();}});
+ target.decode().then(finish,finish);
 }
 function renderFocusTransition(e){
  const focus=nuclearMatch||skinMatch;if(!focus)return;
@@ -868,9 +883,9 @@ function renderFocusTransition(e){
  if(skinMatch)scene.dataset.skinMatchStage=e>.35?'expanding':'patch';
 }
 function renderSkin(){
- const w=scene.clientWidth,h=scene.clientHeight,portrait=w<650&&h>w,ratio=1672/941;
+ const w=scene.clientWidth,h=earlyPlantView()?earlyPlantStage.clientHeight:scene.clientHeight,portrait=w<650&&innerHeight>w,ratio=1672/941;
  const p=still?0:Math.min(1,Math.max(0,(phaseElapsed-200)/4000)),e=p*p*(3-2*p),zoom=1+.6*e;
- const iw=skinFrame?.width||w*(portrait?1.5:1),ih=skinFrame?.height||iw/ratio,startX=skinFrame?.x??(w-iw)/2,startY=skinFrame?.y??(portrait?40:0);
+ const iw=skinFrame?.width||w*(portrait?1.5:1),ih=skinFrame?.height||iw/ratio,startX=skinFrame?.x??(w-iw)/2,startY=skinFrame?.y??(earlyPlantView()?0:portrait?40:0);
  const left=startX-(zoom-1)*iw*.56,top=startY-(zoom-1)*ih*.44;
  const specimen=$('specimen-view');specimen.style.width=`${iw}px`;specimen.style.height=`${ih}px`;specimen.style.left=`${left}px`;specimen.style.top=`${top}px`;specimen.style.transformOrigin='0 0';specimen.style.transform=`scale(${zoom})`;
  skinFocus={x:startX+.56*iw,y:startY+.44*ih,width:.14*iw*zoom,height:.14*ih*zoom};scene.dataset.skinStage=p===1?'close':'context';
@@ -884,20 +899,21 @@ function renderCellEntry(){
  scene.dataset.cellReveal=phase==='field'?'closed':p===1?'open':'opening';
 }
 function geometry(){
+ const early=layoutEarlyPlantVisual(),artTop=early?.top||0;
  if(phase==='skin')renderSkin();
- const w=scene.clientWidth,h=scene.clientHeight,ratio=cell.naturalWidth&&cell.naturalHeight?cell.naturalWidth/cell.naturalHeight:1672/941;
+ const w=scene.clientWidth,h=early?innerHeight:scene.clientHeight,ratio=cell.naturalWidth&&cell.naturalHeight?cell.naturalWidth/cell.naturalHeight:1672/941;
  const portrait=w<650&&h>w;
  const s=Math.max(w/(ratio*1000),h/1000)*(portrait?1.12:1);let bw=ratio*1000*s,bh=1000*s;
  const p=still?0:Math.min(1,approach/8000),ease=p*p*(3-2*p);let z=1+(w<650?.25:.48)*ease;
  const tx=w*(w<650?.44:(.265+.13*ease)),ty=h*((w<650&&h>w?.38:.478)-.045*ease);
  let left=Math.min(0,Math.max(w-bw*z,tx-centre.x*bw*z)),top=Math.min(0,Math.max(h-bh*z,ty-centre.y*bh*z));
  if(portrait&&(['field','teaser'].includes(phase)||(phase==='establish'&&cellEntry<1600))){const q=['field','teaser'].includes(phase)?0:cellEntry/1600,f=q*q*(3-2*q);bw=w+(bw-w)*f;bh=w/ratio+(bh-w/ratio)*f;left*=f;top=h*.16*(1-f)+top*f;}
- if(portrait&&['field','establish','invite'].includes(phase)){bw=w;bh=w/ratio;left=0;top=h*.16;z=1;}
- if(portrait&&phase==='approach'&&approachFrame&&!still){const fw=bw*1.25,fh=bh*1.25,fx=Math.min(0,Math.max(w-fw,w*.44-centre.x*fw)),fy=Math.min(0,Math.max(h-fh,h*.335-centre.y*fh));bw=approachFrame.w+(fw-approachFrame.w)*ease;bh=approachFrame.h+(fh-approachFrame.h)*ease;left=approachFrame.x+(fx-approachFrame.x)*ease;top=approachFrame.y+(fy-approachFrame.y)*ease;z=1;}
- const guess=$('guess-surface');guess.style.width=`${bw}px`;guess.style.height=`${bh}px`;guess.style.transform=`translate3d(${left}px,${top}px,0) scale(${z})`;
+ if(portrait&&['field','establish','invite'].includes(phase)){bw=w;bh=w/ratio;left=0;top=early?(early.height-bh)/2:h*.16;z=1;}
+ if(portrait&&(phase==='approach'||early&&phase==='boundary')&&(early||approachFrame&&!still)){const fw=bw*1.25,fh=bh*1.25,frameH=early?.height||h,fx=Math.min(0,Math.max(w-fw,w*.44-centre.x*fw)),fy=Math.min(0,Math.max(frameH-fh,frameH*(early?.5:.335)-centre.y*fh));if(phase==='approach'&&approachFrame&&!still){const startY=approachFrame.artY??approachFrame.y-artTop;bw=approachFrame.w+(fw-approachFrame.w)*ease;bh=approachFrame.h+(fh-approachFrame.h)*ease;left=approachFrame.x+(fx-approachFrame.x)*ease;top=startY+(fy-startY)*ease;}else{bw=fw;bh=fh;left=fx;top=fy;}z=1;}
+ const guess=$('guess-surface');guess.style.width=`${bw}px`;guess.style.height=`${bh}px`;guess.style.transform=`translate3d(${left}px,${top+artTop}px,0) scale(${z})`;
  world.style.width=`${bw}px`;world.style.height=`${bh}px`;world.style.transform=`translate3d(${left}px,${top}px,0) scale(${z})`;
  
- nucleus.style.left=`${left+hit.x*bw*z}px`;nucleus.style.top=`${top+hit.y*bh*z}px`;nucleus.style.width=`${hit.w*bw*z}px`;nucleus.style.height=`${hit.h*bh*z}px`;
+ nucleus.style.left=`${left+hit.x*bw*z}px`;nucleus.style.top=`${top+artTop+hit.y*bh*z}px`;nucleus.style.width=`${hit.w*bw*z}px`;nucleus.style.height=`${hit.h*bh*z}px`;
 }
 function readAudioPreference(){
  try{const saved=JSON.parse(localStorage.getItem('three-cell-prototype-audio')||'{}');return {soundOn:saved.soundOn!==false,volume:typeof saved.volume==='number'&&saved.volume>=0&&saved.volume<=1?saved.volume:.65,track:saved.track==='sci-fi'?'sci-fi':'tech-soft'};}catch{return {soundOn:true,volume:.65,track:'tech-soft'};}
@@ -937,7 +953,7 @@ function tick(now){
    if(p===1){cancelShotTransition();syncControls();}
   }
   if(phase==='establish'&&cellEntry<1600){cellEntry=Math.min(1600,cellEntry+dt);geometry();renderCellEntry();if(cellEntry===1600){scene.dataset.entry='false';syncControls();}}
-  if(!revealed&&!infoKey&&!guideOpen&&!(nuclearMatch&&transitioning)&&!(phase==='dna-focus'&&!modelEntryStatic&&!still&&learningClock<4200)){revealTime+=dt*narrationSpeed;const count=narrationVisibleCount();paintNarration(count);if(count>=currentCopy()[1].length)revealFull();}
+  if(!revealed&&!infoKey&&!guideOpen&&!(earlyPlantView()&&transitioning)&&!(nuclearMatch&&transitioning)&&!(phase==='dna-focus'&&!modelEntryStatic&&!still&&learningClock<4200)){revealTime+=dt*narrationSpeed;const count=narrationVisibleCount();paintNarration(count);if(count>=currentCopy()[1].length)revealFull();}
   if(phase==='approach'&&approach<8000){approach=Math.min(8000,approach+dt);geometry();if(approach===8000)syncControls();}
   if(!navigationHold&&!still&&revealed&&!infoKey&&!guideOpen&&!transitioning&&sequence[phase]){phaseHold+=dt;const cameraReady=phase!=='approach'||approach===8000;const entryReady=phase!=='establish'||cellEntry===1600;const skinReady=phase!=='skin'||phaseElapsed>=4200,montageReady=phase!=='teaser'||phaseElapsed>=montageTotal();if(cameraReady&&entryReady&&skinReady&&montageReady&&phaseHold>=(phase==='teaser'?0:phase==='model'?Math.max(6000,captions.model[1].length*25/narrationSpeed+2400/narrationSpeed):['world','people'].includes(phase)?openingHold(phase):readingDwell()))setPhase(sequence[phase]);}
  }
@@ -1019,7 +1035,7 @@ $('guess-surface').addEventListener('click',event=>{
  guessNucleus(nucleusCore?'nucleus':vacuole?'vacuole':cytoplasm?'cytoplasm':'other');
 });
 for(const button of document.querySelectorAll('[data-guess]'))button.addEventListener('click',()=>guessNucleus(button.dataset.guess));
-function selectNucleus(){if(phase==='invite'){earn('nucleus');finishNarration();resumeInteractiveMotion();const r=world.getBoundingClientRect(),sr=scene.getBoundingClientRect();approachFrame={x:r.left-sr.left,y:r.top-sr.top,w:r.width,h:r.height};approach=0;setPhase('approach');$('status').textContent=still?'Nucleus selected.':'Nucleus selected. Moving closer.';pause.focus({preventScroll:true});}}
+function selectNucleus(){if(phase==='invite'){earn('nucleus');finishNarration();resumeInteractiveMotion();const r=world.getBoundingClientRect(),sr=scene.getBoundingClientRect();approachFrame={x:r.left-sr.left,y:r.top-sr.top,artY:r.top-document.querySelector('.camera').getBoundingClientRect().top,w:r.width,h:r.height};approach=0;setPhase('approach');$('status').textContent=still?'Nucleus selected.':'Nucleus selected. Moving closer.';pause.focus({preventScroll:true});}}
 $('skip-introduction').addEventListener('click',()=>start('chooser'));begin.addEventListener('click',start);nucleus.addEventListener('click',()=>guessNucleus('nucleus'));chooseCell.addEventListener('click',()=>{if(phase==='field'){earn('cell');finishNarration();resumeInteractiveMotion();cellEntry=still||paused?1600:0;scene.dataset.entry=String(cellEntry<1600);setPhase('establish');$('status').textContent=cellEntry===1600?'Cell interior revealed.':'Cell selected. Revealing the reconstructed interior.';pause.focus({preventScroll:true});}});
 lookInside.addEventListener('click',()=>{if(phase!=='boundary')return;finishNarration();resumeInteractiveMotion();setPhase('inside');$('status').textContent='Nuclear cutaway opened. Chromatin is now visible.';pause.focus({preventScroll:true});});
 $('select-model-nucleus').addEventListener('click',()=>selectModelNucleus());
@@ -1084,7 +1100,7 @@ function startShotTransition(key){
  if(key==='idle'||!changes||typeof getComputedStyle!=='function'){cancelShotTransition();return;}
  const oldKey=phase,oldElapsed=['idle','teaser'].includes(phase)?titleTime:phaseElapsed,duration=oldSource?physicalDuration(phase):0;
  const matched=phase==='skin'&&key==='field'&&skinFocus?{...skinFocus}:null;
- const nuclearFocus=phase==='boundary'&&newView==='nuclear'?{x:parseFloat(nucleus.style.left)+parseFloat(nucleus.style.width)/2,y:parseFloat(nucleus.style.top)+parseFloat(nucleus.style.height)/2,width:parseFloat(nucleus.style.width),height:parseFloat(nucleus.style.height)}:null;
+ const nuclearFocus=phase==='boundary'&&newView==='nuclear'?{x:parseFloat(nucleus.style.left)+parseFloat(nucleus.style.width)/2,y:parseFloat(nucleus.style.top)+parseFloat(nucleus.style.height)/2-(earlyPlantView()?earlyPlantStage.offsetTop:0),width:parseFloat(nucleus.style.width),height:parseFloat(nucleus.style.height)}:null;
  const source=document.querySelector(oldView==='physical'?'.physical-camera':oldView==='teaser'?'.teaser-camera':oldView==='nuclear'?'.nuclear-camera':'.camera');
  // Snapshot before any incoming framing or cleanup can touch the visible source.
  const clone=source.cloneNode(true),sources=[source,...source.querySelectorAll('*')],clones=[clone,...clone.querySelectorAll('*')];
@@ -1094,6 +1110,7 @@ function startShotTransition(key){
  const initialTransform=getComputedStyle(source).transform;
  if(oldView==='physical'){const r=source.querySelector('[id=specimen-view]')?.getBoundingClientRect();if(r)scene.dataset.handoffSpecimenRect=JSON.stringify({x:r.x,y:r.y,width:r.width,height:r.height});}
  if(oldView==='physical'){Object.assign(clone.style,{position:'absolute',left:source.offsetLeft+'px',top:source.offsetTop+'px',right:'auto',bottom:'auto',width:source.offsetWidth+'px',height:source.offsetHeight+'px',margin:'0'});}
+ if(earlyPlantView(key)){clone.style.top='0px';clone.style.left='0px';}
  cancelShotTransition();skinMatch=matched;nuclearMatch=nuclearFocus;transitionStatic=still||paused;scene.dataset.skinMatch=String(Boolean(matched));
  if(oldSource&&oldKey!=='skin')outgoingMotion={node:clone,key:oldKey,elapsed:oldElapsed,duration};
  scene.dataset.handoffSource=initialTransform;scene.dataset.handoffClone=clone.style.transform;

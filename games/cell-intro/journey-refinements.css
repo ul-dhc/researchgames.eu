@@ -8,6 +8,7 @@
 #scene[data-phase=onion] :is(#caption,#detail){color:#332c35;text-shadow:none}
 #scene[data-phase=onion] #detail{max-width:30ch}
 #scene[data-phase=onion] header{color:#332c35;text-shadow:0 1px 3px #f3ecdf80}
+#scene[data-phase=onion] header :is(#scene-number,#return-cells.journey-return){color:#332c35!important}
 #skin-patch{display:none!important}
 #scene[data-phase=skin] #skin-cue{left:54%;top:33%;background:#f0e7d9eb;color:#443844;border-radius:6px;text-shadow:none}
 #scene[data-phase=skin] #skin-cue:after{height:18px;border-color:#f0e7d9}
