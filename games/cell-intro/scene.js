@@ -1,13 +1,13 @@
-import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261115-r4';
+import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261115-r5';
 let researchScene=null;
-import {installEnvironment} from './environment.js?v=cell-intro-20261115-r2';
-import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261115-r2';
-import {createHumanRoute,humanNucleusArt,humanScenes,humanCopy,humanProtein,humanRoles,humanReward,humanRecap} from './human.js?v=cell-intro-20261115-r2';
-import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=cell-intro-20261115-r2';
-import { createCellBranches } from './branches.js?v=cell-intro-20261115-r2';
-import { updateIcons } from './icons.js?v=cell-intro-20261115-r2';
-import { SoundtrackPlayer } from './ambient-mixer.js?v=cell-intro-20261115-r2';
-import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION, MRNA_INTRO, MRNA_DEFINITION} from './cell-facts.js?v=cell-intro-20261115-r2';
+import {installEnvironment} from './environment.js?v=cell-intro-20261115-r5';
+import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261115-r5';
+import {createHumanRoute,humanNucleusArt,humanScenes,humanCopy,humanProtein,humanRoles,humanReward,humanRecap} from './human.js?v=cell-intro-20261115-r5';
+import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=cell-intro-20261115-r5';
+import { createCellBranches } from './branches.js?v=cell-intro-20261115-r5';
+import { updateIcons } from './icons.js?v=cell-intro-20261115-r5';
+import { SoundtrackPlayer } from './ambient-mixer.js?v=cell-intro-20261115-r5';
+import {DNA_INSTRUCTIONS, CHROMATIN_DEFINITION, NUCLEOLUS_FUNCTION, MRNA_INTRO, MRNA_DEFINITION} from './cell-facts.js?v=cell-intro-20261115-r5';
 const $=id=>document.getElementById(id);
 const mobileLayout=()=>matchMedia('(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px)').matches;
 const scene=$('scene'),world=$('world'),cell=$('cell'),cue=$('cue'),nucleus=$('nucleus');
@@ -22,7 +22,7 @@ const captions={
  idle:['A world inside a cell','A short introduction to the world behind our molecular biology and microbiology games. Meet the cell, its key parts, and the instructions that help it work.'],
  teaser:['Life, at its smallest.','Every living organism is made of one or more cells. Cells are the basic units of life.'],
  world:['The living world.','Trees, mushrooms and other living things are made of cells. Most cells are too small to see with our eyes alone.'],
- people:['You are made of cells, too.','Your body is made of cells. So is the frog resting on this hand. Humans and other animals are made of many cells. Some living organisms are microscopic and consist of just one cell.'],
+ people:['You are made of cells, too.','Your body and this frog are made of many cells. Some living things consist of just one cell.'],
  chooser:['Which cell shall we explore?','Cells share some important features, but they are not all organised in the same way. Choose a cell to explore its structures and follow its instructions.'],
  plant:['Inside a plant cell.','This onion bulb cell has a firm outer wall and a large central vacuole. Its nucleus sits in the thin surrounding cytoplasm.'],
  onion:['Our specimen.','Let’s explore the cellular world inside an onion bulb.'],
@@ -219,9 +219,8 @@ function currentCopy(){
  if(phase==='research')return ['',''];
  if(mobileLayout()&&phase==='roles'&&roleMatched.length===4)return isHuman()?humanCopy.roles:isBacterial()?bacterialCopy.roles:captions.roles;
  if(isHuman()&&!['idle','teaser','world','people','chooser'].includes(phase)){if(phase==='roles'&&roleMatched.length===4)return humanReward;if(phase==='protein')return humanProtein[proteinStage]||humanProtein.job;if(phase==='message'&&copyExplained)return ['A message to carry.','mRNA carries this temporary copy to a ribosome in the cytoplasm. The original DNA stays in the nucleus.'];if(phase==='export'&&rnaDeliveryExplained)return ['At the ribosome.','The message has reached the ribosome. Now we can use its instructions to build a protein.'];return humanCopy[phase]||captions[phase];}
- if(reviewMode&&phase==='protein'&&proteinStage==='done')return ['A protein doing its job.','This enzyme splits a sugar into smaller sugars. DNA instructions can be copied into mRNA, which a ribosome reads to build a protein.'];
  if(phase==='establish'&&!earnedTasks.plant.has('cell'))return ['One onion cell.',captions.establish[1]];
- if(isBacterial()&&!['idle','teaser','world','people','chooser'].includes(phase)){if(phase==='roles'&&roleMatched.length===4)return bacterialReward;if(phase==='protein'){if(proteinStage==='collect')return [bacterialChains===1?'One chain is not enough.':'Make four matching chains.',`${bacterialChains} of the 4 protein chains ${bacterialChains===1?'is':'are'} ready. Use the same message and ribosome to make the next matching chain.`];return bacterialProtein[proteinStage]||bacterialProtein.build;}if(phase==='export'&&rnaDeliveryExplained)return bacterialDelivery;if(phase==='message'&&copyExplained)return ['A message to read.','Ribosomes read the mRNA instructions to build protein chains.'];return bacterialCopy[phase]||captions[phase];}
+ if(isBacterial()&&!['idle','teaser','world','people','chooser'].includes(phase)){if(phase==='roles'&&roleMatched.length===4)return bacterialReward;if(phase==='protein'){if(proteinStage==='collect')return bacterialChains===1?['Make a second matching chain.','One of the four chains is ready. Use the same mRNA and ribosome to make a second chain.']:['Two ready, two more to make.','Two folded chains are ready. Watch the ribosome read the same mRNA to build and fold the remaining two, one at a time.'];if(['repeat-growing','repeat-folding'].includes(proteinStage)&&bacterialChains>=2)return [proteinStage==='repeat-growing'?'The ribosome makes the remaining chains.':'Another chain folds and joins the others.',`The same ribosome reads the same mRNA to make chain ${bacterialChains+1} of four. Each new chain grows, folds and leaves the ribosome before the next begins.`];return bacterialProtein[proteinStage]||bacterialProtein.build;}if(phase==='export'&&rnaDeliveryExplained)return bacterialDelivery;if(phase==='message'&&copyExplained)return ['A message to read.','Ribosomes read the mRNA instructions to build protein chains.'];return bacterialCopy[phase]||captions[phase];}
  if(phase==='roles'&&roleMatched.length===4)return ['Well done!','You’ve matched these four parts to their jobs. You’re ready to explore the next challenge.'];
  if(phase==='message'&&copyExplained)return ['A message to carry.','mRNA carries this temporary copy of instructions to a ribosome.'];
  if(phase==='export'&&rnaDeliveryExplained)return deliveryNarrative;
@@ -270,7 +269,7 @@ function renderModel(){
  scene.dataset.modelVisible=String(visible);scene.dataset.modelBlend=String(blend);scene.dataset.modelReady=String(visible&&modelReady);scene.dataset.nucleusLift=String(lift);scene.dataset.nucleusSelected=String(modelSelected);scene.dataset.envelopeActive=String(visualPart==='envelope');scene.dataset.activePart=visualPart;$('envelope-outline').style.display=phase==='explore'?'':'none';
  const entryFocus=proteinFocusProgress(),entryPortrait=mobileLayout(),viewportHeight=typeof innerHeight==='number'?innerHeight:scene.clientHeight;if(phase==='protein'){panel.style.transition='none';const compact=entryPortrait||scene.clientWidth<1100,base=proteinEntryHeight??(compact?350:Math.max(300,Math.min(580,viewportHeight-(Number.isFinite(storyEnd)?storyEnd:255)-155))),end=compact?500:Math.max(300,Math.min(580,viewportHeight-(Number.isFinite(storyEnd)?storyEnd:255)-155))-25;panel.style.height=`${base+(end-base)*entryFocus}px`;panel.style.top=entryPortrait?'auto':`${(Number.isFinite(storyEnd)?storyEnd:255)+8*entryFocus}px`;}else{panel.style.height='';panel.style.top='';panel.style.transition='';}
  if(isBacterial()&&phase==='protein'&&!entryPortrait){const top=storyEnd+6;panel.style.top=top+'px';panel.style.height=Math.max(330,viewportHeight-top-65)+'px';}
- if(mobileLayout()){if(phase==='protein'){const height=['job','reaction','done'].includes(proteinStage)?(isHuman()?190:280):360;panel.style.height=height+'px';panel.style.setProperty('--protein-stage-height',height+'px');}else if(['dna-focus','gene','message'].includes(phase))panel.style.height=(phase==='dna-focus'?230:phase==='gene'?260:330)+'px';else if(phase==='export')panel.style.height='380px';}
+ if(mobileLayout()){if(phase==='protein'){const height=['job','reaction','done'].includes(proteinStage)?150:360;panel.style.height=height+'px';panel.style.setProperty('--protein-stage-height',height+'px');}else if(['dna-focus','gene','message'].includes(phase))panel.style.height=(phase==='dna-focus'?230:phase==='gene'?260:330)+'px';else if(phase==='export')panel.style.height='380px';}
  const mw=panel.clientWidth,mh=panel.clientHeight,portrait=mobileLayout(),ratio=1.25;
  const cellRatio=onionModel.view.width/onionModel.view.height;const cw=Math.min(mw*(portrait?.98:.68),(mh-(portrait?50:40))*.96*cellRatio),ch=cw/cellRatio,cx=0,cy=portrait?50:Math.max(46,(mh-ch)/2);
  const cellModel=$('cell-game-model');cellModel.style.width=`${cw}px`;cellModel.style.height=`${ch}px`;cellModel.style.left=`${cx}px`;cellModel.style.top=`${cy}px`;cellModel.style.opacity=String(1-.86*lift);cellModel.style.transform=`scale(${1-.45*lift})`;
@@ -441,6 +440,13 @@ function renderReading({eligible,rx,ry,rw,rh,mw}){
 const learningWorkCue=document.createElement('div');learningWorkCue.id='learning-work-cue';learningWorkCue.hidden=true;$('nucleus-model').append(learningWorkCue);learningWorkCue.append($('learning-instruction'),$('learning-feedback'));
 function layoutMobileLearningCue(){if(!mobileLayout())return false;const footer=$('dna-learning');if(learningWorkCue.parentElement!==footer)footer.prepend(learningWorkCue);learningWorkCue.dataset.layout='flow';for(const e of [learningWorkCue,footer])for(const prop of ['left','right','top','width','max-width'])e.style.removeProperty(prop);$('nucleus-model').style.marginBottom='12px';return true;}
 const mobilePass=document.createElement('button');mobilePass.id='mobile-pass-message';mobilePass.className='primary';mobilePass.textContent='Pass message';mobilePass.hidden=true;mobilePass.onclick=()=>$('pore-target').click();$('dna-learning').prepend(mobilePass);
+const mobileRibosomeAction=document.createElement('button');mobileRibosomeAction.id='mobile-ribosome-action';mobileRibosomeAction.className='primary';mobileRibosomeAction.hidden=true;mobileRibosomeAction.onclick=()=>$('ribosome-target').click();$('dna-learning').append(mobileRibosomeAction);
+function layoutMolecularControls(){
+ const copy=$('copy-instructions'),copyHost=mobileLayout()?$('dna-learning'):$('dna-lens');if(copy.parentElement!==copyHost)copyHost.append(copy);
+ const deliver=phase==='export'&&rnaExported&&!rnaArrived&&rnaTravelAt<0,join=phase==='protein'&&proteinStage==='build'&&aminoSelected>0;
+ const host=join?$('protein-work-controls'):$('dna-learning');if(mobileRibosomeAction.parentElement!==host)host.append(mobileRibosomeAction);
+ mobileRibosomeAction.hidden=!(mobileLayout()&&(deliver||join));mobileRibosomeAction.textContent=deliver?'Deliver message':'Join amino acid';
+}
 function placeSubjectHandoff(anchorId){
  if(layoutMobileLearningCue())return;
  learningWorkCue.style.textAlign='';
@@ -516,7 +522,7 @@ function advanceProteinProcess(){
  if(isBacterial()){
   if(proteinStage==='folding'&&(still||learningClock-proteinFoldAt>=proteinFoldDuration)){bacterialChains=1;proteinStage='collect';refreshNarrator();revealFull();}
   if(proteinStage==='repeat-growing'&&(still||learningClock-bacterialRepeatAt>=3200)){proteinStage='repeat-folding';proteinFoldAt=learningClock;refreshNarrator();revealFull();}
-  if(proteinStage==='repeat-folding'&&(still||learningClock-proteinFoldAt>=proteinFoldDuration)){bacterialChains++;proteinStage=bacterialChains===4?'assemble-ready':'collect';refreshNarrator();revealFull();}
+  if(proteinStage==='repeat-folding'&&(still||learningClock-proteinFoldAt>=proteinFoldDuration)){bacterialChains++;proteinStage=bacterialChains===4?'assemble-ready':bacterialChains===3?'repeat-growing':'collect';if(proteinStage==='repeat-growing'){bacterialRepeatAt=learningClock;proteinGrowAt=learningClock;proteinFoldAt=-1;}refreshNarrator();revealFull();}
   if(proteinStage==='joining'&&(still||learningClock-bacterialJoinAt>=2200)){proteinStage='job';refreshNarrator();revealFull();}
  }
  if(proteinStage==='build'&&proteinCount===3&&(still||learningClock-proteinAddAt>=360)){proteinStage='growing';proteinGrowReadyAt=-1;proteinGrowAt=still?learningClock-proteinGrowDuration:learningClock;refreshNarrator();revealFull();}
@@ -545,7 +551,7 @@ function renderProteinWork(g,work,action,next){
  const feedInfo=$('amino-feed-info-label');showLearningLayer('amino-feed-info-label',false);feedInfo.style.left=`${poolX+12}px`;feedInfo.style.top=`${poolY-6}px`;
  const pool=$('amino-pool');pool.style.left=`${poolX}px`;pool.style.top=`${poolY}px`;pool.style.width='190px';pool.style.opacity=String(ease((focus-.1)/.7));pool.style.translate=`${-15*(1-focus)}px ${20*(1-focus)}px`;
  const ready=proteinInputReady(),joining=stage==='build'&&!still&&proteinAddAt>=0&&learningClock-proteinAddAt<360;
- for(let i=1;i<=3;i++){const aa=$('amino-'+i);aa.hidden=false;aa.disabled=!ready||i!==expectedAminoAcid();aa.style.opacity=joining&&aminoUsed.at(-1)===i?String(.38+.62*(still?1:ease((learningClock-proteinAddAt)/360))):'1';aa.dataset.next=String(ready&&i===expectedAminoAcid());aa.setAttribute('aria-label','Amino acid '+i+(i===expectedAminoAcid()?' — next in the mRNA message':''));aa.setAttribute('aria-pressed',String(aminoSelected===i));}
+ for(let i=1;i<=3;i++){const aa=$('amino-'+i);aa.hidden=false;aa.disabled=!ready||i!==expectedAminoAcid();aa.style.opacity=joining&&aminoUsed.at(-1)===i?String(.38+.62*(still?1:ease((learningClock-proteinAddAt)/360))):'1';aa.dataset.next=String(ready&&i===expectedAminoAcid());aa.setAttribute('aria-label','Amino acid '+i+(i===expectedAminoAcid()?' – next in the mRNA message':''));aa.setAttribute('aria-pressed',String(aminoSelected===i));}
  for(let i=1;i<=3;i++){
   const aa=$('amino-'+i),consumed=isBacterial()&&aminoUsed.includes(i),feeding=consumed&&joining&&aminoUsed.at(-1)===i,t=feeding?ease((learningClock-proteinAddAt)/360):0;
   aa.dataset.consumed=String(consumed);aa.style.setProperty('--amino-consume-opacity',feeding?String(1-ease((t-.75)/.25)):'0');aa.style.transform='none';aa.style.visibility=consumed&&!feeding?'hidden':'visible';
@@ -583,8 +589,8 @@ function renderProteinWork(g,work,action,next){
  for(const [key,value] of Object.entries({x:compact.x-surfaceW/2,y:compact.y-surfaceH/2,width:surfaceW,height:surfaceH}))enzyme.setAttribute(key,String(value));
  bacteria.renderComplex({centre:compact,home:jobCentre,w:enzymeW,h:enzymeH,completed:bacterialChains,stage:actualStage,fold,detail,currentSurface:{x:compact.x,y:compact.y,width:surfaceW,height:surfaceH},parking,progress:actualStage==='joining'?(still?1:(learningClock-bacterialJoinAt)/2200):assembled?1:0});
  const assemblyReady=assembled;
- const label=$('protein-label'),labelHost=portrait?bar:$('nucleus-model');if(label.parentElement!==labelHost)labelHost.append(label);label.dataset.parked=String(isBacterial()&&!assembled&&['collect','assemble-ready','joining'].includes(actualStage));label.hidden=stage==='purpose'||proteinCount===0||stage==='folding';label.textContent=folded?(isBacterial()?(assembled?'Lactose enzyme':portrait?'Folded chains':'Folded protein chains'):'Protein'):foldReady?'Protein chain':'Growing protein chain';label.style.left=`${folded?jobCentre.x:Math.min(mw-160,exit.x+25)}px`;label.style.top=`${folded?jobCentre.y+enzymeH/2+6:Math.max(0,exit.y-length/(proteinModelUnits+1)*(125+50*growth)-54)}px`;label.style.transform=folded?'translateX(-50%)':'none';
- const sugar=$('sugar-substrate'),sugarX=mw*(portrait?.15:.18),sugarY=portrait?(isBacterial()?60:18):60,binding={x:jobCentre.x+enzymeW*.34,y:jobCentre.y},elapsed=sugarAt<0?0:(stage==='done'||still?proteinReactionDuration:Math.max(0,learningClock-sugarAt)),approach=ease(elapsed/1400),split=ease((elapsed-2400)/700),depart=ease((elapsed-3100)/1900),departBProgress=ease((elapsed-3200)/1800);
+ const label=$('protein-label'),labelHost=portrait&&!assembled?bar:$('nucleus-model');if(label.parentElement!==labelHost)labelHost.append(label);label.dataset.parked=String(isBacterial()&&!assembled&&['collect','assemble-ready','joining'].includes(actualStage));label.hidden=stage==='purpose'||proteinCount===0||stage==='folding';label.textContent=folded?(isBacterial()?(assembled?'Lactose enzyme':portrait?'Folded chains':'Folded protein chains'):'Protein'):foldReady?'Protein chain':'Growing protein chain';label.style.left=`${folded?jobCentre.x:Math.min(mw-160,exit.x+25)}px`;label.style.top=`${folded?jobCentre.y+enzymeH/2+6:Math.max(0,exit.y-length/(proteinModelUnits+1)*(125+50*growth)-54)}px`;label.style.transform=folded?'translateX(-50%)':'none';
+ const sugar=$('sugar-substrate'),sugarX=mw*(portrait?.15:.18),sugarY=portrait?(isBacterial()?14:18):60,binding={x:jobCentre.x+enzymeW*.34,y:jobCentre.y},elapsed=sugarAt<0?0:(stage==='done'||still?proteinReactionDuration:Math.max(0,learningClock-sugarAt)),approach=ease(elapsed/1400),split=ease((elapsed-2400)/700),depart=ease((elapsed-3100)/1900),departBProgress=ease((elapsed-3200)/1800);
  const sx=(binding.x-(sugarX+60))*approach,sy=(binding.y-(sugarY+32))*approach;
  showLearningLayer('sugar-substrate',assembled&&(['job','reaction','done'].includes(stage)||stage==='folding'&&fold===1&&assemblyReady));sugar.style.left=`${sugarX}px`;sugar.style.top=`${sugarY}px`;sugar.style.width='120px';sugar.style.height='85px';sugar.style.transform=`translate(${sx}px,${sy}px)`;
  sugar.disabled=stage!=='job'&&!(stage==='folding'&&fold===1&&assemblyReady);sugar.tabIndex=sugar.disabled?-1:0;sugar.setAttribute('aria-label',stage==='done'?'Glucose and fructose released':'Send sucrose to the enzyme');
@@ -610,7 +616,7 @@ function renderProteinWork(g,work,action,next){
  if(stage==='done'){instruction='Two sugars released. The enzyme is ready to work again.';feedback='Sucrose split into glucose and fructose.';next.hidden=!revealed;next.disabled=false;action.hidden=false;action.disabled=false;$('learning-action-label').textContent='Try another sucrose';}
  if(isBacterial()){instruction=instruction.replaceAll('sucrose','lactose');feedback=feedback.replace('Sucrose split into glucose and fructose.','Lactose split into glucose and galactose.');if(stage==='done')$('learning-action-label').textContent='Try another lactose';if(stage==='folding')instruction=paused?'Folding is paused. Resume exploration to continue.':'The chain folds and leaves the ribosome.';$('sugar-substrate').setAttribute('aria-label',stage==='done'?'Glucose and galactose released':'Send lactose to the enzyme');}
  if(isBacterial()){
-  if(actualStage==='collect'){instruction='Chain folded and released.';action.hidden=false;action.disabled=false;$('learning-action-label').textContent='Make the next chain';}
+  if(actualStage==='collect'){instruction='Chain folded and released.';action.hidden=false;action.disabled=false;$('learning-action-label').textContent=bacterialChains===1?'Make the second chain':'Watch the remaining two chains';}
   if(actualStage==='repeat-growing'){instruction=paused?'Building is paused. Resume exploration to continue.':'Building another matching chain from the same message.';action.hidden=true;}
   if(actualStage==='repeat-folding'){instruction=paused?'Folding is paused. Resume exploration to continue.':'The new chain is folding.';action.hidden=true;}
   if(actualStage==='assemble-ready'){instruction='Ready to fit the enzyme.';action.hidden=false;action.disabled=false;$('learning-action-label').textContent='Fit the four chains together';}
@@ -672,7 +678,7 @@ function renderProteinWork(g,work,action,next){
 }
 
 function renderLearning(g){
- advanceProteinProcess();
+ advanceProteinProcess();layoutMolecularControls();
  if(!['gene','message'].includes(phase)&&!(phase==='export'&&rnaArrived)){$('nucleus-model').style.removeProperty('margin-bottom');$('dna-learning').style.removeProperty('top');$('dna-learning').style.removeProperty('left');$('dna-learning').style.removeProperty('right');$('dna-learning').style.removeProperty('width');delete $('dna-learning').dataset.handoffSubject;scene.style.removeProperty('--message-scene-height');}
  const active=learningPhases.includes(phase),outside=['export','protein'].includes(phase),inset=['dna-focus','gene','message'].includes(phase);learningGeometry=g;scene.dataset.learningInfo=active?infoKey:'';scene.dataset.learning=String(active);scene.dataset.proteinStage=phase==='protein'?proteinStage:'';scene.dataset.proteinCount=String(proteinCount);scene.dataset.earnedTasks=[...earnedTasks[organism]].join(' ');$('dna-learning').hidden=!active;
  for(const id of ['sucrose-info-label','glucose-info-label','fructose-info-label','amino-feed-info-label','enzyme-contact-detail'])showLearningLayer(id,phase==='protein'&&!$(id).hidden);
@@ -845,7 +851,7 @@ function prepareVisual(key){
  incomingDecoded=true;
  if(!target)return;
  const src=isNuclear?'assets/onion-nuclear-interior.webp':physicalSources[key];
- if(!isNuclear){target.alt=key==='world'?'A broad red mushroom cap among grass, moss and forest plants.':'';target.srcset=key==='world'?'assets/forest-mushroom-photo-960.webp 960w, assets/forest-mushroom-photo-1920.webp 1920w, assets/forest-mushroom-photo-3456.webp 2091w':'';target.sizes=key==='world'?'(max-width: 650px) calc(100vw - 40px), 66vw':'';}
+ if(!isNuclear){target.alt=key==='world'?'A broad red mushroom cap among grass, moss and forest plants.':'';target.srcset=key==='world'?'assets/forest-mushroom-photo-960.webp 960w, assets/forest-mushroom-photo-1920.webp 1920w, assets/forest-mushroom-photo-3456.webp 2091w':'';target.sizes=key==='world'?'100vw':'';}
  if(target.dataset.source===src&&target.complete&&target.naturalWidth)return;
  if(target.dataset.source!==src){target.dataset.source=src;target.src=src;if(!isNuclear)$('physical-backdrop').src=key==='world'&&innerWidth<=650?'assets/forest-mushroom-photo-960.webp':src;}
  if(typeof target.decode!=='function')return;
@@ -1313,7 +1319,7 @@ function renderNucleusCues(g){
   target.style.width='max-content';const labelWidth=Math.ceil(target.getBoundingClientRect().width)||(portrait?119:145);
   let lx=portrait?Math.min(mw-labelWidth-2,Math.max(2,key==='envelope'?x+w*.52-labelWidth/2:x+w*geometry.label[0]-labelWidth/2)):(key==='envelope'?x+w*.52-labelWidth/2:key==='dna'?x-166:x+w+20);
   let ly=key==='envelope'?y-56:portrait||isHuman()?y+h*geometry.label[1]-22:y+h*({envelope:0,pores:.22,nucleolus:.49,dna:.70,nucleoplasm:.84}[key])-22;
-  if(portrait){const lower=y+h+12;if(key==='envelope'){lx=8;ly=0;}else if(key==='pores'){lx=mw-labelWidth-8;ly=0;}else if(key==='dna'){lx=8;ly=lower;}else if(key==='nucleoplasm'){lx=mw-labelWidth-8;ly=lower;}else{lx=(mw-labelWidth)/2;ly=lower+56;}}
+  if(portrait){const lower=y+h+12;if(key==='envelope'){lx=Math.max(4,Math.min(mw-labelWidth-4,px-labelWidth/2));ly=0;}else if(key==='pores'){lx=mw-labelWidth-4;ly=py-54;}else if(key==='dna'){lx=4;ly=py-60;}else if(key==='nucleoplasm'){lx=mw-labelWidth-4;ly=lower;}else if(isHuman()){lx=Math.max(4,Math.min(mw-labelWidth-4,px-labelWidth/2));ly=py+24;}else{lx=mw-labelWidth-4;ly=50;}}
   target.style.left=`${lx}px`;target.style.top=`${ly}px`;target.style.width='max-content';target.disabled=!active;target.setAttribute('aria-pressed',String(selectedPart===key));target.dataset.previewActive=String(visualPart===key);
   hit.style.left=`${geometry.point[0]*100}%`;hit.style.top=`${geometry.point[1]*100}%`;hit.hidden=!active;hit.dataset.active=String(visualPart===key);
   const sx=lx+labelWidth/2,sy=ly+22,dx=px-sx,dy=py-sy,edge=Math.max(1,Math.abs(dx)/(labelWidth/2+4),Math.abs(dy)/26),line=`M${sx+dx/edge} ${sy+dy/edge} L${px} ${py}`;lines+=line+' ';if(visualPart===key){activeLine=line;activePoint={x:px,y:py};}

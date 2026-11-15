@@ -30,3 +30,9 @@ A65.3-second educational montage combines separate experiments and representativ
 Adaptations: excerpts are resized, portrait-cropped, joined with dissolves, and overlaid with narrative and source captions. Original source audio is omitted. Portrait framing crops the scientific recording's peripheral scale/time labels; it is not used for numerical size or speed measurements. All shots represent separate contexts, not one documented experiment. No institutional or creator endorsement is implied.
 
 The RNA example describes a general research approach, supported by [NHGRI's transcriptome fact sheet](https://www.genome.gov/about-genomics/fact-sheets/Transcriptome-Fact-Sheet). The examples do not define exclusive boundaries between disciplines.
+
+
+# Cell biology references
+
+- E. coli cell envelope: [Matias et al. (2003), primary cryo-transmission electron microscopy study](https://pubmed.ncbi.nlm.nih.gov/14526023/). Outer and inner membranes enclose the periplasm containing the peptidoglycan wall. The illustrated cutaway simplifies these closely spaced layers.
+- Four-chain beta-galactosidase: [Jacobson et al. (1994), primary structural study](https://pubmed.ncbi.nlm.nih.gov/8008071/), with [RCSB structure4V40](https://www.rcsb.org/structure/4V40). The enzyme is a tetramer of four matching protein subunits. Each subunit in this example is one folded chain. The short amino-acid demonstration is illustrative, not the complete1023-amino-acid sequence.

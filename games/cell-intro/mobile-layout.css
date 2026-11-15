@@ -105,3 +105,28 @@
  #scene[data-phase=protein] #protein-workbar{margin-top:4px}
 }
 @media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){#scene[data-organism][data-phase=protein] #nucleus-model{min-height:0!important}}
+/* Activity actions stay in the reading flow instead of floating over anatomy. */
+#mobile-ribosome-action[hidden]{display:none!important}
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-learning=true] #dna-learning{flex-direction:column;align-items:stretch;gap:12px}
+ #scene #dna-learning>button{max-width:100%;width:100%;white-space:normal}
+ #scene #dna-learning #copy-instructions{position:static;inset:auto;transform:none;margin:0;width:100%;white-space:normal}
+ #scene #ribosome-target>#ribosome-task-cue{display:none!important}
+ #scene #mobile-ribosome-action{position:static;inset:auto;transform:none;width:100%;max-width:100%;white-space:normal}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #story-actions:not(:has(>button:not([hidden]),>details:not([hidden]),#assembly-bridge-actions:not([hidden]))){display:none!important;min-height:0;margin:0}
+ #scene[data-organism=bacterial][data-bacterial-early=true] #b-art-frame{height:280px}
+}
+
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-phase=world][data-view=physical] #story{margin-top:max(0px,calc(var(--usable-height,100dvh)*.46 - 76px))}
+}
+
+/* Label pockets follow their nearby targets; the anatomy and anchors stay fixed. */
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #h-art-frame{height:calc(min(100vw - 24px,420px)*.667 + 112px)}
+ #scene[data-phase=explore] #nucleus-model{height:calc(min(100vw - 24px,600px)*.84 / 1.25 + 116px)}
+}
+/* Keep the visible nucleus action clear of the cytoplasm name below the cell. */
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-organism=plant][data-phase=model] #select-model-nucleus>span{top:-54px;left:0;transform:none}
+}

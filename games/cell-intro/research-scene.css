@@ -26,3 +26,9 @@
 #scene #research-related{padding:8px 0;color:var(--ink);background:transparent;text-shadow:none}
 #scene[data-phase=research] header{text-shadow:none}
 #scene[data-phase=research] .scene-meta{align-self:flex-start;padding:4px 8px;background:rgb(19 27 32 / .66);border-radius:6px}
+
+/* Small credits and the catalogue link remain plain lettering. */
+#scene #research-source{color:#fff}
+#scene[data-research-shot="3"][data-research-aspect="portrait"] #research-source{color:#000}
+#scene[data-research-shot="5"][data-research-aspect="landscape"] #research-source{left:auto;right:8.3%;color:#fff}
+#scene #research-related{color:#fff;background:none;box-shadow:none;text-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
