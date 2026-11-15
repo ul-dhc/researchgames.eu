@@ -1,0 +1,21 @@
+/* Approved homepage light palette: lavender opening and closing, soft-white games. */
+[data-theme="light"]{--night:#f0edf8;--panel:#ffffff;--ink:#171625;--muted:#565668;--line:#dad6e6}
+[data-theme="light"] body{background:#f0edf8}
+[data-theme="light"] .site-header,
+[data-theme="light"] .site-header.scrolled{background:#f0edf8;border-bottom-color:transparent;backdrop-filter:none;box-shadow:none}
+[data-theme="light"] .launch-hero{background:#f0edf8;max-width:none;padding-inline:max(var(--launch-pad),calc((100% - 1480px)/2 + var(--launch-pad)))}
+[data-theme="light"] .launch-hero:before{opacity:0}
+[data-theme="light"] .manifesto{background:#f0edf8;color:#171625}
+[data-theme="light"] .manifesto-copy p{color:#565668}
+[data-theme="light"] :is(.launch-about,.launch-contact,.launch-footer){background:#f0edf8;--muted:#565668}
+[data-theme="light"] .catalog-game{border-color:#dad6e6}
+[data-theme="light"] .catalog-game:hover{border-color:#a79abb}
+@media(max-width:700px){
+ [data-theme="light"] .launch-hero{padding-inline:20px}
+}
+
+/* A softer white game interval between the lavender sections. */
+[data-theme="light"] .home-catalog{background:#fcfbfe;--muted:#565668}
+@media(min-width:761px){
+ [data-theme="light"] .home-catalog{max-width:none;padding-inline:max(46px,calc((100% - 1168px)/2))}
+}
