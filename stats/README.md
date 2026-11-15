@@ -182,7 +182,7 @@ The shared gameplay-session chart follows the same highlighter treatment: rounde
 
 The main overview header offers A+ with three sizes: normal (100%), enlarged (118%) and large (135%). Radio controls work with keyboard arrows; Escape or clicking outside closes the native popover. The selection is stored locally as `rg-dashboard-text-size` and restored before rendering. Both LV and EN labels, graph axis text, readouts, cards and dropdown options scale through `--rg-text-scale`; shared styles default to 1 elsewhere. Text scaling does not change chart data or line thickness. Keep the enlarged mobile layout free from horizontal overflow.
 
-The shared overview opens with the last 7 days selected by default for visits, gameplay and totals.
+The shared overview opens with the last 30 days selected by default for visits, gameplay and totals.
 
 
 ## Latgalian plant-name series
@@ -259,7 +259,7 @@ reporting day verified as 2026-11-04 in Riga.
 
 The main `/stats/` dashboard defaults to **Game analytics**; **Page visits** is a
 separate tab. `?view=gameplay` and `?view=visits` are shareable; old `#visits`
-links activate the visits tab. The period selector is shared and remains 7 days
+links activate the visits tab. The period selector is shared and opens with 30 days
 by default. Tabs use proper tab/tabpanel semantics with arrow/Home/End navigation.
 Game dashboards and gameplay methodology stay under Game analytics; the audience
 report stays under Page visits. The shared chart style and series colors remain.
