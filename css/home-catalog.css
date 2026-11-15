@@ -82,9 +82,3 @@
  .home-catalog .catalog-label{gap:8px 12px}
  .home-catalog .catalog-action{white-space:normal}
 }
-
-/* Only the formerly beige homepage catalog gets a white, full-width backdrop. */
-[data-theme="light"] .home-catalog{background:#ffffff}
-@media(min-width:761px){
- [data-theme="light"] .home-catalog{max-width:none;padding-inline:max(46px,calc((100% - 1168px)/2))}
-}
