@@ -7,7 +7,7 @@ const entry=(extra={})=>({rows:[{key:'LV',name:'Latvia',count:7}],...range,fetch
 const snapshot=(extra={})=>({version:1,generatedAt:now.toISOString(),paths:AUDIENCE_PATHS,periods:{all:{locations:entry()}},...extra});
 test('audience combines exactly the homepage and active game paths, excluding stats and UL',()=>{
  assert.ok(AUDIENCE_PATHS.includes('/'));assert.ok(AUDIENCE_PATHS.includes('/lv'));
- assert.ok(AUDIENCE_PATHS.includes('/games/muns-teirums'));assert.ok(AUDIENCE_PATHS.includes('/games/miklu-rezgis/berniem'));
+ assert.ok(AUDIENCE_PATHS.includes('/games/muna-teiruma'));assert.ok(AUDIENCE_PATHS.includes('/games/miklu-rezgis/berniem'));
  assert.ok(!AUDIENCE_PATHS.some(path=>/stats|LU107/i.test(path)));
  assert.throws(()=>normalizeAudience(snapshot({paths:['/']})),/scope/);
 });

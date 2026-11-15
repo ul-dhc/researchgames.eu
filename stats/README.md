@@ -128,7 +128,7 @@ so a previously cached missing or incomplete first snapshot does not delay recov
 
 The joint overview starts with page visits, before gameplay totals and timelines.
 A featured ResearchGames.eu landing-page card sums `/` and `/lv`; individual game
-cards follow for Riddle Grid, Livonian place names, Muns teirums, and A world
+cards follow for Riddle Grid, Livonian place names, Munā teirumā, and A world
 inside a cell. The cell card includes its public preview. UL107 remains excluded.
 `VISIT_PAGES` is the collector allowlist; `VISIT_GAMES` contains only games.
 Landing visits are never added to a game count. The existing individual dashboards
@@ -166,7 +166,7 @@ Audience layout: countries and browser languages show the five most frequent val
 
 ## Page-visit timeline
 
-The top of the overview, directly below the title/period controls and above the section navigation, renders a daily line chart: total, ResearchGames.eu landing page, Mīklu režģis, Lībiešu vietvārdi, Muns teirums and the cell game. Mīklu režģis and Lībiešu vietvārdi retain their gameplay-chart colors. Series order/colors are fixed in `visit-timeline.js` and the scoped `.visit-timeline-panel` CSS. Dark/light themes, LV/EN labels, keyboard day selection and touch inspection use the shared timeline renderer. Each chart has its own help-text ID.
+The top of the overview, directly below the title/period controls and above the section navigation, renders a daily line chart: total, ResearchGames.eu landing page, Mīklu režģis, Lībiešu vietvārdi, Munā teirumā and the cell game. Mīklu režģis and Lībiešu vietvārdi retain their gameplay-chart colors. Series order/colors are fixed in `visit-timeline.js` and the scoped `.visit-timeline-panel` CSS. Dark/light themes, LV/EN labels, keyboard day selection and touch inspection use the shared timeline renderer. Each chart has its own help-text ID.
 
 The existing GoatCounter hits requests already ask for daily data. `requestVisitSeries` now validates and combines each exact path’s daily values, retaining only nonzero `{date, visits}` records and the source’s reporting-day bounds. The daily sum must match the visit count. Dates follow GoatCounter’s daily grouping; range filters still use the established Riga start/end times. All-time rendering starts at the first observed visit, rather than the API’s year-2000 query boundary. Bounded periods retain quiet days, including partial reporting boundary days.
 
@@ -189,7 +189,7 @@ The shared overview opens with the last 7 days selected by default for visits, g
 
 `latgalian.html` uses the shared stylesheet, accessible dropdowns and timeline
 renderer. It has LV/EN, dark/light, persistent 100/118/135% reading sizes, section
-shortcuts and a default 7-day period. It currently covers Muns teirums; page visits
+shortcuts and a default 7-day period. It currently covers Munā teirumā; page visits
 stay independent of the gameplay size/mode filters. The shared overview links to
 this report without adding aggregate events to its differently defined session
 counts. Scores and durations are not collected in this event-based implementation.
@@ -214,7 +214,7 @@ names versioned and add schema tests before extending variants. For more detaile
 research (scores, duration, per-plant errors), add a separate explicit schema and
 storage design; do not encode individual results in GoatCounter event paths.
 
-The partner-facing `/games/muns-teirums/stats/` now serves the dashboard directly,
+The partner-facing `/games/muna-teiruma/stats/` now serves the dashboard directly,
 keeping its URL in the address bar. Regenerate it after template changes with
 `node stats/scripts/build-latgalian-page.mjs`. Both routes load the same modules,
 styles and snapshots; audience links use absolute paths.
@@ -224,7 +224,7 @@ styles and snapshots; audience links use absolute paths.
 
 All dashboard timestamps use Europe/Riga, regardless of the viewer's operating
 system/browser time zone or LV/EN language. The shared `time.js` formatter handles
-winter/summer offsets. The shared overview, visits, audience, Muns/Mums teirums
+winter/summer offsets. The shared overview, visits, audience, Muns/Munā teirumā
 report and archived LU107 report use this formatter. Riddle snapshot aggregation
 and formatted comments already explicitly use Europe/Riga. Calendar-only timeline
 keys are not instants; render their existing date without shifting to another day.

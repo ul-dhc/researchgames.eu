@@ -1,4 +1,4 @@
-export const PLANT_GAMES=[{id:'muns-teirums',name:'Muns teirums',url:'/games/muns-teirums/',pairs:[6,8,10]}];
+export const PLANT_GAMES=[{id:'muns-teirums',name:'Munā teirumā',url:'/games/muna-teiruma/',pairs:[6,8,10]}];
 export const PLANT_PERIODS=['all','30d','7d'];
 export const ACTIONS=['start','complete','skip'];
 export const VARIANTS=PLANT_GAMES.flatMap(game=>game.pairs.flatMap(pairs=>[true,false].flatMap(time=>[true,false].map(points=>({game:game.id,pairs,time,points,key:`${pairs}-${time?'time':'untimed'}-${points?'points':'unscored'}`})))));

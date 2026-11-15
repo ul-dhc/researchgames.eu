@@ -65,7 +65,7 @@ test('an older fallback fills missing game-periods without replacing newer count
 
 test('landing and active game visits stay separate, with UL excluded',async()=>{
  assert.deepEqual(VISIT_PAGES.landing,['/','/lv']);
- assert.deepEqual(VISIT_GAMES['muns-teirums'],['/games/muns-teirums']);
+ assert.deepEqual(VISIT_GAMES['muns-teirums'],['/games/muns-teirums','/games/muna-teiruma']);
  assert.equal(VISIT_PAGES.lu107,undefined);
  const {snapshot}=await collectVisits(null,async paths=>paths.includes('/')?100:8,now);
  assert.equal(snapshot.periods.all.landing.visits,100);

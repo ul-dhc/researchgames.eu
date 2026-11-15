@@ -8,7 +8,7 @@ import { normalizeSnapshot, snapshotState, mergeSnapshots, refreshStaleSources }
 const copy = {
  lv: {
   visitTotalsTitle:'Apmeklējumu kopsummas',tabGameplay:'Spēļu analītika',tabGameplayNote:'Sesijas un rezultāti',tabVisits:'Lapas apmeklējumi',tabVisitsNote:'Sākumlapa un spēļu lapas',visitDefinition:'Lapas atvēršana tiek uzskaitīta arī tad, ja spēle netiek sākta. Vienā apmeklējumā var izspēlēt vairākas spēles.',gameplayDefinition:'Reģistrētās izspēles un pabeigtās spēles. Vienā lapas apmeklējumā var būt vairākas izspēles; katrai spēlei ir sava sesijas sākuma definīcija.',selectedPeriod:'Izvēlētais periods',periodTotals:'Kopsummas visā periodā',sessionUnit:'Spēlēšanas sesijas',sessionReadout:'Sesijas',
-  latgalianTitle:'Mums teirums',latgalianIntro:'Muns teirums: apmeklējumi, spēlēšana, izmēri un režīmi.',
+  latgalianTitle:'Munā teirumā',latgalianIntro:'Munā teirumā: apmeklējumi, spēlēšana, izmēri un režīmi.',
   textSize:'Teksta izmērs',sizeNormal:'Parasts',sizeMedium:'Palielināts',sizeLarge:'Liels',
   audienceTitle:'Vietnes auditorija',audienceIntro:'Valstis, pārlūka valodas, ekrāni un tehnoloģijas — sākumlapai un visām aktīvajām spēlēm kopā.',
   navVisits:'Apmeklējumi',navGameplay:'Spēlēšana',navReports:'Spēļu pārskati',navData:'Par datiem',visitsIntro:'Cik bieži apmeklē ResearchGames.eu sākumlapu un katras spēles lapu.',gameplayIntro:'Reģistrētās sesijas, pabeigtās spēles un aktivitāte laika gaitā.',dataIntro:'Ko nozīmē rādītāji un kā salīdzināt spēļu datus.',
@@ -16,7 +16,7 @@ const copy = {
  },
  en: {
   visitTotalsTitle:'Visit totals',tabGameplay:'Game analytics',tabGameplayNote:'Sessions and results',tabVisits:'Page visits',tabVisitsNote:'Landing and game pages',visitDefinition:'A page visit can be recorded without starting a game. One visit can include several games.',gameplayDefinition:'Recorded play sessions and completed games. One page visit can include several sessions; each game defines when a session begins.',selectedPeriod:'Selected period',periodTotals:'Totals for the whole period',sessionUnit:'Gameplay sessions',sessionReadout:'Sessions',
-  latgalianTitle:'Mums teirums',latgalianIntro:'Muns teirums: visits, gameplay, sizes and modes.',
+  latgalianTitle:'Munā teirumā',latgalianIntro:'Munā teirumā: visits, gameplay, sizes and modes.',
   textSize:'Text size',sizeNormal:'Normal',sizeMedium:'Enlarged',sizeLarge:'Large',
   audienceTitle:'Website audience',audienceIntro:'Countries, browser languages, screens and technology across the landing page and all active games.',
   navVisits:'Page visits',navGameplay:'Gameplay',navReports:'Game dashboards',navData:'About the data',visitsIntro:'Visits to the ResearchGames.eu landing page and each game page.',gameplayIntro:'Recorded sessions, completed games and activity over time.',dataIntro:'What the metrics mean and how to compare game data.',
@@ -63,7 +63,7 @@ function render() {
  document.title = `ResearchGames.eu – ${t('title')}`;
  document.querySelectorAll('[data-text]').forEach(el => {el.textContent = t(el.dataset.text);});
  document.querySelectorAll('[data-lang]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.lang === language)));
- if($('latgalian-link'))$('latgalian-link').href='/games/muns-teirums/stats/?lang='+language;
+ if($('latgalian-link'))$('latgalian-link').href='/games/muna-teiruma/stats/?lang='+language;
  $('audience-link').href = './audience.html?lang='+language;
  $('home').href = language === 'lv' ? '/lv/' : '/';
  document.querySelector('.brand').href = $('home').href;

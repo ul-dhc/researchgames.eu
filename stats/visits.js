@@ -2,7 +2,7 @@
 export const VISIT_GAMES = {
   'miklu-rezgis': ['/games/miklu-rezgis', '/games/miklu-rezgis/berniem'],
   'libiesu-vietvardi': ['/games/libiesu-vietvardi'],
-  'muns-teirums': ['/games/muns-teirums'],
+  'muns-teirums': ['/games/muns-teirums', '/games/muna-teiruma'],
   'cell-intro': ['/games/cell-intro', '/games/cell-intro-preview']
 };
 export const VISIT_PAGES = {landing: ['/', '/lv'], ...VISIT_GAMES};

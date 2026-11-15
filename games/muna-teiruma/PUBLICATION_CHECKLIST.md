@@ -1,4 +1,4 @@
-# Muns teirums publiskās palaišanas kontrolsaraksts
+# Munā teirumā publiskās palaišanas kontrolsaraksts
 
 Pirms spēles publiskas izziņošanas:
 

@@ -1,12 +1,14 @@
 // Reuse the full game's plant data, deck randomization and matching state machine.
-import { plants } from '/games/muns-teirums/plants.js';
-import { sampleMeadow, makeDeck, createGame, selectCard, resolveMismatch } from '/games/muns-teirums/game-model.mjs';
+import { plants } from '/games/muna-teiruma/plants.js?v=20261115';
+import { t } from '/games/muna-teiruma/translations.mjs?v=20261115';
+import { sampleMeadow, makeDeck, createGame, selectCard, resolveMismatch } from '/games/muna-teiruma/game-model.mjs';
 const ids = ['matainais-abolins','plavas-plaukskene','tiruma-kosa','gailbiksite'];
 const chosenNames = {'matainais-abolins':'kača pauteni','plavas-plaukskene':'cyuku zīpis','tiruma-kosa':'gegiele','gailbiksite':'gaiļa iuzys'};
 const pool = ids.map(id => {
  const plant = plants.find(item => item.id === id);
  if (!plant) throw new Error(`Missing preview plant: ${id}`);
- return {...plant, cardName:chosenNames[id], image:`/games/muns-teirums/${plant.image}`};
+ if (!plant.namesLtg.includes(chosenNames[id])) throw new Error(`Preview name missing from source: ${id}`);
+ return {...plant, cardName:chosenNames[id], image:`/games/muna-teiruma/${plant.image}`};
 });
 for (const preview of document.querySelectorAll('[data-teirums-preview]')) {
  const lv = preview.dataset.locale === 'lv';
@@ -20,8 +22,8 @@ for (const preview of document.querySelectorAll('[data-teirums-preview]')) {
   preview.classList.add('teirums-finishing');
   finishTimer=setTimeout(()=>{
    preview.classList.remove('teirums-finishing');
-   const heading=document.createElement('h4');heading.id='teirums-meadow-title';heading.lang='ltg';heading.textContent='Muns teirums';heading.tabIndex=-1;
-   const count=document.createElement('p');count.className='teirums-meadow-count';count.lang='ltg';count.textContent=`Munā teirumā aug ${meadow.map(plant=>plant.cardName).join(' i ')}.`;
+   const heading=document.createElement('h4');heading.id='teirums-meadow-title';heading.lang='ltg';heading.textContent=t('01.01');heading.tabIndex=-1;
+   const count=document.createElement('p');count.className='teirums-meadow-count';count.lang='ltg';count.textContent=t('04.01',{augu_saraksts:meadow.map(plant=>plant.cardName).join(' i ')});
    const collection=document.createElement('div');collection.className='plant-gallery';
    collection.append(...meadow.map(plant=>{
     const article=document.createElement('article');article.className='gallery-plant';
@@ -78,7 +80,7 @@ for (const preview of document.querySelectorAll('[data-teirums-preview]')) {
   card.setAttribute('aria-pressed','false');card.setAttribute('aria-label',`${lv?'Atvērt kartīti':'Turn card'} ${index+1}`);
   const inner=document.createElement('span');inner.className='card-inner';
   const back=document.createElement('span');back.className='card-back';back.setAttribute('aria-hidden','true');
-  const logo=document.createElement('img');logo.src='/games/muns-teirums/assets/rg-violet.svg';logo.alt='';logo.width=62;logo.height=62;back.append(logo);
+  const logo=document.createElement('img');logo.src='/games/muna-teiruma/assets/rg-violet.svg';logo.alt='';logo.width=62;logo.height=62;back.append(logo);
   const front=document.createElement('span');front.className='card-front';front.setAttribute('aria-hidden','true');
   if(item.kind==='image'){
    const image=document.createElement('img');image.src=item.plant.image;image.alt='';image.draggable=false;front.append(image);

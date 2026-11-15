@@ -36,7 +36,7 @@ Spēles saturs un gaita darbojas pārlūkā. No 2026-11-03 esošais GoatCounter 
 ## Pārbaude
 
 No šīs mapes: `node --test tests/game-model.test.mjs`.
-Priekšskatījumam: palaist statisku HTTP serveri repo saknē un atvērt `/games/muns-teirums/`.
+Priekšskatījumam: palaist statisku HTTP serveri repo saknē un atvērt `/games/muna-teiruma/`.
 
 ## Mainīga pļava
 
@@ -72,7 +72,7 @@ Saskarnē izmantots 61 lietotājas aizpildītais tulkojums no `Muns_teirums_sask
 ## Gameplay analytics — 2026-11-03
 
 Series dashboard: `/stats/latgalian.html`; game-specific shortcut:
-`/games/muns-teirums/stats/`. Linked from the shared `/stats/` overview.
+`/games/muna-teiruma/stats/`. Linked from the shared `/stats/` overview.
 
 `analytics.mjs` emits only `start`, `complete`, `skip` counters to the existing
 GoatCounter script. Versioned event names encode game, 6/9/12 pairs, time on/off,
@@ -85,6 +85,6 @@ An in-memory queue waits for the existing analytics script; no durable retry or
 claim of exactly-once delivery is made. Blockers/offline use may reduce counts.
 
 Rebuild `bundle.js` after changing `analytics.mjs` or `app.js` with
-`node games/muns-teirums/scripts/build.mjs` from the repository root.
-Tests: `node --test games/muns-teirums/tests/*.test.mjs stats/tests/*.test.mjs`.
+`node games/muna-teiruma/scripts/build.mjs` from the repository root.
+Tests: `node --test games/muna-teiruma/tests/*.test.mjs stats/tests/*.test.mjs`.
 Historical games cannot be reconstructed. Counting begins at deployment.

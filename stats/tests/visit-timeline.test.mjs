@@ -15,7 +15,7 @@ test('daily visits merge main and children pages without losing overlapping date
  assert.ok(!JSON.stringify(result).includes('private'));
 });
 test('missing history is distinct from zero history and malformed daily totals are rejected',async()=>{
- const path='/games/muns-teirums';
+ const path='/games/muna-teiruma';
  const missing=await requestVisitSeries([path],range,'test-only',async()=>response(path,5,undefined));
  assert.deepEqual(missing,{visits:5});
  const empty=await requestVisitSeries([path],range,'test-only',async()=>({ok:true,json:async()=>({hits:[],more:false})}));

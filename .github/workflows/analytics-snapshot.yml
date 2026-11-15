@@ -10,7 +10,7 @@ on:
         default: true
   push:
     branches: [main]
-    paths: ['stats/**', 'games/miklu-rezgis/**', 'games/muns-teirums/**', '.github/workflows/analytics-snapshot.yml']
+    paths: ['stats/**', 'games/miklu-rezgis/**', 'games/muna-teiruma/**', '.github/workflows/analytics-snapshot.yml']
 permissions:
   contents: write
 concurrency:
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: '22'
       - name: Test snapshot handling
-        run: node --test stats/tests/*.test.mjs games/miklu-rezgis/tests/*.test.mjs games/muns-teirums/tests/*.test.mjs
+        run: node --test stats/tests/*.test.mjs games/miklu-rezgis/tests/*.test.mjs games/muna-teiruma/tests/*.test.mjs
       - name: Read last published snapshot
         run: |
           echo '{}' > games/miklu-rezgis/data/riddles-refresh.json

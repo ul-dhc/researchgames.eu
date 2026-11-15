@@ -31,6 +31,6 @@ test('event parser accepts only expected events; visits still reject them',async
 });
 test('game-specific visit chart excludes every other game and the landing page',()=>{
  const entry=n=>({timelineStart:'2026-11-01',timelineEnd:'2026-11-03',timeline:[{date:'2026-11-03',visits:n}]});
- const series=buildVisitTimeline({'muns-teirums':entry(4),landing:entry(99)},'7d',{'muns-teirums':'Muns teirums'},'Total',['muns-teirums']);
+ const series=buildVisitTimeline({'muns-teirums':entry(4),landing:entry(99)},'7d',{'muns-teirums':'Munā teirumā'},'Total',['muns-teirums']);
  assert.equal(series.games.length,1);assert.deepEqual(series.games[0].values,[0,0,4]);
 });
