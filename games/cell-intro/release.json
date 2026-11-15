@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261116-r8",
+  "release": "cell-intro-20261116-r9",
   "routes": [
     "plant",
     "human",
@@ -270,7 +270,7 @@
     },
     "index.html": {
       "bytes": 46968,
-      "sha256": "33bd6a0859157aafbb88ce889e2bcbdeff2e41eb0a057d22c66ba8af2d029a38"
+      "sha256": "8268aecd58d4585782ad8503109e7f285ae46793be8d55dbffb78c30b263ad5d"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -281,8 +281,8 @@
       "sha256": "200b2d4d80de736841c7019a0e1a03bc9549e24fe09839aa30cbbf1a1bcdff0e"
     },
     "journey-refinements.css": {
-      "bytes": 12404,
-      "sha256": "aa652f86809b308a7ac9b34e117a2ef5766c162a86be7609db16315a08466fd5"
+      "bytes": 12290,
+      "sha256": "a6ba5f9cdad11031acd977a7a1ab86e99bb7c4ce16aac625c49745696bee2166"
     },
     "lucide-LICENSE.txt": {
       "bytes": 3208,
