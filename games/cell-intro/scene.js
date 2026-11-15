@@ -1,7 +1,7 @@
 import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261115-r5';
 let researchScene=null;
 import {installEnvironment} from './environment.js?v=cell-intro-20261115-r5';
-import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261115-r5';
+import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261115-r6';
 import {createHumanRoute,humanNucleusArt,humanScenes,humanCopy,humanProtein,humanRoles,humanReward,humanRecap} from './human.js?v=cell-intro-20261115-r5';
 import {createBacterialRoute,bacterialScenes,bacterialCopy,bacterialProtein,bacterialDelivery,bacterialReward,bacterialRecap,bacterialRoles} from './bacterial.js?v=cell-intro-20261115-r5';
 import { createCellBranches } from './branches.js?v=cell-intro-20261115-r5';

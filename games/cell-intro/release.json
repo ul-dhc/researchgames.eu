@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261115-r5",
+  "release": "cell-intro-20261115-r6",
   "routes": [
     "plant",
     "human",
@@ -262,7 +262,7 @@
     },
     "index.html": {
       "bytes": 47058,
-      "sha256": "c443a2f70fbb02fb91689554db203b52588e7ec7d89cc41bca11c663b4cce386"
+      "sha256": "08a72c3b9d8a9ce6d7d3edfd382e1a8c82c8107b0f64e0290de4a97f052b117f"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -301,8 +301,8 @@
       "sha256": "655835c6fff8d0b670cc268edaa54f58a24e69c33b6f935c087cdd254a9cc4b0"
     },
     "onion-model.js": {
-      "bytes": 4655,
-      "sha256": "8812dd15df5c2a0464a72a2ee49c9ca8bf89764f7ab2ffd8b8d86ee8136a5891"
+      "bytes": 4811,
+      "sha256": "bb67ed24897b2c5a0d0244672d1ae26ef75a8b97428016acceb04d453ddadfee"
     },
     "research-scene.css": {
       "bytes": 3546,
@@ -314,7 +314,7 @@
     },
     "scene.js": {
       "bytes": 196558,
-      "sha256": "53997feed537539150b4e0ad9ed0e53dc541c50d9f459ab8d1821c683ee78177"
+      "sha256": "80d223bd03ff498905938f8fc26f119b0657e8d78c1406aad0b76cffc68c7a47"
     },
     "shared-ending.js": {
       "bytes": 5284,
