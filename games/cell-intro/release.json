@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261115-r2",
+  "release": "cell-intro-20261115-r3",
   "routes": [
     "plant",
     "human",
@@ -217,8 +217,8 @@
       "sha256": "e78cd63972ef8899b5f6ccd58cb7a28003b404cc61d593fa0107e97f43cd9c73"
     },
     "buttons.css": {
-      "bytes": 12143,
-      "sha256": "10a12995493a17101f6668976a7d859ecd07dba948b835dd920724e964e28c40"
+      "bytes": 12398,
+      "sha256": "75c71011a2ac16bdd83d08427348ca7c204649b775c8c87782d4aa55af4a92d9"
     },
     "cell-facts.js": {
       "bytes": 1619,
@@ -262,7 +262,7 @@
     },
     "index.html": {
       "bytes": 47072,
-      "sha256": "acac2b8bcd9bc840e3dd3ba7f944582387fe9ad2bee61f3d7247c4a78f611530"
+      "sha256": "949ebb845b077f1bb2809ec5ff13e2eb65c482e09045f406d07866b6f000d3d5"
     },
     "information-labels.css": {
       "bytes": 6166,
