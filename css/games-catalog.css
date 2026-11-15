@@ -297,7 +297,7 @@
 [data-theme="light"] :is(.home-catalog,.catalog-unified) #riddle-preview .catalog-cover>img.actual-game-shot{background:#f7fafb}
 
 /* Unavailable games use the same action geometry with a neutral disabled outline. */
-:is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border:1px solid #6b708078;border-radius:7px;background:transparent;color:#9095a2;box-shadow:none;cursor:default;font-size:14px;font-weight:500;line-height:1.4;text-align:center}
+:is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 18px;border:1px solid #6b708078;border-radius:7px;background:transparent;color:#9095a2;box-shadow:none;cursor:default;font-size:16px;font-weight:500;line-height:1.4;text-align:center}
 :is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action:hover{background:transparent;border-color:#6b708078;color:#9095a2;box-shadow:none;transform:none}
 [data-theme="light"] :is(.home-catalog,.catalog-unified) .catalog-cta>.unavailable-action{color:#68707e;border-color:#969ca7;background:transparent}
 /* One quiet image-hover treatment across both catalogs, using the full plant composition. */
@@ -361,3 +361,23 @@
  .catalog-unified .unified-card>.mobile-card-details{margin:0 20px}
  .catalog-unified .mobile-card-details .research-origin{margin:18px 0 0;padding:18px 0 0;border-top:1px solid var(--line)}
 }
+
+/* Secondary information stays readable in both themes and at phone sizes. */
+.catalog-unified .section-intro p{font-size:16px;line-height:1.6}
+.catalog-unified .unified-card .catalog-description{font-size:16px;line-height:1.65}
+.catalog-unified .unified-card .catalog-meta,[data-theme="light"] .catalog-unified .unified-card .catalog-meta{font-size:14px;line-height:1.5}
+.catalog-unified .availability{font-size:12px;line-height:1.4;letter-spacing:.055em}
+.catalog-unified .unified-card .rg-topics>span,.catalog-unified .unified-card .rg-topics>a,[data-theme="light"] .catalog-unified .unified-card .rg-topics>span,[data-theme="light"] .catalog-unified .unified-card .rg-topics>a{font-size:14px;line-height:1.4;min-height:32px;padding:5px 10px}
+.catalog-unified .access-note{font-size:14px;line-height:1.6}
+.catalog-unified .catalog-action{font-size:16px}
+.catalog-unified .research-origin .facts,.catalog-unified .research-origin p,[data-theme="light"] .catalog-unified .research-origin .facts{font-size:15px;line-height:1.65}
+.catalog-unified .research-origin .source-type,[data-theme="light"] .catalog-unified .research-origin .source-type{font-size:12px;line-height:1.5}
+.catalog-filters button{font-size:14px}
+.catalog-filters button span{font-size:12px}
+@media(max-width:700px){
+ .mobile-card-details>summary{font-size:14px;line-height:1.5}
+ .catalog-unified .unified-card .rg-topics>a{min-height:44px}
+ .catalog-unified .mobile-card-details .research-origin .facts,.catalog-unified .mobile-card-details .research-origin p{font-size:15px}
+}
+
+:is(.catalog,.home-catalog) .small-label{font-size:12px}

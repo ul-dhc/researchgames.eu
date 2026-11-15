@@ -66,3 +66,19 @@
  .home-catalog .plant-cover>img:nth-child(2){height:96px}
  .home-catalog .plant-cover>img:nth-child(3){display:none}
 }
+
+/* Keep compact homepage cards readable without relying on browser zoom. */
+.home-catalog-heading p:last-child{font-size:17px;line-height:1.6}
+.home-catalog-heading>.catalog-action{font-size:15px}
+.home-catalog .catalog-description{font-size:16px;line-height:1.65}
+.home-catalog .catalog-meta{font-size:14px;line-height:1.5}
+.home-catalog .availability{font-size:12px;line-height:1.4;letter-spacing:.055em}
+.home-catalog .rg-topics{gap:7px}
+.home-catalog .rg-topics>span,.home-catalog .rg-topics>a{font-size:14px;line-height:1.4;min-height:32px;padding:5px 10px}
+.home-catalog .access-note{font-size:14px;line-height:1.6}
+.home-catalog .catalog-action{font-size:16px}
+@media(max-width:700px){
+ .home-catalog .rg-topics>a{min-height:44px}
+ .home-catalog .catalog-label{gap:8px 12px}
+ .home-catalog .catalog-action{white-space:normal}
+}
