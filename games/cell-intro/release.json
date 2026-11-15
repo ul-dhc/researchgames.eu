@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261115-r3",
+  "release": "cell-intro-20261115-r4",
   "routes": [
     "plant",
     "human",
@@ -262,7 +262,7 @@
     },
     "index.html": {
       "bytes": 47072,
-      "sha256": "949ebb845b077f1bb2809ec5ff13e2eb65c482e09045f406d07866b6f000d3d5"
+      "sha256": "a96230ebc55f890f38bdfd14c04965c763c12f5bfb9e652bdd1c0b31244b682f"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -293,8 +293,8 @@
       "sha256": "8bdfd7470a4b390e55caa2165e7712c25d8f38a9d451c68a46f953ecc6a4bef3"
     },
     "mobile-layout.css": {
-      "bytes": 10639,
-      "sha256": "82377dfc52e134439b2638b82c0c801f0e73766d8be9e0a2687014ba4e58d77b"
+      "bytes": 10446,
+      "sha256": "2bbf344887f8dd1f9a709b31e4f338b1b536f1f27e8d47a525e53b365f98fe61"
     },
     "onion-model.css": {
       "bytes": 2395,
@@ -305,8 +305,8 @@
       "sha256": "11a504310e86c4d2184d166c7e3ad9b64c204587b91eecfee274d78ea6847e0c"
     },
     "research-scene.css": {
-      "bytes": 2070,
-      "sha256": "62b09fa1e25d33fa737adac7d89073bd4ef5bdead65326e57c3a5aaa3f4858a3"
+      "bytes": 3098,
+      "sha256": "8235f4d43c6ea8a64334b3221cf8f2b2e297f61a4c16b9a20a7791c4fba7d57d"
     },
     "scene.css": {
       "bytes": 64821,
@@ -314,11 +314,11 @@
     },
     "scene.js": {
       "bytes": 195215,
-      "sha256": "29a3063aab8a83b2d3e53fba7ff3ceefe68a4ba451d0ec194c23e7c6d0ad7968"
+      "sha256": "df3facafd6d160fb43d56900396f2194b75baf7713378c4318a595dbb1604d3f"
     },
     "shared-ending.js": {
-      "bytes": 5096,
-      "sha256": "117ba540fa83ef666cd862490c36c5a8c939d3c3edc824e881a1ad6663702622"
+      "bytes": 5260,
+      "sha256": "32702c5afb4b009142f8c66c915663a24195eeb249694123f2247df7a74f435f"
     },
     "shared-icons.js": {
       "bytes": 7308,

@@ -1,4 +1,4 @@
-import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261115-r2';
+import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261115-r4';
 let researchScene=null;
 import {installEnvironment} from './environment.js?v=cell-intro-20261115-r2';
 import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261115-r2';
