@@ -1,0 +1,54 @@
+/* Reuse the established activity column and its mobile choose-then-place flow. */
+#scene[data-phase=cell-places][data-organism] #model-activity{width:410px;max-height:none;overflow:visible;padding:16px}
+#scene[data-phase=cell-places][data-organism] #activity-question{min-height:2.5em}
+#scene[data-phase=cell-places][data-organism] #activity-feedback{min-height:44px;margin:8px 0 0}
+#scene[data-phase=cell-places][data-organism] .activity-framing{min-height:0;margin-bottom:8px}
+#scene[data-phase=cell-places][data-organism] .activity-finish-slot{display:grid;min-height:52px}
+#scene[data-phase=cell-places][data-organism] #activity-next{width:100%;margin:0}
+/* The shared panel already provides the question and feedback. */
+#scene[data-phase=cell-places][data-organism] #activity-drop-cue{display:none!important}
+#scene[data-phase=cell-places][data-organism] :is(#h-cell-art,#b-cell-art){height:calc(100% - 48px);top:0}
+#cell-placement-surface{position:absolute;z-index:7;overflow:visible;pointer-events:auto;touch-action:pan-y}
+#cell-placement-surface[hidden]{display:none!important}
+#cell-placement-surface>path{fill:transparent;stroke:transparent;stroke-width:0;cursor:crosshair;outline:none}
+#cell-placement-surface>path:focus-visible{fill:var(--action-soft);stroke:var(--action);stroke-width:2px;vector-effect:non-scaling-stroke}
+#cell-placement-surface>path[data-feedback=correct]{fill:var(--action-soft);stroke:var(--action);stroke-width:2px;vector-effect:non-scaling-stroke}
+#cell-placement-surface>path[data-place-region=membrane]{fill:none;stroke-width:18px;vector-effect:non-scaling-stroke}
+#cell-placement-surface>path[data-place-region=membrane]:focus-visible,#cell-placement-surface>path[data-place-region=membrane][data-feedback=correct]{fill:none;stroke-width:3px}
+@media(min-width:1001px),(pointer:fine) and (min-width:651px) and (min-height:651px){
+ #scene[data-phase=cell-places][data-organism]{display:grid;grid-template-columns:minmax(0,1fr) 410px;column-gap:24px;align-content:start;height:auto;min-height:100svh;padding:88px var(--gutter) 110px;overflow:clip}
+ #scene[data-phase=cell-places][data-organism] #story{position:relative;inset:auto;grid-column:1;grid-row:1;align-self:start;max-width:none;margin:0}
+ #scene[data-phase=cell-places][data-organism] #model-activity{position:relative;inset:auto;grid-column:2;grid-row:1/span 2;align-self:start;width:100%;margin:0}
+ #scene[data-phase=cell-places][data-organism] :is(#nucleus-model,#human-tour,#bacterial-tour){position:relative;inset:auto;grid-column:1;grid-row:2;width:100%;height:380px;max-width:none;max-height:none;margin:12px 0 0;transform:none}
+ #scene[data-phase=cell-places][data-organism] :is(#h-art-frame,#b-art-frame){height:380px}
+}
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-phase=cell-places][data-organism] #model-activity{position:relative;inset:auto;order:2;margin:16px 24px 0;width:auto;max-height:none;overflow:visible}
+ #scene[data-phase=cell-places][data-organism] #nucleus-model{order:3;height:240px;margin:0 12px 12px}
+ #scene[data-phase=cell-places][data-organism] :is(#human-tour,#bacterial-tour){order:3;margin:0 12px 12px;width:calc(100% - 24px)}
+ #scene[data-phase=cell-places][data-organism] :is(#h-art-frame,#b-art-frame){height:280px}
+}
+
+#scene[data-phase=cell-places][data-organism] .activity-finish-slot>*{grid-area:1/1}
+#scene[data-phase=cell-places][data-organism] .activity-finish-slot>#activity-next{align-self:center}
+#scene[data-phase=cell-places][data-organism] #model-activity[data-cell-complete=true] #activity-feedback{opacity:0}
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-phase=cell-places][data-organism] :is(#caption,#detail,#story-actions){display:none!important}
+ #scene[data-phase=cell-places][data-organism] #model-activity{padding:12px;margin-top:12px}
+ #scene[data-phase=cell-places][data-organism] .activity-kicker{margin-bottom:8px}
+ #scene[data-phase=cell-places][data-organism] .activity-choices{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #scene[data-phase=cell-places][data-organism] .activity-choice{min-height:86px;font-size:12px}
+ #scene[data-phase=cell-places][data-organism] .activity-choice>svg{height:38px}
+ #scene[data-phase=cell-places][data-organism] #nucleus-model{height:220px}
+ #scene[data-phase=cell-places][data-organism] :is(#h-art-frame,#b-art-frame){height:260px}
+}
+@media(max-width:350px){
+ #scene[data-phase=cell-places][data-organism] #activity-question{font-size:20px;min-height:3.75em}
+ #scene[data-phase=cell-places][data-organism] .activity-choice{font-size:11px}
+}
+#scene[data-phase=cell-places][data-organism] #activity-feedback{pointer-events:none}
+@media(max-width:650px),(max-width:1000px) and (max-height:650px),(pointer:coarse) and (max-width:1000px){
+ #scene[data-phase=cell-places][data-organism] :is(#caption,#detail,#story-actions){display:none!important}
+}
+
+#scene[data-phase=cell-places][data-organism] #story-actions{display:none!important}

@@ -1,24 +1,24 @@
 {
-  "release": "cell-intro-20261115-r7",
+  "release": "cell-intro-20261116-r8",
   "routes": [
     "plant",
     "human",
     "bacterial"
   ],
-  "researchDurationSeconds": 65.3,
+  "researchDurationSeconds": 68.8,
   "filmAudioStreams": 0,
   "files": {
     "CREDITS.md": {
-      "bytes": 5319,
-      "sha256": "cc4f09c92e3b5eb45c98b9fa1b8a4f8a54e499d0629255ded49a89ed82407e01"
+      "bytes": 5817,
+      "sha256": "c89ebbe611e014a06c1251cd4df4193abda0d92913318a166ae0787813cce658"
     },
     "README.md": {
       "bytes": 977,
       "sha256": "6bbcf224d17ed414efc3161f097bc2ed95e7cde8df9f2dab9a51808448394654"
     },
     "ambient-mixer.js": {
-      "bytes": 9764,
-      "sha256": "e7d1602f87d93efe884fc6cb554dad84adcc1f2d0bcc3fe717c080a03cbd3e2f"
+      "bytes": 11322,
+      "sha256": "26f396730586fb4e083c2967b0bc59de2cc74f54cd76e0f535b7d896a34ec03f"
     },
     "assets/bacterial-folded-chain-card.webp": {
       "bytes": 46506,
@@ -205,16 +205,16 @@
       "sha256": "6900661075182d08c7c2699c3f5b6e9e0d869a63c12181552a2dbad4cc1a1e1e"
     },
     "bacterial.js": {
-      "bytes": 26226,
-      "sha256": "242e5c4210a33fa1f00741587cdd3cfcc2b835f698dda99d28b38151577a5081"
+      "bytes": 26213,
+      "sha256": "2437a116cb0c6f6e1ebe9b175fc5c4de810e87491ca5a0fad0fc3836d102bcd9"
     },
     "branches.css": {
       "bytes": 8237,
       "sha256": "d2c05d48c1a5e54120f7c7929a225e403e297149b22e026305be3c9a09c35a74"
     },
     "branches.js": {
-      "bytes": 11219,
-      "sha256": "e78cd63972ef8899b5f6ccd58cb7a28003b404cc61d593fa0107e97f43cd9c73"
+      "bytes": 11222,
+      "sha256": "28f92bc37876b58f6822f08c6525bcf2a53be8e30d46c6b192394454349338b9"
     },
     "buttons.css": {
       "bytes": 12398,
@@ -223,6 +223,14 @@
     "cell-facts.js": {
       "bytes": 1619,
       "sha256": "650386543b3b3b18c29c56d284edf80212de7e6a232c6bd2e16ad6168e0d3d8c"
+    },
+    "cell-placement.css": {
+      "bytes": 5079,
+      "sha256": "ce1fb04406426cdbef7578730d12286407d9a18cf7db73e4c076b417715790e4"
+    },
+    "cell-placement.js": {
+      "bytes": 10281,
+      "sha256": "988836f2d39239bf250e6ec1d2b3b6809ccbfc640a9c50857c691ee5bf664bb3"
     },
     "chooser-art.js": {
       "bytes": 3479,
@@ -253,16 +261,16 @@
       "sha256": "db76fcf51bed692c7c101a875a6fbea3495a266df6d74c6d4913d4471b3ebc43"
     },
     "human.js": {
-      "bytes": 24218,
-      "sha256": "693b7110fd2852b28f8db3678bdface42da4ebdc50b56083e00e9a256265f56b"
+      "bytes": 24120,
+      "sha256": "8e7ad30b1bed97c9c7681a67038efd07d778eaa103d5ff7d5e67cf112ca79427"
     },
     "icons.js": {
       "bytes": 1557,
       "sha256": "991014133a08e8a99c73079d82479983704b25fbb4a8e1914534dd197443fa3a"
     },
     "index.html": {
-      "bytes": 47058,
-      "sha256": "5740be08e8f33ef3ae59a219f1ab19454105b5d7dbcb4773e3cbbd26c4c93ef3"
+      "bytes": 46968,
+      "sha256": "33bd6a0859157aafbb88ce889e2bcbdeff2e41eb0a057d22c66ba8af2d029a38"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -273,52 +281,52 @@
       "sha256": "200b2d4d80de736841c7019a0e1a03bc9549e24fe09839aa30cbbf1a1bcdff0e"
     },
     "journey-refinements.css": {
-      "bytes": 11778,
-      "sha256": "6368a74a2aadd04777c6e235013f0db3f454b8df4e8726edfb2938415fd319c4"
+      "bytes": 12404,
+      "sha256": "aa652f86809b308a7ac9b34e117a2ef5766c162a86be7609db16315a08466fd5"
     },
     "lucide-LICENSE.txt": {
       "bytes": 3208,
       "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
     },
     "media/research-landscape.mp4": {
-      "bytes": 26902666,
-      "sha256": "6fefb29303ddc7f2ab7569b405105770e4de9da506ff9ac7d4679f02a41ca3d8"
+      "bytes": 27757699,
+      "sha256": "b3a64a53836474bffa7a51c5e1bd8031da325b1bd7fb9cc00983d5ff9cb998bc"
     },
     "media/research-portrait.mp4": {
-      "bytes": 25495697,
-      "sha256": "af6492437c12d5abe80bd6ba487e23844196b1d14907832b50e14e395d6193f2"
+      "bytes": 26806098,
+      "sha256": "21d26553c696be404ba55328fe850b74e4f1ea5005d1ec6f5a7ba4c33060b607"
     },
     "media/research-story.json": {
       "bytes": 1647,
-      "sha256": "8bdfd7470a4b390e55caa2165e7712c25d8f38a9d451c68a46f953ecc6a4bef3"
+      "sha256": "b3a05206e06e12ba0f263be179753fb68643d19742ad16f84f5bcec40ee58e74"
     },
     "mobile-layout.css": {
       "bytes": 13763,
       "sha256": "0fc0a4fa52b86c7dfb301315e28f41850f7541b59c08eb733f6b49adef37df20"
     },
     "onion-model.css": {
-      "bytes": 2395,
-      "sha256": "655835c6fff8d0b670cc268edaa54f58a24e69c33b6f935c087cdd254a9cc4b0"
+      "bytes": 2425,
+      "sha256": "19defa47a73ddc87df4eb3552f85ca8bcb4fe1320304e0a6f0d04fae32ccfc10"
     },
     "onion-model.js": {
-      "bytes": 4811,
-      "sha256": "bb67ed24897b2c5a0d0244672d1ae26ef75a8b97428016acceb04d453ddadfee"
+      "bytes": 4851,
+      "sha256": "b85d1d5cb3d8177f7244553b4e16c3ff2b60dec87835b62de3c396649511025b"
     },
     "research-scene.css": {
-      "bytes": 3546,
-      "sha256": "ee3ff571a7880630f27647c9e0f165d7d59c139291c1b8b9c70bcf1b988c0686"
+      "bytes": 3632,
+      "sha256": "7b161f65e97f01b800e93825e1b9691371be6f3c0b30da5ac9ecb934292de26c"
     },
     "scene.css": {
       "bytes": 64821,
       "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
     },
     "scene.js": {
-      "bytes": 198582,
-      "sha256": "f99a7b1ca44ee4570f8fecef46ea4cb32c773f9d1f829cbd67460c98e05c9e32"
+      "bytes": 201605,
+      "sha256": "f96df0e8bf2eb42a7d077d28a0a6b2527b0e932dd37804f4fcdaf45168f7b9fb"
     },
     "shared-ending.js": {
-      "bytes": 5284,
-      "sha256": "e1408c8c126c63a93006fbb424896568126a522e6fb91635127ea9c9f9367bd2"
+      "bytes": 5344,
+      "sha256": "600fcf86c82bed2256afdd6f51dc53d0ee5fa592bf7cbe1b3dad80c909a748fa"
     },
     "shared-icons.js": {
       "bytes": 7308,

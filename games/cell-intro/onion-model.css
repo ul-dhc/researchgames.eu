@@ -1,5 +1,5 @@
 /* Approved detailed onion artwork; area overlays do not alter its geometry. */
-#scene[data-organism=plant][data-phase=model] :is(.camera,.physical-camera,.nuclear-camera){visibility:hidden!important}
+#scene[data-organism=plant]:is([data-phase=model],[data-phase=cell-places]) :is(.camera,.physical-camera,.nuclear-camera){visibility:hidden!important}
 #scene[data-organism=plant] #onion-model-overlays path{fill:transparent;stroke:none;pointer-events:none;opacity:0}
 #scene[data-organism=plant][data-phase=model] #vacuole-shape{pointer-events:all;cursor:pointer}
 #scene[data-organism=plant] #cell-game-model[data-structure-preview=vacuole] #vacuole-shape{fill:#ead79830;stroke:#ead798b3;stroke-width:3;opacity:1}

@@ -32,3 +32,4 @@
 #scene[data-research-shot="3"][data-research-aspect="portrait"] #research-source{color:#000}
 #scene[data-research-shot="5"][data-research-aspect="landscape"] #research-source{left:auto;right:8.3%;color:#fff}
 #scene #research-related{color:#fff;background:none;box-shadow:none;text-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+#scene[data-research-shot="7"] :is(#research-source,#research-related){color:#17252c}

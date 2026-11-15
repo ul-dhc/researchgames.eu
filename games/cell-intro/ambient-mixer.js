@@ -1,7 +1,7 @@
 // Two preloaded voices of the same approved recording. Visual clocks never own audio time.
 export class AmbientMixer {
  constructor(voices,{loopStart=5,loopEnd=142,overlap=8,onState=()=>{},onFinish=()=>{},onError=()=>{}}={}){
-  this.voices=voices;this.loopStart=loopStart;this.loopEnd=loopEnd;this.overlap=overlap;this.onState=onState;this.onFinish=onFinish;this.onError=onError;this.master=.65;this.active=0;this.mix=null;this.running=false;this.loopAllowed=true;this.loopFailed=false;this.finished=false;this.generation=0;this.loops=0;
+  this.voices=voices;this.loopStart=loopStart;this.loopEnd=loopEnd;this.overlap=overlap;this.onState=onState;this.onFinish=onFinish;this.onError=onError;this.master=.65;this.active=0;this.mix=null;this.running=false;this.loopAllowed=true;this.loopFailed=false;this.finished=false;this.generation=0;this.loops=0;this.retryAt=0;
   for(const voice of voices){voice.loop=false;voice.addEventListener('ended',()=>this.ended(voice));voice.addEventListener('error',()=>this.failed(voice));voice.addEventListener('waiting',()=>{if(this.running&&voice===this.voices[this.active])this.onState('loading');});}
   this.applyGains();
  }
@@ -21,20 +21,27 @@ export class AmbientMixer {
   }this.gains=gains;
  }
  async play(){
-  if(this.finished)return;this.running=true;const generation=this.generation,targets=this.mix?[this.mix.outgoing,this.mix.incoming]:[this.active];
+  if(this.finished){if(!this.loopAllowed)return;this.finished=false;this.voices[this.active].currentTime=this.loopStart;}this.running=true;const generation=this.generation,targets=this.mix?[this.mix.outgoing,this.mix.incoming]:[this.active];
   try{
-   this.ensureGraph();if(this.graph&&this.graph.context.state==='suspended')await this.graph.context.resume();
-   await Promise.all(targets.map(i=>this.voices[i].paused?this.voices[i].play():Promise.resolve()));
+   this.ensureGraph();
+   // Start media while the original user gesture is still active, including the silent standby.
+   const resume=this.graph&&this.graph.context.state!=='running'&&this.graph.context.state!=='closed'?this.graph.context.resume():Promise.resolve();
+   const starts=targets.map(i=>this.voices[i].paused?this.voices[i].play():Promise.resolve());
+   if(!this.primed&&!this.priming&&typeof navigator!=='undefined'&&navigator.userActivation?.isActive){
+    const standby=1-this.active;this.priming=true;
+    this.voices[standby].play().then(()=>{this.primed=true;if(generation!==this.generation||!this.running||this.active!==standby&&this.mix?.incoming!==standby)this.voices[standby].pause();},()=>{}).finally(()=>this.priming=false);
+   }
+   await Promise.all([resume,...starts]);
    if(generation!==this.generation||!this.running)return;
    if(this.mix)this.mix.started=true;this.applyGains();this.onState('playing');
   }catch(error){
    if(generation!==this.generation||!this.running)return;
-   if(this.mix){const failed=this.mix.incoming;this.voices[failed].pause();this.mix=null;this.loopFailed=true;this.applyGains();this.onError('loop',error);}
+   if(this.mix){const failed=this.mix.incoming;this.voices[failed].pause();this.mix=null;this.loopFailed=true;this.retryAt=performance.now()+1000;this.applyGains();this.onError('loop',error);}
    else{this.pause();this.onError('initial',error);}
   }
  }
  pause(){this.running=false;for(const voice of this.voices)voice.pause();}
- reset(){this.generation++;this.pause();this.active=0;this.mix=null;this.loopFailed=false;this.finished=false;this.loops=0;for(const voice of this.voices){voice.currentTime=0;voice.loop=false;}this.applyGains();}
+ reset(){this.generation++;this.pause();this.active=0;this.mix=null;this.loopFailed=false;this.finished=false;this.loops=0;this.retryAt=0;for(const voice of this.voices){voice.currentTime=0;voice.loop=false;}this.applyGains();}
  tick(){
   if(!this.running||this.finished)return;
   if(this.mix?.started){
@@ -42,18 +49,27 @@ export class AmbientMixer {
    if(p>=1){this.voices[mix.outgoing].pause();this.active=mix.incoming;this.mix=null;this.loops++;this.applyGains();}
    return;
   }
-  if(this.mix||!this.loopAllowed||this.loopFailed)return;
+  if(this.mix||!this.loopAllowed||this.loopFailed&&performance.now()<this.retryAt)return;
   const voice=this.voices[this.active],next=1-this.active;
-  if(voice.currentTime<this.loopEnd-this.overlap||this.voices[next].readyState<3)return;
-  try{this.voices[next].pause();this.voices[next].currentTime=this.loopStart;this.voices[next].volume=0;this.mix={outgoing:this.active,incoming:next,start:this.loopStart,started:false};void this.play();}
-  catch(error){this.mix=null;this.loopFailed=true;this.applyGains();this.onError('loop',error);}
+  const end=Number.isFinite(voice.duration)?Math.min(this.loopEnd,voice.duration-.1):this.loopEnd;
+  if(voice.currentTime<end-this.overlap||this.voices[next].readyState<2)return;
+  try{this.loopFailed=false;this.voices[next].pause();this.voices[next].currentTime=this.loopStart;this.voices[next].volume=0;this.mix={outgoing:this.active,incoming:next,start:this.loopStart,started:false};void this.play();}
+  catch(error){this.mix=null;this.loopFailed=true;this.retryAt=performance.now()+1000;this.applyGains();this.onError('loop',error);}
  }
  ended(voice){
-  if(voice!==this.voices[this.active]||this.mix)return;
-  this.running=false;this.finished=true;for(const other of this.voices)other.pause();this.onFinish(this.loopAllowed);
+  if(voice!==this.voices[this.active])return;
+  if(this.mix?.started&&!this.voices[this.mix.incoming].paused){
+   this.active=this.mix.incoming;this.mix=null;this.loops++;this.applyGains();return;
+  }
+  if(this.loopAllowed&&this.running){
+   // A slow standby voice must not turn an ordinary track ending into permanent silence.
+   this.generation++;if(this.mix)this.voices[this.mix.incoming].pause();this.mix=null;
+   voice.currentTime=this.loopStart;this.loopFailed=false;this.loops++;this.applyGains();void this.play();return;
+  }
+  this.mix=null;this.running=false;this.finished=true;for(const other of this.voices)other.pause();this.onFinish(false);
  }
  failed(voice){
-  if(this.mix&&voice===this.voices[this.mix.incoming]){voice.pause();this.mix=null;this.loopFailed=true;this.applyGains();this.onError('loop');}
+  if(this.mix&&voice===this.voices[this.mix.incoming]){voice.pause();this.mix=null;this.loopFailed=true;this.retryAt=performance.now()+1000;this.applyGains();this.onError('loop');}
   else if(this.running&&voice===this.voices[this.active]){this.pause();this.onError('initial');}
  }
  snapshot(){return {active:this.active,overlap:Boolean(this.mix?.started),pending:Boolean(this.mix&&!this.mix.started),gains:[...this.gains],times:this.voices.map(v=>v.currentTime),running:this.running,loops:this.loops,loopAllowed:this.loopAllowed,finished:this.finished};}
@@ -63,19 +79,19 @@ export class AmbientMixer {
 export class SoundtrackPlayer {
  constructor(tracks,{selected=0,switchDuration=3,onState=()=>{},onFinish=()=>{},onError=()=>{}}={}){
   this.tracks=tracks;this.activeTrack=selected;this.requested=selected;this.switchDuration=switchDuration;this.onState=onState;this.onFinish=onFinish;this.onError=onError;this.master=.65;this.running=false;this.finished=false;this.loopAllowed=true;this.fade=null;this.generation=0;
-  this.mixers=tracks.map((track,index)=>new AmbientMixer(track.voices,{loopStart:track.loopStart,loopEnd:track.loopEnd,overlap:8,onState:state=>{if(this.running&&index===this.activeTrack)this.onState(state);},onFinish:()=>this.finishTrack(index),onError:(kind,error)=>this.trackError(index,kind,error)}));
+  this.mixers=tracks.map((track,index)=>new AmbientMixer(track.voices,{loopStart:track.loopStart,loopEnd:track.loopEnd,overlap:track.overlap??8,onState:state=>{if(this.running&&index===this.activeTrack)this.onState(state);},onFinish:()=>this.finishTrack(index),onError:(kind,error)=>this.trackError(index,kind,error)}));
   this.weights=tracks.map((_,i)=>i===selected?1:0);this.applyMaster();
  }
  get loopFailed(){return this.mixers[this.activeTrack].loopFailed;}
  prepare(index){
-  const track=this.tracks[index];if(track.loaded)return;track.loaded=true;
+  const track=this.tracks[index];if(track.loaded){for(const voice of track.voices)if(voice.error)voice.load?.();return;}track.loaded=true;
   for(const voice of track.voices){voice.preload='auto';voice.src=track.src;voice.load?.();}
  }
  applyMaster(){this.mixers.forEach((m,i)=>m.setMaster(this.master*this.weights[i]));}
  setMaster(value){this.master=Math.max(0,Math.min(1,value));this.applyMaster();}
  setLoopAllowed(value){this.loopAllowed=value;this.mixers.forEach(m=>m.setLoopAllowed(value));}
  async play(){
-  if(this.finished)return;this.running=true;this.prepare(this.activeTrack);
+  if(this.finished){if(!this.loopAllowed)return;this.reset();}this.running=true;this.prepare(this.activeTrack);
   const targets=this.fade?[this.fade.outgoing,this.fade.incoming]:[this.activeTrack];
   await Promise.all(targets.map(i=>this.mixers[i].play()));
  }

@@ -25,6 +25,6 @@ export function renderOnionModel($,g,{phase,active}){
  for(const[id,x,y,anchor,key]of labels){const label=$(id);label.style.width='max-content';const width=label.offsetWidth;label.style.left=Math.max(4,Math.min(mw-width-4,x-width/2))+'px';label.style.top=y+'px';if(portrait&&key==='cytoplasm'){label.style.left='4px';label.style.top=(cy+ch+10)+'px';}else if(key==='cytoplasm'){const rim=point(...anchor);label.style.left=Math.max(4,Math.min(mw-width-4,rim.x-width/2))+'px';label.style.top=(rim.y+16)+'px';}const a=point(...anchor),r=label.getBoundingClientRect(),p=model.parentElement.getBoundingClientRect(),sx=r.left-p.left+r.width/2,sy=r.top-p.top+r.height/2,dx=a.x-sx,dy=a.y-sy,edge=Math.max(1,Math.abs(dx)/(r.width/2),Math.abs(dy)/(r.height/2)),line=$('onion-'+key+'-leader');line.setAttribute('d',`M${sx+dx/edge} ${sy+dy/edge} L${a.x} ${a.y}`);line.dataset.active=String(active===key);}
  $('model-nucleus-info').hidden=true;
  // The cell stays still while its actual nucleus opens into the shared cutaway.
- model.style.transform='none';model.style.opacity=String(phase==='model'?1:phase==='explore'?1-lift:0);
- if(['model','explore'].includes(phase))$('nucleus-cutaway').style.opacity=phase==='model'?'0':String(lift);
+ model.style.transform='none';model.style.opacity=String(['model','cell-places'].includes(phase)?1:phase==='explore'?1-lift:0);
+ if(['model','cell-places','explore'].includes(phase))$('nucleus-cutaway').style.opacity=phase!=='explore'?'0':String(lift);
 }

@@ -1,9 +1,9 @@
-import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=cell-intro-20261115-r1';
-import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=cell-intro-20261115-r1';
+import {chooserArtMarkup,initializeChooserDepth} from './chooser-art.js?v=cell-intro-20261116-r8';
+import { cellFacts, DNA_INSTRUCTIONS } from './cell-facts.js?v=cell-intro-20261116-r8';
 /* Local checkpoint: cell choice, visual continuity and initial inspection only. */
 export function createCellBranches(api){
  const {scene,$}=api,host=$('cell-branches');
- const custom=['chooser','plant','human','bacterial'],plantSteps=['onion','skin','field','establish','invite','approach','boundary','inside','nucleolus','model','explore','assemble','dna-focus','gene','message','export','protein','roles'];
+ const custom=['chooser','plant','human','bacterial'],plantSteps=['onion','skin','field','establish','invite','approach','boundary','inside','nucleolus','model','cell-places','explore','dna-focus','gene','message','export','protein','roles'];
  const cells={
   plant:{title:'Plant cell',subtitle:'Onion bulb epidermis',copy:'A firm wall supports this cell. The large vacuole fills most of its interior.',facts:['wall','vacuole','nucleus','p-cytoplasm']},
   human:{title:'Human cheek cell',subtitle:'From the lining inside your cheek',copy:'A flexible boundary surrounds this flattened cell and its nucleus.',facts:['h-membrane','h-nucleus','h-mitochondria','h-cytoplasm']},
