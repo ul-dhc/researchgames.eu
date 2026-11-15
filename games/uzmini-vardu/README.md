@@ -1,6 +1,6 @@
 # Uzmini vārdu – direct Tēzaurs TEI continuation
 
-Version: **crossword-tei-2026_4-v1**. Latvian interface. Portable repository source.
+Version: **crossword-tei-2026_4-rg-start-info-v5**. Latvian interface. Portable repository source.
 
 Ready-to-serve entry: index.html. Edit src/runtime.js, src/tier-core.js, src/interface.html and src/styles.css. src/game.js is generated. Python 3.9+ and existing Node suffice.
 
@@ -28,10 +28,30 @@ Omit --check only for deliberate re-extraction. scripts/extract_bank.py invokes 
 
 The original v10 ?legacy=1 game and rg-wordnet-crosswords-levels-v1 key remain untouched. The exact pre-TEI tier game is available at ?legacy=wordnet. Historical HTML and banks are retained byte-exactly.
 
-The current tier key rg-wordnet-crosswords-tiers-v1, schema 1 and frozen compatibility identity are retained because answers and grids did not change. Existing sessions with no sourceVersion use the frozen WordNet bank throughout their three rounds. New sessions/sets have sourceVersion tei-2026_4 and use direct TEI definitions. Existing values, hints, selection, round, mode, set index and scores remain intact. The current source is shown below each clue. A reset repeats the same session source; completing a set and choosing a new one uses TEI. Switching tier/mode preserves independent sessions. Unknown source versions are rejected. data/content-key.txt is the frozen save/grid identity; data/tei-content-key.txt independently pins the full current TEI bank plus unchanged grids. Both are checked at build time.
+The current tier key rg-wordnet-crosswords-tiers-v1, schema 1 and frozen compatibility identity are retained because answers and grids did not change. Existing sessions with no sourceVersion use the frozen WordNet bank throughout their three rounds. New sessions/sets have sourceVersion tei-2026_4 and use direct TEI definitions. Existing values, hints, selection, round, mode, set index and scores remain intact. The current round source and exact records are in the unified information area. A reset repeats the same session source; completing a set and choosing a new one uses TEI. Switching tier/mode preserves independent sessions. Unknown source versions are rejected. data/content-key.txt is the frozen save/grid identity; data/tei-content-key.txt independently pins the full current TEI bank plus unchanged grids. Both are checked at build time.
 
 No actual user save was read or changed during migration. An existing open tab continues its old code until the user reloads. Different hosts, ports and browser profiles have separate saves. Concurrent old and new tabs on one origin can overwrite the same tier save using their own in-memory state, as before; finish or close the old tab before continuing the same save elsewhere.
 
 ## Rollback and evidence
 
 The exact original and historical games remain in snapshots/ and data/. Complete local working-project and repository rollbacks are retained outside this folder. See TEI-QA.md and VALIDATION.json for recorded checks. Test scripts write ignored local result files. No network project was modified.
+
+## Current interface
+
+The start screen uses one title, an unframed introduction, authentic Lucide difficulty icons and a decorative empty crossword grid on desktop. Both modes and independent saved sessions remain available. The two home controls return to start without resetting progress; the difficulty indicator remains distinct. Free play has no visible score badge; scored play keeps its numeric score.
+
+Header/footer information links and the distinct question icon open the same About/help area. Section links focus the requested heading; close, Escape and brand return to the invoking control and prior game scroll. All gameplay guidance, exact scoring rules, limitations, dynamic round records, source attribution and licensing are retained there. Older saved sessions continue to identify their WordNet definitions correctly. Contextual letter-hint messages clear on subsequent input, navigation or completion.
+
+Source records, answer IDs, tiers, grids, compatibility identity and scoring rules are unchanged. Display capitalization changes only the first letter. Appearance preferences remain separate from round storage. Inter and Manrope use their retained OFL licences; Lucide uses its retained ISC licence. Provider marks retain their original colors and proportions.
+
+Additional checks:
+
+```sh
+python3 scripts/build.py --output dist/rg-shell-candidate.html
+node tests/test_ui.cjs
+node tests/test_shell.cjs
+node tests/test_display_about.cjs
+node tests/test_unified_info.cjs
+```
+
+The deployment entry is the reproducible self-contained index.html. Generated source and test reports are ignored. The full TEI remains an external source input for import verification, not a browser dependency. Physical phone, virtual keyboard and native screen-reader testing remain pending.

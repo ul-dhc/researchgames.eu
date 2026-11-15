@@ -1,0 +1,12 @@
+[
+  {
+    "filename": "researchgames-logo-color-light.svg",
+    "source": "repository:assets/brand/researchgames-logo-color-light.svg",
+    "sha256": "7b3288704cdba6531907dd38128a5b786fadbaaea202d7f940aba297806994c1"
+  },
+  {
+    "filename": "researchgames-logo-color-dark.svg",
+    "source": "repository:assets/brand/researchgames-logo-color-dark.svg",
+    "sha256": "c20c5197cfcf1d8e487099c442ff22b88cba0111ccbaee02341efbbe79c39bc5"
+  }
+]

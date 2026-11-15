@@ -1,0 +1,54 @@
+/* Actual Livonian shell.css About rules with scoped offline adaptations. */
+body.about-open,body.about-page{display:flex;flex-direction:column;min-height:100dvh;height:auto;background:var(--bg);}
+body.about-open>.screen{display:none!important;}
+body.about-open>.site-header{position:sticky;top:0;z-index:30;flex:none;}
+.about-main{position:relative;z-index:20;width:min(920px,calc(100% - 32px));max-width:none;margin:34px auto 70px;padding:0;color:var(--ink);background:transparent;border:0;overflow:visible;}
+.about-hero{padding:clamp(32px,6vw,64px);text-align:center;border:1px solid var(--border);border-radius:24px;background:var(--panel);box-shadow:var(--shadow);}
+.about-kicker,.about-card-label{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
+.about-kicker{display:flex;justify-content:center;align-items:center;gap:8px;}
+.about-title{margin:10px 0 16px;color:var(--accent);font-size:clamp(35px,6vw,58px);line-height:1.05;letter-spacing:-.045em;}
+.about-lead{max-width:660px;margin:0 auto;color:var(--ink-muted);font-size:clamp(16px,2vw,19px);line-height:1.7;}
+.about-content{display:flex;flex-direction:column;gap:16px;margin-top:18px;}
+.about-card{padding:clamp(24px,4vw,38px);border:1px solid var(--border);border-radius:19px;background:var(--panel);box-shadow:var(--shadow);}
+.about-card :is(h2,h3){margin:7px 0 17px;color:var(--accent);font-size:clamp(21px,3vw,28px);letter-spacing:-.025em;}
+.about-card p{margin:0 0 14px;color:var(--ink-muted);font-size:calc(17px * var(--shell-text-scale,1));line-height:1.72;}
+.about-card p:last-child{margin-bottom:0;}
+.about-card .about-card-label{color:var(--accent);font-size:calc(12px * var(--shell-text-scale,1));}
+.about-card a{color:var(--accent);text-underline-offset:3px;}
+.about-card a:hover{color:var(--ink);}
+.about-copy,.data-copy{display:grid;gap:14px;}
+.about-copy+.about-copy{margin-top:0;}
+.about-contact{display:flex;align-items:center;gap:11px;margin:21px 0;padding-top:19px;border-top:1px solid var(--border);color:var(--ink-muted);line-height:1.7;flex-wrap:wrap;}
+.about-contact svg{color:var(--accent);width:34px;height:34px;flex:none;}
+.about-contact a{font-weight:600;}
+.partner-logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:clamp(20px,4vw,38px);margin:30px 0 0;padding:38px 0 12px;border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;}
+.partner-logo-link{display:flex;align-items:center;justify-content:center;min-width:0;opacity:.82;transition:opacity .18s ease;}
+.partner-logo-link:hover{opacity:1;}
+.partner-logo-link img{width:100%;max-width:220px;height:auto;max-height:130px;object-fit:contain;}
+.partner-logo-link--research{grid-column:1/-1;justify-self:center;width:min(100%,220px);}
+html[data-theme="dark"] .partner-logo-link--liv img{filter:invert(1);mix-blend-mode:screen;}
+.about-more{display:inline-flex;margin-top:18px;font-weight:600;}
+.variant-list{display:block;margin:22px 0;}
+.about-version{padding:17px 0;border-top:1px solid var(--border);}
+.about-version h3{font-family:var(--font-body);font-size:17px;margin:0 0 6px;color:var(--ink);}
+.how-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:24px 0;}
+.how-step strong{display:block;margin-bottom:8px;color:var(--accent);}
+.how-step p{font-size:15px;}
+.score-list{list-style:none;margin:4px 0 19px;padding:0;border-top:1px solid var(--border);}
+.score-list li{display:grid;grid-template-columns:minmax(170px,.75fr) 1fr;gap:22px;padding:13px 0;border-bottom:1px solid var(--border);}
+.score-list strong{color:var(--ink);font-size:calc(14px * var(--shell-text-scale,1));}
+.score-list span{color:var(--ink-muted);font-size:calc(14px * var(--shell-text-scale,1));line-height:1.55;}
+.data-copy ul{margin:0 0 14px;padding-left:22px;color:var(--ink-muted);line-height:1.72;font-size:calc(17px * var(--shell-text-scale,1));}
+.about-close-top{position:absolute;top:12px;right:12px;z-index:21;width:42px;height:42px;border-radius:50%;text-decoration:none;background:var(--panel);}
+.about-actions{display:flex;justify-content:center;padding-top:12px;}
+.about-close-bottom{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:160px;width:auto;text-decoration:none;}
+/* Shared footer structure follows the actual Livonian shell; factual marks identify
+   this game's site, data source and publisher, never sponsors. */
+:root{--shadow:0 14px 40px #0a0c1412}html[data-theme="dark"]{--shadow:0 20px 60px #0004}
+body.about-open>.site-header{position:sticky;top:0;z-index:30;flex:none}
+.about-main{flex:none}.about-main[hidden]{display:none!important}.about-hero,.about-card{min-width:0;overflow-wrap:anywhere}.about-title{font-size:calc(clamp(30px,5vw,54px) * var(--shell-text-scale));padding-right:8px}.about-lead{font-size:calc(17px * var(--shell-text-scale))}.about-card :is(h2,h3){font-size:calc(clamp(21px,3vw,28px) * var(--shell-text-scale))}.about-card .logo-note{font-size:calc(12px * var(--shell-text-scale))}.about-card .source{font-size:calc(14px * var(--shell-text-scale))}
+.about-close-top{width:44px;height:44px;min-width:44px;min-height:44px}.about-close-bottom{display:inline-flex;align-items:center;gap:8px;min-height:44px}.about-version h3{font-size:calc(17px * var(--shell-text-scale))}.provider-logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0 16px}.provider-logos a{display:flex;align-items:center;justify-content:center;min-width:0;min-height:70px;background:#fff;border-radius:10px;padding:12px}.provider-logos img{display:block;width:100%;max-width:240px;height:auto;filter:none!important;mix-blend-mode:normal}.provider-logos a:first-child img{max-width:162px}
+.site-footer{width:min(1120px,calc(100% - 56px));margin:24px auto 0;padding:22px 0;border-top:1px solid var(--line);font-size:calc(12px * var(--shell-text-scale));color:var(--muted)}.site-footer .footer-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:28px}.site-footer a{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;text-decoration:none}.footer-brands{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:26px}.site-footer .footer-brand img{display:block;width:164px;max-width:100%;height:auto;filter:none!important;mix-blend-mode:normal}.brand-on-dark{display:none!important}html[data-theme="dark"] .brand-on-light{display:none!important}html[data-theme="dark"] .brand-on-dark{display:block!important}.provider-footer{display:flex;flex-direction:column;align-items:center;gap:5px}.provider-footer>span{font-size:calc(10px * var(--shell-text-scale))}.provider-logo{background:#fff;padding:9px 12px;border-radius:8px}.provider-logo img{width:150px;height:auto;display:block;filter:none!important;mix-blend-mode:normal}.provider-footer:last-child img{width:180px}.site-footer .lucide{width:16px;height:16px}
+@media(max-width:650px){.about-main{width:calc(100% - 24px);margin:18px auto 32px}.about-hero{padding:44px 20px 28px;border-radius:18px}.about-card{padding:22px 18px;border-radius:16px}.about-close-top{top:8px;right:8px}.about-content{gap:12px;margin-top:12px}.provider-logos{grid-template-columns:1fr;gap:12px}.site-footer{width:calc(100% - 28px);padding:18px 0}.site-footer .footer-links,.footer-brands{flex-direction:column;gap:18px}.about-title{font-size:calc(30px * var(--shell-text-scale));padding:0}.about-lead{font-size:calc(16px * var(--shell-text-scale))}}
+/* Unified help uses the reference About surface and a short section navigation. */
+.about-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin:18px 0 0;padding:8px 4px}.about-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:calc(13px * var(--shell-text-scale));font-weight:650;text-decoration:none;color:var(--ink-muted);border-bottom:1px solid transparent}.about-nav a:hover,.about-nav a[aria-current=location]{color:var(--accent);border-bottom-color:var(--accent)}.about-card h2[id]{scroll-margin-top:132px}.about-card .mobileNote{font-size:calc(16px * var(--shell-text-scale))!important;color:var(--ink-muted)!important;line-height:1.7}.about-card .icon-legend{list-style:none;padding:0;margin:0}.about-card .icon-legend li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:13px;align-items:start;padding:12px 0;font-size:calc(16px * var(--shell-text-scale));line-height:1.6;color:var(--ink-muted)}.about-card .icon-legend .lucide{width:22px;height:22px;color:var(--accent);margin-top:3px}.round-source-info{border-top:1px solid var(--border);padding-top:18px;margin:22px 0;overflow-wrap:anywhere}.round-source-info #current-source-heading{font-size:calc(17px * var(--shell-text-scale));line-height:1.4}.round-source-info #sources p{font-size:calc(12px * var(--shell-text-scale));line-height:1.6}.round-source-info #intro{font-size:calc(15px * var(--shell-text-scale))}.about-card h2:focus-visible{outline:2px solid var(--accent);outline-offset:5px}@media(max-width:650px){.about-nav{gap:2px 14px;justify-content:flex-start;padding:0 4px;margin-top:12px}.about-nav a{font-size:calc(12px * var(--shell-text-scale))}.about-card .icon-legend li{gap:10px}.round-source-info #sources p{font-size:calc(11px * var(--shell-text-scale))}}

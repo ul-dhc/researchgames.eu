@@ -1,0 +1,24 @@
+[
+  {
+    "filename": "Tezaurs.svg",
+    "url": "https://tezaurs.lv/img/tezaurs/Tezaurs.svg",
+    "resolved_url": "https://tezaurs.lv/img/tezaurs/Tezaurs.svg",
+    "sha256": "926ad1fbe95ddb043ae1d3d48ba57d6d6990a07a9aa5e888ca240e02919e0bc0",
+    "bytes": 13037,
+    "viewBox": "0 0 325 55",
+    "downloaded_at_utc": "2026-11-15T19:16:57.180672+00:00",
+    "original_colors_and_aspect_ratio": true,
+    "license": "No logo-specific licence identified; dataset licence is not asserted for logos."
+  },
+  {
+    "filename": "IMCSULlogoLV.svg",
+    "url": "https://www.lumii.lv/static/images/IMCSULlogoLV.svg",
+    "resolved_url": "https://www.lumii.lv/static/images/IMCSULlogoLV.svg",
+    "sha256": "8db2216f2582bd8ddece19b734f1ceff898caab908e165d6221f4ecfb14e2e34",
+    "bytes": 26301,
+    "viewBox": "0 0 599.008 91.7356",
+    "downloaded_at_utc": "2026-11-15T19:16:57.280955+00:00",
+    "original_colors_and_aspect_ratio": true,
+    "license": "No logo-specific licence identified; dataset licence is not asserted for logos."
+  }
+]

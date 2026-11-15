@@ -1,0 +1,30 @@
+{
+  "package": "lucide-static",
+  "version": "1.68.0",
+  "source": "https://registry.npmjs.org/lucide-static/-/lucide-static-1.68.0.tgz",
+  "integrity": "sha512-sInxhr771A4UUu8D1gXZjj3mmGwqRTYDVNbfwN25Yx6vwA9Hnq9t+P9rF49UW8MirAe1iaYpqe+3vq99bbH8zg==",
+  "sha256": {
+    "arrow-left.svg": "22346488513766f618309ddd918dd5941be449a82ec824e37c06a43f6a5a3827",
+    "arrow-right.svg": "e139e2f2ceddec153f6832d65732043ed100d88f56158268fd206abac7857064",
+    "arrow-up-right.svg": "3397b671abb779a5e2450b10b5b8f716f0c5a6d263fc8325c2cd1d4ef2b63e66",
+    "arrow-down.svg": "35156cae7ee58acf232784a41935d750c9571150242f2a141d5f6064bfaedb16",
+    "info.svg": "9d6fa66f4fefff302573f1e6173d1080c30ccca867ef96d53fbeb49df9dfc57e",
+    "lightbulb.svg": "74245a4dd266e7f0754b1b1c371d76d7429cf0c04192fee30bf7f490f70c96be",
+    "eraser.svg": "75c1c75f91e3179c5be00e7fe3cdbc86fa93bffae26e6efc472e749802c307c8",
+    "rotate-cw.svg": "862e1b070ce4cb2a96a0b61266d55f7872085c93f060d70940a911a3172a227c",
+    "list.svg": "30b824f45692552e6ee65b8544ac2339a50595fa74599be6abf8d7327685e031",
+    "sliders-horizontal.svg": "0a1be154f7f6b665a1c6a9be906a56966be1ff7358cd0e2bee20ed30ed72b410",
+    "chevron-down.svg": "cc604edb764faa393fa4be1b137e25db97309a4f3d905a3b9e6279e72e7fec01",
+    "chart-no-axes-column-increasing.svg": "9d0e90b5467d5532dbf4a0ab05b64ac5984470b38c45dd7b7251062a4c09e693",
+    "check.svg": "efff66502b2b87f754e91f34ff84a26304b403da51c333b5f43d51182fbf077e",
+    "book-open.svg": "366d64631df37964a436e775ed0b4a709828bdfe1a6034033115700b84a8b871",
+    "sun.svg": "933a8447548bfdce3c2757e236ea3d47db07555e4d8e42c411ca7bed01ef96f7",
+    "moon.svg": "c467c13c0bf3bf6817f98bafd8c989b47a3057e12e434348568db47aff06b753",
+    "x.svg": "79a0758f01db56a317a9aae0f01f6ad6f921d20b8e522704f55d76eb8556d442",
+    "house.svg": "b5bf71c35da75bca71f06f62b715f707637ed67a95f50c596e2077c606b67ddf",
+    "circle-help.svg": "36db87942c2ad34cd6488ee471456fb0a945d2ad637c13a4fcd2e155097d5856",
+    "sprout.svg": "82af2b2e0238818295f4aba11e6642ed96a5dbc09193fe4b21e0088dcb047ae7",
+    "layers-2.svg": "9b78bd0957ccaf2757ad91a4491a80ae565095da4839fe450b4b3b258a74c9e7",
+    "puzzle.svg": "c20e77175093dc031d37de5fb0e1598569b4e9d1649391182f2148cd78dbf41e"
+  }
+}

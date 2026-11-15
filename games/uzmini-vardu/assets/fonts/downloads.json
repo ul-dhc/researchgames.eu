@@ -1,0 +1,20 @@
+[
+  {
+    "family": "Inter",
+    "weight": "400",
+    "name": "inter-400.ttf",
+    "url": "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"
+  },
+  {
+    "family": "Inter",
+    "weight": "600",
+    "name": "inter-600.ttf",
+    "url": "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf"
+  },
+  {
+    "family": "Manrope",
+    "weight": "700",
+    "name": "manrope-700.ttf",
+    "url": "https://fonts.gstatic.com/s/manrope/v23/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE-_F.ttf"
+  }
+]
