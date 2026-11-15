@@ -279,7 +279,7 @@
 [data-theme="light"] .catalog-unified .unified-card .catalog-meta{font-size:12px;color:#535a69}
 [data-theme="light"] .catalog-unified .unified-card .rg-topics>span,[data-theme="light"] .catalog-unified .unified-card .rg-topics>a{font-size:12px}
 [data-theme="light"] .home-catalog .home-dna .unavailable-action{color:#68707e;border-color:#969ca7;background:transparent}
-[data-theme="light"] .games-page{--night:#ffffff;--muted:#484f5e;background:#ffffff}
+[data-theme="light"] .games-page{--night:#f6f5f3;--muted:#484f5e;background:#f6f5f3}
 [data-theme="light"] .catalog .small-label{color:#68417f}
 [data-theme="light"] .catalog-filters button{border-color:#81758e}
 [data-theme="light"] .catalog-filters button span{color:#53515e}
