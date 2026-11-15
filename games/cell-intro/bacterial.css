@@ -20,7 +20,7 @@
  
  
 }
-@media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #nucleus-model{height:440px!important}#b-anatomy-cue{height:auto;aspect-ratio:1.5;top:50%;translate:0 -50%}}
+@media(max-width:650px){#b-anatomy-cue{height:auto;aspect-ratio:1.5;top:50%;translate:0 -50%}}
 @media(max-width:650px){
  #scene[data-organism=bacterial][data-phase=protein] #process-copy-reserve{display:none}
  #scene[data-organism=bacterial][data-phase=protein] #detail{min-height:132px}
@@ -28,7 +28,7 @@
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-controls{min-height:48px}
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue{min-height:0;margin:8px 0 0}
  #scene[data-organism=bacterial][data-phase=protein] #protein-work-cue>span{padding:4px 0}
- #scene[data-organism=bacterial][data-phase=protein] #nucleus-model{height:420px!important;margin-top:12px}
+ #scene[data-organism=bacterial][data-phase=protein] #nucleus-model{margin-top:12px}
 }
 @media(max-width:650px){#scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #detail{min-height:156px}}
 #scene[data-organism=bacterial]:is([data-phase=message],[data-phase=export]) #process-copy-reserve{display:grid;grid-area:1/1;visibility:hidden}

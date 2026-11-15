@@ -35,7 +35,7 @@
 #scene #learning-work-cue{position:absolute;z-index:5;pointer-events:none;color:var(--progress-text);font-size:15px;line-height:1.4}
 #scene #learning-work-cue[hidden]{display:none}
 #scene #learning-work-cue :is(#learning-instruction,#learning-feedback){font:inherit;color:var(--progress-text);margin:0;padding:0;background:none;border:0;box-shadow:none;text-shadow:none}
-@media(max-width:650px){#scene[data-phase=protein] #nucleus-model{min-height:500px!important}}
+
 
 /* Molecular engagement uses the same clock and visual language in both routes. */
 #scene #rna-reading-signal{position:absolute;inset:0;pointer-events:none;mask-size:contain;mask-position:center;mask-repeat:no-repeat;background:linear-gradient(90deg,transparent,#fff0b899 40%,#fff8eac9 50%,#fff0b899 60%,transparent);background-size:35% 100%;background-repeat:no-repeat;opacity:0}

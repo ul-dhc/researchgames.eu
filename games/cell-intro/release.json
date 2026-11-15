@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261115-r1",
+  "release": "cell-intro-20261115-r2",
   "routes": [
     "plant",
     "human",
@@ -201,12 +201,12 @@
       "sha256": "304b3d0474e3e0ed2813aa86a85f53eaf8b778277a2fdcff6f2ffe66b91970ab"
     },
     "bacterial.css": {
-      "bytes": 15518,
-      "sha256": "c70fda8c27f6b20000e021365b3fcaf9fa8394d6fc85b55aed60d1f26b1a5262"
+      "bytes": 15380,
+      "sha256": "6900661075182d08c7c2699c3f5b6e9e0d869a63c12181552a2dbad4cc1a1e1e"
     },
     "bacterial.js": {
-      "bytes": 25100,
-      "sha256": "3b0e8efb157fcc20170982e3505dfb85f94b3e34b54829f89698ed3448b1ac29"
+      "bytes": 25340,
+      "sha256": "76bc457090a58e72e2e103374b0887028c4046dd5be210a572d5c56753c9f088"
     },
     "branches.css": {
       "bytes": 8237,
@@ -253,24 +253,24 @@
       "sha256": "db76fcf51bed692c7c101a875a6fbea3495a266df6d74c6d4913d4471b3ebc43"
     },
     "human.js": {
-      "bytes": 23489,
-      "sha256": "dd6aa98600db8f9c5e770087cdb229d564c2256c736bca887e9852e07a5fd497"
+      "bytes": 23909,
+      "sha256": "e9478dbb3ce2cd7961f3faaec58e3e7ac1d1b2be976cfb16f320febafd2962f2"
     },
     "icons.js": {
       "bytes": 1557,
       "sha256": "991014133a08e8a99c73079d82479983704b25fbb4a8e1914534dd197443fa3a"
     },
     "index.html": {
-      "bytes": 47080,
-      "sha256": "02046b67ac971b98ce99ca8ac9e1b70a4c6761db6b98034275ceda65f9fc1945"
+      "bytes": 47072,
+      "sha256": "acac2b8bcd9bc840e3dd3ba7f944582387fe9ad2bee61f3d7247c4a78f611530"
     },
     "information-labels.css": {
       "bytes": 6166,
       "sha256": "904df4beea10201ace6273f33836720caa818cc8c1c17a5fa0f6d85fab882d2f"
     },
     "interaction-refinements.css": {
-      "bytes": 8823,
-      "sha256": "5ea7833c7cf4601bc1327f1aae6ec197dd68e7e1e3c9e91e7bf634c63f2d36e2"
+      "bytes": 8729,
+      "sha256": "200b2d4d80de736841c7019a0e1a03bc9549e24fe09839aa30cbbf1a1bcdff0e"
     },
     "journey-refinements.css": {
       "bytes": 8763,
@@ -292,6 +292,10 @@
       "bytes": 1647,
       "sha256": "8bdfd7470a4b390e55caa2165e7712c25d8f38a9d451c68a46f953ecc6a4bef3"
     },
+    "mobile-layout.css": {
+      "bytes": 10639,
+      "sha256": "82377dfc52e134439b2638b82c0c801f0e73766d8be9e0a2687014ba4e58d77b"
+    },
     "onion-model.css": {
       "bytes": 2395,
       "sha256": "655835c6fff8d0b670cc268edaa54f58a24e69c33b6f935c087cdd254a9cc4b0"
@@ -309,8 +313,8 @@
       "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
     },
     "scene.js": {
-      "bytes": 189082,
-      "sha256": "cbc5b7652226c941742257046664a9b76969310c9260dc1b511a97689665fbf0"
+      "bytes": 195215,
+      "sha256": "29a3063aab8a83b2d3e53fba7ff3ceefe68a4ba451d0ec194c23e7c6d0ad7968"
     },
     "shared-ending.js": {
       "bytes": 5096,
