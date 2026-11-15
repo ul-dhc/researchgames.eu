@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 :root{--ink:#f5f4f1;--muted:#a9adbb;--night:#050812;--panel:#090e1b;--panel2:#0e1425;--line:#293047;--purple:#aa4de8;--violet:#6132ef;--blue:#3f78ff;--cyan:#3dcce7;--green:#45d399;--serif:'DM Sans',system-ui,sans-serif;--sans:'DM Sans',system-ui,sans-serif;--text-label:12px;--text-small:14px;--text-body:16px;--text-lead:18px;--title-card:clamp(32px,3vw,44px);--title-section:clamp(42px,4.4vw,62px);--title-display:clamp(56px,5.4vw,78px);--max:1480px;--pad:clamp(20px,4vw,66px)}
 [data-theme="dark"]{color-scheme:dark}
-[data-theme="light"]{color-scheme:light;--ink:#151622;--muted:#626879;--night:#f5f4f1;--panel:#ffffff;--panel2:#eeedf3;--line:#d8d6e1;--purple:#8738cc;--violet:#5630dc;--blue:#2864dc;--cyan:#087f9b;--green:#16835d}
+[data-theme="light"]{color-scheme:light;--ink:#151622;--muted:#626879;--night:#ffffff;--panel:#ffffff;--panel2:#eeedf3;--line:#d8d6e1;--purple:#8738cc;--violet:#5630dc;--blue:#2864dc;--cyan:#087f9b;--green:#16835d}
 *{box-sizing:border-box}::selection{background:#8246d6;color:#fff}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--ink);font-family:var(--sans);line-height:1.55;overflow-x:hidden}a{color:inherit}button,a{font:inherit}img{display:block;max-width:100%}button{color:inherit}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;z-index:1000;left:20px;top:-80px;background:white;color:#080b16;padding:12px 18px;border-radius:4px}.skip-link:focus{top:16px}:focus-visible{outline:3px solid #71c5ff;outline-offset:4px}
 .site-header{position:fixed;z-index:50;inset:0 0 auto;height:92px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;transition:.3s;background:linear-gradient(#050812d9,transparent)}.site-header.scrolled{height:76px;background:#050812ef;border-bottom:1px solid #ffffff12;backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:clamp(18px,2vw,27px);letter-spacing:-.04em}.brand>span>span{color:#8f4fff}.brand small{font-size:.52em;letter-spacing:0}.site-header nav{display:flex;align-items:center;gap:clamp(20px,3vw,46px)}.site-header nav>a{text-decoration:none;font-size:14px;transition:color .2s}.site-header nav>a:hover{color:#b9a2ff}.nav-cta{border:1px solid #9c4ad7;border-radius:6px;padding:13px 20px}.menu-toggle{display:none;background:none;border:0;width:46px;height:46px;padding:10px}.menu-toggle span:not(.sr-only){display:block;height:2px;background:white;margin:6px 0}
 .hero{max-width:var(--max);min-height:100svh;margin:auto;padding:108px var(--pad) 34px;display:grid;grid-template-columns:minmax(320px,.88fr) minmax(520px,1.12fr);gap:clamp(40px,5vw,82px);align-items:center;position:relative}.hero:before{content:'';position:absolute;width:500px;height:500px;left:-340px;top:100px;background:#2d1ce5;filter:blur(140px);opacity:.13}.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:11px;font-weight:600;color:#bc77ed}.hero h1{font:500 clamp(58px,5.25vw,88px)/.94 var(--sans);letter-spacing:-.055em;margin:14px 0 20px}.hero h1 em,.manifesto em,.callout-inner em{font-style:normal;background:linear-gradient(100deg,#b547e5,#6333ef 54%,#467cff);background-clip:text;color:transparent}.hero-intro{font-size:clamp(16px,1.25vw,19px);line-height:1.55;color:#d0d0d3;max-width:430px}.button-row{display:flex;gap:14px;margin-top:30px}.button{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:26px;padding:13px 21px;border-radius:6px;text-decoration:none;border:1px solid #34416a;background:transparent;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}.button:hover{transform:translateY(-2px);border-color:#8759ee}.button.primary{background:linear-gradient(110deg,#3421ed,#6423d0);border:0;padding-inline:24px}.button.light{background:#f5f3f0;color:#090c17;border-color:white}.button.secondary{background:#090d17}.button span{font-size:20px}
@@ -82,8 +82,8 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 .button.primary{color:#ffffff}
 .exhibit-content{color:#f5f4f1}
 
-[data-theme="light"] .site-header{background:linear-gradient(#f5f4f1eb,transparent)}
-[data-theme="light"] .site-header.scrolled{background:#f5f4f1ed;border-bottom-color:#16182a18;box-shadow:0 8px 30px #34304d0c}
+[data-theme="light"] .site-header{background:linear-gradient(#ffffffeb,transparent)}
+[data-theme="light"] .site-header.scrolled{background:#ffffffed;border-bottom-color:#16182a18;box-shadow:0 8px 30px #34304d0c}
 [data-theme="light"] .site-header nav>a:hover{color:#663bd0}
 [data-theme="light"] .nav-cta{border-color:#7650ce}
 [data-theme="light"] .theme-toggle{background:#ffffff;border-color:#c9c6d5;color:#3c4050}
@@ -97,7 +97,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 [data-theme="light"] .card-front{background:linear-gradient(145deg,#f3eaf9,#edf1fb);border-color:#c9c3d5;color:#7137a4}
 [data-theme="light"] .game-note{color:#5e6371}
 [data-theme="light"] .game-complete{background:radial-gradient(circle at center,#eee8ff,#ffffff 70%);border-color:#d2cede}
-[data-theme="light"] .manifesto{background:#e8e5ee;color:#151622}
+[data-theme="light"] .manifesto{background:#ffffff;color:#151622}
 [data-theme="light"] .exhibit{border-color:#c8c5d1;box-shadow:0 16px 40px #27203e14}
 [data-theme="light"] .process{border-top-color:#d8d5df}
 [data-theme="light"] .process-grid{background:#d3d0dc}
@@ -105,7 +105,7 @@ body,.site-header,.card-front,.card-back,.game-complete,.process-grid li,.manife
 [data-theme="light"] .network-label{background:#fffffff2;color:#151622;border-color:#8c57c2;box-shadow:0 12px 40px #41365324}
 [data-theme="light"] #research-network line{stroke:#5d5c76;opacity:.3}
 [data-theme="light"] footer{border-top-color:#d5d2dc;color:#636879}
-@media(max-width:760px){.theme-toggle{margin-left:auto;width:62px;height:36px}.theme-knob{width:26px;height:26px}[data-theme="light"] .theme-knob{transform:translateX(28px)}[data-theme="light"] .site-header nav{background:#f8f7f4f7;border-color:#d2cfda;box-shadow:0 18px 40px #2821391f}}
+@media(max-width:760px){.theme-toggle{margin-left:auto;width:62px;height:36px}.theme-knob{width:26px;height:26px}[data-theme="light"] .theme-knob{transform:translateX(28px)}[data-theme="light"] .site-header nav{background:#fffffff7;border-color:#d2cfda;box-shadow:0 18px 40px #2821391f}}
 
 /* Meaningful research-game cards */
 .card-front{display:flex;flex-direction:column;justify-content:center;gap:7px;font-weight:500;line-height:1.05}

@@ -161,8 +161,9 @@ main{display:block;max-width:none;min-height:0;margin:0;padding:0}
 .launch-contact__email:hover .launch-contact__arrow,.launch-contact__email:focus-visible .launch-contact__arrow{transform:translate(3px,-3px);color:#d7c7ff}
 .launch-footer{box-sizing:border-box;display:grid;place-items:center;width:100%;max-width:var(--launch-max);margin:auto;padding:32px var(--launch-pad);border-top:1px solid var(--line);color:#8f95a5;font-size:13px;text-align:center}
 .launch-footer p{margin:0!important;justify-self:center}
-[data-theme="light"] body{background:radial-gradient(circle at 18% 9%,rgba(107,77,194,.11),transparent 25%),var(--night)}
-[data-theme="light"] .site-header{background:rgba(245,244,241,.82);border-bottom-color:rgba(25,22,37,.09)}
+[data-theme="light"] body{background:#ffffff}
+[data-theme="light"] .launch-hero:before{opacity:0}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.82);border-bottom-color:rgba(25,22,37,.09)}
 [data-theme="light"] .language-switcher{background:rgba(40,32,56,.045);color:#aaa6b2}
 [data-theme="light"] .site-header .language-switcher a{color:#66616f}
 [data-theme="light"] .site-header .language-switcher a:hover,[data-theme="light"] .site-header .language-switcher a:focus-visible{background:rgba(103,67,185,.09);color:#59399c}
