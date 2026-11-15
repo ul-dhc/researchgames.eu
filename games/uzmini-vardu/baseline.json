@@ -1,0 +1,33 @@
+{
+  "version": 10,
+  "snapshot": "snapshots/crossword-v10.html",
+  "sha256": "e2b8293d9c8df96d7a4d10a9195be0a810d3523ac65e06290f05a8a1dc1985e0",
+  "bytes": 32942,
+  "parts": [
+    {
+      "path": "src/document-start.html",
+      "sha256": "c0e7b0e181ad67e903835b179d5290a6fa08606f56c1df62d3281804a07da7c4",
+      "bytes": 167
+    },
+    {
+      "path": "src/styles.css",
+      "sha256": "02099a7b07c28d23aaa64b27967a29d2c25682c227f8c2c9e529cad40a05e301",
+      "bytes": 6487
+    },
+    {
+      "path": "src/interface.html",
+      "sha256": "c378a0977144050388d9667ab2c1313cae942565397fa65bf3c0cb89ebc29d07",
+      "bytes": 8411
+    },
+    {
+      "path": "src/game.js",
+      "sha256": "c7328c4d4ac29e51e9ea6036b40eb2f49909e37e365f9046c6635310c7b63e36",
+      "bytes": 17861
+    },
+    {
+      "path": "src/document-end.html",
+      "sha256": "aaf061c8e28da72201aac488d8971036d19f9fddca3b7f4453417a83e4f42d25",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,4606 @@
+{
+  "version": "tiers-1",
+  "sizes": [
+    5,
+    7,
+    9
+  ],
+  "sets": {
+    "B": [
+      {
+        "seed": 0,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 6,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1621:0:gaļa",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-920:0:autors",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5521:0:puse",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 3,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8942:0:ūsa",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1445:0:mežs",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5831:0:māte",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2045:0:sezona",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2002:0:galds",
+                "x": 3,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2107:0:cena",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1818:0:daļa",
+                "x": 3,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10131:1:jērs",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3366:0:vakars",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1862:0:kustība",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4477:0:glāze",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-77:0:iela",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15104:0:šalle",
+                "x": 4,
+                "y": 2,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2911:0:dati",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-110:0:diena",
+                "x": 0,
+                "y": 3,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6629:0:bikses",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5044:1:soma",
+                "x": 5,
+                "y": 5,
+                "dir": 1,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4501:0:sākums",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6083:0:dators",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-354:0:māja",
+                "x": 2,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1104:0:forma",
+                "x": 1,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2000:0:krēsls",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 5,
+            "rows": 11,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8969:0:kalns",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8943:0:poga",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1389:0:cīņa",
+                "x": 1,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1133:0:rīts",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3073:0:gaiss",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-103:0:grīda",
+                "x": 0,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1106:0:saule",
+                "x": 3,
+                "y": 6,
+                "dir": 1,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 15,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9818:0:mētelis",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6326:0:miljons",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2537:0:pavārs",
+                "x": 7,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-352:0:telpa",
+                "x": 3,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4367:1:ledus",
+                "x": 1,
+                "y": 3,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2275:1:puisis",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2235:0:internets",
+                "x": 4,
+                "y": 6,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2003:0:gulta",
+                "x": 6,
+                "y": 8,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-112:0:minūte",
+                "x": 2,
+                "y": 11,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13974:0:medus",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9858:0:milti",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3049:1:skolēns",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9692:0:ota",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1704:0:šķīvis",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 10,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3793:0:saturs",
+                "x": 3,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2503:0:robeža",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1492:0:lietus",
+                "x": 5,
+                "y": 4,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9920:0:kleita",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3983:0:laiva",
+                "x": 3,
+                "y": 5,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4110:0:biete",
+                "x": 2,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4989:0:zābaks",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 14,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2433:0:viesis",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1445:0:mežs",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2011:0:mūzika",
+                "x": 2,
+                "y": 5,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2237:0:procents",
+                "x": 0,
+                "y": 6,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5039:0:kabata",
+                "x": 7,
+                "y": 6,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-354:0:māja",
+                "x": 4,
+                "y": 7,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6391:0:mērķis",
+                "x": 4,
+                "y": 7,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5971:0:cukurs",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2479:0:rinda",
+                "x": 3,
+                "y": 11,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-376:0:decembris",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-194:0:vilciens",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15804:0:karote",
+                "x": 0,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15244:0:torte",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3135:1:izstāde",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15603:0:šķēres",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3595:0:mēness",
+                "x": 1,
+                "y": 6,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3537:0:nākotne",
+                "x": 3,
+                "y": 6,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6074:0:sniegs",
+                "x": 5,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11465:0:glāsts",
+                "x": 0,
+                "y": 7,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11455:0:tronis",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 17,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-101:0:nedēļa",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1077:0:tūkstotis",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1453:1:students",
+                "x": 3,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10130:0:kucēns",
+                "x": 2,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2004:0:skapis",
+                "x": 1,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2278:0:gadsimts",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2846:0:kaimiņš",
+                "x": 5,
+                "y": 10,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-351:0:istaba",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9859:0:pārtika",
+                "x": 1,
+                "y": 14,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 4,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2000:0:krēsls",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12508:0:luksofors",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5582:0:komanda",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1273:1:virtuve",
+                "x": 3,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2815:3:hobijs",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3340:3:veikals",
+                "x": 8,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4477:0:glāze",
+                "x": 4,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4824:0:griesti",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5587:0:piedurkne",
+                "x": 0,
+                "y": 4,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5537:0:mēnesis",
+                "x": 6,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3397:0:ritenis",
+                "x": 2,
+                "y": 6,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10400:0:kāposts",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3366:0:vakars",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1668:0:rakstnieks",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3595:0:mēness",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3138:0:pacients",
+                "x": 7,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4565:0:burtnīca",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15603:0:šķēres",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1704:0:šķīvis",
+                "x": 0,
+                "y": 7,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 2,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3793:0:saturs",
+                "x": 2,
+                "y": 11,
+                "dir": 0,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 5,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1104:0:forma",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4501:0:sākums",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4477:0:glāze",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5831:0:māte",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5971:0:cukurs",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-112:0:minūte",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3366:0:vakars",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9920:0:kleita",
+                "x": 3,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8942:0:ūsa",
+                "x": 6,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10131:1:jērs",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1445:0:mežs",
+                "x": 5,
+                "y": 6,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3073:0:gaiss",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1621:0:gaļa",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1106:0:saule",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1818:0:daļa",
+                "x": 2,
+                "y": 1,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1389:0:cīņa",
+                "x": 7,
+                "y": 1,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5044:1:soma",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6391:0:mērķis",
+                "x": 2,
+                "y": 3,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-77:0:iela",
+                "x": 4,
+                "y": 4,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2004:0:skapis",
+                "x": 2,
+                "y": 8,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 6,
+        "rounds": [
+          {
+            "cols": 8,
+            "rows": 5,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6074:0:sniegs",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4477:0:glāze",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2911:0:dati",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-354:0:māja",
+                "x": 3,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2433:0:viesis",
+                "x": 2,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 6,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-376:0:decembris",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10131:1:jērs",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1106:0:saule",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1389:0:cīņa",
+                "x": 2,
+                "y": 2,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5044:1:soma",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5521:0:puse",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15804:0:karote",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8943:0:poga",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-77:0:iela",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1104:0:forma",
+                "x": 2,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3595:0:mēness",
+                "x": 5,
+                "y": 3,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9692:0:ota",
+                "x": 7,
+                "y": 4,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5831:0:māte",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2107:0:cena",
+                "x": 4,
+                "y": 6,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8942:0:ūsa",
+                "x": 4,
+                "y": 8,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 7,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12534:0:ods",
+                "x": 2,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9692:0:ota",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5044:1:soma",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8942:0:ūsa",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1106:0:saule",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3073:0:gaiss",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-354:0:māja",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6391:0:mērķis",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6629:0:bikses",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-77:0:iela",
+                "x": 5,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1133:0:rīts",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4501:0:sākums",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 10,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8969:0:kalns",
+                "x": 3,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5039:0:kabata",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3983:0:laiva",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2004:0:skapis",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-103:0:grīda",
+                "x": 1,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1389:0:cīņa",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1818:0:daļa",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-110:0:diena",
+                "x": 0,
+                "y": 5,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3537:0:nākotne",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "I": [
+      {
+        "seed": 0,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9813:0:kurpe",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8218:0:papēdis",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-61:0:dzeja",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1841:2:ēka",
+                "x": 3,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1:0:gads",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3540:0:kāja",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4209:0:burkāns",
+                "x": 3,
+                "y": 2,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11370:0:drupas",
+                "x": 1,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3589:0:durvis",
+                "x": 1,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7336:0:svece",
+                "x": 6,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3545:0:roka",
+                "x": 1,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9749:0:piens",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6903:0:sula",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10290:1:vadība",
+                "x": 1,
+                "y": 3,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12071:0:biezpiens",
+                "x": 5,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2920:0:sakne",
+                "x": 7,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4825:0:siena",
+                "x": 3,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11142:0:strauts",
+                "x": 3,
+                "y": 5,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-725:1:attēls",
+                "x": 0,
+                "y": 6,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3870:0:upe",
+                "x": 3,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1838:1:stāsts",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "rounds": [
+          {
+            "cols": 6,
+            "rows": 5,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11201:0:doms",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1207:0:kuģis",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4127:0:zobs",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5769:0:suga",
+                "x": 3,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3560:0:nags",
+                "x": 2,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 5,
+            "rows": 16,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3205:1:vilks",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3572:0:logs",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1895:0:māsa",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4128:0:mēle",
+                "x": 0,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-728:1:atrisinājums",
+                "x": 3,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2043:0:vasara",
+                "x": 0,
+                "y": 10,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8954:0:rūts",
+                "x": 0,
+                "y": 14,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3706:0:aita",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1760:0:slimība",
+                "x": 0,
+                "y": 3,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13551:1:kaps",
+                "x": 3,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15455:0:kategorija",
+                "x": 3,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9742:2:siekala",
+                "x": 6,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-449:0:iestāde",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-74:0:grēda",
+                "x": 2,
+                "y": 9,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3904:0:deja",
+                "x": 5,
+                "y": 9,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2922:0:lapa",
+                "x": 2,
+                "y": 12,
+                "dir": 0,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "rounds": [
+          {
+            "cols": 4,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12336:0:romāns",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3781:0:prese",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10791:0:mape",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5944:0:nāve",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10692:0:vēna",
+                "x": 2,
+                "y": 4,
+                "dir": 1,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6368:0:vide",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4409:0:vara",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13060:0:dezinfekcija",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4876:1:nazis",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5817:0:asmens",
+                "x": 5,
+                "y": 6,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2168:0:vecums",
+                "x": 1,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3670:0:mats",
+                "x": 2,
+                "y": 11,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1766:0:templis",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2311:0:redakcija",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7203:0:egle",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3754:0:krūms",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4393:0:laiks",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8808:1:miers",
+                "x": 2,
+                "y": 6,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1197:0:norma",
+                "x": 1,
+                "y": 7,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4820:0:novads",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3782:0:mašīna",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1642:0:makarons",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-517:0:jūra",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6398:0:ūdens",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8358:0:pieteka",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4517:0:kauls",
+                "x": 2,
+                "y": 7,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 10,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4871:0:papīrs",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6340:0:ornaments",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12416:0:kontrasts",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5886:0:krāsa",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13998:0:mērs",
+                "x": 4,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-141:0:pants",
+                "x": 2,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1594:0:pirksts",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6290:1:zirnis",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6469:0:ķirbis",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-41:1:ļaudis",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2149:0:avots",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4828:0:zirgs",
+                "x": 3,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10848:0:gurns",
+                "x": 6,
+                "y": 5,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10851:0:plecs",
+                "x": 3,
+                "y": 7,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6609:0:debess",
+                "x": 2,
+                "y": 9,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14642:0:pussala",
+                "x": 1,
+                "y": 11,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 4,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1854:0:pārkāpums",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5227:1:krāns",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3003:0:sādža",
+                "x": 4,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10275:0:lapsa",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4379:0:lūpa",
+                "x": 0,
+                "y": 5,
+                "dir": 1,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 6,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1794:1:tradīcija",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2916:0:ģimene",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15738:0:ilgas",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1538:0:atmiņa",
+                "x": 5,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2417:0:pļava",
+                "x": 1,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3827:0:plūme",
+                "x": 1,
+                "y": 8,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8966:0:migla",
+                "x": 1,
+                "y": 11,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5535:0:nodaļa",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14598:0:prombūtne",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8954:0:rūts",
+                "x": 5,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2879:0:laime",
+                "x": 2,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3017:0:budžets",
+                "x": 2,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2117:0:dome",
+                "x": 2,
+                "y": 8,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13551:1:kaps",
+                "x": 6,
+                "y": 9,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1635:0:režija",
+                "x": 1,
+                "y": 10,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3702:0:sastāvs",
+                "x": 0,
+                "y": 12,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 5,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1765:1:dievnams",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6376:0:komisija",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7215:0:lauks",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8626:0:kungs",
+                "x": 2,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6249:0:dziesma",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-713:0:dokuments",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5981:0:lidmašīna",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4273:0:mājvieta",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15714:0:ceļš",
+                "x": 1,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2817:0:prieks",
+                "x": 0,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5952:0:izskaņa",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1052:0:konkurss",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 15,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3809:0:akcija",
+                "x": 2,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1222:0:amatpersona",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2945:0:paaudze",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1307:0:pilsonis",
+                "x": 0,
+                "y": 2,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3553:0:elkonis",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5365:1:dzejolis",
+                "x": 4,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2556:0:ozols",
+                "x": 2,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6062:0:centrs",
+                "x": 7,
+                "y": 9,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5889:0:maniere",
+                "x": 1,
+                "y": 10,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 6,
+        "rounds": [
+          {
+            "cols": 8,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7234:0:simpātija",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-655:1:bizness",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13541:0:kamīns",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14215:0:notārs",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3552:1:plauksta",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 14,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10006:0:kukulis",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15560:0:cirvis",
+                "x": 5,
+                "y": 3,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1015:2:kolēģis",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10439:0:audekls",
+                "x": 3,
+                "y": 7,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2257:0:lēmums",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-439:0:akmens",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10965:1:dzelme",
+                "x": 0,
+                "y": 12,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 16,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-273:2:līgums",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-773:0:politika",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3918:0:studija",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6374:0:tomāts",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6296:1:gurķis",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-517:0:jūra",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10926:2:rezultāts",
+                "x": 3,
+                "y": 7,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-143:1:piemērs",
+                "x": 5,
+                "y": 8,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-895:0:muzejs",
+                "x": 2,
+                "y": 10,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 7,
+        "rounds": [
+          {
+            "cols": 8,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6303:1:ķiploks",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3090:0:koncerts",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3093:0:deputāts",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2520:1:gultne",
+                "x": 2,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11521:0:tīģeris",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 10,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3392:3:automašīna",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-725:1:atspulgs",
+                "x": 7,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10504:0:grozījums",
+                "x": 3,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3534:0:zīmulis",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1136:0:turnīrs",
+                "x": 1,
+                "y": 2,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-273:2:līgums",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13551:1:kaps",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 17,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1105:2:zvaigzne",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7305:1:brīvība",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3332:0:policija",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4642:0:piepūle",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7636:0:imunitāte",
+                "x": 2,
+                "y": 7,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10783:1:pildspalva",
+                "x": 4,
+                "y": 7,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4444:0:lielgabals",
+                "x": 6,
+                "y": 7,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3540:0:kāja",
+                "x": 1,
+                "y": 13,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10275:0:lapsa",
+                "x": 3,
+                "y": 16,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 8,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 11,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-314:0:čempionāts",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5101:1:satversme",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2231:0:kompānija",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1052:1:sacensība",
+                "x": 4,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6125:0:tiesība",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2232:0:republika",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10791:0:mape",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4538:0:patiesība",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3311:0:atbalsts",
+                "x": 2,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2341:0:bibliotēka",
+                "x": 4,
+                "y": 3,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-728:0:atbilde",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-11452:0:barikāde",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9807:0:apelsīns",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2967:0:attiecība",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3347:0:kvalitāte",
+                "x": 4,
+                "y": 2,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2312:0:izdevums",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14042:0:mikrofons",
+                "x": 6,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8808:1:miers",
+                "x": 3,
+                "y": 6,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3754:0:krūms",
+                "x": 2,
+                "y": 8,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3827:0:plūme",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5769:0:suga",
+                "x": 2,
+                "y": 12,
+                "dir": 0,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 9,
+        "rounds": [
+          {
+            "cols": 9,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1285:1:pavasaris",
+                "x": 8,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13082:0:disertācija",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2326:0:operācija",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9262:0:lietotājs",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2139:0:nodoklis",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-610:0:pakalpojums",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3889:0:televīzija",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-609:2:tirdzniecība",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15417:0:dekorācija",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-9857:0:transports",
+                "x": 2,
+                "y": 2,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1406:0:attīstība",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4379:0:lūpa",
+                "x": 3,
+                "y": 12,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 15,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7591:0:reputācija",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3017:0:budžets",
+                "x": 1,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1095:1:iedzīvotājs",
+                "x": 3,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10812:0:inventārs",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2909:0:informācija",
+                "x": 0,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14909:0:siltumnīca",
+                "x": 8,
+                "y": 4,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3545:0:roka",
+                "x": 2,
+                "y": 9,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3540:0:kāja",
+                "x": 2,
+                "y": 11,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4409:0:vara",
+                "x": 5,
+                "y": 13,
+                "dir": 0,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 10,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3545:0:roka",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-264:2:organizācija",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5817:0:asmens",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5769:0:suga",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3904:0:deja",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 11,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3870:0:upe",
+                "x": 2,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6126:0:privilēģija",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4876:1:nazis",
+                "x": 1,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5889:0:maniere",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6903:0:sula",
+                "x": 1,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1207:0:kuģis",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1841:2:ēka",
+                "x": 1,
+                "y": 10,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 11,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4128:0:mēle",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4538:0:patiesība",
+                "x": 2,
+                "y": 2,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8954:0:rūts",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10791:0:mape",
+                "x": 1,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5944:0:nāve",
+                "x": 0,
+                "y": 5,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-15738:0:ilgas",
+                "x": 2,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6296:1:gurķis",
+                "x": 4,
+                "y": 5,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2043:0:vasara",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3560:0:nags",
+                "x": 1,
+                "y": 10,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "E": [
+      {
+        "seed": 0,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-782:1:ekonomika",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 4,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 1,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5755:0:skaņa",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 5,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 2,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 4,
+                "y": 4,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 15,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5510:0:zods",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2265:1:faktors",
+                "x": 8,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6204:0:kolēģija",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2859:0:auglis",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 1,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 4,
+                "y": 5,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1643:0:ieraksts",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2135:0:sports",
+                "x": 2,
+                "y": 9,
+                "dir": 1,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 11,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4373:0:grunts",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12370:0:ērce",
+                "x": 2,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3086:0:alumīnijs",
+                "x": 1,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7551:4:bulta",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-636:0:zinātne",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 17,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14671:0:rakstība",
+                "x": 5,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13949:0:marmors",
+                "x": 3,
+                "y": 3,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14002:0:metafora",
+                "x": 1,
+                "y": 4,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 7,
+                "y": 6,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2052:0:ražošana",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 3,
+                "y": 9,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3639:1:princips",
+                "x": 4,
+                "y": 9,
+                "dir": 1,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 16,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3897:0:temperatūra",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 4,
+                "y": 5,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13449:0:imigrācija",
+                "x": 6,
+                "y": 5,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14817:0:sanatorija",
+                "x": 2,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2859:0:auglis",
+                "x": 2,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 0,
+                "y": 10,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3447:0:ķermenis",
+                "x": 0,
+                "y": 12,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5755:0:skaņa",
+                "x": 0,
+                "y": 15,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "rounds": [
+          {
+            "cols": 4,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10160:0:atvasinājums",
+                "x": 1,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 0,
+                "y": 9,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 6,
+            "rows": 12,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2859:0:auglis",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 1,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7551:4:bulta",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 1,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 5,
+                "y": 5,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 0,
+                "y": 8,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 1,
+                "y": 8,
+                "dir": 1,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 14,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-636:0:zinātne",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 2,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13949:0:marmors",
+                "x": 1,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4373:0:grunts",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5755:0:skaņa",
+                "x": 5,
+                "y": 5,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 7,
+                "y": 5,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 3,
+                "y": 9,
+                "dir": 0,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 3,
+                "y": 9,
+                "dir": 1,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 5,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 3,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 3,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 7,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 6,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 8,
+                "y": 2,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5755:0:skaņa",
+                "x": 4,
+                "y": 3,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 5,
+                "y": 6,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 16,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2052:0:ražošana",
+                "x": 8,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7551:4:bulta",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14671:0:rakstība",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 4,
+                "y": 1,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1643:0:ieraksts",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 2,
+                "y": 8,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6204:0:kolēģija",
+                "x": 3,
+                "y": 8,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-636:0:zinātne",
+                "x": 2,
+                "y": 13,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 4,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6204:0:kolēģija",
+                "x": 6,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 3,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 3,
+                "y": 7,
+                "dir": 0,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 8,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5510:0:zods",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 3,
+                "y": 3,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 6,
+                "y": 3,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12370:0:ērce",
+                "x": 3,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 15,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2135:0:sports",
+                "x": 2,
+                "y": 5,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 5,
+                "y": 6,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14002:0:metafora",
+                "x": 8,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 4,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 6,
+                "y": 11,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7551:4:bulta",
+                "x": 4,
+                "y": 13,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 5,
+        "rounds": [
+          {
+            "cols": 4,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 0,
+                "y": 5,
+                "dir": 1,
+                "n": 4
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 16,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-10160:0:atvasinājums",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-7551:4:bulta",
+                "x": 0,
+                "y": 1,
+                "dir": 0,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14002:0:metafora",
+                "x": 6,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-782:1:ekonomika",
+                "x": 0,
+                "y": 4,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 2,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 0,
+                "y": 11,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 2,
+                "y": 11,
+                "dir": 1,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 13,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2265:1:faktors",
+                "x": 1,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5510:0:zods",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 1,
+                "y": 4,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13949:0:marmors",
+                "x": 4,
+                "y": 5,
+                "dir": 1,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 0,
+                "y": 6,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 2,
+                "y": 8,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 1,
+                "y": 11,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 6,
+        "rounds": [
+          {
+            "cols": 7,
+            "rows": 5,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5510:0:zods",
+                "x": 1,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 0,
+                "y": 2,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 0,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 6,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2859:0:auglis",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 3,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 8,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 3,
+                "y": 1,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 5,
+                "y": 4,
+                "dir": 0,
+                "n": 6
+              }
+            ]
+          },
+          {
+            "cols": 9,
+            "rows": 17,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 3,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2135:0:sports",
+                "x": 8,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12370:0:ērce",
+                "x": 4,
+                "y": 4,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4373:0:grunts",
+                "x": 3,
+                "y": 5,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-1643:0:ieraksts",
+                "x": 1,
+                "y": 6,
+                "dir": 1,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3447:0:ķermenis",
+                "x": 0,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13449:0:imigrācija",
+                "x": 6,
+                "y": 7,
+                "dir": 1,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-636:0:zinātne",
+                "x": 4,
+                "y": 10,
+                "dir": 1,
+                "n": 8
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 2,
+                "y": 16,
+                "dir": 0,
+                "n": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 7,
+        "rounds": [
+          {
+            "cols": 5,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5755:0:skaņa",
+                "x": 0,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3232:0:akts",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-3086:0:alumīnijs",
+                "x": 4,
+                "y": 0,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2877:0:auto",
+                "x": 2,
+                "y": 5,
+                "dir": 1,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-5510:0:zods",
+                "x": 1,
+                "y": 8,
+                "dir": 0,
+                "n": 5
+              }
+            ]
+          },
+          {
+            "cols": 8,
+            "rows": 9,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6057:0:posms",
+                "x": 0,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4756:0:valsts",
+                "x": 2,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2052:0:ražošana",
+                "x": 5,
+                "y": 1,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-8952:0:māls",
+                "x": 0,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2558:0:koks",
+                "x": 4,
+                "y": 4,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-13187:0:eseja",
+                "x": 1,
+                "y": 6,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6309:0:pupa",
+                "x": 2,
+                "y": 8,
+                "dir": 0,
+                "n": 7
+              }
+            ]
+          },
+          {
+            "cols": 7,
+            "rows": 14,
+            "words": [
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2685:0:spēks",
+                "x": 2,
+                "y": 0,
+                "dir": 0,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-14817:0:sanatorija",
+                "x": 2,
+                "y": 0,
+                "dir": 1,
+                "n": 1
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4988:0:kakls",
+                "x": 0,
+                "y": 1,
+                "dir": 1,
+                "n": 2
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2557:0:osis",
+                "x": 5,
+                "y": 2,
+                "dir": 1,
+                "n": 3
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2918:0:augs",
+                "x": 2,
+                "y": 3,
+                "dir": 0,
+                "n": 4
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-2135:0:sports",
+                "x": 0,
+                "y": 5,
+                "dir": 0,
+                "n": 5
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-6187:0:viela",
+                "x": 1,
+                "y": 7,
+                "dir": 0,
+                "n": 6
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-12403:0:vasks",
+                "x": 1,
+                "y": 9,
+                "dir": 0,
+                "n": 7
+              },
+              {
+                "id": "wordnet_lv-tezaurs_2026_4-4224:0:kņazs",
+                "x": 4,
+                "y": 9,
+                "dir": 1,
+                "n": 8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

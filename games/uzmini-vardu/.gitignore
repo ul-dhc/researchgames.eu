@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+src/game.js
+tests/*-results.json
+.index*.tmp
+index.tmp

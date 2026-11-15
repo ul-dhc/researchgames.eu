@@ -1,0 +1,285 @@
+<!doctype html><html lang="lv"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WordNet · Krustvārdi 01</title><style>
+:root{font-family:Inter,system-ui,sans-serif;color:#272333;background:#f7f6f2;--p:#655084;--line:#d7d1df}*{box-sizing:border-box}body{margin:0}main{max-width:980px;margin:auto;padding:28px 20px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}.brand{font-weight:750;letter-spacing:-.4px}.tag{font-size:12px;color:#655084}h1{font-size:clamp(25px,4vw,38px);letter-spacing:-1.2px;margin:28px 0 8px}p{line-height:1.55}.intro{max-width:650px;color:#625e6c;margin:0 0 22px}.layout{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:40px}.board{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;max-width:300px;margin:auto}.cell{position:relative;aspect-ratio:1;background:#fff;border:1px solid #bdb6c8;border-radius:4px;display:grid;place-items:center}.cell.focused{outline:3px solid var(--p);outline-offset:-2px}.cell.active{background:#ede7f3}.cell.bad{border:2px solid #b44c46}.cell.good{background:#e8efe9}.cell input{background:none;width:100%;height:100%;border:0;text-align:center;font:600 24px system-ui;color:inherit;outline:0;padding-top:8px;text-transform:uppercase;caret-color:var(--p)}.num{position:absolute;left:4px;top:2px;font-size:10px;pointer-events:none}.blank{aspect-ratio:1}.cluebox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px}.eyebrow{font-size:12px;color:var(--p);font-weight:700;letter-spacing:.6px}.clue{margin:10px 0 0;line-height:1.5;min-height:76px}button{font:inherit;cursor:pointer;min-height:44px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#30273e;padding:9px 13px}button:hover{border-color:var(--p)}button:focus-visible{outline:3px solid #9978bd;outline-offset:2px}.primary{background:var(--p);color:white;border-color:var(--p)}.row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.diacritics button{min-width:39px;padding:7px}.status{font-size:14px;min-height:42px;line-height:1.5;color:#5f536e}progress{width:100%;height:6px;accent-color:var(--p)}.list{margin:20px 0}.list button{display:block;text-align:left;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:10px 0;background:none;font-size:14px;line-height:1.5}.list button.current{color:var(--p);font-weight:650}details{border-top:1px solid var(--line);padding-top:18px;margin-top:22px;font-size:13px;color:#625e6c;line-height:1.6}summary{cursor:pointer;min-height:34px}a{color:var(--p)}.wordentry{width:100%;height:48px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:600 22px system-ui;letter-spacing:3px;text-transform:uppercase}.entrylabel{display:block;font-size:12px;color:#625e6c;margin:10px 0 5px}.source{overflow-wrap:anywhere;font-size:12px}.end{font-weight:650;color:#365642}@media(max-width:650px){main{padding:16px}.layout{display:flex;flex-direction:column;gap:16px}h1{margin-top:20px}.board{width:min(100%,216px)}.cluebox{padding:14px}.clue{min-height:0}.layout>section:first-child{order:3}.layout>section:last-child{display:contents}.play{order:1}.controls{order:2}.diacritics{flex-wrap:nowrap;overflow-x:auto;margin:8px 0;padding-bottom:4px}.diacritics button{flex:0 0 40px}.clue{max-height:100px;overflow-y:auto}.cluebox{margin-bottom:6px}.play>.row{margin:6px 0}.status{min-height:22px;margin:5px 0}.controls>.row:not(.diacritics){margin:6px 0}.intro{font-size:14px;margin-bottom:16px}.wordentry{height:46px}.list{margin-top:8px}.list{order:4;margin:0}.mobileNote{font-size:11px!important;margin:6px 0}}
+.welcome{max-width:680px;background:#fff;padding:20px;border:1px solid var(--line);border-radius:12px}.welcome p{font-size:14px}.level-title{font-size:13px;color:var(--p);font-weight:650}#score{margin-left:auto}[hidden]{display:none!important}.board{grid-template-columns:repeat(var(--cols,6),1fr)}@media(max-width:650px){.board{width:min(100%,calc(var(--cols,6)*36px))}.cell input{font-size:20px}.welcome{padding:16px}} .word-state{font-size:13px;color:#396647;font-weight:650;margin-top:6px}.list button.solved{color:#396647;background:#edf4ee}.cell.good{background:#e3efe5;border-color:#85a58d}.level-end{background:#edf4ee;border:1px solid #b9cebf;border-radius:10px;padding:14px;margin-top:12px}.level-end h2{font-size:18px;margin:0 0 6px}.level-end p{font-size:14px;line-height:1.5;margin:0} .icon-button{display:inline-flex;align-items:center;justify-content:center;position:relative;width:46px;height:46px;min-width:46px;padding:0;vertical-align:middle}.icon-button svg{flex:none}.hint-cost{position:absolute;bottom:1px;right:2px;font-size:10px;line-height:1.1;background:#f7f6f2;padding:1px;border-radius:3px}.bottom-actions{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}.help{margin-top:8px;border-top:0;padding-top:0}.help summary{list-style:none}.help summary::-webkit-details-marker{display:none}.help h2{font-size:19px}.icon-legend{list-style:none;padding:0}.icon-legend li{display:flex;align-items:flex-start;gap:10px;margin:12px 0}.icon-legend svg{flex-shrink:0}.status:empty{display:none}.status{min-height:0}.icon-button:disabled{opacity:.45;cursor:default}
+.word-state:empty{display:none}
+@media(max-width:650px){
+ main{padding:12px}
+ main:has(#game:not([hidden])) h1{display:none}
+ header{padding-bottom:10px}.brand{font-size:15px}.tag{font-size:10px}
+ #game>.row{margin:10px 0;align-items:center;min-height:22px}
+ #level-title{max-width:68%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px}
+ #score{white-space:nowrap;font-size:12px}
+ .layout{gap:8px}.cluebox{padding:12px;margin-bottom:8px}
+ .clue{font-size:15px;line-height:1.4;max-height:108px;margin-top:7px}
+ .eyebrow{font-size:11px}.word-state{font-size:12px;margin-top:4px}
+ .entry-now .entrylabel{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0}
+ .entry-now .wordentry{height:46px;margin:0}
+ .play>.row{margin:7px 0 4px}.controls>.row{margin:0 0 6px}
+ .controls .status{font-size:12px;margin:4px 0}.list{margin-top:8px}
+}
+.layout>.side-panel{grid-column:2;grid-row:1}.layout>.grid-panel{grid-column:1;grid-row:1}@media(max-width:650px){.layout>.side-panel{display:contents}.layout>.grid-panel{display:block;order:3}} .questions{border:0;padding:0;margin-top:12px}.questions summary{list-style:none}.questions summary::-webkit-details-marker{display:none}@media(max-width:650px){.questions{order:4;margin-top:4px}.play>.row{gap:6px}.play progress{display:block;margin:3px 0}} </style><main><header><span class="brand">ResearchGames<span style="color:var(--p)">.eu</span></span><span class="tag">WORDNET / DIVI LĪMEŅI</span></header><h1>No nozīmes līdz vārdam</h1><section id="welcome" class="welcome"><h2>Izvēlies spēles veidu</h2><p>Divi pārbaudīti līmeņi: 8 pazīstami dabas vārdi, tad 10 vārdi ar mazāk ierastām nozīmēm. Bez laika ierobežojuma.</p><div class="row"><button id="mode-free" class="primary">Brīvais režīms</button><button id="mode-points">Ar punktiem</button></div><details><summary>ⓘ Kā darbojas punkti un norādes?</summary><p>Abos režīmos vari atklāt vienu burtu. Brīvajā režīmā punktu nav. Punktu režīmā par pareizi pabeigtu vārdu: 100 punkti, mīnus 25 par katru šim vārdam izmantoto burtu norādi, ne mazāk par 0. Krustpunktā atklāts burts palīdz arī otram vārdam, bet maksā tikai izvēlētajam. Pareizie vārdi iekrāsojas automātiski. Par kļūdainiem mēģinājumiem punktus nezaudē.</p></details></section><div id="game" hidden><div class="row"><span id="level-title" class="level-title"></span><span id="score" class="level-title"></span></div><div class="layout"><section class="side-panel"><div class="play"><div class="cluebox"><div id="label" class="eyebrow"></div><div id="word-state" class="word-state" role="status"></div><p id="clue" class="clue"></p></div><div class="entry-now"><label class="entrylabel" for="word-entry">Raksti izvēlētā vārda atbildi</label><input id="word-entry" class="wordentry" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="label clue"></div><div class="row"><button id="prev" aria-label="Iepriekšējais jautājums">←</button><button id="next" aria-label="Nākamais jautājums">→</button><span id="count" style="align-self:center;margin-left:auto;font-size:13px"></span></div><progress aria-label="Atrisināto vārdu skaits šajā līmenī" id="progress" max="8" value="0"></progress></div><div class="controls"><div class="row"><button id="hint" class="icon-button" title="Atklāt vienu burtu" aria-label="Atklāt vienu burtu"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6m-5 3h4M8.2 13.7A6 6 0 1 1 15.8 13.7C14.8 14.4 15 15.5 15 16H9c0-.5.2-1.6-.8-2.3Z"/></svg><span id="hint-cost" class="hint-cost" aria-hidden="true" hidden></span></button><button id="clear" class="icon-button" title="Dzēst burtu vai atlasīto tekstu" aria-label="Dzēst burtu vai atlasīto tekstu"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5-7 7 7 7h12V5Z"/><path d="m12 9 6 6m0-6-6 6"/></svg></button><button id="reset" class="icon-button" title="Sākt abus līmeņus no jauna" aria-label="Sākt abus līmeņus no jauna"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg></button></div><div id="status" class="status" role="status"></div><section id="level-end" class="level-end" hidden aria-live="polite"><h2 id="end-heading"></h2><p id="end-text"></p></section><div class="row"><button id="next-level" class="primary" hidden>Nākamais līmenis →</button><button id="previous-level" hidden>← Pirmais līmenis</button></div><div id="all-done" class="end" hidden>Abi līmeņi pabeigti. Šajā prototipā ir tieši šīs divas pārbaudītās mīklas.</div></div><details class="questions"><summary class="icon-button" title="Visi šī līmeņa jautājumi" aria-label="Visi šī līmeņa jautājumi"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.1M4 12h.1M4 18h.1"/></svg></summary><div id="list" class="list"></div></details></section><section class="grid-panel"><div id="board" class="board" aria-label="Krustvārdu režģis"></div></section></div><div class="bottom-actions"><button id="new-game" class="icon-button" title="Mainīt režīmu un sākt jaunu spēli" aria-label="Mainīt režīmu un sākt jaunu spēli"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9"/><circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button></div><details class="help"><summary class="icon-button" title="Palīdzība un WordNet avoti" aria-label="Palīdzība un WordNet avoti"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></svg></summary><h2>Palīdzība un avoti</h2><p id="intro" class="intro"></p><p class="mobileNote" style="font-size:12px;color:#777">Krustpunktā pieskaries vēlreiz, lai mainītu virzienu. Režģī raksti nepārtraukti; nākamais burts pāriet uz nākamo rūtiņu. Var pārvietoties arī ar bultām vai pieskārienu. Ērtāk telefonā: raksti visu vārdu laukā virs režģa.</p><ul class="icon-legend"><li><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6m-5 3h4M8.2 13.7A6 6 0 1 1 15.8 13.7C14.8 14.4 15 15.5 15 16H9c0-.5.2-1.6-.8-2.3Z"/></svg><span>Atklāt vienu burtu. Punktu režīmā samazina šī vārda vērtību; atskaitījums redzams pie ikonas.</span></li><li><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5-7 7 7 7h12V5Z"/><path d="m12 9 6 6m0-6-6 6"/></svg><span>Dzēst burtu vai atlasīto tekstu.</span></li><li><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg><span>Sākt abus līmeņus no jauna. Pirms dzēšanas prasīsim apstiprinājumu.</span></li><li><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9"/><circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Mainīt režīmu. Tas sāk jaunu spēli tikai pēc apstiprinājuma.</span></li></ul><p>Bez laika ierobežojuma. Brīvajā režīmā punktu nav. Punktu režīmā par katru pareizi pabeigtu vārdu: 100 punkti, mīnus 25 par katru šim vārdam izmantoto burtu norādi, ne mazāk par 0. Pareizie vārdi iekrāsojas automātiski. Par kļūdainiem mēģinājumiem punktus nezaudē. Krustpunktā atklāts burts palīdz arī otram vārdam, bet maksā tikai izvēlētajam. Punkti pārrēķinās, ja pareizu vārdu izmaini. Pirmajā līmenī ne vairāk kā 800, otrajā 1000 punktu.</p><p>WordNet pētnieki apkopo ne tikai vārdus, bet to atsevišķās nozīmes. Šeit katrs jautājums ir vienas izvēlētas nozīmes oriģināls skaidrojums. Tas nav viss, ko šis vārds var nozīmēt. Krustojumi šajā spēlē ir burtu sakritības, nevis WordNet semantiskās saites.</p><p>Režģī pieņemta viena konkrēta atbilde katrai pozīcijai. Citi valodā derīgi apzīmējumi var neatbilst šī režģa burtu skaitam. Šis ir neliels spēlējamības tests, nevis pilns valodas tests.</p><div id="sources" class="source"></div><p>Avots: <a href="https://repository.clarin.lv/repository/xmlui/handle/20.500.12574/162" target="_blank" rel="noopener">Tēzaurs.lv 2026_4 / Latvian WordNet</a>. Paikens u. c. (2023), <a href="https://doi.org/10.18653/v1/2023.gwc-1.23" target="_blank" rel="noopener">Latvian WordNet</a>. Dati un šī adaptācija: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Skaidrojumi pārņemti bez pārfrāzēšanas; atlasīti 18 nozīmju ieraksti diviem līmeņiem. Atbildes glabājas tikai šajā pārlūkā, netiek sūtītas pētniekiem.</p></details></div></main><script>
+const LEVELS=[
+  {
+    "words": [
+      {
+        "word": "LIETUS",
+        "clue": "Nokrišņi ūdens pilienu veidā",
+        "synset": "wordnet_lv-tezaurs_2026_4-1492",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-lietus:1-180633",
+        "y": 0,
+        "x": 0,
+        "dir": 0,
+        "n": 1
+      },
+      {
+        "word": "UPE",
+        "clue": "pastāvīga ūdenstece, kas plūst pašas izveidotā garenā gultnē, uzņemot sava baseina noteces ūdeņus",
+        "synset": "wordnet_lv-tezaurs_2026_4-3870",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-upe:1-355812",
+        "y": 0,
+        "x": 4,
+        "dir": 1,
+        "n": 2
+      },
+      {
+        "word": "SAKNE",
+        "clue": "augu daļa, kas nostiprina augu augsnē, uzsūc ūdeni un tajā izšķīdušās minerālvielas, sintezē organiskas vielas un sekmē to pārvietošanos uz citiem orgāniem, izdala vielmaiņas produktus",
+        "synset": "wordnet_lv-tezaurs_2026_4-2920",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-sakne:1-291853",
+        "y": 2,
+        "x": 0,
+        "dir": 0,
+        "n": 3
+      },
+      {
+        "word": "KRŪMS",
+        "clue": "Daudzgadīgs augs ar vairākiem ilggadīgiem koksnainiem virszemes stumbriem (bez viena galvenā stumbra)",
+        "synset": "wordnet_lv-tezaurs_2026_4-3754",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-krūms:1-163292",
+        "y": 2,
+        "x": 2,
+        "dir": 1,
+        "n": 4
+      },
+      {
+        "word": "LAPA",
+        "clue": "viens no augstāko augu pamatorgāniem – dažādas formas un lieluma (parasti zaļa) plātne, kurā norisinās fotosintēze un citi auga dzīvībai svarīgi procesi",
+        "synset": "wordnet_lv-tezaurs_2026_4-2922",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-lapa:1-173918",
+        "y": 4,
+        "x": 0,
+        "dir": 1,
+        "n": 5
+      },
+      {
+        "word": "SNIEGS",
+        "clue": "Nokrišņi - balti ledus kristāli, kas aukstajā periodā izveidojas mākoņos",
+        "synset": "wordnet_lv-tezaurs_2026_4-6074",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-sniegs:1-314922",
+        "y": 4,
+        "x": 4,
+        "dir": 1,
+        "n": 6
+      },
+      {
+        "word": "AKMENS",
+        "clue": "ciets, ūdenī nešķīstošs nemetālisks iezis vai tā gabals",
+        "synset": "wordnet_lv-tezaurs_2026_4-439",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-akmens:1-9152",
+        "y": 5,
+        "x": 0,
+        "dir": 0,
+        "n": 7
+      },
+      {
+        "word": "ZIEDS",
+        "clue": "Augstāko augu (sēklaugu) vairošanās orgāns, kas sastāv no apziedņa, putekšņlapām un auglenīcas",
+        "synset": "wordnet_lv-tezaurs_2026_4-2923",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-zieds:1-380846",
+        "y": 9,
+        "x": 0,
+        "dir": 0,
+        "n": 8
+      }
+    ],
+    "rows": 10,
+    "cols": 6,
+    "source": "Latvian WordNet / Tēzaurs.lv 2026_4",
+    "license": "CC BY-SA 4.0",
+    "citation": "Paikens et al. (2023). Latvian WordNet. DOI: 10.18653/v1/2023.gwc-1.23",
+    "sourceUrl": "https://repository.clarin.lv/repository/xmlui/handle/20.500.12574/162",
+    "title": "Daba tuvumā",
+    "intro": "Astoņi vārdi par dabu. Sāc ar pazīstamām nozīmēm un izmanto krustpunktus."
+  },
+  {
+    "words": [
+      {
+        "word": "SPĀRNS",
+        "clue": "Sānu daļa, sānu korpuss (celtnei)",
+        "synset": "wordnet_lv-tezaurs_2026_4-5439",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-spārns:1-316667",
+        "y": 0,
+        "x": 2,
+        "dir": 0,
+        "n": 1
+      },
+      {
+        "word": "PĒDA",
+        "clue": "Garuma mērvienība - aptuveni 30,48 centimetri (angļu un vecajā krievu mērvienību sistēmā)",
+        "synset": "wordnet_lv-tezaurs_2026_4-6654",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-pēda:1-247978",
+        "y": 0,
+        "x": 3,
+        "dir": 1,
+        "n": 2
+      },
+      {
+        "word": "SAKNE",
+        "clue": "Radniecīgu vārdu grupai kopēja morfēma, ar ko ir saistīta vārda visa leksiskā nozīme vai tās galvenā dala",
+        "synset": "wordnet_lv-tezaurs_2026_4-4115",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-sakne:1-291853",
+        "y": 2,
+        "x": 1,
+        "dir": 1,
+        "n": 3
+      },
+      {
+        "word": "ZVAIGZNE",
+        "clue": "cilvēks, kas ir ieguvis slavu, ir zināms plašam cilvēku lokam",
+        "synset": "wordnet_lv-tezaurs_2026_4-1105",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-zvaigzne:1-383701",
+        "y": 2,
+        "x": 7,
+        "dir": 1,
+        "n": 4
+      },
+      {
+        "word": "LAPA",
+        "clue": "vietne globālajā tīmeklī",
+        "synset": "wordnet_lv-tezaurs_2026_4-7332",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-lapa:1-173918",
+        "y": 3,
+        "x": 0,
+        "dir": 0,
+        "n": 5
+      },
+      {
+        "word": "KOKS",
+        "clue": "Sakarīgs vienkāršs grafs, kas nesatur ciklus; izmanto datu šķirošanas un meklēšanas procedūrās",
+        "synset": "wordnet_lv-tezaurs_2026_4-2558",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-koks:1-154421",
+        "y": 3,
+        "x": 5,
+        "dir": 1,
+        "n": 6
+      },
+      {
+        "word": "ROKA",
+        "clue": "samērā garš, kustīgs (ierīces, ietaises u. tml.) darba elements",
+        "synset": "wordnet_lv-tezaurs_2026_4-5599",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-roka:1-286042",
+        "y": 4,
+        "x": 4,
+        "dir": 0,
+        "n": 7
+      },
+      {
+        "word": "MEZGLS",
+        "clue": "Savienojums (diegiem, auklām u. tml.), ko veido, (tos) sasienot; ciešs iesējums (piemēram, pavedienā); savilkta cilpa",
+        "synset": "wordnet_lv-tezaurs_2026_4-6468",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-mezgls:1-199050",
+        "y": 6,
+        "x": 0,
+        "dir": 0,
+        "n": 8
+      },
+      {
+        "word": "LOKS",
+        "clue": "Rokas ierocis šaušanai ar bultām - elastīgs stienis, kas saliekts līknes daļas formā, savelkot tā galus ar stiegru",
+        "synset": "wordnet_lv-tezaurs_2026_4-15558",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-loks:1-184212",
+        "y": 6,
+        "x": 4,
+        "dir": 1,
+        "n": 9
+      },
+      {
+        "word": "TILTS",
+        "clue": "Šasijas daļa (transportlīdzeklim, piemēram, automobilim, traktoram), kas savieno pretējo pušu riteņus",
+        "synset": "wordnet_lv-tezaurs_2026_4-3567",
+        "lexicalEntry": "wordnet_lv-tezaurs_2026_4-tilts:1-344692",
+        "y": 9,
+        "x": 0,
+        "dir": 0,
+        "n": 10
+      }
+    ],
+    "rows": 10,
+    "cols": 8,
+    "source": "Latvian WordNet / Tēzaurs.lv 2026_4",
+    "license": "CC BY-SA 4.0",
+    "citation": "Paikens et al. (2023). Latvian WordNet. DOI: 10.18653/v1/2023.gwc-1.23",
+    "sourceUrl": "https://repository.clarin.lv/repository/xmlui/handle/20.500.12574/162",
+    "title": "Pazīstams vārds, cita nozīme",
+    "intro": "Desmit vārdi. Šoreiz daudzi ikdienišķi vārdi lietoti mazāk ierastā nozīmē. Lasi skaidrojumu precīzi."
+  }
+],KEY='rg-wordnet-crosswords-levels-v1';
+const $=id=>document.getElementById(id);let session=null,level=0,active=0,focusKey='',wholeEntry=false,D,words,values,hints,cells,members,checked=new Set(),entryComposing=false;
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&['free','points'].includes(s.mode)&&Array.isArray(s.levels)&&s.levels.length===2&&s.levels.every(x=>x&&x.values&&typeof x.values==='object'&&!Array.isArray(x.values)&&x.hints&&typeof x.hints==='object'&&!Array.isArray(x.hints))&&[0,1].includes(s.level))session=s}catch(e){}
+function save(){if(!session)return;session.level=level;try{localStorage.setItem(KEY,JSON.stringify(session))}catch(e){}}
+function positions(w){return [...w.word].map((c,i)=>`${w.y+(w.dir?i:0)},${w.x+(w.dir?0:i)}`)}
+function correct(w,v){return positions(w).every((p,j)=>v[p]===w.word[j])}
+function complete(i){return correct(words[i],values)}
+function totalScore(){return LEVELS.reduce((n,d,k)=>n+d.words.reduce((a,w,i)=>a+(correct(w,session.levels[k].values)?Math.max(0,100-25*(session.levels[k].hints[i]||0)):0),0),0)}
+function countComplete(k){return LEVELS[k].words.filter(w=>correct(w,session.levels[k].values)).length}
+function message(s){$('status').textContent=s}
+function update(){if(document.activeElement!==$('word-entry'))$('word-entry').value=positions(words[active]).map(p=>values[p]||' ').join('').trimEnd();$('word-entry').placeholder='Tava atbilde';
+ const n=words.filter((_,i)=>complete(i)).length;$('count').textContent=`${n} / ${words.length} vārdi atrisināti`;$('progress').max=words.length;$('progress').value=n;
+ $('score').textContent=session.mode==='points'?`${totalScore()} p.`:'bez punktiem';$('score').setAttribute('title',session.mode==='points'?`Kopā ${totalScore()} punkti; par izvēlēto vārdu līdz ${Math.max(0,100-25*(hints[active]||0))} punktiem`:'Brīvais režīms bez punktiem');
+ $('label').textContent=`${words[active].n}. ${words[active].dir?'VERTIKĀLI':'HORIZONTĀLI'}`;$('clue').textContent=words[active].clue;
+ const cost=Math.min(25,Math.max(0,100-25*(hints[active]||0))),hintLabel=session.mode==='points'?`Atklāt vienu burtu: šī vārda vērtība samazinās par ${cost} punktiem`:'Atklāt vienu burtu';$('hint').setAttribute('aria-label',hintLabel);$('hint').setAttribute('title',hintLabel);$('hint-cost').hidden=session.mode!=='points';$('hint-cost').textContent=cost?'−'+cost:'0';$('hint').disabled=complete(active);
+ document.querySelectorAll('.cell').forEach(el=>{const p=el.dataset.p;el.classList.toggle('active',positions(words[active]).includes(p));el.classList.toggle('focused',p===focusKey);el.classList.toggle('good',members[p].some(i=>complete(i)))});
+ document.querySelectorAll('.list button').forEach((b,i)=>{const done=complete(i),w=words[i];b.classList.toggle('current',i===active);b.classList.toggle('solved',done);b.textContent=`${done?'✓ Atrisināts · ':''}${w.n}. ${w.dir?'↓':'→'} ${w.clue}`});$('word-state').textContent=complete(active)?'✓ Vārds atrisināts':'';
+ $('next-level').hidden=level!==0||n!==words.length;$('previous-level').hidden=level!==1;$('all-done').hidden=true;$('level-end').hidden=n!==words.length;$('end-heading').textContent=level===0?'✓ Pirmais līmenis pabeigts':'✓ Otrais līmenis pabeigts';$('end-text').textContent=level===0?'Atrisināji astoņus dabas vārdus pēc īstiem WordNet skaidrojumiem. Nākamajā līmenī būs desmit vārdi, daudzi ar mazāk ierastām nozīmēm.':'Atrisināji arī otru mīklu. Šajā prototipā ir divi līmeņi. Viens un tas pats vārds WordNet var būt saistīts ar vairākām atšķirīgām nozīmēm. Vari atgriezties pirmajā līmenī vai sākt jaunu spēli.';
+ $('sources').replaceChildren(...words.map((w,i)=>{const p=document.createElement('p');p.textContent=`${w.n}. ${w.dir?'Vertikāli':'Horizontāli'} · ${w.synset}${complete(i)?' · '+w.word:''}`;return p}));save();}
+function select(i,focus=false){active=i;focusKey=positions(words[i]).find(p=>!values[p])||positions(words[i])[0];$('word-entry').value=positions(words[i]).map(p=>values[p]||' ').join('').trimEnd();update();if(focus){wholeEntry=true;$('word-entry').focus();$('word-entry').select()}}
+function loadLevel(k){if(k===1&&countComplete(0)!==LEVELS[0].words.length)return;level=k;D=LEVELS[k];words=D.words;values=session.levels[k].values;hints=session.levels[k].hints;active=0;wholeEntry=false;checked.clear();cells={};members={};
+ words.forEach((w,i)=>positions(w).forEach((p,j)=>{if(cells[p]&&cells[p]!==w.word[j])throw Error('Crossing mismatch');cells[p]=w.word[j];(members[p]??=[]).push(i)}));
+ $('board').replaceChildren();$('board').style.setProperty('--cols',D.cols);$('list').replaceChildren();$('level-title').textContent=`${k+1}. LĪMENIS / 2 · ${D.title}`;$('intro').textContent=D.intro;
+ for(let y=0;y<D.rows;y++)for(let x=0;x<D.cols;x++){const p=`${y},${x}`,el=document.createElement('div');if(!cells[p])el.className='blank';else{el.className='cell';el.dataset.p=p;const start=words.find(w=>w.y===y&&w.x===x);if(start){const num=document.createElement('span');num.className='num';num.textContent=start.n;el.append(num)}const inp=document.createElement('input');inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.autocapitalize='characters';inp.setAttribute('aria-label',`${y+1}. rinda, ${x+1}. kolonna`);inp.value=values[p]||'';let wasFocused=false;
+ inp.addEventListener('pointerdown',()=>{wasFocused=document.activeElement===inp});inp.addEventListener('focus',()=>{wholeEntry=false;focusKey=p;inp.select();if(!members[p].includes(active))active=members[p][0];update()});inp.addEventListener('click',()=>{if(wasFocused&&members[p].length>1){active=members[p][(members[p].indexOf(active)+1)%members[p].length];update()}});
+ let composing=false;
+ const commitCell=()=>{const letters=[...normalizeAnswer(inp.value,false)],ps=positions(words[active]),start=ps.indexOf(p);if(start<0)return;
+ // Keep focus on the current committed grapheme. A following letter flows
+ // into the next cell; a combining mark instead updates the current letter.
+ const chars=letters.length?letters:[''];let last=p;
+ chars.slice(0,ps.length-start).forEach((letter,j)=>{const dest=ps[start+j];values[dest]=letter;inputAt(dest).value=letter;document.querySelector(`[data-p="${dest}"]`).classList.remove('bad');last=dest});
+ checked.clear();update();if(chars.length>1&&last!==p){focusKey=last;inputAt(last).focus();inputAt(last).setSelectionRange(1,1);update()}};
+ inp.addEventListener('compositionstart',()=>{composing=true});inp.addEventListener('compositionend',()=>{composing=false;commitCell()});
+ inp.addEventListener('input',e=>{if(composing||e?.isComposing)return;commitCell()});
+ inp.addEventListener('blur',()=>{if(!composing){commitCell();inp.value=values[p]||''}});
+ inp.addEventListener('keydown',e=>{if(composing||e.isComposing||e.keyCode===229)return;if(e.key==='Backspace'&&!inp.value){e.preventDefault();move(-1)}else if(e.key==='Enter'){e.preventDefault();update()}else if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();move(1)}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();move(-1)}});el.append(inp)}$('board').append(el)}
+ words.forEach((w,i)=>{const b=document.createElement('button');b.textContent=`${w.n}. ${w.dir?'↓':'→'} ${w.clue}`;b.onclick=()=>select(i,true);$('list').append(b)});message('');select(0);}
+function inputAt(p){return document.querySelector(`[data-p="${p}"] input`)}
+function write(p,v){values[p]=v;inputAt(p).value=v;document.querySelector(`[data-p="${p}"]`).classList.remove('bad');checked.clear();update()}
+function move(delta){const ps=positions(words[active]),i=ps.indexOf(focusKey);if(i+delta>=0&&i+delta<ps.length){focusKey=ps[i+delta];inputAt(focusKey).focus();update()}}
+
+function reveal(){const w=words[active],ps=positions(w),j=ps.findIndex((p,j)=>values[p]!==w.word[j]);if(j<0)return;const p=ps[j];hints[active]=(hints[active]||0)+1;values[p]=w.word[j];inputAt(p).value=w.word[j];document.querySelector(`[data-p="${p}"]`).classList.remove('bad');$('word-entry').value=ps.map(p=>values[p]||' ').join('').trimEnd();update();message(session.mode==='points'?`Atklāts viens burts. Šī vārda vērtība tagad līdz ${Math.max(0,100-25*hints[active])} punktiem.`:'Atklāts viens burts. Pārējo atbildi atrodi pēc skaidrojuma un krustpunktiem.');}
+function start(mode){session={mode,level:0,levels:LEVELS.map(()=>({values:{},hints:{}}))};$('welcome').hidden=true;$('game').hidden=false;loadLevel(0)}
+function normalizeAnswer(raw,spaces=true){return raw.normalize('NFC').toLocaleUpperCase('lv').replace(spaces?/[^A-ZĀČĒĢĪĶĻŅŠŪŽ ]/g:/[^A-ZĀČĒĢĪĶĻŅŠŪŽ]/g,'')}
+function commitEntry(){const v=normalizeAnswer($('word-entry').value).slice(0,words[active].word.length);positions(words[active]).forEach((p,j)=>{values[p]=v[j]===' '?'':v[j]||'';inputAt(p).value=values[p];document.querySelector(`[data-p="${p}"]`).classList.remove('bad')});checked.clear();update()}
+$('word-entry').addEventListener('focus',()=>{wholeEntry=true;$('word-entry').select()});
+$('word-entry').addEventListener('compositionstart',()=>{entryComposing=true});
+$('word-entry').addEventListener('compositionend',()=>{entryComposing=false;commitEntry()});
+$('word-entry').addEventListener('input',e=>{if(entryComposing||e?.isComposing)return;commitEntry()});
+$('word-entry').addEventListener('blur',()=>{if(!entryComposing){commitEntry();$('word-entry').value=positions(words[active]).map(p=>values[p]||' ').join('').trimEnd()}});
+$('word-entry').addEventListener('keydown',e=>{if(entryComposing||e.isComposing||e.keyCode===229)return;if(e.key==='Enter'){e.preventDefault();update()}});
+
+
+$('hint').onclick=reveal;$('prev').onclick=()=>select((active+words.length-1)%words.length,true);$('next').onclick=()=>select((active+1)%words.length,true);$('clear').onclick=()=>{if(wholeEntry){const e=$('word-entry'),a=e.selectionStart??e.value.length,b=e.selectionEnd??a,start=a===b?Math.max(0,a-1):a;e.value=e.value.slice(0,start)+e.value.slice(b);e.dispatchEvent(new Event('input'));e.focus();e.setSelectionRange(start,start)}else write(focusKey,'')};
+$('reset').onclick=()=>{if(!confirm('Sākt abus līmeņus no jauna? Ievadītās atbildes un punkti tiks dzēsti.'))return;start(session.mode)};
+$('new-game').onclick=()=>{if(!confirm('Dzēst abu līmeņu progresu un izvēlēties režīmu no jauna?'))return;session=null;try{localStorage.removeItem(KEY)}catch(e){}$('game').hidden=true;$('welcome').hidden=false};
+$('next-level').onclick=()=>loadLevel(1);$('previous-level').onclick=()=>loadLevel(0);$('mode-free').onclick=()=>start('free');$('mode-points').onclick=()=>start('points');
+if(session){$('welcome').hidden=true;$('game').hidden=false;loadLevel(session.level)}
+
+</script></html>
