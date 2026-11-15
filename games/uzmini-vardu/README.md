@@ -1,6 +1,6 @@
 # Uzmini vārdu – direct Tēzaurs TEI continuation
 
-Version: **crossword-tei-2026_4-rg-start-info-v5**. Latvian interface. Portable repository source.
+Version: **crossword-tei-2026_4-rg-start-detail-v6**. Latvian interface. Portable repository source.
 
 Ready-to-serve entry: index.html. Edit src/runtime.js, src/tier-core.js, src/interface.html and src/styles.css. src/game.js is generated. Python 3.9+ and existing Node suffice.
 
@@ -55,3 +55,5 @@ node tests/test_unified_info.cjs
 ```
 
 The deployment entry is the reproducible self-contained index.html. Generated source and test reports are ignored. The full TEI remains an external source input for import verification, not a browser dependency. Physical phone, virtual keyboard and native screen-reader testing remain pending.
+
+V6 straightens the decorative start grid, distinguishes saved-session controls from the original two-level game, and simplifies About with the DHC credit and contact. Relevant round sources, data attribution and shipped licences are retained.
