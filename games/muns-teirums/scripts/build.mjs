@@ -12,7 +12,7 @@ const plants = JSON.parse(data.slice(data.indexOf('['),data.lastIndexOf(']')+1))
 const iconSource = await read('icons.js');
 const icons = JSON.parse(iconSource.slice(iconSource.indexOf('{'),iconSource.lastIndexOf('}')+1));
 const escape = s => s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
-const layout = [[0,'image'],[3,'name'],[1,'image'],[4,'name'],[5,'name'],[2,'image'],[6,'name'],[3,'image'],[6,'image'],[7,'name'],[0,'name'],[4,'image'],[7,'image'],[1,'name'],[5,'image'],[2,'name']];
+const layout = Array.from({length:9},(_,i)=>[[i,'image'],[i,'name']]).flat();
 const open = new Set();
 const cards = layout.map(([p,kind],i)=>{
   const plant = plants[p], name = plant.namesLtg[0];
@@ -27,7 +27,7 @@ const replacements = {'↗':'arrow-up-right','→':'arrow-right','↻':'rotate-c
 for(const [glyph,icon] of Object.entries(replacements))html=html.replaceAll(`<span aria-hidden="true">${glyph}</span>`,icons[icon]);
 html = html.replace('<span class="little-cross" aria-hidden="true"></span>',icons.sprout).replace('aria-label="Aizvērt">×</button>',`aria-label="Aizvērt">${icons.x}</button>`);
 // Localize the static HTML too, including the no-JavaScript preview.
-html = html.replace(/<([a-z][a-z0-9]*)([^>]*\bdata-i18n="([\d.]+)"[^>]*)>[\s\S]*?<\/\1>/g, (_, tag, attrs, id) => `<${tag}${attrs}>${escape(t(id, { augu_skaits: 8 }))}</${tag}>`);
+html = html.replace(/<([a-z][a-z0-9]*)([^>]*\bdata-i18n="([\d.]+)"[^>]*)>[\s\S]*?<\/\1>/g, (_, tag, attrs, id) => `<${tag}${attrs}>${escape(t(id, { augu_skaits: 9 }))}</${tag}>`);
 html = html.replace(/<([a-z][a-z0-9]*)([^>]*\bdata-i18n-text="([\d.]+)"[^>]*)>[^<]*/g, (_, tag, attrs, id) => `<${tag}${attrs}>${escape(t(id))} `);
 html = html.replace(/<[^>]*\bdata-i18n-aria="([\d.]+)"[^>]*>/g, (tag, id) => tag.replace(/aria-label="[^"]*"/, `aria-label="${escape(t(id))}"`));
 html = html.replace(/<meta[^>]*\bdata-i18n-content="([\d.]+)"[^>]*>/g, (tag, id) => tag.replace(/ content="[^"]*"/, ` content="${escape(t(id))}"`));
@@ -45,4 +45,4 @@ html = html.replace(/href="style\.css(?:\?[^"]*)?"/, `href="style.css?v=${versio
   .replace(/src="bundle\.js(?:\?[^"]*)?"/, `src="bundle.js?v=${version}"`)
   .replace(/src="preview-access\.js(?:\?[^"]*)?"/, `src="preview-access.js?v=${version}"`);
 await fs.writeFile(path.join(root,'index.html'),html);
-console.log('Built 16 static cards, inline Lucide icons and bundle.js.');
+console.log('Built 18 static cards, inline Lucide icons and bundle.js.');

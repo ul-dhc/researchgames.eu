@@ -1,8 +1,8 @@
-# Muns teirums – pilots
+# Munā teirumā – pilots
 
 Priekšskatījumu pagaidām aizsargā paroles ekrāns un `noindex, nofollow` norāde. Pirms publiskās palaišanas izpildīt [publicēšanas kontrolsarakstu](PUBLICATION_CHECKLIST.md).
 
-Atsevišķa HTML/CSS/JavaScript spēle ar 6, 8 vai 10 pāriem (noklusējumā 8). Nav Astro atkarības; gatavais `index.html` un `bundle.js` ir iekļauti mapē.
+Atsevišķa HTML/CSS/JavaScript spēle ar 6, 9 vai 12 pāriem (noklusējumā 9). Nav Astro atkarības; gatavais `index.html` un `bundle.js` ir iekļauti mapē.
 
 Visas 16 parauga kārtis ir iepriekš ģenerētas HTML, tāpēc to redzamība nav atkarīga no JavaScript. Pārlūks ielādē vienu parasto `defer` skriptu; nav ES moduļu pieprasījumu. Pēc izmaiņām avotos palaist `node scripts/build.mjs`. Pārnēsājamai versijai izmantot `node scripts/package.mjs /absolūts/izvades/ceļš`.
 
@@ -12,7 +12,7 @@ Pamatā RG sākumlapas `js/memory-game.js` kāršu struktūra un spēles princip
 
 ## Saturs
 
-Visi 37 augi, kuriem pievienotajā tīruma augu arhīvā ir zīmējums; vienā spēlē tiek izmantoti 6, 8 vai 10 no tiem. Nosaukumi no sagatavotās datu kopas `outputs/latgalian-plants-20261102/plants.json`, oriģinālais avots – lietotājas dotais DOCX saraksts. Variantu secība saglabāta. Ekrānattēlu papildu varianti un literārie citāti nav pārņemti.
+Visi 37 augi, kuriem pievienotajā tīruma augu arhīvā ir zīmējums; vienā spēlē tiek izmantoti 6, 9 vai 12 no tiem. Nosaukumi no sagatavotās datu kopas `outputs/latgalian-plants-20261102/plants.json`, oriģinālais avots – lietotājas dotais DOCX saraksts. Variantu secība saglabāta. Ekrānattēlu papildu varianti un literārie citāti nav pārņemti.
 
 Attēli no lietotājas `Teiruma_augi.zip`. Izveidoti apgriezti WebP atvasinājumi ar caurspīdīgu fonu; oriģināli nav mainīti. Māksliniece – Līga Romančuka; kredīts ar Instagram saiti norādīts sadaļā “Par spēli”. Gala nosaukumu redakcija vēl jāsaskaņo ar datu turētāju.
 
@@ -26,8 +26,8 @@ Pulksteņa un zvaigznes Lucide pogas neatkarīgi ieslēdz laika un punktu skait�
 
 - Bez abām opcijām: netiek rādīts vērtējums vai laiks, arī beigu galerijā.
 - Tikai laiks: pulkstenis sākas ar pirmās kārts atvēršanu un apstājas pie pēdējā pāra; punktu nav.
-- Tikai punkti: `max(0, 100 × atrastie pāri − 10 × nesakritības)`. Maksimums 600, 800 vai 1000.
-- Abi: iepriekšējai formulai spēles beigās pievieno `max(0, 25 × pāru skaits − floor(aktīvās sekundes / 2))`. Maksimums 750, 1000 vai 1250. Soda punkti netiek dzēsti, pirms pielikts bonuss. Rezultāts nevar būt negatīvs.
+- Tikai punkti: `max(0, 100 × atrastie pāri − 10 × nesakritības)`. Maksimums 600, 900 vai 1200.
+- Abi: iepriekšējai formulai spēles beigās pievieno `max(0, 25 × pāru skaits − floor(aktīvās sekundes / 2))`. Maksimums 750, 1125 vai 1500. Soda punkti netiek dzēsti, pirms pielikts bonuss. Rezultāts nevar būt negatīvs.
 
 Laiks apstājas, kad lapa nav redzama vai atvērts apraksta dialogs. Nesakritība ir redzama 0.9 sekundes; vienas kārts atkārtots klikšķis nav jauns gājiens. Punktu formula ir izskaidrota dialogā atbilstoši ieslēgtajām opcijām; sākumlapā nav punktu skaidrojuma vai kāršu skaita/ilguma kopsavilkuma.
 
@@ -40,9 +40,9 @@ Priekšskatījumam: palaist statisku HTTP serveri repo saknē un atvērt `/games
 
 ## Mainīga pļava
 
-Katrā spēlē izlozē izvēlētos 6, 8 vai 10 atšķirīgus augus no visiem 37 pieejamajiem zīmējumiem. Iepriekšējās izlases ID saglabājas pārlūkā; nākamā izlase nedrīkst būt pilnīgi identiska. Ja pārlūka krātuve nav pieejama, atšķirība tiek saglabāta vienas lapas sesijas ietvaros. Kāršu izvietojums tiek sajaukts atsevišķi.
+Katrā spēlē izlozē izvēlētos 6, 9 vai 12 atšķirīgus augus no visiem 37 pieejamajiem zīmējumiem. Iepriekšējās izlases ID saglabājas pārlūkā; nākamā izlase nedrīkst būt pilnīgi identiska. Ja pārlūka krātuve nav pieejama, atšķirība tiek saglabāta vienas lapas sesijas ietvaros. Kāršu izvietojums tiek sajaukts atsevišķi.
 
-Pēc spēles spēles laukuma un kreisā ievada vietā automātiski atveras pilna platuma “Muns teirums” ar izvēlētajiem augiem, latgaliskajiem variantiem un latviskajiem nosaukumiem. Galerijas kartītes parādās ar maigu, secīgu animāciju; `prefers-reduced-motion` to atslēdz. Statistika spēles laikā atrodas zem kārtīm un ir redzama jau sākumā.
+Pēc spēles spēles laukuma un kreisā ievada vietā automātiski atveras pilna platuma “Munā teirumā” ar izvēlētajiem augiem, latgaliskajiem variantiem un latviskajiem nosaukumiem. Galerijas kartītes parādās ar maigu, secīgu animāciju; `prefers-reduced-motion` to atslēdz. Statistika spēles laikā atrodas zem kārtīm un ir redzama jau sākumā.
 
 Pilna papildinformācija ir tikai trim lietotājas pievienotajām lapām: asinszālei, parastajam biškrēsliņam un lielajai ceļtekai. Angļu, vācu un poļu nosaukumi transkribēti tieši no šīm lapām, bez tulkošanas vai citiem nosaukumu avotiem. Faktu tekstu vietā dotas tiešas saites uz Latvijas dabas aprakstiem un Tēzauru. Asinszāles lapā dotā ģints `Hypericum sp.` netiek sašaurināta līdz sugai; Latvijas dabas saite ved uz divšķautņu asinszāles aprakstu. Pārējiem augiem papildu valodu lauki un fakti nav aizpildīti.
 
@@ -50,7 +50,7 @@ Pilna papildinformācija ir tikai trim lietotājas pievienotajām lapām: asinsz
 
 ## Pāru skaita izvēle
 
-Labajā pusē augšā pieejami 6, 8 un 10 pāri; katras lapas ielādes noklusējums ir 8 pāri (16 kārtis). Mainot izvēli jau sāktā spēlē, sākas jauns tīrums. 10 pāru spēle datorā izmanto 5 kolonnas un 4 rindas; mobilajā skatā 4 kolonnas un 5 rindas. Atrasto pāru progresa punktiņi ir noņemti.
+Augšā pieejami 6, 9 un 12 pāri; noklusējums ir 9 pāri (18 kārtis). Mainot izvēli sāktā spēlē, sākas jauns tīrums. Datorā noklusējuma režģis ir 6 kolonnas × 3 rindas; telefonā – 3 kolonnas × 6 rindas. Rindas vienmēr ir pilnas. Datora režģis tiek mērogots pieejamajā augstumā, saglabājot kāršu proporcijas.
 
 Poga “Izlaist spēli” secīgi atver atlasītās pļavas kārtis ar 145 ms soli un 850 ms apgriešanās animāciju; pēc īsas pauzes atveras augu galerija. Atkārtota pogas nospiešana atklāšanas laikā ir bloķēta; sākot jaunu spēli, iepriekšējās pārejas tiek atceltas. Samazinātu kustību režīmā kārtis atveras bez animācijas. Izlaižot spēli, galerijā un kopējamajā tekstā nerāda punktus vai laiku.
 
@@ -75,7 +75,7 @@ Series dashboard: `/stats/latgalian.html`; game-specific shortcut:
 `/games/muns-teirums/stats/`. Linked from the shared `/stats/` overview.
 
 `analytics.mjs` emits only `start`, `complete`, `skip` counters to the existing
-GoatCounter script. Versioned event names encode game, 6/8/10 pairs, time on/off,
+GoatCounter script. Versioned event names encode game, 6/9/12 pairs, time on/off,
 and points on/off. No player/session IDs, answers, plant selections, scores,
 durations or free text are sent. `no_session:true` counts replays independently;
 the browser state prevents duplicate starts, completions or skips within a game.

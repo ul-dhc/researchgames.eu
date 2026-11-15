@@ -20,7 +20,7 @@ const grid = $('memory-grid');
 // Keep settings in the header, leaving a stable playing area below them.
 const boardTools = document.querySelector('.board-tools');
 document.querySelector('.site-header').append(boardTools);
-for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 8 });
+for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 9 });
 for (const node of document.querySelectorAll('[data-i18n-text]')) node.firstChild.textContent = t(node.dataset.i18nText) + ' ';
 for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
 for (const node of document.querySelectorAll('[data-i18n-content]')) node.content = t(node.dataset.i18nContent);
@@ -44,7 +44,7 @@ $('toggle-font-size').addEventListener('click', () => {
 let game = null, mode = 'preview', mismatchTimeout, finishTimeout, timer;
 let elapsed = 0, runningSince = null, aboutPaused = false;
 let meadow = [], previousMeadow = [];
-let pairCount = 8;
+let pairCount = 9;
 const settings = { time: true, points: true };
 let shareText = '';
 let revealTimeouts = [];
@@ -297,9 +297,13 @@ function buildGallery() {
     const linkIcon = document.createElement('span'); linkIcon.innerHTML = icons['arrow-up-right']; link.append(linkIcon);
     article.append(image, title);
     if (plant.scientificName) {
-      const latin = document.createElement('p'); latin.className = 'scientific-name'; latin.lang = 'la';
-      const scientificName = document.createElement('i'); scientificName.textContent = plant.scientificName;
-      latin.append(scientificName); article.append(latin);
+      const latin = document.createElement('p'); latin.className = 'scientific-name';
+      const scientificName = document.createElement('i'); scientificName.lang = 'la';
+      const generic = /\s+sp\.$/.test(plant.scientificName);
+      scientificName.textContent = generic ? plant.scientificName.replace(/\s+sp\.$/, '') : plant.scientificName;
+      latin.append(t('05.11', { nosaukums: '' }).trimEnd() + ' ', scientificName);
+      if (generic) latin.append(' sp.');
+      article.append(latin);
     }
     article.append(lv);
     if (plant.namesOther) {
@@ -347,7 +351,7 @@ $('skip-game').addEventListener('click', () => {
 });
 document.querySelectorAll('.pair-picker button').forEach(button => button.addEventListener('click', () => {
   const count = Number(button.dataset.pairCount);
-  if (![6, 8, 10].includes(count) || count === pairCount) return;
+  if (![6, 9, 12].includes(count) || count === pairCount) return;
   pairCount = count;
   if (mode === 'preview') preview();
   else startGame();

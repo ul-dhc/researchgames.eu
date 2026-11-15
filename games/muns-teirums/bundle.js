@@ -10,14 +10,14 @@ const plants = [
     ],
     "image": "assets/asinszale.webp",
     "namesOther": {
-      "en": "st John’s wort",
+      "en": "st. John’s wort",
       "de": "Johanniskräuter",
       "pl": "dziurawiec"
     },
     "scientificName": "Hypericum sp.",
     "factUrl": "https://www.latvijasdaba.lv/augi/hypericum-perforatum-l/",
     "factLinkLabel": "Latvijas daba",
-    "namesOtherSource": "Lietotājas pievienotā auga lapa; transkripcija bez tulkošanas.",
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx",
     "natureLinkKind": "species",
     "natureLinkNote": "Divšķautņu asinszāles apraksts; avotā norādīts Hypericum sp."
   },
@@ -31,7 +31,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/verbascum-thapsus-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": "Parastā deviņvīruspēka apraksts; avotā dots vispārīgais nosaukums."
+    "natureLinkNote": "Parastā deviņvīruspēka apraksts; avotā dots vispārīgais nosaukums.",
+    "scientificName": "Verbascum sp.",
+    "namesOther": {
+      "en": "mullein",
+      "de": "Königskerze",
+      "pl": "dziewanna"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "dzeltena-smarzilzite",
@@ -44,7 +51,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/anthemis-tinctoria-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Cota tinctoria",
+    "namesOther": {
+      "en": "yellow chamomile",
+      "de": "Färber-Hundskamille",
+      "pl": "rumian źólty"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "dzirkstelite",
@@ -57,7 +71,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/dianthus-deltoides-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Dianthus deltoides",
+    "namesOther": {
+      "en": "maiden pink",
+      "de": "Heide-Nelke",
+      "pl": "gożdzik kropkowany"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "eiropas-saulpurene",
@@ -70,7 +91,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/trollius-europaeus-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Trollius europaeus",
+    "namesOther": {
+      "en": "globeflower",
+      "de": "Trollblume",
+      "pl": "pełnik europejski"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "efeju-setlozna",
@@ -83,7 +111,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/glechoma-hederacea-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Glechoma hederacea",
+    "namesOther": {
+      "en": "ground-ivy",
+      "de": "Gewöhnlicher Gundermann",
+      "pl": "bluszczyk kurdybanek"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "gandrene",
@@ -96,7 +131,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/geraniaceae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Geranium sp.",
+    "namesOther": {
+      "en": "crane’s-bill (geranium)",
+      "de": "Storchschnabel",
+      "pl": "bodziszek"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "gailbiksite",
@@ -109,7 +151,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/primula-veris-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Primula veris",
+    "namesOther": {
+      "en": "cowslip",
+      "de": "Wiesen-Primel (Schlüsselblume)",
+      "pl": "pierwiosnek lekarski"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "grislis",
@@ -121,7 +170,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/cyperaceae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Carex sp.",
+    "namesOther": {
+      "en": "sedge",
+      "de": "Segge",
+      "pl": "turzyca"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "lauka-kokalis",
@@ -133,7 +189,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/agrostemma-githago-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Agrostemma githago",
+    "namesOther": {
+      "en": "common corncockle",
+      "de": "Korn-Rade",
+      "pl": "kąkol polny"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "liela-celteka",
@@ -145,14 +208,14 @@ const plants = [
     ],
     "image": "assets/liela-celteka.webp",
     "namesOther": {
-      "en": "plantain",
+      "en": "broadleaf plantain",
       "de": "Wegerich",
       "pl": "babka"
     },
     "scientificName": "Plantago major",
     "factUrl": "https://www.latvijasdaba.lv/augi/plantago-major-l/",
     "factLinkLabel": "Latvijas daba",
-    "namesOtherSource": "Lietotājas pievienotā auga lapa; transkripcija bez tulkošanas.",
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx",
     "natureLinkKind": "species",
     "natureLinkNote": ""
   },
@@ -168,7 +231,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/urtica-dioica-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Urtica dioica",
+    "namesOther": {
+      "en": "common nettle",
+      "de": "Große Brennessel",
+      "pl": "pokrzywa zwyczajna"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "narbulis",
@@ -180,7 +250,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/scrophulariaceae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Melampyrum sp.",
+    "namesOther": {
+      "en": "cow-wheat",
+      "de": "Wachtelweizen",
+      "pl": "pszeniec"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "matainais-abolins",
@@ -193,13 +270,20 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/trifolium-arvense-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Trifolium arvense",
+    "namesOther": {
+      "en": "hare’s foot clover",
+      "de": "Hasenklee",
+      "pl": "koniczyna polna"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "mallepe",
     "nameLv": "māllēpe",
     "namesLtg": [
-      "muolaineite",
+      "muolainete",
       "pamuošu lopa",
       "soltlape"
     ],
@@ -207,7 +291,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/tussilago-farfara-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Tussilago farfara",
+    "namesOther": {
+      "en": "coltsfoot",
+      "de": "Huflattich",
+      "pl": "podbiał pospolity"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "marsils",
@@ -220,7 +311,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/labiatae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Thymus sp.",
+    "namesOther": {
+      "en": "thyme",
+      "de": "Thymian",
+      "pl": "macierzanka (tymianek)"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "pamislapu-pakreslite",
@@ -233,7 +331,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/chrysosplenium-alternifolium-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Chrysosplenium alternifolium",
+    "namesOther": {
+      "en": "alternate-leaved golden saxifrage",
+      "de": "Wechselblättriges Milzkraut",
+      "pl": "śledziennica skrętolistna (śledziennica naprzemianlistna)"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "parastais-biskreslins",
@@ -245,14 +350,14 @@ const plants = [
     ],
     "image": "assets/parastais-biskreslins.webp",
     "namesOther": {
-      "en": "tansy",
+      "en": "common tansy",
       "de": "Rainfarn",
       "pl": "wrotycz pospolity"
     },
     "scientificName": "Tanacetum vulgare",
     "factUrl": "https://www.latvijasdaba.lv/augi/tanacetum-vulgare-l/",
     "factLinkLabel": "Latvijas daba",
-    "namesOtherSource": "Lietotājas pievienotā auga lapa; transkripcija bez tulkošanas.",
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx",
     "natureLinkKind": "species",
     "natureLinkNote": ""
   },
@@ -268,7 +373,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/achillea-millefolium-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Achillea millefolium",
+    "namesOther": {
+      "en": "common yarrow",
+      "de": "Borstenblättrige Schafgarbe",
+      "pl": "krwawnik pospolity"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "parastais-rasaskreslins",
@@ -281,7 +393,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/alchemilla-vulgaris-l-sl/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Alchemilla vulgaris",
+    "namesOther": {
+      "en": "lady’s mantle",
+      "de": "Frauenmantel",
+      "pl": "przywrotnik"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "parasta-margrietina",
@@ -293,7 +412,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/leucanthemum-vulgare-lam/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Leucanthemum vulgare",
+    "namesOther": {
+      "en": "oxeye daisy",
+      "de": "Wiesen-Margerite",
+      "pl": "jastrun złaściwy"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "parasta-vigrieze",
@@ -306,7 +432,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/filipendula-ulmaria-l-maxim/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Filipendula ulmaria",
+    "namesOther": {
+      "en": "meadowsweet",
+      "de": "Mädesüß",
+      "pl": "wiązówka"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "plaukskene",
@@ -319,20 +452,34 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/silene-vulgaris-moench-garcke/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Silene sp.",
+    "namesOther": {
+      "en": "campion",
+      "de": "Leimkraut",
+      "pl": "lepnica"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "plavas-bitene",
     "nameLv": "pļavas bitene",
     "namesLtg": [
-      "bitine",
-      "kuosa zuole"
+      "bišu kaneņa",
+      "biteite"
     ],
     "image": "assets/plavas-bitene.webp",
     "factUrl": "https://www.latvijasdaba.lv/augi/geum-rivale-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Geum rivale",
+    "namesOther": {
+      "en": "water avens",
+      "de": "Bach-Nelkenwurz",
+      "pl": "kuklik zwisły"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "plavas-dzelzene",
@@ -345,7 +492,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/centaurea-jacea-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Centaurea jacea",
+    "namesOther": {
+      "en": "brown knapweed",
+      "de": "Wiesen-Flockenblume",
+      "pl": "chaber łąkowy"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "plavas-plaukskene",
@@ -358,7 +512,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/coronaria-flos-cuculi-l-abraun/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Silene flos-cuculi",
+    "namesOther": {
+      "en": "Ragged-Robin (meadow campion)",
+      "de": "Kuckucks-Lichtnelke",
+      "pl": "firletka poszarpana"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "purva-atalene",
@@ -371,7 +532,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/parnassia-palustris-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Parnassia palustris",
+    "namesOther": {
+      "en": "marsh grass of Parnassus",
+      "de": "Sumpfherzblatt",
+      "pl": "dziewięciornik błotny"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "rudzupuke",
@@ -383,7 +551,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/centaurea-cyanus-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Centaurea cyanus",
+    "namesOther": {
+      "en": "cornflower",
+      "de": "Kornblume",
+      "pl": "chaber bławatek"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "spilve",
@@ -395,7 +570,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/cyperaceae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Eriophorum sp.",
+    "namesOther": {
+      "en": "cottongrass",
+      "de": "Wollgras",
+      "pl": "wełnianka"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "sunu-vijolite",
@@ -407,20 +589,33 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/viola-canina-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Viola canina",
+    "namesOther": {
+      "en": "heath dog-violet",
+      "de": "Hunds-Veilchen",
+      "pl": "fiołek psi"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "tiruma-kosa",
     "nameLv": "tīruma kosa",
     "namesLtg": [
-      "gegiele",
-      "škūrsta"
+      "gegiele"
     ],
     "image": "assets/tiruma-kosa.webp",
     "factUrl": "https://www.latvijasdaba.lv/augi/equisetum-arvense-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Equisetum arvense",
+    "namesOther": {
+      "en": "field horsetail",
+      "de": "Acker-Schachtelhalm",
+      "pl": "skrzyp polny"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "tiruma-peterene",
@@ -432,7 +627,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/knautia-arvensis-l-coult/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Knautia arvensis",
+    "namesOther": {
+      "en": "field scabious",
+      "de": "Ackerknautie",
+      "pl": "świerzbnica polna"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "tiruma-zilausis",
@@ -445,7 +647,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/consolida-regalis-gray/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Delphinium consolida",
+    "namesOther": {
+      "en": "forking larkspur",
+      "de": "Feld-Rittersporn",
+      "pl": "ostróżeczka polna"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "trejkrasu-atraitnite",
@@ -457,7 +666,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/viola-tricolor-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Viola tricolor",
+    "namesOther": {
+      "en": "wild pansy",
+      "de": "Wildes Stiefmütterchen",
+      "pl": "fiołek trójbarwny"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "vermele",
@@ -470,7 +686,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/artemisia-absinthium-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Artemisia absinthium",
+    "namesOther": {
+      "en": "wormwood",
+      "de": "Wermut",
+      "pl": "bylica piołun"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "vibotne",
@@ -483,7 +706,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/artemisia-vulgaris-l/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "species",
-    "natureLinkNote": ""
+    "natureLinkNote": "",
+    "scientificName": "Artemisia sp.",
+    "namesOther": {
+      "en": "mugwort",
+      "de": "Beifuß",
+      "pl": "bylica"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   },
   {
     "id": "zvagulis",
@@ -496,7 +726,14 @@ const plants = [
     "factUrl": "https://www.latvijasdaba.lv/augi/sistematiskais-raditajs/scrophulariaceae/",
     "factLinkLabel": "Latvijas daba",
     "natureLinkKind": "family",
-    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta."
+    "natureLinkNote": "Dzimtas sugu saraksts – avotā suga nav precizēta.",
+    "scientificName": "Rhinanthus sp.",
+    "namesOther": {
+      "en": "yellow rattle",
+      "de": "Klappertopf",
+      "pl": "szelężnik"
+    },
+    "namesOtherSource": "Edeites labojumi: Muns_teirums_redzamie_teksti_LV_LTG (1).docx"
   }
 ];
 
@@ -518,8 +755,8 @@ const icons = {
 // Texts supplied by the translator in the LV/LTG Word worksheet.
 const interfaceStrings = {
   "01.01": {
-    "lv": "Muns teirums",
-    "ltg": "Muns teirums"
+    "lv": "Munā teirumā",
+    "ltg": "Munā teirumā"
   },
   "01.02": {
     "lv": "Pilotversija",
@@ -527,7 +764,7 @@ const interfaceStrings = {
   },
   "01.03": {
     "lv": "Par spēli",
-    "ltg": "Par spēli"
+    "ltg": "Par kaitu"
   },
   "01.04": {
     "lv": "Atrodi saistītos augus – zīmējumu un tā nosaukumu!",
@@ -535,7 +772,7 @@ const interfaceStrings = {
   },
   "01.05": {
     "lv": "Katrā spēlē cits tīrums – {augu_skaits} augi no 37.",
-    "ltg": "Kotrai spēlei ir cyts teirums – {augu skaits} augi nu 37."
+    "ltg": "Kotrai kaitai ir cyts teirums – {augu skaits} augi nu 37."
   },
   "01.06": {
     "lv": "Sākt spēli",
@@ -543,7 +780,7 @@ const interfaceStrings = {
   },
   "01.07": {
     "lv": "Izlaist spēli",
-    "ltg": "Izlaist spēli"
+    "ltg": "Izlaist kaitu"
   },
   "01.08": {
     "lv": "Sākt no jauna",
@@ -551,7 +788,7 @@ const interfaceStrings = {
   },
   "01.09": {
     "lv": "Atver un atrodi pāri.",
-    "ltg": "Atver i atrūni puori."
+    "ltg": "Attaisi i atrūni puori."
   },
   "01.10": {
     "lv": "Skaitīt laiku",
@@ -579,11 +816,11 @@ const interfaceStrings = {
   },
   "02.04": {
     "lv": "Atver pirmo kārti.",
-    "ltg": "Atver pyrmū karteņu."
+    "ltg": "Attaisi pyrmū karteņu."
   },
   "02.05": {
     "lv": "Atver vēl vienu kārti.",
-    "ltg": "Atver cytu karteņu."
+    "ltg": "Attaisi cytu karteņu."
   },
   "02.06": {
     "lv": "{latgaliskais_nosaukums} – {latviskais_nosaukums}.",
@@ -591,11 +828,11 @@ const interfaceStrings = {
   },
   "02.07": {
     "lv": "Šīs kārtis nav pāris. Iegaumē un mēģini vēlreiz.",
-    "ltg": "Ituos kartenis nav puoris. Īgaumej i raugi vēļreiz."
+    "ltg": "Ituos kartenis nav puors. Atguodoj i raugi vēļreiz."
   },
   "02.08": {
     "lv": "Meklē nākamo pāri.",
-    "ltg": "Meklej nuokamū puori."
+    "ltg": "Meklej jaunu puori."
   },
   "02.09": {
     "lv": "Tīrums atklājas…",
@@ -603,7 +840,7 @@ const interfaceStrings = {
   },
   "02.10": {
     "lv": "Ieskaties savā tīrumā",
-    "ltg": "Īsaver sovā teirumā"
+    "ltg": "Apsaver sovu teirumu"
   },
   "02.11": {
     "lv": "Punkti",
@@ -635,11 +872,11 @@ const interfaceStrings = {
   },
   "03.04": {
     "lv": "Nokopēts!",
-    "ltg": "Pōrkopēts!"
+    "ltg": "Puorkopēts!"
   },
   "03.05": {
     "lv": "Iezīmē un nokopē rezultāta tekstu zem pogām.",
-    "ltg": "Izceļ i puorkopē rezultata tekstu zam pogu."
+    "ltg": "Izceļ i puorkopej rezultata tekstu zam pūgu."
   },
   "03.06": {
     "lv": "no {maksimums} punktiem",
@@ -651,15 +888,15 @@ const interfaceStrings = {
   },
   "03.08": {
     "lv": "{skaits} nesakritība",
-    "ltg": "{skaits} nesakriteiba"
+    "ltg": "{skaits} nasakriteiba"
   },
   "03.09": {
     "lv": "{skaits} nesakritības",
-    "ltg": "{skaits} nesakriteibas"
+    "ltg": "{skaits} nasakriteibys"
   },
   "03.10": {
     "lv": "{augu_skaits} iepazīti augi",
-    "ltg": "{augu_skaits} iepazeiti augi"
+    "ltg": "{augu_skaits} īpazeiti augi"
   },
   "04.01": {
     "lv": "Munā teirumā aug {augu_saraksts}.",
@@ -679,11 +916,11 @@ const interfaceStrings = {
   },
   "04.05": {
     "lv": "{skaits} minūtes",
-    "ltg": "{skaits} minutis"
+    "ltg": "{skaits} minutys"
   },
   "04.06": {
     "lv": "{skaits} minūšu",
-    "ltg": "{skaits} minute laikā"
+    "ltg": "{skaits} minutu laikā"
   },
   "04.07": {
     "lv": "{skaits} sekundes",
@@ -691,7 +928,7 @@ const interfaceStrings = {
   },
   "04.08": {
     "lv": "{skaits} sekunžu",
-    "ltg": "{skaits} sekunžu"
+    "ltg": "{skaits} sekuņžu"
   },
   "04.09": {
     "lv": "{minūtes} un {sekundes}",
@@ -743,7 +980,7 @@ const interfaceStrings = {
   },
   "05.10": {
     "lv": "Vienam augam var būt vairāki līdzvērtīgi nosaukumi.",
-    "ltg": ""
+    "ltg": "Vīnam augam var byut vairuoki nūsaukumi."
   },
   "06.01": {
     "lv": "ResearchGames.eu · pilots",
@@ -751,23 +988,23 @@ const interfaceStrings = {
   },
   "06.02": {
     "lv": "Atmiņas spēle ar augu zīmējumiem un latgaliskajiem nosaukumiem. Vienā pāra kārtī ir zīmējums, otrā – viens nejauši izvēlēts šī auga nosaukums. Tas saglabājas nemainīgs visu spēli. Galerijā redzami visi avotā norādītie varianti vienādā noformējumā un nejaušā secībā.",
-    "ltg": ""
+    "ltg": "Atguoduošonys kaita ar augu zeimiejumim i latgaliskajim nūsaukumim."
   },
   "06.03": {
-    "lv": "Izvēlies 6, 8 vai 10 pārus. Katrā spēlē augus izlozē no 37 zīmējumu kolekcijas. Nākamajā spēlē augu izlase mainās. Spēles beigās atveras “Muns teirums” – galerija ar iepazītajiem augiem un iespēju kopēt rezultātu.",
-    "ltg": ""
+    "lv": "Izvēlies 6, 9 vai 12 pārus. Katrā spēlē augus izlozē no 37 zīmējumu kolekcijas. Nākamajā spēlē augu izlase mainās. Spēles beigās atveras “Munā teirumā” – galerija ar iepazītajiem augiem un iespēju kopēt rezultātu.",
+    "ltg": "Izalosi 6, 9 voi 12 puoru. Kotrā kaitā augus izlūzej nu 37 zeimiejumu kolekcejis. Cytā spēlē augu izlase pasamaina. Kaitys golā atsataisa “Munā teirumā” – galereja ar īpazeitajim augim i vareibu kopēt rezultatu."
   },
   "06.04": {
     "lv": "Kā spēlēt",
-    "ltg": ""
+    "ltg": "Kai kaitavuot"
   },
   "06.05": {
     "lv": "Atver divas kārtis. Ja zīmējums un nosaukums atbilst vienam augam, pāris paliek atvērts. Ja nesakrīt, atceries to atrašanās vietu un mēģini vēlreiz.",
-    "ltg": ""
+    "ltg": "Attaisi divejis kartenis. Ka zeimiejums i nūsaukums ir vīnam augam, puors palīk attaiseits. Ka nasakreit, atguodoj jūs atrasasšonys vītu i raugi vēļreiz."
   },
   "06.06": {
     "lv": "Laiks un punkti",
-    "ltg": ""
+    "ltg": "Laiks i punkti"
   },
   "06.07": {
     "lv": "Ar pulksteņa un zvaigznes ikonām vari neatkarīgi ieslēgt laika un punktu skaitīšanu. Noklusējumā abas iespējas ir ieslēgtas.",
@@ -775,43 +1012,43 @@ const interfaceStrings = {
   },
   "07.01": {
     "lv": "Laika un punktu skaitīšana ir izslēgta. Vari iepazīt augus savā ritmā.",
-    "ltg": ""
+    "ltg": "Laika i punktu skaiteišona ir izslāgta. Vari īpazeit augus sova ritmā."
   },
   "07.02": {
     "lv": "Par pāri saņem 100 punktus, katra nesakritība atņem 10. Laika bonuss sākas ar {bonusa_maksimums} punktiem un samazinās par 1 punktu katrās 2 aktīvās sekundēs, līdz sasniedz nulli. Bonuss pievienojas spēles beigās. Maksimums – {maksimums} punkti.",
-    "ltg": ""
+    "ltg": "Par puori sajem 100 punktu, kotra nasakriteiba atjam 10. Laika bonuss suocās ar {bonusa_maksimums} punktim i sasamazynoj par 1 punktu kotruos 2 aktivuos sekuņdēs, koleidz sasnādz nulli. Bonus pīsavīnoj kaitys golā. Maksimums – {maksimums} punkti."
   },
   "07.03": {
     "lv": "Par pāri saņem 100 punktus, katra nesakritība atņem 10. Rezultāts nevar būt negatīvs. Maksimums – {maksimums} punkti. Laiks netiek skaitīts.",
-    "ltg": ""
+    "ltg": "Par puori sajem 100 punktu, kotra nasakriteiba atjam 10 punktu. Rezultats navar byut nagativs. Maksimums – {maksimums} punkti. Laiks nateik skaiteits."
   },
   "07.04": {
     "lv": "Laiks sākas ar pirmās kārts atvēršanu un apstājas pēc pēdējā pāra. Punkti netiek skaitīti.",
-    "ltg": ""
+    "ltg": "Laiks suocās ar pyrmuos kartys attaiseišonu i nūstuoj piec pādejuo puora. Punkti nateik skaiteiti."
   },
   "07.05": {
     "lv": "Pulksteņa un zvaigznes ikonas darbojas neatkarīgi; mainot izvēli spēles laikā, sākas jauns tīrums.",
-    "ltg": ""
+    "ltg": "Stuņdinīka i zvaigznis ikonys dorbojās naatkareigi; pamainūt izvēli kaitys laikā, suocās jauns teirums."
   },
   "08.03": {
     "lv": "Māksliniece – Līga Romančuka",
     "ltg": ""
   },
   "08.04": {
-    "lv": "Avots: topošā grāmata “Augu nosaukumi latgaliešu valodā”, sastādītāja Edeite Laime.\nSpēlē izmantota nodaļa “Teiruma augi”.\nAugu nosaukumu varianti saglabāti kā avotā. To secība galerijā ir nejauša.",
-    "ltg": ""
+    "lv": "Izdevums “Augu nūsaukumu vuordineica”, sastādītājas Maruta Latkovska, Edeite Laime un Lidija Leikuma.\nSpēlē izmantota nodaļa “Teiruma augi”.",
+    "ltg": "Izdavums “Augu nūsaukumu vuordineica”, sastateituojis Maruta Latkovska, Edeite Laime i Lidija Leikuma.\nKaitā izmontuota nūdaļa “Teiruma augi”"
   },
   "08.05": {
     "lv": "Sadarbībā ar “Volūdu”",
-    "ltg": ""
+    "ltg": "Sadarbeibā ar “Volūdu”"
   },
   "08.06": {
-    "lv": "Spēle veidota sadarbībā ar latgaliešu kultūras kustību “Volūda”, kas veicina latgaliešu valodas un kultūras attīstību.",
-    "ltg": ""
+    "lv": "Spēle veidota sadarbībā ar latgaliešu kultūras kustību  “Volūda”, kas veicina latgaliešu valodas un kultūras attīstību.",
+    "ltg": "Kaita taiseita sadarbeibā ar latgalīšu kulturys kusteibu “Volūda”, kas veicynoj latgalīšu volūdys i kulturys atteisteibu."
   },
   "08.07": {
-    "lv": "Spēle ir iekļauta ResearchGames.eu spēļu kolekcijā un ir atvērtā koda projekts, kas pieejams GitHub.",
-    "ltg": ""
+    "lv": "Spēli izstrādā  LU Digitālo humanitāro zinātņu centrs. Spēle ir iekļauta  ResearchGames.eu  spēļu kolekcijā un ir atvērtā koda projekts, kas pieejams  GitHub.",
+    "ltg": "Kaitu izstruodoj LU Digitalūs humanitarūs zynuotņu centrys. Kaita ir daļa nu ResearchGames.eu kaitu kolekcejis i ir attaiseituo koda projekts, kas daīmams GitHub."
   },
   "09.01": {
     "lv": "Uz kāršu laukumu",
@@ -870,12 +1107,60 @@ const interfaceStrings = {
     "ltg": ""
   },
   "09.15": {
-    "lv": "Muns teirums · ResearchGames.eu",
+    "lv": "Munā teirumā · ResearchGames.eu",
     "ltg": ""
   },
   "09.16": {
-    "lv": "Muns teirums – atrodi augu un to latgalisko nosaukumu pārus. Iepazīsti augus un valodas daudzveidību.",
-    "ltg": "Muns teirums – atrast augu puorus i tūs latgaliskūs nūsaukumus. Īpazeit augus i volūdys daudzveideibu."
+    "lv": "Munā teirumā – atrodi augu un to latgalisko nosaukumu pārus. Iepazīsti augus un valodas daudzveidību.",
+    "ltg": "Munā teirumā – atrast augu puorus i tūs latgaliskūs nūsaukumus. Īpazeit augus i volūdys daudzveideibu."
+  },
+  "05.11": {
+    "lv": "Latīniski: {nosaukums}",
+    "ltg": "latiniski: {vuords}"
+  },
+  "06.08": {
+    "lv": "Iepazīt augus un valodu",
+    "ltg": "Īpazeit augus i volūdu."
+  },
+  "06.09": {
+    "lv": "Savienojot zīmējumu ar nosaukumu, vari iepazīt tīruma augu izskatu un apgūt to latgaliskos nosaukumus. Meklējot pārus, pievērs uzmanību lapu formai, ziediem un citām zīmējumā redzamajām pazīmēm. Atkārtota sastapšanās ar vienu augu un tā vārdiem palīdz tos saistīt atmiņā.",
+    "ltg": "Savīnojūt zeimiejumus ar nūsaukumu, vari izzynuot teiruma augu izskotu i vuiceitīs jūs latgaliskūs nūsaukumus. Meklejūt puorus, dagrīz viereibys lopu formai, zīdim i cytom zeimiejumā radzamajom pazeimem. Ka izīt ar kaidu augu sasatikt vaira reižu, tys paleidz jū lobuok nūglobuot atmiņā."
+  },
+  "06.10": {
+    "lv": "Vienam augam var būt vairāki nosaukumi, kurus vārdnīcas sastādītājas iesaka lietot biežāk. To varianti atklāj latgaliešu valodas bagātību – pirmais sarakstā nav vienīgais pareizais. Beigu galerijā vari salīdzināt latgaliskos un latviskos nosaukumus un turpināt izziņu Tēzaurā un enciklopēdijā “Latvijas daba”.",
+    "ltg": "Vīnam augam var byut vairuoki nūsaukumi, kurūs vuordineicys sastateituojis īsoka lītuot bīžuok. Jūs varianti atkluoj latgalīšu volūdys boguoteibu – pyrmais saroksta nav vīneigais pareizais. Gola galerejā var saleidzynuot latgaliskūs i latvyskūs nūsaukumus i turpynuot izzynuošonu Tezaurā i enciklopedejā “Latvijas daba”."
+  },
+  "06.11": {
+    "lv": "No avota līdz spēlei",
+    "ltg": "Nu olūda da kaitys"
+  },
+  "06.12": {
+    "lv": "ResearchGames.eu pieeja ir iepazīt pētniecības un kultūras mantojuma materiālus, ar tiem darbojoties. “Munā teirumā” ir eksperiments, kā augu nosaukumu krājumu un oriģinālzīmējumus pārvērst vienkāršā spēlē, saglabājot nosaukumu daudzveidību un norādes uz avotiem.",
+    "ltg": "ResearchGames.eu daīšona ir īpazeit pietnīceibys i kulturys montuojuma materialus, ar jim dorbojūtīs. “Munā teirumā” ir eksperiments, kai augu nūsaukumu kruojumu i originalzeimiejumus puorvērst vīnkuoršā spēlē, saglobojūt nūsaukumu byušonu vysaidim i nūruodis iz olūtim."
+  },
+  "08.08": {
+    "lv": "Sadarbība",
+    "ltg": "Sadarbeiba"
+  },
+  "08.09": {
+    "lv": "Atvērtā koda projekts",
+    "ltg": "Attaiseituo koda projekts."
+  },
+  "08.10": {
+    "lv": "Māksliniece",
+    "ltg": "Muokslineica"
+  },
+  "08.11": {
+    "lv": "Avots",
+    "ltg": "Olūts"
+  },
+  "08.12": {
+    "lv": "Izdevums “Augu nūsaukumu vuordineica”, sastādītājas Maruta Latkovska, Edeite Laime un Lidija Leikuma.",
+    "ltg": "Izdavums “Augu nūsaukumu vuordineica”, sastateituojis Maruta Latkovska, Edeite Laime i Lidija Leikuma."
+  },
+  "08.13": {
+    "lv": "Spēlē izmantota nodaļa “Teiruma augi”.",
+    "ltg": "Kaitā izmontuota nūdaļa “Teiruma augi”"
   }
 };
 function t(id, values = {}) {
@@ -895,7 +1180,7 @@ const scoreFor = (pairs, mistakes, bonus = 0) => Math.max(0, pairs * 100 - mista
 // One bonus point expires per two active seconds, never below zero.
 const timeBonusFor = (pairCount, seconds) => Math.max(0, pairCount * 25 - Math.floor(Math.max(0, seconds) / 2));
 
-function sampleMeadow(plants, count = 8, previousIds = [], random = Math.random) {
+function sampleMeadow(plants, count = 9, previousIds = [], random = Math.random) {
   if (count > plants.length || count < 1) throw new RangeError('Invalid meadow size');
   const pool = [...plants];
   for (let i = pool.length - 1; i > 0; i--) {
@@ -928,13 +1213,17 @@ function prepareMeadowNames(plants, random = Math.random) {
 // Phone/tablet column counts stay in CSS; this is only the desktop layout.
 function fitBoardLayout(count, width, height, gap = 10) {
   let best = { columns: 4, rows: Math.ceil(count / 4), cardWidth: 0 };
+  let threeRows;
   for (let columns = 3; columns <= Math.min(8, count); columns++) {
     if (count % columns !== 0) continue;
     const rows = Math.ceil(count / columns);
     const cardWidth = Math.min(220, (width - (columns - 1) * gap) / columns,
       (height - (rows - 1) * gap) / rows * .9);
+    if (rows === 3) threeRows = { columns, rows, cardWidth };
     if (cardWidth > best.cardWidth + .5) best = { columns, rows, cardWidth };
   }
+  // Prefer a balanced three-row board when the artwork remains comfortably sized.
+  if (threeRows && threeRows.cardWidth >= 88 && threeRows.cardWidth >= best.cardWidth * .85) best = threeRows;
   return { ...best, cardWidth: Math.max(1, Math.floor(best.cardWidth)) };
 }
 
@@ -984,7 +1273,7 @@ function shareResultFor(meadow, { time = false, points = false, seconds = 0, sco
   const sentences = [t('04.01', { augu_saraksts: names })];
   const minutes = Math.floor(seconds / 60), rest = seconds % 60;
   const singular = n => n % 10 === 1 && n % 100 !== 11;
-  const minuteText = minutes ? t(singular(minutes) ? '04.05' : '04.06', { skaits: minutes }) : '';
+  const minuteText = minutes ? t(singular(minutes) ? '04.05' : '04.06', { skaits: minutes }).replace(/\s+laikā\s*$/, '') : '';
   const secondText = rest || !minutes ? t(singular(rest) ? '04.07' : '04.08', { skaits: rest }) : '';
   let duration = minuteText && secondText ? t('04.09', { minūtes: minuteText, sekundes: secondText }) : minuteText || secondText;
   const pointWord = t(score % 10 === 1 || score % 10 === 0 || score % 100 >= 11 && score % 100 <= 19 ? '04.10' : '04.11');
@@ -1005,7 +1294,7 @@ function shareResultFor(meadow, { time = false, points = false, seconds = 0, sco
 // Aggregate events only: no player IDs, names, answers or free text.
 function createPlantAnalytics(send) {
   let variant, started=false, ended=false;
-  const emit=action=>{try{send({path:`rg-plant-v1-muns-teirums-${action}-${variant}`,title:'Muns teirums · '+action,event:true,no_session:true,referrer:''});}catch{/* Tracking must never interrupt play. */}};
+  const emit=action=>{try{send({path:`rg-plant-v1-muns-teirums-${action}-${variant}`,title:'Munā teirumā · '+action,event:true,no_session:true,referrer:''});}catch{/* Tracking must never interrupt play. */}};
   return {
     reset(pairs,settings){variant=`${pairs}-${settings.time?'time':'untimed'}-${settings.points?'points':'unscored'}`;started=false;ended=false;},
     start(){if(!started&&!ended){started=true;emit('start');}},
@@ -1031,7 +1320,7 @@ const grid = $('memory-grid');
 // Keep settings in the header, leaving a stable playing area below them.
 const boardTools = document.querySelector('.board-tools');
 document.querySelector('.site-header').append(boardTools);
-for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 8 });
+for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n, { augu_skaits: 9 });
 for (const node of document.querySelectorAll('[data-i18n-text]')) node.firstChild.textContent = t(node.dataset.i18nText) + ' ';
 for (const node of document.querySelectorAll('[data-i18n-aria]')) node.setAttribute('aria-label', t(node.dataset.i18nAria));
 for (const node of document.querySelectorAll('[data-i18n-content]')) node.content = t(node.dataset.i18nContent);
@@ -1055,7 +1344,7 @@ $('toggle-font-size').addEventListener('click', () => {
 let game = null, mode = 'preview', mismatchTimeout, finishTimeout, timer;
 let elapsed = 0, runningSince = null, aboutPaused = false;
 let meadow = [], previousMeadow = [];
-let pairCount = 8;
+let pairCount = 9;
 const settings = { time: true, points: true };
 let shareText = '';
 let revealTimeouts = [];
@@ -1308,9 +1597,13 @@ function buildGallery() {
     const linkIcon = document.createElement('span'); linkIcon.innerHTML = icons['arrow-up-right']; link.append(linkIcon);
     article.append(image, title);
     if (plant.scientificName) {
-      const latin = document.createElement('p'); latin.className = 'scientific-name'; latin.lang = 'la';
-      const scientificName = document.createElement('i'); scientificName.textContent = plant.scientificName;
-      latin.append(scientificName); article.append(latin);
+      const latin = document.createElement('p'); latin.className = 'scientific-name';
+      const scientificName = document.createElement('i'); scientificName.lang = 'la';
+      const generic = /\s+sp\.$/.test(plant.scientificName);
+      scientificName.textContent = generic ? plant.scientificName.replace(/\s+sp\.$/, '') : plant.scientificName;
+      latin.append(t('05.11', { nosaukums: '' }).trimEnd() + ' ', scientificName);
+      if (generic) latin.append(' sp.');
+      article.append(latin);
     }
     article.append(lv);
     if (plant.namesOther) {
@@ -1358,7 +1651,7 @@ $('skip-game').addEventListener('click', () => {
 });
 document.querySelectorAll('.pair-picker button').forEach(button => button.addEventListener('click', () => {
   const count = Number(button.dataset.pairCount);
-  if (![6, 8, 10].includes(count) || count === pairCount) return;
+  if (![6, 9, 12].includes(count) || count === pairCount) return;
   pairCount = count;
   if (mode === 'preview') preview();
   else startGame();

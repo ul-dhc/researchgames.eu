@@ -5,7 +5,7 @@ const plants = Array.from({length:8},(_,i)=>({id:`plant-${i}`}));
 const ordered = () => plants.flatMap(plant => ['image','name'].map(kind=>({plant,kind})));
 
 test('portrait desktop cards fit both available dimensions for every game size',()=>{
-  for(const count of [12,16,20]) for(const [width,height] of [[540,270],[870,377],[900,550],[1100,900]]) {
+  for(const count of [12,18,24]) for(const [width,height] of [[540,270],[870,377],[900,550],[1100,900]]) {
     const fitted=fitBoardLayout(count,width,height);
     assert.ok(fitted.columns*fitted.rows>=count);
     assert.equal(fitted.columns*fitted.rows,count);
@@ -22,11 +22,19 @@ test('a short desktop window adds columns rather than flattening the cards',()=>
   assert.ok(tall.cardWidth>short.cardWidth);
 });
 
-test('a meadow samples eight distinct plants from 37 without changing the source',()=>{
+test('the default nine pairs make three full desktop rows instead of two strips',()=>{
+  for(const [width,height] of [[700,330],[870,377],[900,550],[870,760]]){
+    const layout=fitBoardLayout(18,width,height);
+    assert.equal(layout.columns,6);
+    assert.equal(layout.rows,3);
+  }
+});
+
+test('a meadow samples nine distinct plants from 37 without changing the source',()=>{
   const pool=Array.from({length:37},(_,i)=>({id:`plant-${i}`}));
   const original=pool.map(p=>p.id);
   const meadow=sampleMeadow(pool);
-  assert.equal(meadow.length,8);assert.equal(new Set(meadow.map(p=>p.id)).size,8);
+  assert.equal(meadow.length,9);assert.equal(new Set(meadow.map(p=>p.id)).size,9);
   assert.deepEqual(pool.map(p=>p.id),original);
 });
 test('even an identical random draw cannot repeat the preceding meadow',()=>{
@@ -40,7 +48,7 @@ test('an undersized plant collection is rejected',()=>{
   assert.throws(()=>sampleMeadow(plants,9),RangeError);
 });
 
-for (const count of [6, 8, 10]) {
+for (const count of [6, 9, 12]) {
   test(`${count} pairs have the correct deck size, completion and score maximum`,()=>{
     const pool=Array.from({length:37},(_,i)=>({id:`plant-${i}`}));
     const meadow=sampleMeadow(pool,count);
@@ -102,23 +110,24 @@ test('copied meadow includes only enabled metrics', () => {
  const meadow = [{namesLtg:['ašņa zuole']},{namesLtg:['celine']}];
  const base = 'Munā teirumā aug ašņa zuole i celine.';
  assert.equal(shareResultFor(meadow), base);
- assert.equal(shareResultFor(meadow,{time:true,seconds:125}), base+' Es tū atkluoju 2 minute laikā i 5 sekunžu laikā');
+ assert.equal(shareResultFor(meadow,{time:true,seconds:125}), base+' Es tū atkluoju 2 minutu i 5 sekuņžu laikā');
  assert.equal(shareResultFor(meadow,{points:true,score:500}), base+' Es dabuoju 500 punktu.');
- assert.equal(shareResultFor(meadow,{time:true,points:true,seconds:60,score:822}), base+' Es tū atkluoju 1 minutis laikā i dabuoju 822 punktus.');
+ assert.equal(shareResultFor(meadow,{time:true,points:true,seconds:60,score:822}), base+' Es tū atkluoju 1 minutys laikā i dabuoju 822 punktus.');
 });
 
 test('result duration uses the supplied Latgalian forms', () => {
- for (const [seconds, phrase] of [[34,'34 sekunžu'],[1,'1 sekuņdis'],[11,'11 sekunžu'],[21,'21 sekuņdis'],[120,'2 minute'],[61,'1 minutis i 1 sekuņdis']]) {
+ for (const [seconds, phrase] of [[34,'34 sekuņžu'],[1,'1 sekuņdis'],[11,'11 sekuņžu'],[21,'21 sekuņdis'],[120,'2 minutu'],[61,'1 minutys i 1 sekuņdis']]) {
   assert.ok(shareResultFor([],{time:true,seconds}).includes(phrase+' laikā'));
  }
 });
 
 test('translator placeholders and untranslated fallbacks are preserved', async () => {
  const {t,interfaceStrings}=await import('../translations.mjs');
- assert.equal(t('01.05',{augu_skaits:10}),'Kotrai spēlei ir cyts teirums – 10 augi nu 37.');
+ assert.equal(t('01.05',{augu_skaits:10}),'Kotrai kaitai ir cyts teirums – 10 augi nu 37.');
  assert.equal(t('05.01',{nosaukums:'asinszāle'}),'latviešu: asinszāle');
- assert.equal(t('06.04'),'Kā spēlēt');
- assert.equal(Object.values(interfaceStrings).filter(x=>x.ltg).length,61);
+ assert.equal(t('06.04'),'Kai kaitavuot');
+ assert.equal(t('05.05'),'Latvijas daba');
+ assert.equal(t('01.01'),'Munā teirumā');
  for(const id of Object.keys(interfaceStrings)) assert.ok(t(id).length>0);
  assert.ok(!shareResultFor([{namesLtg:['ašņa zuole']}],{time:true,points:true,seconds:34,score:633}).includes('{'));
  assert.ok(!shareResultFor([],{time:true,seconds:120}).includes('laikā laikā'));
@@ -126,7 +135,7 @@ test('translator placeholders and untranslated fallbacks are preserved', async (
 
 test('timed score result includes laikā once after seconds', () => {
  const result=shareResultFor([{namesLtg:['ašņa zuole']}],{time:true,points:true,seconds:55,score:633});
- assert.equal(result,'Munā teirumā aug ašņa zuole. Es tū atkluoju 55 sekunžu laikā i dabuoju 633 punktus.');
+ assert.equal(result,'Munā teirumā aug ašņa zuole. Es tū atkluoju 55 sekuņžu laikā i dabuoju 633 punktus.');
  assert.ok(!shareResultFor([],{time:true,points:true,seconds:120,score:633}).includes('laikā laikā'));
 });
 

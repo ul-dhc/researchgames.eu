@@ -206,7 +206,7 @@ body.is-complete .meadow-note{display:none}
 .pair-picker button[aria-pressed="true"]:hover{background:var(--accent);color:var(--forest-deep)}
 .pair-picker>span{font-size:calc(10px * var(--text-scale,1));color:var(--muted);padding:0 9px 0 5px}
 @media(min-width:1000px) and (min-height:600px){
-  body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(5,minmax(0,1fr))}
+  body:not(.is-complete) .memory-grid[data-pair-count="12"]{grid-template-columns:repeat(5,minmax(0,1fr))}
 }
 @media(max-width:760px){.pair-picker{gap:1px;padding:3px}.pair-picker button{width:26px;height:26px;font-size:calc(11px * var(--text-scale,1))}.pair-picker>span{font-size:calc(9px * var(--text-scale,1));padding-right:5px}.game-topline{gap:9px}.game-topline h2{font-size:calc(18px * var(--text-scale,1))}}
 /* Optional clock and points, next to the meadow size. */
@@ -448,15 +448,35 @@ body:not(.is-complete) .memory-card{aspect-ratio:9/10;min-height:0;container-typ
 .memory-card .card-front>img{width:100%;height:100%;object-fit:contain}
 /* Phones retain an overview of the game; vertical scrolling is natural here. */
 @media(max-width:479px){
-  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
   body:not(.is-complete) .memory-grid[data-pair-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-  body:not(.is-complete) .memory-card{width:100%;min-height:100px}
+  body:not(.is-complete) .memory-card{width:100%;min-height:0}
   .memory-card .plant-name{font-size:calc(clamp(12px,13cqi,18px) * var(--text-scale))}
   .memory-card .plant-name.long-name,.memory-card .plant-name.long-word{font-size:calc(clamp(11px,11cqi,16px) * var(--text-scale))}
   .name-face{padding:4px 3px}
 }
 @media(min-width:480px) and (max-width:760px){
-  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  body:not(.is-complete) .memory-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+}
+/* Explicit mobile tracks avoid Safari stretching auto-sized rows apart.
+   The board height is the sum of its cards and eight-pixel gaps, never leftover space. */
+@media(max-width:760px){
+  body:not(.is-complete) .memory-grid{
+    --mobile-columns:3;--mobile-rows:6;
+    --mobile-card-height:clamp(86px,calc((100vw - 40px - (var(--mobile-columns) - 1)*8px)/var(--mobile-columns)*1.1),140px);
+    grid-template-columns:repeat(var(--mobile-columns),minmax(0,1fr));
+    grid-template-rows:repeat(var(--mobile-rows),var(--mobile-card-height));
+    grid-auto-rows:var(--mobile-card-height);
+    height:calc(var(--mobile-rows)*var(--mobile-card-height) + (var(--mobile-rows) - 1)*8px);
+    min-height:0;max-height:none;gap:8px;align-content:start;align-items:stretch;
+  }
+  body:not(.is-complete) .memory-grid[data-pair-count="6"]{--mobile-rows:4}
+  body:not(.is-complete) .memory-grid[data-pair-count="12"]{--mobile-columns:4;--mobile-rows:6}
+  body:not(.is-complete) .memory-card{width:100%;height:100%;min-height:0;aspect-ratio:auto}
+  .memory-shell .game-topline{min-height:0;height:auto;margin-bottom:10px}
+}
+@media(max-width:479px){
+  body:not(.is-complete) .memory-grid[data-pair-count="6"]{--mobile-columns:3;--mobile-rows:4;grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 /* Tablets and very short landscape windows use the full content width. */
 @media(min-width:761px) and (max-width:999px),(min-width:1000px) and (max-height:599px){
@@ -467,7 +487,7 @@ body:not(.is-complete) .memory-card{aspect-ratio:9/10;min-height:0;container-typ
   .hero-copy>.meadow-note{margin:16px 0 24px}
   .hero-copy .botanical-corner,.hero-stem{display:none}
   body:not(.is-complete) .memory-shell{width:100%;max-width:780px;justify-self:center;padding-top:0}
-  body:not(.is-complete) .memory-grid,body:not(.is-complete) .memory-grid[data-pair-count="10"]{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;grid-template-rows:none}
+  body:not(.is-complete) .memory-grid,body:not(.is-complete) .memory-grid[data-pair-count="12"]{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;grid-template-rows:none}
   .site-header>.board-tools{flex-direction:row}
 }
 /* The desktop game occupies one viewport. Fit the whole board uniformly;
@@ -486,7 +506,7 @@ body:not(.is-complete) .memory-card{aspect-ratio:9/10;min-height:0;container-typ
   body:not(.is-complete) .memory-shell{height:100%;min-height:0;width:100%;max-width:none;padding-top:0;display:flex;flex-direction:column;justify-self:stretch}
   .game-topline{height:54px;min-height:54px;flex-shrink:0;flex-wrap:nowrap;margin:0 0 10px;gap:0}
   .game-topline h2{font-size:calc(19px * var(--text-scale));line-height:1.25}
-  body:not(.is-complete) .memory-grid,body:not(.is-complete) .memory-grid[data-pair-count="10"]{flex:1 1 0;min-height:0;width:100%;max-width:none;grid-template-columns:repeat(var(--fit-columns,4),var(--fit-card-width,100px));grid-template-rows:repeat(var(--fit-rows,4),calc(var(--fit-card-width,100px)/.9));grid-auto-rows:auto;justify-content:center;align-content:center;gap:10px}
+  body:not(.is-complete) .memory-grid,body:not(.is-complete) .memory-grid[data-pair-count="12"]{flex:1 1 0;min-height:0;width:100%;max-width:none;grid-template-columns:repeat(var(--fit-columns,4),var(--fit-card-width,100px));grid-template-rows:repeat(var(--fit-rows,4),calc(var(--fit-card-width,100px)/.9));grid-auto-rows:auto;justify-content:center;align-content:center;gap:10px}
   body:not(.is-complete) .memory-card{height:calc(var(--fit-card-width,100px)/.9);width:var(--fit-card-width,100px);aspect-ratio:9/10}
   .game-stats{flex-shrink:0;height:58px;min-height:58px;margin:10px 0 0;padding:4px 0 0}
   .game-stats strong{font-size:calc(18px * var(--text-scale))}

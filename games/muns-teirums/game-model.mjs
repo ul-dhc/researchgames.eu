@@ -5,7 +5,7 @@ export const scoreFor = (pairs, mistakes, bonus = 0) => Math.max(0, pairs * 100 
 // One bonus point expires per two active seconds, never below zero.
 export const timeBonusFor = (pairCount, seconds) => Math.max(0, pairCount * 25 - Math.floor(Math.max(0, seconds) / 2));
 
-export function sampleMeadow(plants, count = 8, previousIds = [], random = Math.random) {
+export function sampleMeadow(plants, count = 9, previousIds = [], random = Math.random) {
   if (count > plants.length || count < 1) throw new RangeError('Invalid meadow size');
   const pool = [...plants];
   for (let i = pool.length - 1; i > 0; i--) {
@@ -38,13 +38,17 @@ export function prepareMeadowNames(plants, random = Math.random) {
 // Phone/tablet column counts stay in CSS; this is only the desktop layout.
 export function fitBoardLayout(count, width, height, gap = 10) {
   let best = { columns: 4, rows: Math.ceil(count / 4), cardWidth: 0 };
+  let threeRows;
   for (let columns = 3; columns <= Math.min(8, count); columns++) {
     if (count % columns !== 0) continue;
     const rows = Math.ceil(count / columns);
     const cardWidth = Math.min(220, (width - (columns - 1) * gap) / columns,
       (height - (rows - 1) * gap) / rows * .9);
+    if (rows === 3) threeRows = { columns, rows, cardWidth };
     if (cardWidth > best.cardWidth + .5) best = { columns, rows, cardWidth };
   }
+  // Prefer a balanced three-row board when the artwork remains comfortably sized.
+  if (threeRows && threeRows.cardWidth >= 88 && threeRows.cardWidth >= best.cardWidth * .85) best = threeRows;
   return { ...best, cardWidth: Math.max(1, Math.floor(best.cardWidth)) };
 }
 
@@ -94,7 +98,7 @@ export function shareResultFor(meadow, { time = false, points = false, seconds =
   const sentences = [t('04.01', { augu_saraksts: names })];
   const minutes = Math.floor(seconds / 60), rest = seconds % 60;
   const singular = n => n % 10 === 1 && n % 100 !== 11;
-  const minuteText = minutes ? t(singular(minutes) ? '04.05' : '04.06', { skaits: minutes }) : '';
+  const minuteText = minutes ? t(singular(minutes) ? '04.05' : '04.06', { skaits: minutes }).replace(/\s+laikā\s*$/, '') : '';
   const secondText = rest || !minutes ? t(singular(rest) ? '04.07' : '04.08', { skaits: rest }) : '';
   let duration = minuteText && secondText ? t('04.09', { minūtes: minuteText, sekundes: secondText }) : minuteText || secondText;
   const pointWord = t(score % 10 === 1 || score % 10 === 0 || score % 100 >= 11 && score % 100 <= 19 ? '04.10' : '04.11');
