@@ -86,3 +86,8 @@ html[data-info-state="paused"] .help-shortcut{display:none}
 #welcome .start-actions .primary{background:var(--selected);border-color:var(--accent);color:var(--accent)}
 #welcome .start-actions .primary:hover:not(:disabled){background:var(--selected);border-color:var(--accent);color:var(--accent);filter:brightness(.97)}
 #welcome :is(.difficulty-choice,.start-actions) button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+#choose-tier.tier-current{cursor:default}
+#choose-tier.tier-current:hover{background:transparent}
+#tier-icon{display:inline-flex;align-items:center;flex:none;color:var(--accent)}
+#tier-icon .lucide{width:21px;height:21px}
