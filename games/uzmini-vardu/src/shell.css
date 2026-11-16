@@ -75,7 +75,14 @@ html[data-info-state="paused"] .help-shortcut{display:none}
 
 .start-copy .pilot-label{margin:0 0 8px;font-size:calc(14px * var(--shell-text-scale));font-weight:600;line-height:1.4;color:var(--ink-muted)}
 
-#welcome .difficulty-choice button{grid-template-columns:32px minmax(0,1fr);padding-inline:12px}
-#welcome .difficulty-choice button[aria-pressed=true]{background:var(--accent);color:var(--bg);border-bottom-color:var(--accent)}
-#welcome .difficulty-choice button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* Coordinated, softly tinted start controls. */
+#welcome .difficulty-choice{gap:6px}
+#welcome .difficulty-choice button{grid-template-columns:32px minmax(0,1fr);border:1px solid var(--border);border-radius:12px;padding-inline:14px}
+.start-view:not(.about-open) #welcome .difficulty-choice button{padding-inline:14px}
+#welcome .difficulty-choice button:hover{background:var(--panel-2);border-color:var(--accent)}
+#welcome .difficulty-choice button[aria-pressed=true]{background:var(--selected);color:var(--accent);border-color:var(--accent)}
 #welcome .difficulty-choice button[aria-pressed=true] .tier-symbol{color:inherit}
+#welcome .start-actions button{border-radius:12px;border:1px solid var(--border)}
+#welcome .start-actions .primary{background:var(--selected);border-color:var(--accent);color:var(--accent)}
+#welcome .start-actions .primary:hover:not(:disabled){background:var(--selected);border-color:var(--accent);color:var(--accent);filter:brightness(.97)}
+#welcome :is(.difficulty-choice,.start-actions) button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
