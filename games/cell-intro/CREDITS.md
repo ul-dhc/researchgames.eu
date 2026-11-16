@@ -37,3 +37,6 @@ The RNA example describes a general research approach, supported by [NHGRI's tra
 
 - E. coli cell envelope: [Matias et al. (2003), primary cryo-transmission electron microscopy study](https://pubmed.ncbi.nlm.nih.gov/14526023/). Outer and inner membranes enclose the periplasm containing the peptidoglycan wall. The illustrated cutaway simplifies these closely spaced layers.
 - Four-chain beta-galactosidase: [Jacobson et al. (1994), primary structural study](https://pubmed.ncbi.nlm.nih.gov/8008071/), with [RCSB structure4V40](https://www.rcsb.org/structure/4V40). The enzyme is a tetramer of four matching protein subunits. Each subunit in this example is one folded chain. The short amino-acid demonstration is illustrative, not the complete1023-amino-acid sequence.
+
+
+Intro 4 wide-screen image: AI-generated photographic illustration, created with OpenAI image generation using Sanita's original frog and woodland-person photographs as visual references, approved16November2026. The open-palm composition is generated and mirrored for page layout; it is not an unaltered documentary photograph. The original portrait photograph remains in the mobile view.

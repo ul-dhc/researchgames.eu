@@ -875,6 +875,7 @@ function prepareVisual(key){
  if(!target&&earlyPlantPhases.includes(key)){const images=['field-image','cell'].map($);if(images.every(img=>img.complete&&img.naturalWidth))return;incomingDecoded=false;Promise.all(images.map(img=>img.decode?.().catch(()=>{}))).then(finish);return;}
  if(!target)return;
  const src=isNuclear?'assets/onion-nuclear-interior.webp':physicalSources[key];
+ if(!isNuclear)$('physical-wide-source').srcset=key==='people'?'assets/frog-on-hand-natural-v3.png':'';
  if(!isNuclear){target.alt=key==='world'?'A broad red mushroom cap among grass, moss and forest plants.':'';target.srcset=key==='world'?'assets/forest-mushroom-photo-960.webp 960w, assets/forest-mushroom-photo-1920.webp 1920w, assets/forest-mushroom-photo-3456.webp 2091w':'';target.sizes=key==='world'?'100vw':'';}
  if(target.dataset.source===src&&target.complete&&target.naturalWidth)return;
  if(target.dataset.source!==src){target.dataset.source=src;target.src=src;if(!isNuclear)$('physical-backdrop').src=key==='world'&&innerWidth<=650?'assets/forest-mushroom-photo-960.webp':src;}

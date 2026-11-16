@@ -102,10 +102,10 @@
 
 #scene:is([data-phase=world],[data-phase=people]) #preview{color:var(--ink);text-shadow:none}
 #scene:is([data-phase=world],[data-phase=people]) #review-context{color:var(--ink);text-shadow:none}
-/* Keep the whole hand in the wide-screen introduction, at the photo's natural scale. */
+/* Fill the wide-screen introduction while keeping the frog and supporting hand in the crop. */
 @media(min-width:1001px),(pointer:fine) and (min-width:651px) and (min-height:651px){
  #scene[data-phase=people] .physical-camera{background:#c4c1b6}
  #scene[data-phase=people] #physical-backdrop{display:none}
- #scene[data-phase=people] #specimen-view{left:auto;right:5%;width:min(55%,calc(100svh * 890 / 1684));height:100%}
- #scene[data-phase=people] #physical{object-fit:contain;object-position:center;mask-image:none}
+ #scene[data-phase=people] #specimen-view{inset:0;width:100%;height:100%}
+ #scene[data-phase=people] #physical{object-fit:cover;object-position:center;mask-image:none;transform:scaleX(-1)}
 }

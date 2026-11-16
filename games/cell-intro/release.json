@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261116-r9",
+  "release": "cell-intro-20261116-r10",
   "routes": [
     "plant",
     "human",
@@ -9,8 +9,8 @@
   "filmAudioStreams": 0,
   "files": {
     "CREDITS.md": {
-      "bytes": 5817,
-      "sha256": "c89ebbe611e014a06c1251cd4df4193abda0d92913318a166ae0787813cce658"
+      "bytes": 6207,
+      "sha256": "a2734ce45523667c1a3902e0cf0c96be64df8353af41559306151af0cb659fe4"
     },
     "README.md": {
       "bytes": 977,
@@ -269,8 +269,8 @@
       "sha256": "991014133a08e8a99c73079d82479983704b25fbb4a8e1914534dd197443fa3a"
     },
     "index.html": {
-      "bytes": 46968,
-      "sha256": "8268aecd58d4585782ad8503109e7f285ae46793be8d55dbffb78c30b263ad5d"
+      "bytes": 47136,
+      "sha256": "d03516e662addb4a9ed63106119daf41ba21ba348979585df08ff05c09c187a4"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -281,8 +281,8 @@
       "sha256": "200b2d4d80de736841c7019a0e1a03bc9549e24fe09839aa30cbbf1a1bcdff0e"
     },
     "journey-refinements.css": {
-      "bytes": 12290,
-      "sha256": "a6ba5f9cdad11031acd977a7a1ab86e99bb7c4ce16aac625c49745696bee2166"
+      "bytes": 12275,
+      "sha256": "b85f99aea42708f9d9bea0c0140eb21a5ad50aca915d757ebe044f9cc30e548f"
     },
     "lucide-LICENSE.txt": {
       "bytes": 3208,
@@ -321,8 +321,8 @@
       "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
     },
     "scene.js": {
-      "bytes": 201605,
-      "sha256": "f96df0e8bf2eb42a7d077d28a0a6b2527b0e932dd37804f4fcdaf45168f7b9fb"
+      "bytes": 201709,
+      "sha256": "4442ff393705c8b7c4c6588ef80e212291f9d21d3bedc8d54b2229d4ff63fed2"
     },
     "shared-ending.js": {
       "bytes": 5344,
@@ -331,6 +331,10 @@
     "shared-icons.js": {
       "bytes": 7308,
       "sha256": "489ea8386fc427eb05f62617cdb55fdff4ca43733291ff59c9c64f2c52b02804"
+    },
+    "assets/frog-on-hand-natural-v3.png": {
+      "bytes": 2850128,
+      "sha256": "b473cfdae04ef794cbbbf3b0a44711da1cd8ed17fb96002f698d3bb1190f8a1f"
     }
   },
   "mediaFormat": "H.264 High level4.0, yuv420p,30fps,faststart; no audio stream"
