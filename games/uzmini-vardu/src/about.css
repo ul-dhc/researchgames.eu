@@ -60,3 +60,13 @@ body.about-open>.site-header{position:sticky;top:0;z-index:30;flex:none}
 .provider-name{display:none}
 html[data-theme="dark"] .provider-logos img,html[data-theme="dark"] .provider-logo img{display:none!important}
 html[data-theme="dark"] .provider-name{display:inline;color:var(--accent);font-size:calc(16px * var(--shell-text-scale));font-weight:650;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
+
+/* Explicit monochrome presentation – original asset bytes and geometry are retained. */
+.header-start-brand .rg-monochrome,.site-footer .footer-brand .rg-monochrome,.provider-logos img,.site-footer .footer-mii img{filter:brightness(0)!important;mix-blend-mode:normal!important}
+html[data-theme="dark"] .header-start-brand .rg-monochrome,html[data-theme="dark"] .site-footer .footer-brand .rg-monochrome,html[data-theme="dark"] .provider-logos img,html[data-theme="dark"] .site-footer .footer-mii img{filter:brightness(0) invert(1)!important}
+html[data-theme="dark"] .provider-logos img,html[data-theme="dark"] .site-footer .footer-mii img{display:block!important}
+.provider-logos .provider-name,html[data-theme="dark"] .provider-logos .provider-name{display:none!important}
+.site-footer .footer-mii img{width:180px;height:auto}.site-footer .footer-brand-dhc img{width:132px;height:auto;filter:none!important;mix-blend-mode:normal!important}.site-footer .footer-brand-dhc{min-width:132px}
+
+/* Creator card follows the reference label, heading, contact and partner-mark structure. */
+.about-partners{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:28px;margin:24px 0 0}.about-partner{display:flex;align-items:center;justify-content:center;min-height:44px;max-width:100%}.about-partner img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}.about-partner-dhc{width:220px}.about-partner-mii{width:260px}.about-partner-mii img{filter:brightness(0)!important}html[data-theme="dark"] .about-partner-mii img{filter:brightness(0) invert(1)!important}.provider-logos.source-provider{display:flex;justify-content:center}.source-provider a{width:min(100%,200px)}

@@ -43,7 +43,7 @@ def build(require_baseline=False,output=None):
     text=text.replace('</style>',(ROOT/'src/shell.css').read_text()+'\n'+(ROOT/'src/about.css').read_text()+'</style>',1)
     font_license='\n'.join((ROOT/'assets/fonts'/f).read_text() for f in ['inter-OFL.txt','manrope-OFL.txt'])
     text=text.replace('<script>','<!-- Font licences\n'+font_license+'\n--><script>',1)
-    text=re.sub(r'@@asset:([^@]+)@@',lambda m:'data:image/svg+xml;base64,'+base64.b64encode((ROOT/m[1]).read_bytes()).decode(),text)
+    text=re.sub(r'@@asset:([^@]+)@@',lambda m:'data:'+{'.svg':'image/svg+xml','.png':'image/png'}[Path(m[1]).suffix]+';base64,'+base64.b64encode((ROOT/m[1]).read_bytes()).decode(),text)
     text=re.sub(r'@@icon:([a-z0-9-]+)@@',lambda m:icons[m[1]],text)
     assert '@@' not in text
     license=(ROOT/'assets/LUCIDE-LICENSE.txt').read_text()

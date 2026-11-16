@@ -53,3 +53,18 @@ html[data-theme="dark"] .footer-brand img{filter:brightness(0) invert(1)}
 #welcome .tier-copy strong{font-size:calc(18px * var(--shell-text-scale))}.mode-copy strong{font-size:calc(16px * var(--shell-text-scale))}.mode-copy{gap:4px}.start-actions button{min-height:64px}.resume-link{display:inline-flex;align-items:center;gap:7px;min-height:44px;color:var(--accent);text-decoration:none}.resume-link:hover{text-decoration:underline}.resume-link .lucide{width:18px;height:18px}
 #count,.tier-current #level-title,#score,.eyebrow,.word-state,.entrylabel,.status,.controls .status,#entry-links a,#save-status{font-size:calc(14px * var(--shell-text-scale))!important;line-height:1.5}.clue{font-size:calc(20px * var(--shell-text-scale));line-height:1.55}.list button{font-size:calc(16px * var(--shell-text-scale))}.hint-cost{font-size:calc(14px * var(--shell-text-scale));line-height:1.2}.level-end p,.end{font-size:calc(16px * var(--shell-text-scale))}.level-end h2{font-size:calc(21px * var(--shell-text-scale))}#round-links h3{font-size:calc(18px * var(--shell-text-scale))}#save-status:empty{display:none}
 @media(max-width:650px){.clue{font-size:calc(18px * var(--shell-text-scale))}.tier-current{max-width:calc(100% - 58px)}.start-actions{gap:10px}#welcome .difficulty-choice{margin-bottom:16px}#welcome .difficulty-choice button{min-height:74px}.start-links{gap:4px 18px}}
+
+/* Fit the normal desktop start composition by sharing vertical space, without clipping. */
+@media(min-width:901px){
+ body.start-view:not(.about-open){display:flex;flex-direction:column;min-height:100dvh}
+ .start-view:not(.about-open)>#game-main{width:min(1120px,100%);flex:1;display:flex;align-items:center;margin:0 auto;padding:18px 28px 14px}
+ .start-view:not(.about-open) #welcome.start-layout{width:100%;margin:0 auto;gap:clamp(36px,6vw,80px)}
+ .start-view:not(.about-open) #welcome .start-lead{margin:12px 0 16px}
+ .start-view:not(.about-open) #welcome .difficulty-choice{margin-bottom:10px}
+ .start-view:not(.about-open) #welcome .difficulty-choice button{min-height:64px;padding:8px 0}
+ .start-view:not(.about-open) .start-actions{margin-top:12px}
+ .start-view:not(.about-open) .start-links{margin-top:8px}
+ .start-view:not(.about-open) .start-illustration{padding:8px}
+ .start-view:not(.about-open) .start-grid{max-width:clamp(280px,38vh,360px);margin:auto}
+ .start-view:not(.about-open)>.site-footer{margin:0 auto;padding:10px 0 12px}
+}

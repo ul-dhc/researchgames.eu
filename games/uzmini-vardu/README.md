@@ -1,6 +1,6 @@
 # Uzmini vārdu – direct Tēzaurs TEI continuation
 
-Version: **crossword-tei-2026_4-rg-provider-theme-v7.1**. Latvian interface. Portable repository source.
+Version: **crossword-tei-2026_4-rg-footer-dhc-v8**. Latvian interface. Portable repository source.
 
 Ready-to-serve entry: index.html. Edit src/runtime.js, src/tier-core.js, src/interface.html and src/styles.css. src/game.js is generated. Python 3.9+ and existing Node suffice.
 
@@ -61,3 +61,5 @@ V6 straightens the decorative start grid, distinguishes saved-session controls f
 V7 increases secondary text readability, uses the original transparent provider marks without white panels, removes the duplicate footer info glyph, and offers a conditional genuine-progress resume link. Normal successful saving stays silent; failures remain visible. Original legacy versions, game data and save compatibility are preserved.
 
 V7.1 uses the authentic transparent provider logos in light mode and readable linked provider names in dark mode, consistently in About and the footer. No logo recoloring or background panels.
+
+V8 fits the desktop start composition with readable text, replaces the footer with Par spēli plus ResearchGames/LU MII/LU DHC, and uses transparent monochrome logo presentation. The exact Mīklu režģis favicon and original DHC assets are vendored with provenance in assets/footer-assets.json. Both About openers share one panel, with the revised concept/creators copy and exact Autumn2026 CLARIN citation plus a compact CC BY-SA4.0 link. Removed About explanations do not alter saves, archived versions or gameplay.

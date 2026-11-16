@@ -1,0 +1,37 @@
+[
+  {
+    "file": "assets/providers/dhc-lv-black.png",
+    "source": "repository:games/miklu-rezgis/assets/partners/Digit_humanit_zin_c_LAT_melns.png",
+    "sha256": "b57b24062ac2b86be191c175a4aa3a5424eb229b759495fa0c0da67447cfb599",
+    "bytes": 128916,
+    "unchanged": true
+  },
+  {
+    "file": "assets/providers/dhc-lv-white.png",
+    "source": "repository:games/miklu-rezgis/assets/partners/Digit_humanit_zin_c_LAT_balts.png",
+    "sha256": "b457ef183e27edc868c7db11554b6445173d5d959197d313ca21e3d23a1f1790",
+    "bytes": 135995,
+    "unchanged": true
+  },
+  {
+    "file": "assets/brand/researchgames-monochrome-white.svg",
+    "source": "repository:games/miklu-rezgis/assets/partners/researchgames-white.svg",
+    "sha256": "563f00b24922b947eb31f0c137fe08b18f0fe46239f380d29ec1abb289fe4825",
+    "bytes": 9455,
+    "unchanged": true
+  },
+  {
+    "file": "assets/favicon/favicon.svg",
+    "source": "repository:games/miklu-rezgis/assets/favicon/favicon.svg",
+    "sha256": "b84cd83f2c6ed1d2e80b5519ef054c90f418e1132fac77de0628a885968639e2",
+    "bytes": 1907,
+    "unchanged": true
+  },
+  {
+    "file": "assets/favicon/apple-touch-icon.png",
+    "source": "repository:games/miklu-rezgis/assets/favicon/apple-touch-icon.png",
+    "sha256": "377181e6bc59545e4903613eb32775464acaa8389bbaaaff7b69002ee0b19e3f",
+    "bytes": 1707,
+    "unchanged": true
+  }
+]
