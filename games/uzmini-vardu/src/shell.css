@@ -68,3 +68,7 @@ html[data-theme="dark"] .footer-brand img{filter:brightness(0) invert(1)}
  .start-view:not(.about-open) .start-grid{max-width:clamp(280px,38vh,360px);margin:auto}
  .start-view:not(.about-open)>.site-footer{margin:0 auto;padding:10px 0 12px}
 }
+
+/* Temporary coordination pause – preserved footer/About restored by removing the root flag. */
+html[data-info-state="paused"] :is(.site-footer,#about-screen,#header-about,[data-about-link],[data-about-section]){display:none!important}
+html[data-info-state="paused"] .help-shortcut{display:none}

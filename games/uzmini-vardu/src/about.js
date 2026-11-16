@@ -1,6 +1,8 @@
 /* Preserve the reference About lifecycle; all help routes use this same area. */
 (() => {
   'use strict';
+  // Temporary presentation pause – remove the document flag to restore the preserved About.
+  if (document.documentElement?.getAttribute?.('data-info-state') === 'paused') return;
   if (['1','wordnet'].includes(new URLSearchParams(location.search).get('legacy'))) return;
   const game=document.getElementById('game-main'),about=document.getElementById('about-screen');
   let opened=false,opener=null,savedScroll=0;
