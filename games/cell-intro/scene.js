@@ -1,5 +1,5 @@
 import {createCellPlacement} from './cell-placement.js?v=cell-intro-20261116-r8';
-import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261116-r8';
+import {installResearchEnding} from './shared-ending.js?v=cell-intro-20261126-r11';
 let researchScene=null;
 import {installEnvironment} from './environment.js?v=cell-intro-20261116-r8';
 import {onionModel,installOnionModel,renderOnionModel} from './onion-model.js?v=cell-intro-20261116-r8';

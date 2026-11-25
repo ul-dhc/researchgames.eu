@@ -1,5 +1,5 @@
 {
-  "release": "cell-intro-20261116-r10",
+  "release": "cell-intro-20261126-r11",
   "routes": [
     "plant",
     "human",
@@ -269,8 +269,8 @@
       "sha256": "991014133a08e8a99c73079d82479983704b25fbb4a8e1914534dd197443fa3a"
     },
     "index.html": {
-      "bytes": 47136,
-      "sha256": "d03516e662addb4a9ed63106119daf41ba21ba348979585df08ff05c09c187a4"
+      "bytes": 50285,
+      "sha256": "ac796037d6f02dd15437bb16ad93aa940f79940bfe13689116215a985801949c"
     },
     "information-labels.css": {
       "bytes": 6166,
@@ -321,12 +321,12 @@
       "sha256": "6e5a19afdf163fa4568c51e1436531d49850dcf80bf6a75a9955f5e3e7748a0d"
     },
     "scene.js": {
-      "bytes": 201709,
-      "sha256": "4442ff393705c8b7c4c6588ef80e212291f9d21d3bedc8d54b2229d4ff63fed2"
+      "bytes": 201710,
+      "sha256": "12dbe5443bdacebf0d323c8c19e128ae6a4cb05912951d1c187544d4cf9fe6d4"
     },
     "shared-ending.js": {
-      "bytes": 5344,
-      "sha256": "600fcf86c82bed2256afdd6f51dc53d0ee5fa592bf7cbe1b3dad80c909a748fa"
+      "bytes": 5079,
+      "sha256": "b0026ba484e24c4ea4e6c6714ad81958b87d49b0bf62648fa9138a6f742918e9"
     },
     "shared-icons.js": {
       "bytes": 7308,
