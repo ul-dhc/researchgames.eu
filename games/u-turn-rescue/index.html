@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U-Turn Rescue</title>
+<link rel="canonical" href="https://researchgames.eu/games/u-turn-rescue/">
+<script data-goatcounter="https://researchgames.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=Chakra+Petch:wght@600;700&display=swap">
+<style>
+:root{
+  /* Single dark theme by choice: the lab's deep blue. Layout: blue header bar, one live viewport, one control strip. */
+  color-scheme:dark;
+  --bg:#021b33;
+  --panel:#06294a;
+  --line:#1d4a78;
+  --ink:#eaf2fa;
+  --muted:#9db4cc;
+  --brand:#004a87;
+  --hi:#8ec5ff;
+  --accent:#ffa94d;
+  --bad:#ff6b6b;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+#app{max-width:980px;margin:0 auto;padding:12px 16px 18px;display:flex;flex-direction:column;gap:10px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;background:var(--brand);color:#fff;padding:10px 16px;border-radius:4px}
+.id{display:flex;align-items:center;gap:12px}
+.mark{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.12em;padding:4px 8px 4px 10px;border:2px solid #fff;border-radius:3px;line-height:1}
+h1{font-family:var(--display);font-weight:700;font-size:24px;margin:0;line-height:1.1}
+.lab{font-size:12px;letter-spacing:.04em;opacity:.85}
+.stats{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;font-variant-numeric:tabular-nums;color:#ffffffcc}
+.stats b{color:#fff;font-family:var(--display);font-size:19px;margin-left:6px}
+#lives{letter-spacing:.1em}
+#scoreN{font-size:26px}
+#stage{position:relative;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+canvas{display:block;width:100%;aspect-ratio:16/10;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+#overlay{position:absolute;inset:0;background:#021b33f0;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+#overlay[hidden]{display:none}
+.card{max-width:560px;width:100%;max-height:100%}
+.card h2{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 8px;text-wrap:balance}
+.card p{margin:0 0 10px}
+.card ul{margin:0 0 12px;padding-left:20px}
+.card li{margin-bottom:5px}
+.card em{font-style:normal;color:var(--hi);font-weight:600}
+.card .s{color:var(--accent);font-weight:600}
+.card .g{color:#b8c7d6;font-weight:600}
+.card .lie{color:var(--bad);font-weight:600}
+.tally{display:flex;gap:6px 20px;flex-wrap:wrap;margin-bottom:8px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.tally b{font-family:var(--display);font-size:22px;color:var(--ink);margin-left:5px}
+#panel{display:flex;gap:10px;align-items:stretch}
+button{font-family:var(--display);font-weight:700;font-size:16px;padding:9px 18px;border-radius:4px;border:1px solid #2f6ea8;cursor:pointer;color:#fff;background:var(--brand)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#bFlip{flex:1;font-size:22px;padding:14px;letter-spacing:.08em}
+#bFlip:active{transform:translateY(1px)}
+#bSound{background:var(--panel);color:var(--muted);border-color:var(--line);font-size:13px;font-family:var(--body);font-weight:500}
+.sec{background:var(--panel);color:var(--ink);border-color:var(--line);font-size:14px}
+.card .sec{margin-left:8px}
+.card .rank{font-family:var(--display);font-size:19px;color:var(--accent);margin:4px 0 6px}
+#board{margin:10px 0 12px;font-variant-numeric:tabular-nums}
+#board h3{font-family:var(--display);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 4px}
+#board ol{margin:0;padding:0;list-style:none}
+#board li{display:flex;gap:10px;padding:3px 8px;border-radius:4px;margin:0}
+#board li.me{background:#0d3b66;color:#fff;font-weight:600}
+#board .rk{width:22px;color:var(--muted)}
+#board .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#board .note{color:var(--muted);font-size:14px}
+</style>
+<style>
+/* Game skin: arcade cabinet in the lab's deep blue. HUD pods on top, glowing microscope viewport, chunky pressable buttons. */
+:root{--display:"Chakra Petch","IBM Plex Sans Condensed",sans-serif;--gold:#ffd43b}
+body{background:radial-gradient(ellipse at 50% -10%,#0b3d6e 0,#021b33 55%,#010f1f 100%) fixed;min-height:100vh}
+#app{max-width:1040px;gap:12px;padding:16px}
+header{background:linear-gradient(180deg,#0a3a68,#052848);border:1px solid #2a6aa6;border-radius:14px;box-shadow:0 10px 30px #0008,inset 0 1px 0 #ffffff22;padding:12px 16px}
+.mark{border:0;border-radius:8px;background:#fff;color:#004a87;padding:7px 9px;font-size:19px}
+h1{font-size:28px;letter-spacing:.02em}
+.lab{opacity:.7}
+.stats{gap:8px}
+.stats span{display:flex;flex-direction:column;align-items:center;min-width:72px;padding:5px 10px 6px;background:#021b33b3;border:1px solid #1d4a78;border-radius:10px;font-size:12px;color:var(--muted)}
+.stats b,#scoreN{margin:0;font-size:22px;line-height:1.15;color:#fff}
+.stats span:first-child{border-color:var(--gold);box-shadow:0 0 12px #ffd43b33}
+.stats span:first-child b{color:var(--gold)}
+#lives{color:var(--bad);letter-spacing:.12em;font-size:17px}
+#stage{border:2px solid #2a6aa6;border-radius:14px;box-shadow:0 0 34px #1d6fd033,0 14px 30px #0008}
+#overlay{background:radial-gradient(ellipse at center,#052a4ee6,#010f1ff2)}
+.card{background:linear-gradient(180deg,#0a3560,#06264a);border:1px solid #2f6ea8;border-radius:16px;padding:20px 24px;box-shadow:0 20px 50px #000a,inset 0 1px 0 #ffffff1f}
+.card h2{font-size:32px;margin-bottom:12px}
+.kick{font-size:13px;color:var(--hi);margin:0 0 2px!important}
+.rules{display:grid;gap:9px;margin:0 0 14px}
+.rule{display:flex;gap:12px;align-items:flex-start}
+.rule p{margin:0!important;font-size:14px;color:#d5e3f1}
+.chip{flex:none;width:58px;text-align:center;font-family:var(--display);font-weight:700;font-size:13px;padding:3px 0;border-radius:6px;background:#004a87;color:#fff;border:1px solid #2f6ea8}
+.cast{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin:0 0 10px;padding:8px 10px;border-radius:10px;background:#021b3399}
+.cast i{display:inline-block;width:14px;height:7px;border-radius:4px;margin-right:6px;vertical-align:middle;box-shadow:0 0 6px currentColor}
+.foot{font-size:13px;color:var(--muted)}
+button{border:0;border-radius:10px;box-shadow:0 4px 0 #002a50,0 6px 14px #0006;transition:transform .06s,box-shadow .06s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 #002a50}
+#bGo{background:linear-gradient(180deg,#ffbd70,#ff8f1f);color:#2a1300;font-size:20px;padding:12px 32px;box-shadow:0 4px 0 #a3530a,0 8px 18px #0007}
+#bGo:active{box-shadow:0 1px 0 #a3530a}
+#bFlip{background:linear-gradient(180deg,#1a6fc0,#004a87);font-size:24px;border-radius:12px;box-shadow:0 5px 0 #002a50,0 10px 24px #0007,inset 0 1px 0 #ffffff33}
+#bFlip:active{transform:translateY(4px);box-shadow:0 1px 0 #002a50}
+.sec,#bSound{background:#06294a;color:var(--ink);border:1px solid #1d4a78;box-shadow:0 4px 0 #021428}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px}
+.tally span{display:flex;flex-direction:column;background:#021b33;border:1px solid #1d4a78;border-radius:10px;padding:6px 10px;font-size:12px}
+.tally b{margin:0;font-size:22px}
+.badge{display:inline-block;background:var(--gold);color:#2a1d00;font-family:var(--display);font-weight:700;font-size:14px;padding:3px 12px;border-radius:999px;margin-bottom:4px}
+.card h2.big{font-size:60px;line-height:1;color:var(--gold);margin:0 0 12px}
+#board li{background:#021b3366;margin-bottom:3px}
+@media(max-width:600px){header{justify-content:center}.stats span{min-width:56px;padding:4px 6px}.stats b,#scoreN{font-size:18px}h1{font-size:22px}.card{padding:16px}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="id"><div class="mark" aria-label="MMML">MMML</div><div><h1>U-Turn Rescue</h1><div class="lab">Laboratory of Magnetic Soft Materials</div></div></div>
+    <div class="stats"><span>Score<b id="scoreN">0</b></span><span>Holding<b id="hold">0</b></span><span>Combo<b id="combo">×1.0</b></span><span>Peak<b id="peak">0</b></span><span>Lives<b id="lives"></b></span></div>
+  </header>
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="overlay"><div class="card" id="card"></div></div>
+  </div>
+  <div id="panel">
+    <button id="bFlip">FLIP FIELD · SPACE</button>
+    <button id="bPause" class="sec">Pause · P</button>
+    <button id="bSound" aria-pressed="true">Sound on</button>
+  </div>
+</div>
+<script>
+"use strict";
+window.addEventListener('error',e=>{console.error('Game error',e.message,e.lineno);});
+const W=160,H=100;          // field of view, micrometres; walls at top and bottom
+// Physics, for a 1 um radius cell in water at room temperature, B = 0.5 mT:
+const OM=1.989;             // m B / (8 pi eta R^3): turn rate [rad/s] per 1e-16 A m^2
+const DR=0.163;             // kT / (8 pi eta R^3): rotational diffusion [rad^2/s]
+const TAU_B=0.1;            // coil L/R time [s]: the field passes through zero on every reversal
+const HEAT_FLIP=.2,COOL=.13,TRIP=2.5;   // coil driver heating per reversal, cooling per second, cut-out time
+const TRAIL=2.6,MAXLOST=5,ZW=34,VER=3,SAVEWIN=1.6,COMBO_T=10;
+const tracers=Array.from({length:60},()=>({x:Math.random()*W,y:2+Math.random()*(H-4)}));
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const $=id=>document.getElementById(id);
+const rand=(a,b)=>a+Math.random()*(b-a);
+const gauss=()=>{let u=0;while(!u)u=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*Math.random())};
+
+const DAY=new Date().toISOString().slice(0,10);
+let seed=0;
+function srand(){seed=0;for(const ch of DAY)seed=(seed*31+ch.charCodeAt(0))|0;}
+function rnd(){seed=(seed+0x6D2B79F5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;}
+const srnd=(a,b)=>a+rnd()*(b-a);   // today's sample: the same swimmers for every player
+let G;
+function reset(){G={state:'intro',t:0,combo:0,bestCombo:0,saves:0,flips:0,lastSave:-9,level:1,cd:0,field:0,b:1,heat:0,trip:-9,lastFlip:-9,cells:[],fx:[],texts:[],spawnIn:.1,lost:0,peak:0,flash:0,said:{},acc:0,score:0,flow:0,flowT:0,flowNext:5,zx:W/2};srand();G.zph=rnd()*6.28;}
+reset();
+let best=0;try{best=+localStorage.getItem('uturn-score-best-v3')||0;}catch(_){}
+
+let AC=null,soundOn=true;
+function beep(f,d,type,g){
+  if(!AC||!soundOn)return;
+  try{const o=AC.createOscillator(),ga=AC.createGain(),t=AC.currentTime;o.type=type||'sine';o.frequency.value=f;ga.gain.setValueAtTime(g||.05,t);ga.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(ga);ga.connect(AC.destination);o.start(t);o.stop(t+d);}catch(_){}
+}
+
+// Poiseuille flow between the two walls: fastest in the middle, zero at the walls. G.flow is the mean speed.
+const uAt=y=>{const s=2*y/H-1;return 1.5*G.flow*(1-s*s);};
+function spawn(){
+  // today's cast is seeded; the mix gets stranger and faster as the run goes on
+  const t=G.t,r=rnd();
+  let kind='normal',pol=1;
+  if(t>5&&r<.10)kind='wander';                      // not magnetic: swims at random
+  else if(t>8&&r<.22)kind='tumble';                 // magnetic, but tumbles now and then
+  else if(t>16&&r<.34)kind='rev';                   // reverses its flagella and swims backwards
+  else if(t>10&&r<.34+Math.min(.33,(t-10)/70+.12))pol=-1;   // south-seeker
+  const fast=t>14&&rnd()<.25,ramp=1+Math.min(.4,t/200);
+  const sz=srnd(.8,1.3),base=Math.exp(srnd(Math.log(.9),Math.log(14)));
+  const c={kind,pol,sw:1,sz,v:(fast?srnd(38,52):srnd(16,30))*ramp,
+    k:Math.min(24,base*OM/Math.pow(sz,1.5)),      // bigger cells carry more magnetosomes but feel far more drag
+    dr:DR/(sz*sz*sz),
+    x:srnd(W*.3,W*.7),y:srnd(12,H-12),trail:[],born:t,
+    wob:rnd()<.3?srnd(.25,.5):0,wf:srnd(5,9),ph:srnd(0,6.28),next:t+srnd(2,5),pulse:-9};
+  c.h=kind==='wander'?srnd(0,6.28):(G.field===0?0:Math.PI)+(pol<0?Math.PI:0);G.cells.push(c);
+  const first=(k,msg,col)=>{if(!G.said[k]){G.said[k]=true;say(c.x,c.y-5,msg,col,3);}};
+  if(kind==='wander')first('w','Wanderer ignores the field','#b8c7d6');
+  else if(kind==='tumble')first('t','Tumbler loses its heading','#8ec5ff');
+  else if(kind==='rev')first('x','Reverser backs up on its own','#8ec5ff');
+  else if(pol<0)first('s','South seeker swims against the field','#ffa94d');
+  else if(fast)first('f','Sprinter!','#8ec5ff');
+}
+function flip(){
+  if(G.state!=='play'||G.t-G.lastFlip<.2)return;
+  if(G.t<G.trip){beep(90,.08,'square',.03);return;}
+  G.field=G.field===0?Math.PI:0;G.lastFlip=G.t;G.flash=1;G.heat+=HEAT_FLIP;G.flips++;
+  for(const c of G.cells)if(c.danger)c.saveWin=G.t+SAVEWIN;   // only a swimmer already heading out can be a clutch save
+  beep(180,.16,'triangle',.07);
+  if(G.heat>=1){G.heat=1;G.trip=G.t+TRIP;G.flash=-1;say(W/2,H/2-16,'Coil overheated, field off','#ff6b6b',TRIP);beep(90,.5,'sawtooth',.06);}
+}
+function say(x,y,str,col,life){G.texts.push({x:Math.max(22,Math.min(W-22,x)),y:Math.max(8,y),str,col,t:G.t,life:life||1.4});}
+
+function update(dt){
+  G.t+=dt;G.spawnIn-=dt;
+  // the coil: finite rise time, and a driver that heats on every reversal
+  const off=G.t<G.trip;
+  G.b+=((off?0:G.field===0?1:-1)-G.b)*Math.min(1,dt/TAU_B);
+  G.heat=Math.max(0,G.heat-(off?.24:COOL)*dt);
+  // a changing flow and a moving detector window: steady, even flipping does not hold the swarm
+  if(G.t>G.flowNext){G.flowT=(rnd()<.5?-1:1)*srnd(3.5,7)*(1+Math.min(.6,G.t/120));G.flowNext=G.t+srnd(5,9);say(W/2,16,'Flow shifts '+(G.flowT>0?'→':'←'),'#8ec5ff',1.8);}
+  G.flow+=(G.flowT-G.flow)*Math.min(1,dt*1.2);
+  G.zx=W/2+48*Math.sin(G.zph+G.t*.22);
+  for(const p of tracers){p.x+=uAt(p.y)*dt;if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;}
+  if(G.spawnIn<=0){spawn();G.spawnIn=Math.max(.45,1.5-G.t/60)*srnd(.75,1.25);beep(660,.05,'sine',.02);}
+  for(let i=G.cells.length-1;i>=0;i--){
+    const c=G.cells[i];
+    const shear=3*G.flow*(2*c.y/H-1)/H;            // half the flow vorticity: shear rotates every cell
+    if(c.kind==='wander')c.h+=shear*dt+Math.sqrt(2*.5*dt)*gauss();
+    else{
+      // magnetic torque against viscous drag, plus shear, plus rotational Brownian motion
+      c.h+=(-c.k*G.b*c.pol*Math.sin(c.h)+shear)*dt+Math.sqrt(2*c.dr*dt)*gauss();
+      if(G.t>c.next){
+        if(c.kind==='tumble'){c.h+=(Math.random()<.5?1:-1)*rand(1.2,2.8);c.next=G.t+rand(2.5,5);c.pulse=G.t;}
+        else if(c.kind==='rev'){c.sw*=-1;c.next=G.t+rand(4,8);c.pulse=G.t;}
+      }
+    }
+    c.hm=c.h+(c.wob?c.wob*Math.sin(G.t*c.wf+c.ph):0);   // wobblers swim a wavy line
+    const u=uAt(c.y);
+    c.x+=(c.sw*c.v*Math.cos(c.hm)+u)*dt;c.y+=c.sw*c.v*Math.sin(c.hm)*dt;
+    if(c.y<3||c.y>H-3){c.y=Math.max(3,Math.min(H-3,c.y));if(c.kind==='wander')c.h=-c.h;}
+    c.trail.push({x:c.x,y:c.y,t:G.t});
+    while(c.trail.length&&G.t-c.trail[0].t>TRAIL)c.trail.shift();
+    const vx=c.sw*Math.cos(c.h)*c.v+u;
+    c.danger=c.kind==='wander'?false:vx>0?(W-c.x)/vx<1.6:vx<0?c.x/-vx<1.6:false;
+    if(c.saveWin){
+      const home=c.x<W/2?vx>0:vx<0;
+      if(!c.danger&&home&&G.t<c.saveWin){
+        G.combo++;G.saves++;G.bestCombo=Math.max(G.bestCombo,G.combo);G.lastSave=G.t;
+        const bonus=25*G.combo;G.acc+=bonus/10;
+        say(c.x,c.y-4,'Save +'+bonus+(G.combo>1?' · combo '+G.combo:''),'#ffd43b',1.2);
+        beep(520+40*Math.min(G.combo,12),.09,'sine',.05);c.saveWin=0;
+      }else if(G.t>=c.saveWin)c.saveWin=0;
+    }
+    if(c.x<-3||c.x>W+3){
+      G.cells.splice(i,1);
+      if(c.kind!=='wander'){G.lost++;G.flash=-1;say(c.x,c.y,'Escaped','#ff6b6b');beep(120,.25,'sawtooth',.05);if(G.combo>=3)say(W/2,30,'Combo broken','#ff6b6b',1.4);G.combo=0;}
+    }
+  }
+  if(G.cells.length>G.peak)G.peak=G.cells.length;
+  let n=0;for(const c of G.cells)n+=Math.abs(c.x-G.zx)<ZW/2?3:1;
+  G.acc+=n*dt*(1+.1*Math.min(G.combo,10));G.score=Math.round(G.acc*10);
+  if(G.combo&&G.t-G.lastSave>COMBO_T){if(G.combo>=3)say(W/2,30,'Combo expired','#9db4cc',1.4);G.combo=0;}
+  const lv=1+Math.floor(G.t/20);
+  if(lv>G.level){G.level=lv;say(W/2,H/2-12,'Level '+lv,'#ffffff',2);beep(330,.2,'triangle',.05);beep(495,.3,'triangle',.04);}
+  G.fx=G.fx.filter(p=>G.t-p.t<.6);
+  G.texts=G.texts.filter(p=>G.t-p.t<p.life);
+  G.flash*=Math.pow(.02,dt);
+  hud();
+  if(G.lost>=MAXLOST)over();
+}
+function hud(){
+  $('scoreN').textContent=G.score;$('combo').textContent='×'+(1+.1*Math.min(G.combo,10)).toFixed(1);$('hold').textContent=G.cells.length;$('peak').textContent=G.peak;rival();
+  const left=Math.max(0,MAXLOST-G.lost);$('lives').textContent='●'.repeat(left)+'○'.repeat(MAXLOST-left);
+}
+function over(){
+  if(G.state!=='play')return;G.state='over';
+  const rk=rankText(),record=G.score>best;if(record){best=G.score;try{localStorage.setItem('uturn-score-best-v3',best);}catch(_){}}
+  $('card').innerHTML=(record?'<div class="badge">New personal best</div>':'<p class="kick">Run over</p>')+'<h2 class="big">'+G.score+'</h2>'+
+    '<div class="tally"><span>Score<b>'+G.score+'</b></span><span>Your best<b>'+best+'</b></span><span>Peak held<b>'+G.peak+'</b></span><span>Survived<b>'+Math.round(G.t)+' s</b></span><span>Level<b>'+G.level+'</b></span></div>'+
+    '<div class="tally"><span>Clutch saves<b>'+G.saves+'</b></span><span>Best combo<b>'+G.bestCombo+'</b></span><span>Flips<b>'+G.flips+'</b></span></div>'+
+    (rk?'<p class="rank">'+rk+'</p>':'')+
+    '<div id="board"></div><button id="bGo">Play again</button><button id="bCopy" class="sec">Copy result</button>';
+  $('overlay').hidden=false;$('bGo').onclick=start;
+  $('bCopy').onclick=()=>{
+    const txt='U-Turn Rescue, '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'. '+G.score+' points, '+G.saves+' clutch saves, best combo '+G.bestCombo+', level '+G.level+(rk?' ('+rk+')':'');
+    try{navigator.clipboard.writeText(txt).then(()=>{$('bCopy').textContent='Copied';},()=>{$('bCopy').textContent='Copy blocked';});}catch(_){$('bCopy').textContent='Copy blocked';}
+  };hud();beep(260,.4,'triangle',.06);
+  renderBoard();submit();
+}
+const rule=(k,t)=>'<div class="rule"><span class="chip">'+k+'</span><p>'+t+'</p></div>';
+function intro(){
+  $('card').innerHTML='<p class="kick">Magnetic bacteria · daily challenge</p><h2>Hold the swarm</h2>'+
+    '<div class="rules">'+
+    rule('Flip','Space, a tap on the view or the big button reverses the field. Every magnetic swimmer turns around to follow it.')+
+    rule('Score','10 points a second for each swimmer on screen, triple inside the moving ×3 window.')+
+    rule('Save','Turn back a swimmer wearing a <span class="lie">red ring</span> for a bonus. Chain saves into a combo worth up to ×2. An escape or '+COMBO_T+' quiet seconds break it.')+
+    rule('Coil','The field needs a moment to reverse and every flip heats the driver. Overheat it and the field is gone for '+TRIP+' s.')+
+    rule('Flow','The channel flow keeps shifting. Its shear twists weak swimmers off course, most of all near the walls.')+
+    '</div><div class="cast"><span><i style="color:#cfe6ff;background:#cfe6ff"></i>North seekers follow the field</span><span><i style="color:#ffa94d;background:#ffa94d"></i>South seekers swim against it</span><span><i style="color:#8fa3b8;background:#8fa3b8"></i>Wanderers ignore it and cost nothing</span></div>'+
+    '<p class="foot">Watch for tumblers, reversers and sprinters too. '+MAXLOST+' escapes end the run. Everyone plays the same swimmers today. P pauses.</p>'+
+    '<div id="board"></div><button id="bGo">Start</button>';
+  $('bGo').onclick=start;renderBoard();
+}
+
+// ---------- leaderboard (scores from the harder rules only: v = VER) ----------
+let db=null,user=null,uid=null,rows=[],names={},boardNote='',lastRival='';
+const num=v=>Math.max(0,Math.round(+v||0));
+function boardList(title,list,key){
+  const h=document.createElement('h3');h.textContent=title;const ol=document.createElement('ol');
+  list.forEach((r,i)=>{
+    const li=document.createElement('li');if(r.id===uid)li.className='me';
+    const a=document.createElement('span');a.className='rk';a.textContent=i+1;
+    const b=document.createElement('span');b.className='nm';b.textContent=(names[r.id]||'Someone')+(r.id===uid?' (you)':'');
+    const c=document.createElement('span');c.textContent=num(r[key]);
+    li.append(a,b,c);ol.append(li);
+  });
+  return [h,ol];
+}
+function renderBoard(){
+  const el=$('board');if(!el)return;el.textContent='';
+  if(boardNote){const p=document.createElement('p');p.className='note';p.textContent=boardNote;el.append(p);}
+  if(!db)return;
+  const today=rows.filter(r=>r.day===DAY).sort((a,b)=>num(b.today)-num(a.today)).slice(0,6);
+  const all=rows.slice().sort((a,b)=>num(b.best)-num(a.best)).slice(0,4);
+  if(today.length)el.append(...boardList("Today's sample",today,'today'));
+  else if(!boardNote){const p=document.createElement('p');p.className='note';p.textContent="Nobody has scored on today's sample yet. Be the first.";el.append(p);}
+  if(all.length)el.append(...boardList('All-time best',all,'best'));
+}
+function rival(){
+  if(!db||G.state!=='play')return;
+  let next=null;
+  for(const r of rows)if(r.day===DAY&&r.id!==uid&&num(r.today)>G.score&&(!next||num(r.today)<num(next.today)))next=r;
+  const txt=next?'Beat '+(names[next.id]||'Someone')+' at '+num(next.today):(rows.some(r=>r.day===DAY&&r.id!==uid)?"You lead today's sample. Keep holding.":'');
+  lastRival=txt;
+}
+function rankText(){
+  if(!db)return '';
+  const others=rows.filter(r=>r.day===DAY&&r.id!==uid),mine=rows.find(r=>r.id===uid);
+  const my=Math.max(G.score,mine&&mine.day===DAY?num(mine.today):0);
+  return '#'+(1+others.filter(r=>num(r.today)>my).length)+' of '+(others.length+1)+" on today's sample";
+}
+async function submit(){
+  if(!db||!uid||!G.score)return;
+  const mine=rows.find(r=>r.id===uid)||{};
+  const today=mine.day===DAY?Math.max(num(mine.today),G.score):G.score,bestAll=Math.max(num(mine.best),G.score);
+  if(mine.day===DAY&&today===num(mine.today)&&bestAll===num(mine.best))return;
+  try{await db.doc('scores/'+uid).set({v:VER,day:DAY,today,best:bestAll,peak:Math.max(num(mine.peak),G.peak)});}
+  catch(_){boardNote='Your score was not saved. Posting scores needs Contributor access to this page.';renderBoard();}
+}
+(async()=>{
+  try{
+    const use=window.claude&&window.claude.use;if(!use)return;
+    boardNote='Loading leaderboard…';renderBoard();
+    [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
+    if(!db){boardNote='';renderBoard();return;}
+    try{uid=user?await user.id():null;}catch(_){}
+    const timer=setTimeout(()=>{boardNote='The leaderboard cannot be reached yet.';renderBoard();},10000);
+    db.collection('scores').orderBy('best','desc').limit(300).onSnapshot(async snap=>{
+      clearTimeout(timer);boardNote='';
+      rows=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(r=>r.v===VER);
+      renderBoard();
+      if(user){try{const ps=await user.profiles(rows.map(r=>r.id));for(const id in ps)if(ps[id]&&ps[id].name)names[id]=ps[id].name;renderBoard();}catch(_){}}
+    },()=>{clearTimeout(timer);boardNote='The leaderboard is unavailable in this view.';renderBoard();});
+  }catch(_){boardNote='';renderBoard();}
+})();
+
+function start(){
+  try{if(!AC){const A=window.AudioContext||window.webkitAudioContext;if(A)AC=new A();}if(AC&&AC.state==='suspended')AC.resume();}catch(_){}
+  reset();G.state='count';G.cd=3;lastRival='';$('overlay').hidden=true;hud();
+}
+
+let sc=1,last=0;
+function frame(now){
+  requestAnimationFrame(frame);
+  const dt=Math.min(.05,(now-last)/1000||0);last=now;
+  if(G.state==='play')update(dt);
+  else if(G.state==='count'){
+    const was=Math.ceil(G.cd);G.cd-=dt;
+    if(G.cd<=0){G.state='play';beep(880,.14,'triangle',.06);}
+    else if(Math.ceil(G.cd)!==was)beep(440,.08,'triangle',.05);
+  }
+  const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+  const w=Math.round(r.width*dpr),h=Math.round(r.width*H/W*dpr);
+  if(!w)return;
+  if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
+  sc=w/W;
+  const g=ctx.createRadialGradient(w/2,h/2,h*.1,w/2,h/2,w*.7);
+  g.addColorStop(0,'#0a3d6b');g.addColorStop(1,'#021a31');
+  ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  // channel walls
+  ctx.fillStyle='rgba(142,197,255,.16)';ctx.fillRect(0,0,w,1.6*sc);ctx.fillRect(0,h-1.6*sc,w,1.6*sc);
+  // field lines: they fade through zero while the coil reverses, and vanish when the driver cuts out
+  const amp=Math.abs(G.b),dir=G.b>=0?1:-1,off=((G.t*8*dir)%16+16)%16;
+  ctx.strokeStyle='rgba(255,255,255,'+(.09*amp).toFixed(3)+')';ctx.lineWidth=1.5*dpr;ctx.beginPath();
+  for(let y=10;y<H;y+=16)for(let x=-16+off;x<W+16;x+=16){
+    ctx.moveTo((x-1.5*dir)*sc,(y-2)*sc);ctx.lineTo((x+1.5*dir)*sc,y*sc);ctx.lineTo((x-1.5*dir)*sc,(y+2)*sc);
+  }
+  ctx.stroke();
+  // detector window (triple points) and flow tracers (streak length follows the local flow speed)
+  ctx.fillStyle='rgba(142,197,255,.10)';ctx.fillRect((G.zx-ZW/2)*sc,0,ZW*sc,h);
+  ctx.fillStyle='rgba(142,197,255,.8)';ctx.font='700 '+15*dpr+'px "IBM Plex Sans Condensed",sans-serif';ctx.textAlign='center';ctx.fillText('×3',G.zx*sc,(H-4)*sc);
+  ctx.strokeStyle='rgba(255,255,255,.22)';ctx.lineWidth=1.2*dpr;ctx.beginPath();
+  for(const p of tracers){const u=uAt(p.y);ctx.moveTo(p.x*sc,p.y*sc);ctx.lineTo((p.x-u*.35-.3)*sc,p.y*sc);}
+  ctx.stroke();
+  // big live count behind the swimmers
+  ctx.fillStyle='rgba(255,255,255,.06)';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font='700 '+46*sc+'px "IBM Plex Sans Condensed",sans-serif';if(G.state!=='count')ctx.fillText(G.cells.length,w/2,h/2);ctx.textBaseline='alphabetic';
+  ctx.lineCap='round';ctx.lineJoin='round';
+  for(const c of G.cells){
+    const tr=c.trail,col=c.kind==='wander'?'#8fa3b8':c.pol>0?'#cfe6ff':'#ffa94d';
+    ctx.strokeStyle=col;ctx.lineWidth=2*dpr;
+    for(let i=0;i<tr.length-1;i+=6){
+      const j=Math.min(tr.length-1,i+6);
+      ctx.globalAlpha=.5*Math.max(0,1-(G.t-tr[j].t)/TRAIL);
+      ctx.beginPath();ctx.moveTo(tr[i].x*sc,tr[i].y*sc);
+      for(let k=i+1;k<=j;k++)ctx.lineTo(tr[k].x*sc,tr[k].y*sc);
+      ctx.stroke();
+    }
+    const age=G.t-c.born;
+    if(age<.5){ctx.globalAlpha=1-age/.5;ctx.strokeStyle=col;ctx.beginPath();ctx.arc(c.x*sc,c.y*sc,(1+age*12)*sc,0,7);ctx.stroke();}
+    if(c.danger){ctx.globalAlpha=.55+.45*Math.sin(G.t*14);ctx.strokeStyle='#ff6b6b';ctx.lineWidth=2*dpr;ctx.beginPath();ctx.arc(c.x*sc,c.y*sc,3.6*sc,0,7);ctx.stroke();}
+    const pu=G.t-c.pulse;if(pu<.5){ctx.globalAlpha=1-pu/.5;ctx.strokeStyle=col;ctx.lineWidth=2*dpr;ctx.beginPath();ctx.arc(c.x*sc,c.y*sc,(2+pu*10)*sc,0,7);ctx.stroke();}
+    ctx.globalAlpha=Math.min(1,age/.3);
+    ctx.save();ctx.translate(c.x*sc,c.y*sc);ctx.rotate((c.hm===undefined?c.h:c.hm)+(c.sw<0?Math.PI:0));
+    // flagellum trails behind the direction of swimming
+    const bl=2.3*c.sz;ctx.strokeStyle=col;ctx.lineWidth=.9*dpr;ctx.globalAlpha*=.7;ctx.beginPath();ctx.moveTo(-bl*sc,0);
+    for(let q=1;q<=8;q++){const fxp=-bl-q*.55;ctx.lineTo(fxp*sc,.55*Math.sin(q*1.1-G.t*26-c.ph)*Math.min(1,q/3)*sc);}
+    ctx.stroke();ctx.globalAlpha=Math.min(1,age/.3);
+    ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=8*dpr;ctx.beginPath();ctx.ellipse(0,0,bl*sc,1.05*c.sz*sc,0,0,7);ctx.fill();ctx.restore();
+  }
+  ctx.textAlign='center';ctx.font='600 '+14*dpr+'px "IBM Plex Sans",sans-serif';
+  for(const p of G.texts){
+    const a=(G.t-p.t)/p.life;ctx.globalAlpha=Math.min(1,2.2*(1-a));ctx.fillStyle=p.col;
+    ctx.fillText(p.str,p.x*sc,(p.y-a*6)*sc);
+  }
+  ctx.globalAlpha=1;
+  if(Math.abs(G.flash)>.02){ctx.fillStyle=G.flash>0?'rgba(142,197,255,'+.1*G.flash+')':'rgba(255,107,107,'+.18*-G.flash+')';ctx.fillRect(0,0,w,h);}
+  ctx.strokeStyle='#eaf2fa';ctx.fillStyle='#eaf2fa';ctx.lineWidth=2*dpr;ctx.font='600 '+13*dpr+'px "IBM Plex Sans",sans-serif';
+  if(lastRival&&G.state==='play'){ctx.textAlign='right';ctx.fillText(lastRival,(W-5)*sc,8.2*sc);}
+  ctx.textAlign='left';
+  // instruments: field, flow, coil heat
+  ctx.fillText('B',5*sc,8.2*sc);
+  if(amp>.06){
+    const ay=7*sc,cx0=17,hl=7*amp,x0=(cx0-hl*dir)*sc,x1=(cx0+hl*dir)*sc;
+    ctx.beginPath();ctx.moveTo(x0,ay);ctx.lineTo(x1,ay);ctx.moveTo(x1-2.5*dir*sc,ay-1.7*sc);ctx.lineTo(x1,ay);ctx.lineTo(x1-2.5*dir*sc,ay+1.7*sc);ctx.stroke();
+  }else if(G.t<G.trip){ctx.fillStyle='#ff6b6b';ctx.fillText('off',10*sc,8.2*sc);ctx.fillStyle='#eaf2fa';}
+  if(Math.abs(G.flow)>.4){
+    const fd=G.flow>0?1:-1,len=3+Math.abs(G.flow)*1.6,fy=13*sc,f0=(fd>0?19:19+len)*sc,f1=(fd>0?19+len:19)*sc;
+    ctx.fillText('Flow',5*sc,14.2*sc);ctx.strokeStyle='#8ec5ff';
+    ctx.beginPath();ctx.moveTo(f0,fy);ctx.lineTo(f1,fy);ctx.moveTo(f1-2.2*fd*sc,fy-1.5*sc);ctx.lineTo(f1,fy);ctx.lineTo(f1-2.2*fd*sc,fy+1.5*sc);ctx.stroke();ctx.strokeStyle='#eaf2fa';
+  }
+  const tripped=G.t<G.trip,hot=tripped||G.heat>.7;
+  ctx.fillText('Coil',5*sc,20.2*sc);
+  ctx.fillStyle='rgba(255,255,255,.14)';ctx.fillRect(19*sc,17.8*sc,22*sc,2.4*sc);
+  ctx.fillStyle=tripped?'#ff6b6b':hot?'#ffa94d':'#8ec5ff';
+  if(!tripped||Math.sin(G.t*16)>0)ctx.fillRect(19*sc,17.8*sc,22*Math.min(1,G.heat)*sc,2.4*sc);
+  ctx.fillStyle='#eaf2fa';
+  ctx.font=12*dpr+'px "IBM Plex Sans",sans-serif';
+  ctx.beginPath();ctx.moveTo(5*sc,(H-5)*sc);ctx.lineTo(25*sc,(H-5)*sc);ctx.stroke();ctx.fillText('20 µm',5*sc,(H-7)*sc);
+  // combo meter under the coil bar: the bar drains until the combo expires
+  if(G.combo>0){
+    ctx.textAlign='left';ctx.fillStyle='#ffd43b';ctx.font='600 '+13*dpr+'px "IBM Plex Sans",sans-serif';
+    ctx.fillText('Combo ×'+(1+.1*Math.min(G.combo,10)).toFixed(1),5*sc,26.2*sc);
+    ctx.fillStyle='rgba(255,255,255,.14)';ctx.fillRect(5*sc,28*sc,36*sc,1.2*sc);
+    ctx.fillStyle='#ffd43b';ctx.fillRect(5*sc,28*sc,36*Math.max(0,1-(G.t-G.lastSave)/COMBO_T)*sc,1.2*sc);
+  }
+  if(G.state==='count'){
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#ffffff';
+    ctx.font='700 '+34*sc+'px "IBM Plex Sans Condensed",sans-serif';ctx.fillText(Math.ceil(G.cd),w/2,h/2-4*sc);
+    ctx.font='600 '+15*dpr+'px "IBM Plex Sans",sans-serif';ctx.fillStyle='#9db4cc';ctx.fillText(G.t>0?'Resuming':'Get ready',w/2,h/2+18*sc);
+    ctx.textBaseline='alphabetic';
+  }
+}
+
+function onDown(e){if(e.cancelable)e.preventDefault();flip();}
+if(window.PointerEvent)cv.addEventListener('pointerdown',onDown);
+else{cv.addEventListener('mousedown',onDown);cv.addEventListener('touchstart',onDown,{passive:false});}
+$('bFlip').addEventListener('click',()=>{flip();$('bFlip').blur();});
+window.addEventListener('keydown',e=>{
+  const k=e.key;
+  if(e.code==='Space'||k===' '){
+    e.preventDefault();if(e.repeat)return;     // holding Space does not auto-flip
+    if(G.state==='play')flip();else if(G.state==='pause')resume();else if(G.state==='intro'||G.state==='over')start();
+  }else if(k==='p'||k==='P'||k==='Escape'){if(G.state==='pause')resume();else pause();}
+});
+function pause(){
+  if(G.state!=='play'&&G.state!=='count')return;G.state='pause';
+  $('card').innerHTML='<h2>Paused</h2><p>Your run is frozen. Press Space, P or the button to carry on.</p><button id="bGo">Resume</button>';
+  $('overlay').hidden=false;$('bGo').onclick=resume;
+}
+function resume(){if(G.state!=='pause')return;$('overlay').hidden=true;G.state='count';G.cd=1.5;}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
+$('bPause').onclick=()=>{if(G.state==='pause')resume();else pause();$('bPause').blur();};
+$('bSound').onclick=()=>{soundOn=!soundOn;$('bSound').textContent='Sound '+(soundOn?'on':'off');$('bSound').setAttribute('aria-pressed',soundOn);};
+
+intro();hud();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
